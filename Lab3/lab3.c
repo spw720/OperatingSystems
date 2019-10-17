@@ -47,8 +47,6 @@ void lfcat()
 
 			file_name = read_dir->d_name;
 
-			fprintf(fp, "\n\nFILE: %s\n", file_name);
-
 			/* Open the file */
 			input = fopen(file_name, "r");
 
@@ -63,6 +61,8 @@ void lfcat()
 				&& strcmp(file_name, "lab3.c") != 0
 				&& strcmp(file_name, "lab3") != 0
 				&& strcmp(file_name, "output.txt") != 0 ) {
+
+				fprintf(fp, "\n\nFILE: %s\n", file_name);
 
 				char *line = NULL;
      		size_t len = 0;
@@ -83,8 +83,6 @@ void lfcat()
 
 				free(line);
 
-			} //end of if(file human-readable)
-
 			/* print 80 "-" characters to output.txt */
 			int counter = 80;
 			fprintf(fp, "\n", "");
@@ -93,6 +91,8 @@ void lfcat()
 				counter -= 1;
 			}
 			fprintf(fp, "\n", "");
+
+			} //end of if(file human-readable)
 
 			/* close the read file and free/null assign your line buffer */
 			//free(line);
