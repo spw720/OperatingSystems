@@ -1,80 +1,16 @@
-File: 1_poem.txt
-I loved you first: but afterwards your love
-Outsoaring mine, sang such a loftier song
-As drowned the friendly cooings of my dove.
-Which owes the other most? my love was long,
-And yours one moment seemed to wax more strong;
-I loved and guessed at you, you construed me
-And loved me for what might or might not be –
-Nay, weights and measures do us both a wrong.
-For verily love knows not ‘mine’ or ‘thine;’
-With separate ‘I’ and ‘thou’ free love has done,
-For one is both and both are one in love:
-Rich love knows nought of ‘thine that is not mine;’
-Both have the strength and both the length thereof,
-Both of us, of the love which makes us one.
 
-~Christina Rossetti
----------------------------------------------------------------------------------------------------------------
-File: 2_lyrics.txt
-Nur für mich bist du am Leben
-Ich steck dir Orden ins Gesicht
-Du bist mir ganz und gar ergeben
-Du liebst mich denn ich lieb' dich nicht
 
-Du blutest für mein Seelenheil
-Ein kleiner Schnitt und du wirst geil
-Der Körper - schon total entstellt
-Egal, erlaubt ist, was gefällt
+FILE: .
 
-Ich tu' dir weh.
-Tut mir nicht Leid!
-Das tut dir gut.
-Hör wie es schreit!
+--------------------------------------------------------------------------------
 
-Bei dir habe ich die Wahl der Qual
-Stacheldraht im Harnkanal
-Leg dein Fleisch in Salz und Eiter
-Erst stirbst du doch dann lebst du weiter
 
-Bisse, Tritte, harte Schläge
-Nadel, Zangen, stumpfe Säge
-Wünsch' dir was, ich sag nicht nein
-Und führ' dir Nagetiere ein
+FILE: ..
 
-Ich tu' dir weh.
-Tut mir nicht Leid!
-Das tut dir gut.
-Hör wie es schreit!
+--------------------------------------------------------------------------------
 
-Ich tu' dir weh.
-Tut mir nicht Leid!
-Es tut dir gut.
-Hör wie es schreit!
 
-Du bist das Schiff, ich der Kapitän
-Wohin soll denn die Reise geh'n?
-Ich seh' im Spiegel dein Gesicht
-Du liebst mich denn ich lieb' dich nicht
-
-Ich tu' dir weh.
-Tut mir nicht Leid!
-Das tut dir gut.
-Hört wie es schreit!
-
-Ich tu' dir weh.
-Tut mir nicht Leid!
-Das tut dir gut.
-Hör wie es schreit!
-
-Ich tu' dir weh.
-Tut mir nicht Leid!
-Das tut dir gut.
-Hör wie's schreit! 
-
-~ Rammstien "Ich tu' dir weh"
----------------------------------------------------------------------------------------------------------------
-File: 3_DE_Code.py
+FILE: 3_DE_Code.py
 import random, csv
 import numpy as np
 import json
@@ -403,4 +339,266 @@ if(__name__=="__main__"):
 		writer.writerow(row)
 	outfile.close()
 #==============================================================================
----------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+FILE: lab3skel
+
+--------------------------------------------------------------------------------
+
+
+FILE: 2_lyrics.txt
+Nur für mich bist du am Leben
+Ich steck dir Orden ins Gesicht
+Du bist mir ganz und gar ergeben
+Du liebst mich denn ich lieb' dich nicht
+
+Du blutest für mein Seelenheil
+Ein kleiner Schnitt und du wirst geil
+Der Körper - schon total entstellt
+Egal, erlaubt ist, was gefällt
+
+Ich tu' dir weh.
+Tut mir nicht Leid!
+Das tut dir gut.
+Hör wie es schreit!
+
+Bei dir habe ich die Wahl der Qual
+Stacheldraht im Harnkanal
+Leg dein Fleisch in Salz und Eiter
+Erst stirbst du doch dann lebst du weiter
+
+Bisse, Tritte, harte Schläge
+Nadel, Zangen, stumpfe Säge
+Wünsch' dir was, ich sag nicht nein
+Und führ' dir Nagetiere ein
+
+Ich tu' dir weh.
+Tut mir nicht Leid!
+Das tut dir gut.
+Hör wie es schreit!
+
+Ich tu' dir weh.
+Tut mir nicht Leid!
+Es tut dir gut.
+Hör wie es schreit!
+
+Du bist das Schiff, ich der Kapitän
+Wohin soll denn die Reise geh'n?
+Ich seh' im Spiegel dein Gesicht
+Du liebst mich denn ich lieb' dich nicht
+
+Ich tu' dir weh.
+Tut mir nicht Leid!
+Das tut dir gut.
+Hört wie es schreit!
+
+Ich tu' dir weh.
+Tut mir nicht Leid!
+Das tut dir gut.
+Hör wie es schreit!
+
+Ich tu' dir weh.
+Tut mir nicht Leid!
+Das tut dir gut.
+Hör wie's schreit! 
+
+~ Rammstien "Ich tu' dir weh"
+--------------------------------------------------------------------------------
+
+
+FILE: 1_poem.txt
+I loved you first: but afterwards your love
+Outsoaring mine, sang such a loftier song
+As drowned the friendly cooings of my dove.
+Which owes the other most? my love was long,
+And yours one moment seemed to wax more strong;
+I loved and guessed at you, you construed me
+And loved me for what might or might not be –
+Nay, weights and measures do us both a wrong.
+For verily love knows not ‘mine’ or ‘thine;’
+With separate ‘I’ and ‘thou’ free love has done,
+For one is both and both are one in love:
+Rich love knows nought of ‘thine that is not mine;’
+Both have the strength and both the length thereof,
+Both of us, of the love which makes us one.
+
+~Christina Rossetti
+--------------------------------------------------------------------------------
+
+
+FILE: lab3
+Ïúíþ
+FILE: %s
+
+*** File: %s ***
+
+
+--------------------------------------------------------------------------------
+
+
+FILE: lab3.c
+/*
+* Description: <write a brief description of your lab>
+*
+* Author: Sean Wilson
+* Date: 10/15/19
+*
+* Notes:
+* 1. <add notes we should consider when grading>
+*/
+
+/*-------------------------Preprocessor Directives---------------------------*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h>
+#include <string.h>
+#include <unistd.h>
+#include "command.h"
+/*---------------------------------------------------------------------------*/
+
+/*----------------------------Function Definitions---------------------------*/
+void lfcat()
+{
+	/* Define your variables here */
+	FILE *fp; //output.txt file pointer
+	FILE *input; //input file pointer
+	char cwd[100]; //path to current working dir
+	struct dirent *read_dir; //directory details
+  DIR *directory; //directory
+	const char* file_name; //name of file
+
+	/* Open the file output.txt for writing */
+	fp = fopen("output.txt", "w");
+
+	/* Get the current directory*/
+   if (getcwd(cwd, sizeof(cwd)) != NULL) {
+       printf("Current working dir: %s\n", cwd);
+   }
+	 else {
+       perror("getcwd() error");
+   }
+
+	/* Open the dir using opendir() */
+	directory = opendir (cwd);
+
+	/* use a while loop to read the dir */
+	while ((read_dir = readdir(directory)) != NULL) {
+
+			file_name = read_dir->d_name;
+
+			fprintf(fp, "\n\nFILE: %s\n", file_name);
+
+			/* Open the file */
+			input = fopen(file_name, "r");
+
+			if (input == NULL) {
+          perror("Unable to open file!");
+      }
+
+			/* Hint: use an if statement to skip any names that are not readable files (e.g. ".", "..", "lab-3.c", "lab3.exe", "output.txt" */
+			//if (input != "." & input != ".." & input != "lab-3.c" & input != "lab3.exe" & input != "output.txt") {
+			if ( strcmp(file_name, ".") != 0
+				&& strcmp(file_name, "..") != 0
+				&& strcmp(file_name, "lab3.c") != 0
+				&& strcmp(file_name, "lab3") != 0
+				&& strcmp(file_name, "output.txt") != 0 ) {
+
+				char *line = NULL;
+     		size_t len = 0;
+
+				printf("\n\n*** File: %s ***\n\n", file_name);
+
+				/* Read in each line using getline() */
+     		while(getline(&line, &len, input) != -1) {
+
+					printf("line: %s", line);
+
+					/* Write each line to output.txt */
+					//fwrite(line , 1 , sizeof(line) , fp );
+					fprintf(fp, "%s", line);
+					//fprintf(fp, "%s\n", line_break);
+
+				} //end of while(theres a line in file) loop
+
+				free(line);
+
+			} //end of if(file human-readable)
+
+			/* print 80 "-" characters to output.txt */
+			int counter = 80;
+			fprintf(fp, "\n", "");
+			while (counter > 0) {
+				fprintf(fp, "-", "");
+				counter -= 1;
+			}
+			fprintf(fp, "\n", "");
+
+			/* close the read file and free/null assign your line buffer */
+			//free(line);
+			fclose(input);
+
+  } //end of while(theres a file in directory) loop
+
+	/*close both the output file and the directory you were reading from using closedir() and fclose() */
+	closedir(directory);
+	fclose(fp);
+
+} //end of lfcat()
+
+/*---------------------------------------------------------------------------*/
+/*-----------------------------Program Main----------------------------------*/
+int main() {
+	setbuf(stdout, NULL);
+
+	/*function vars */
+	char *cBuffer;
+	size_t bufferSize;
+	size_t inputSize;
+	char *token;
+
+	/* Allocate memory to the input buffer. */
+	cBuffer = (char *)malloc(bufferSize * sizeof(char));
+	if( cBuffer == NULL)
+	{
+		printf("Error! Unable to allocate input buffer. \n");
+		exit(1);
+	}
+
+	/*main run cycle*/
+	do {
+
+	printf( ">>> ");
+	inputSize = getline(&cBuffer, &bufferSize, stdin);
+
+	/* tokenize the input string */
+	token = strtok(cBuffer, " ");
+	while(token != NULL && strcmp(token, "\n")) {
+
+		/*if the command is 'exit then close the program*/
+		if(strcmp(token, "exit\n") == 0 || strcmp(token, "exit") == 0) { break; }
+
+		/*Display any commands */
+		if(strcmp(token, "lfcat\n") == 0) {lfcat();}
+		else {printf("Error: Unrecognized command! \n"); break;}
+		token = strtok(NULL, " ");
+	}
+	if(token != NULL) {if(strcmp(token, "exit\n") == 0 || strcmp(token, "exit") == 0) { break; }}
+	} while (1);
+	/*Free the allocated memory*/
+	free(cBuffer);
+	return 0;
+}
+/*-----------------------------Program End-----------------------------------*/
+
+--------------------------------------------------------------------------------
+
+
+FILE: command.h
+void lfcat();
+--------------------------------------------------------------------------------
+
+
+FILE: output.txt
+
+--------------------------------------------------------------------------------
