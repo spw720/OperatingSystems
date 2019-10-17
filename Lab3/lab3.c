@@ -1,11 +1,11 @@
 /*
-* Description: <write a brief description of your lab>
+* Description: CLI program that reads all files in directory and outputs to a file
 *
 * Author: Sean Wilson
 * Date: 10/15/19
 *
 * Notes:
-* 1. <add notes we should consider when grading>
+* 1. Make sure output.txt is clean
 */
 
 /*-------------------------Preprocessor Directives---------------------------*/
@@ -55,7 +55,6 @@ void lfcat()
       }
 
 			/* Hint: use an if statement to skip any names that are not readable files (e.g. ".", "..", "lab-3.c", "lab3.exe", "output.txt" */
-			//if (input != "." & input != ".." & input != "lab-3.c" & input != "lab3.exe" & input != "output.txt") {
 			if ( strcmp(file_name, ".") != 0
 				&& strcmp(file_name, "..") != 0
 				&& strcmp(file_name, "lab3.c") != 0
@@ -67,17 +66,15 @@ void lfcat()
 				char *line = NULL;
      		size_t len = 0;
 
-				printf("\n\n*** File: %s ***\n\n", file_name);
+				printf("*** File: %s ***\n\n", file_name);
 
 				/* Read in each line using getline() */
      		while(getline(&line, &len, input) != -1) {
 
-					printf("line: %s", line);
+					//printf("line: %s", line);
 
 					/* Write each line to output.txt */
-					//fwrite(line , 1 , sizeof(line) , fp );
 					fprintf(fp, "%s", line);
-					//fprintf(fp, "%s\n", line_break);
 
 				} //end of while(theres a line in file) loop
 
@@ -95,7 +92,6 @@ void lfcat()
 			} //end of if(file human-readable)
 
 			/* close the read file and free/null assign your line buffer */
-			//free(line);
 			fclose(input);
 
   } //end of while(theres a file in directory) loop
