@@ -113,7 +113,7 @@ int main() {
 
 	/*function vars */
 	char *cBuffer;
-	size_t bufferSize;
+	size_t bufferSize = 32;
 	size_t inputSize;
 	char *token;
 
