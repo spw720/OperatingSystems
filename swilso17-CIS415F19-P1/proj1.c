@@ -120,14 +120,20 @@ int main(int argc, char *argv[]) {
 	setbuf(stdout, NULL);
 
 	FILE *output;
-	FILE *input;
+
+	//TODO set to NULL
+	FILE *input = NULL;
 
 	/*function vars */
+
+	//TODO set to NULL
 	char *cBuffer = NULL;
+
 	size_t bufferSize = 32;
 	size_t inputSize;
-	char *token;
-	char *token2;
+
+	char *token = NULL;//TODO set to NULL;
+	char *token2 = NULL;//TODO set to NULL;
 
 	/* Allocate memory to the input buffer. */
 	cBuffer = (char *)malloc(bufferSize * sizeof(char));
