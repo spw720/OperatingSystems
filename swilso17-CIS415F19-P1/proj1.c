@@ -238,7 +238,7 @@ int main(int argc, char *argv[]) {
 	free(cBuffer);
 
 	//fclose(input);
-	fclose(output);
+	//fclose(output);
 	return 0;
 
 }// end of main()
