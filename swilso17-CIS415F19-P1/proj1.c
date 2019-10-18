@@ -109,6 +109,7 @@ void displayFile(char *filename){ /*for the cat command*/
 	}
 	else {write(1, "No such file!\n", strlen("No such file!\n"));}
 
+	free(buffy);
 	close(open_file);
 
 }// end of displayFile()
