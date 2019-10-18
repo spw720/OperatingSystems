@@ -64,7 +64,11 @@ void showCurrentDir(){ /*for the pwd command*/
 /*---------------------------------------------------------------------------*/
 
 void makeDir(char *dirName){ /*for the mkdir command*/
-	printf("Directory: %s\n", dirName);
+
+	if (mkdir(dirName, 0777) == -1){
+		write(1, "Directory creation failed\n", strlen("Directory creation failed\n"));
+	}
+
 }// end of makeDir()
 
 /*---------------------------------------------------------------------------*/
@@ -90,7 +94,9 @@ void moveFile(char *sourcePath, char *destinationPath){ /*for the mv command*/
 /*---------------------------------------------------------------------------*/
 
 void deleteFile(char *filename){ /*for the rm command*/
-	printf("Filename: %s\n", filename);
+
+	int rem = remove(filename);
+
 }// end of deleteFile()
 
 /*---------------------------------------------------------------------------*/
@@ -119,9 +125,10 @@ void displayFile(char *filename){ /*for the cat command*/
 int main(int argc, char *argv[]) {
 	setbuf(stdout, NULL);
 
+	// TODO Figure this out...Null pointers being freed could cause this error?
 	FILE *output = NULL;
 
-	//TODO set to NULL
+	// TODO Figure this out...Null pointers being freed could cause this error?
 	FILE *input = NULL;
 
 	/*function vars */
@@ -237,8 +244,10 @@ int main(int argc, char *argv[]) {
 	/*Free the allocated memory*/
 	free(cBuffer);
 
+	// TODO Figure this out...Null pointers being freed could cause this error?
 	//fclose(input);
 	//fclose(output);
+
 	return 0;
 
 }// end of main()
