@@ -123,7 +123,7 @@ int main(int argc, char *argv[]) {
 	FILE *input;
 
 	/*function vars */
-	char *cBuffer;
+	char *cBuffer = NULL;
 	size_t bufferSize = 32;
 	size_t inputSize;
 	char *token;
