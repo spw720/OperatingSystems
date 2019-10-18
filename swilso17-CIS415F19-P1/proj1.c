@@ -9,6 +9,8 @@
 */
 
 /*-------------------------Preprocessor Directives---------------------------*/
+#include<fcntl.h> 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <dirent.h>
@@ -18,63 +20,6 @@
 /*---------------------------------------------------------------------------*/
 
 /*----------------------------Function Definitions---------------------------*/
-
-void lfcat()
-{
-	/* Define your variables here */
-	FILE *fp; //output.txt file pointer
-	FILE *input; //input file pointer
-	char cwd[100]; //path to current working dir
-	struct dirent *read_dir; //directory details
-  DIR *directory; //directory
-	const char* file_name; //name of file
-	/* Open the file output.txt for writing */
-	fp = fopen("output.txt", "w");
-	/* Get the current directory*/
-  if (getcwd(cwd, sizeof(cwd)) != NULL) {
-  	printf("Current working dir: %s\n", cwd);
-  }
-	else {
-  	perror("getcwd() error");
-  }
-	/* Open the dir using opendir() */
-	directory = opendir (cwd);
-	/* use a while loop to read the dir */
-	while ((read_dir = readdir(directory)) != NULL) {
-			file_name = read_dir->d_name;
-			/* Open the file */
-			input = fopen(file_name, "r");
-			if (input == NULL) {
-          perror("Unable to open file!");
-      }
-			if ( strcmp(file_name, ".") != 0 && strcmp(file_name, "..") != 0 && strcmp(file_name, "lab3.c") != 0 && strcmp(file_name, "lab3") != 0 && strcmp(file_name, "output.txt") != 0 ) {
-				char *line = NULL;
-     		size_t len = 0;
-				printf("*** File: %s ***\n\n", file_name);
-				/* Read in each line using getline() */
-     		while(getline(&line, &len, input) != -1) {
-					/* Write each line to output.txt */
-					fprintf(fp, "%s", line);
-				} //end of while(theres a line in file) loop
-				free(line);
-			/* print 80 "-" characters to output.txt */
-			int counter = 80;
-			fprintf(fp, "\n", "");
-			while (counter > 0) {
-				fprintf(fp, "-", "");
-				counter -= 1;
-			}
-			fprintf(fp, "\n", "");
-			} //end of if(file human-readable)
-			/* close the read file and free/null assign your line buffer */
-			fclose(input);
-  } //end of while(theres a file in directory) loop
-	/*close both the output file and the directory you were reading from using closedir() and fclose() */
-	closedir(directory);
-	fclose(fp);
-} //end of lfcat()
-
-/*---------------------------------------------------------------------------*/
 
 void listDir(){ /*for the ls command*/
 
@@ -91,9 +36,12 @@ void listDir(){ /*for the ls command*/
 	/* use a while loop to read the dir */
 	while ((read_dir = readdir(directory)) != NULL) {
 			file_name = read_dir->d_name;
-			printf("%s ", file_name);
+
+			write(1, file_name, strlen(file_name));
+			write(1, " ", strlen(" "));
 	}
-	printf("\n", "");
+
+	write(1, "\n", strlen("\n"));
 
 	closedir(directory);
 
@@ -105,7 +53,9 @@ void showCurrentDir(){ /*for the pwd command*/
 
 	char cwd[100]; //path to current working dir
 	if (getcwd(cwd, sizeof(cwd)) != NULL) {
-  	printf("%s\n", cwd);
+
+		write(1, cwd, strlen(cwd));
+		write(1, "\n", strlen("\n"));
   }
 	else {perror("getcwd() error");}
 
@@ -150,27 +100,37 @@ void displayFile(char *filename){ /*for the cat command*/
 	char * line = NULL;
 	size_t len = 0;
 
-	printf("filename: %s\n", filename);
+	char *c = (char *) calloc(1024, sizeof(char));
 
-	input = fopen(filename,"r");
+	//TODO - not allowed to use fopen
+	//input = fopen(filename,"r");
+	int open_file = open(filename, O_RDONLY);
+	if (open_file < 0) { perror("No such file!"); exit(1); }
 
-	if (input){
+	int sz = read(open_file, c, 1024);
 
-		while ((read = getline(&line, &len, input)) != -1) {
-					printf("%s", line);
-		}
+	write(1, c, strlen(c));
 
-	}
-	else {printf("Invalid Filename!\n", "");}
-	
+	//if (input){
+	//	while ((read = getline(&line, &len, input)) != -1) {
+	//				write(1, line, strlen(line));}}
+	//else {
+	//	write(1, "Invalid Filename!\n", strlen("Invalid Filename!\n"));}
+
 	free(line);
-	fclose(input);
+
+	//TODO - not allowed to use fclose
+	close(open_file);
 
 }// end of displayFile()
 
 /*-----------------------------Program Main----------------------------------*/
+
 int main(int argc, char *argv[]) {
 	setbuf(stdout, NULL);
+
+	FILE *output;
+	FILE *input;
 
 	/*function vars */
 	char *cBuffer;
@@ -187,15 +147,32 @@ int main(int argc, char *argv[]) {
 		exit(1);
 	}
 
+	//File mode check
+	if (argc >= 3 && (strncmp(argv[1], "-f", 2) == 0)){
+
+		input = fopen(argv[2], "r");
+
+		output = freopen("output.txt", "w+", stdout);
+
+	}
+
+	if (input == NULL){
+		input = stdin;
+	}
+
 	/*main run cycle*/
 	do {
 
-		printf( ">>> ");
+		if (input == stdin) {
+			printf( ">>> ");
+		}
 
-		inputSize = getline(&cBuffer, &bufferSize, stdin);
+		inputSize = getline(&cBuffer, &bufferSize, input);
 
 		/* tokenize the input string */
 		token = strtok(cBuffer, " ");
+
+		if (token == NULL) {break;}
 
 		while(token != NULL && strcmp(token, "\n")) {
 
@@ -203,11 +180,10 @@ int main(int argc, char *argv[]) {
 			if(strcmp(token, "exit\n") == 0 || strcmp(token, "exit") == 0) { break; }
 
 			/*Display any commands */
-			if(strcmp(token, "lfcat\n") == 0) {lfcat();}
 
 /*-----------------------------No-Argument-----------------------------------*/
 
-			else if(strcmp(token, "ls\n") == 0) {listDir();}
+			if(strcmp(token, "ls\n") == 0) {listDir();}
 
 			else if(strcmp(token, "pwd\n") == 0) {showCurrentDir();}
 
@@ -249,6 +225,8 @@ int main(int argc, char *argv[]) {
 				moveFile(token, token2);
 			}
 
+/*--------------------------------------------------------------------------*/
+
 			else {printf("Error: Unrecognized command! \n"); break;}
 
 			token = strtok(NULL, " ");
@@ -262,6 +240,7 @@ int main(int argc, char *argv[]) {
 
 	/*Free the allocated memory*/
 	free(cBuffer);
+	fclose(output);
 	return 0;
 
 }// end of main()

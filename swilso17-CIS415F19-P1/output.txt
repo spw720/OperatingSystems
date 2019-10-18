@@ -1,0 +1,9 @@
+. .. test_input.txt proj1.c input.txt proj1 command.h output.txt 
+/Users/sean/Desktop/CIS415/415-Repo/CIS415/swilso17-CIS415F19-P1
+pwd ; mkdir test ; cd test
+cd .. ; cd test ; pwd
+cp ../input.txt . ; ls ; cat input.txt
+mv input.txt del.txt ; pwd ; ls
+rm del.txt ; ls
+cd .. ; pwd
+ls
