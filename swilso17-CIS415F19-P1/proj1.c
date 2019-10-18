@@ -1,5 +1,5 @@
 /*
-* Description: CLI program that implements ls, cwd, mkdir, cd,
+* Description: CLI program that implements ls, pwd, mkdir, cd, mv, rm,
 *
 * Author: Sean Wilson
 * Date: 10/15/19
@@ -9,7 +9,7 @@
 */
 
 /*-------------------------Preprocessor Directives---------------------------*/
-#include<fcntl.h> 
+#include<fcntl.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -82,7 +82,9 @@ void copyFile(char *sourcePath, char *destinationPath){ /*for the cp command*/
 /*---------------------------------------------------------------------------*/
 
 void moveFile(char *sourcePath, char *destinationPath){ /*for the mv command*/
-	printf("Source: %s Destination: %s\n", sourcePath, destinationPath);
+
+	rename(sourcePath, destinationPath);
+
 }// end of moveFile()
 
 /*---------------------------------------------------------------------------*/
@@ -95,31 +97,18 @@ void deleteFile(char *filename){ /*for the rm command*/
 
 void displayFile(char *filename){ /*for the cat command*/
 
-	FILE *input; //input file pointer
-	ssize_t read;
-	char * line = NULL;
-	size_t len = 0;
+	char *buffy = (char *) calloc(1024, sizeof(char));
 
-	char *c = (char *) calloc(1024, sizeof(char));
-
-	//TODO - not allowed to use fopen
-	//input = fopen(filename,"r");
 	int open_file = open(filename, O_RDONLY);
-	if (open_file < 0) { perror("No such file!"); exit(1); }
+	if (open_file >= 0) {
 
-	int sz = read(open_file, c, 1024);
+		int sz = read(open_file, buffy, 1024);
 
-	write(1, c, strlen(c));
+		write(1, buffy, strlen(buffy));
 
-	//if (input){
-	//	while ((read = getline(&line, &len, input)) != -1) {
-	//				write(1, line, strlen(line));}}
-	//else {
-	//	write(1, "Invalid Filename!\n", strlen("Invalid Filename!\n"));}
+	}
+	else {write(1, "No such file!\n", strlen("No such file!\n"));}
 
-	free(line);
-
-	//TODO - not allowed to use fclose
 	close(open_file);
 
 }// end of displayFile()
@@ -190,17 +179,17 @@ int main(int argc, char *argv[]) {
 /*-----------------------------1-Argument-----------------------------------*/
 
 			else if(strcmp(token, "mkdir") == 0) {
-				token = strtok(NULL, " ");
+				token = strtok(NULL, " \n");
 				makeDir(token);
 			}
 
 			else if(strcmp(token, "cd") == 0) {
-				token = strtok(NULL, " ");
+				token = strtok(NULL, " \n");
 				changeDir(token);
 			}
 
 			else if(strcmp(token, "rm") == 0) {
-				token = strtok(NULL, " ");
+				token = strtok(NULL, " \n");
 				deleteFile(token);
 			}
 
@@ -215,13 +204,13 @@ int main(int argc, char *argv[]) {
 
 			else if(strcmp(token, "cp") == 0) {
 				token = strtok(NULL, " ");
-				token2 = strtok(NULL, " ");
+				token2 = strtok(NULL, " \n");
 				copyFile(token, token2);
 			}
 
 			else if(strcmp(token, "mv") == 0) {
 				token = strtok(NULL, " ");
-				token2 = strtok(NULL, " ");
+				token2 = strtok(NULL, " \n");
 				moveFile(token, token2);
 			}
 
