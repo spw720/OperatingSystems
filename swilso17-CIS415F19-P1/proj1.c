@@ -237,7 +237,7 @@ int main(int argc, char *argv[]) {
 	/*Free the allocated memory*/
 	free(cBuffer);
 
-	fclose(input);
+	//fclose(input);
 	fclose(output);
 	return 0;
 
