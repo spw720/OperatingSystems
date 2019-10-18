@@ -119,7 +119,7 @@ void displayFile(char *filename){ /*for the cat command*/
 int main(int argc, char *argv[]) {
 	setbuf(stdout, NULL);
 
-	FILE *output;
+	FILE *output = NULL;
 
 	//TODO set to NULL
 	FILE *input = NULL;
@@ -236,6 +236,8 @@ int main(int argc, char *argv[]) {
 
 	/*Free the allocated memory*/
 	free(cBuffer);
+
+	fclose(input);
 	fclose(output);
 	return 0;
 
