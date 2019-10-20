@@ -1,11 +1,11 @@
 /*
-* Description: CLI program that implements ls, pwd, mkdir, cd, mv, rm,
+* Description: CLI program that implements ls, pwd, mkdir, cd, mv, cp, rm
 *
 * Author: Sean Wilson
 * Date: 10/15/19
 *
 * Notes:
-* 1. Make sure output.txt is clean
+* 1.
 */
 
 /*-------------------------Preprocessor Directives---------------------------*/
@@ -20,6 +20,8 @@
 /*---------------------------------------------------------------------------*/
 
 /*----------------------------Function Definitions---------------------------*/
+
+/*----------------------------------LS---------------------------------------*/
 
 void listDir(){ /*for the ls command*/
 
@@ -47,7 +49,7 @@ void listDir(){ /*for the ls command*/
 
 }// end of listDir()
 
-/*---------------------------------------------------------------------------*/
+/*----------------------------------PWD--------------------------------------*/
 
 void showCurrentDir(){ /*for the pwd command*/
 
@@ -61,29 +63,52 @@ void showCurrentDir(){ /*for the pwd command*/
 
 }// end of showCurrentDir()
 
-/*---------------------------------------------------------------------------*/
+/*----------------------------------MKDIR------------------------------------*/
 
 void makeDir(char *dirName){ /*for the mkdir command*/
 
 	if (mkdir(dirName, 0777) == -1){
-		write(1, "Directory creation failed\n", strlen("Directory creation failed\n"));
+		write(1, "Error! [mkdir]\n", strlen("Error! [mkdir]\n"));
 	}
 
 }// end of makeDir()
 
-/*---------------------------------------------------------------------------*/
+/*----------------------------------CD---------------------------------------*/
 
 void changeDir(char *dirName){ /*for the cd command*/
-	printf("Directory: %s\n", dirName);
+
+	if (chdir(dirName) != 0){
+		write(1, "Error! [cd]\n", strlen("Error! [cd]\n"));
+	}
+
 }// end of changeDir()
 
-/*---------------------------------------------------------------------------*/
+/*----------------------------------CP---------------------------------------*/
 
 void copyFile(char *sourcePath, char *destinationPath){ /*for the cp command*/
-	printf("Source: %s Destination: %s\n", sourcePath, destinationPath);
+
+	char *buffy = (char *) calloc(1024, sizeof(char));
+
+	int og_file = open(sourcePath, O_RDONLY);
+	//int new_file = open(destinationPath, O_WRONLY|O_CREAT, 0777);
+	int new_file = open(destinationPath, O_WRONLY | O_CREAT , 0777);
+
+	if (og_file >= 0) {
+
+		int sz = read(og_file, buffy, 1024);
+
+		write(new_file, buffy, strlen(buffy));
+
+	}
+	else {write(1, "Error! [cp]\n", strlen("Error! [cp]\n"));}
+
+	free(buffy);
+	close(og_file);
+	close(new_file);
+
 }// end of copyFile()
 
-/*---------------------------------------------------------------------------*/
+/*----------------------------------MV---------------------------------------*/
 
 void moveFile(char *sourcePath, char *destinationPath){ /*for the mv command*/
 
@@ -91,15 +116,18 @@ void moveFile(char *sourcePath, char *destinationPath){ /*for the mv command*/
 
 }// end of moveFile()
 
-/*---------------------------------------------------------------------------*/
+/*----------------------------------RM---------------------------------------*/
 
 void deleteFile(char *filename){ /*for the rm command*/
 
-	int rem = remove(filename);
+	int rem = unlink(filename);
+	if (rem == -1) {
+		write(1, "Error! [rm]\n", strlen("Error! [rm]\n"));
+	}
 
 }// end of deleteFile()
 
-/*---------------------------------------------------------------------------*/
+/*----------------------------------CAT--------------------------------------*/
 
 void displayFile(char *filename){ /*for the cat command*/
 
@@ -113,12 +141,21 @@ void displayFile(char *filename){ /*for the cat command*/
 		write(1, buffy, strlen(buffy));
 
 	}
-	else {write(1, "No such file!\n", strlen("No such file!\n"));}
+	else {write(1, "Error! [cat]\n", strlen("Error! [cat]\n"));}
 
 	free(buffy);
 	close(open_file);
 
 }// end of displayFile()
+
+/*--------------------------------------------------------------------------*/
+
+
+
+
+
+
+
 
 /*-----------------------------Program Main----------------------------------*/
 
@@ -141,6 +178,8 @@ int main(int argc, char *argv[]) {
 
 	char *token = NULL;//TODO set to NULL;
 	char *token2 = NULL;//TODO set to NULL;
+
+	char *token3 = NULL;//TODO set to NULL;
 
 	/* Allocate memory to the input buffer. */
 	cBuffer = (char *)malloc(bufferSize * sizeof(char));
@@ -177,69 +216,144 @@ int main(int argc, char *argv[]) {
 
 		if (token == NULL) {break;}
 
+		/*while token not null and token = newline*/
 		while(token != NULL && strcmp(token, "\n")) {
 
 			/*if the command is 'exit then close the program*/
 			if(strcmp(token, "exit\n") == 0 || strcmp(token, "exit") == 0) { break; }
 
-			/*Display any commands */
-
 /*-----------------------------No-Argument-----------------------------------*/
 
-			if(strcmp(token, "ls\n") == 0) {listDir();}
+			if(strcmp(token, "ls\n") == 0) {
+				listDir();
+			}//end of ls
 
-			else if(strcmp(token, "pwd\n") == 0) {showCurrentDir();}
+			else if(strncmp(token, "ls", 2) == 0) {
+				token3 = strtok(NULL, " \n");
+				if (token3 != NULL){
+					if (strcmp(token3, ";") == 0){}
+				}
+				listDir();
+			}//end of ls
+
+
+			else if(strcmp(token, "pwd\n") == 0) {
+				showCurrentDir();
+			}//end of pwd
+
+			else if(strncmp(token, "pwd", 3) == 0) {
+				token3 = strtok(NULL, " \n");
+				if (token3 != NULL){
+					if (strcmp(token3, ";") == 0){}
+				}
+				showCurrentDir();
+			}//end of pwd
 
 /*-----------------------------1-Argument-----------------------------------*/
 
-			else if(strcmp(token, "mkdir") == 0) {
+			else if(strncmp(token, "mkdir", 5) == 0) {
+
 				token = strtok(NULL, " \n");
+
+				token3 = strtok(NULL, " \n");
+				if (token3 != NULL){
+					if (strncmp(token3, ";", 1) == 0){}
+				}
+
 				makeDir(token);
-			}
+			}//end of mkdir
 
-			else if(strcmp(token, "cd") == 0) {
+
+			else if(strncmp(token, "cd", 2) == 0) {
+
 				token = strtok(NULL, " \n");
+
+
+				char *temp_token = token;
+				//temp_token[strlen(temp_token)-1] = '\0';
+
+				token3 = strtok(NULL, " \n");
+				if (token3 != NULL){
+					if (strncmp(token3, ";", 1) == 0){}
+				}
+
 				changeDir(token);
-			}
+			}//end of cd
 
-			else if(strcmp(token, "rm") == 0) {
+
+			else if(strncmp(token, "rm", 2) == 0) {
+
 				token = strtok(NULL, " \n");
+
+				token3 = strtok(NULL, " \n");
+				if (token3 != NULL){
+					if (strncmp(token3, ";", 1) == 0){}
+				}
+
 				deleteFile(token);
-			}
+			}//end of rm
 
-			else if(strcmp(token, "cat") == 0) {
+			else if(strncmp(token, "cat", 3) == 0) {
 
 				token = strtok(NULL, " \n");
+
+				token3 = strtok(NULL, " \n");
+				if (token3 != NULL){
+					if (strncmp(token3, ";", 1) == 0){}
+				}
 
 				displayFile(token);
-			}
+			}//end of cat
 
 /*-----------------------------2-Argument-----------------------------------*/
 
-			else if(strcmp(token, "cp") == 0) {
-				token = strtok(NULL, " ");
-				token2 = strtok(NULL, " \n");
-				copyFile(token, token2);
-			}
+			else if(strncmp(token, "cp", 2) == 0) {
 
-			else if(strcmp(token, "mv") == 0) {
 				token = strtok(NULL, " ");
 				token2 = strtok(NULL, " \n");
+
+				token3 = strtok(NULL, " \n");
+				if (token3 != NULL){
+					if (strncmp(token3, ";", 1) == 0){}
+				}
+
+				if (strncmp(token2, ".", 1) == 0){
+					char *temp_token = token + 3;
+					copyFile(token, temp_token);
+				}
+				else{copyFile(token, token2);}
+			}//end of cp
+
+
+			else if(strncmp(token, "mv", 2) == 0) {
+
+				token = strtok(NULL, " ");
+				token2 = strtok(NULL, " \n");
+
+				token3 = strtok(NULL, " \n");
+				if (token3 != NULL){
+					if (strncmp(token3, ";", 1) == 0){}
+				}
+
 				moveFile(token, token2);
-			}
+			}//end of mv
 
 /*--------------------------------------------------------------------------*/
 
-			else {printf("Error: Unrecognized command! \n"); break;}
+			else {
+				printf("Error: Unrecognized command!\n");
+				break;
+			}
 
-			token = strtok(NULL, " ");
-		}
+			token = strtok(NULL, " "); //TODO set to ;
+
+		}// end of while(token not null)
 
 		if(token != NULL) {
 			if(strcmp(token, "exit\n") == 0 || strcmp(token, "exit") == 0) { break; }
 		}
 
-	} while (1);
+	} while (1); // end of do-while loop
 
 	/*Free the allocated memory*/
 	free(cBuffer);
@@ -251,12 +365,5 @@ int main(int argc, char *argv[]) {
 	return 0;
 
 }// end of main()
-
-
-
-
-
-
-
 
 /*-----------------------------Program End-----------------------------------*/
