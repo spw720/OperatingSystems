@@ -12,4 +12,4 @@ ls
 . .. del.txt 
 . .. 
 /Users/sean/Desktop/CIS415/415-Repo/CIS415/swilso17-CIS415F19-P1
-. .. test proj1.c input.txt proj1 command.h output.txt 
+. .. test psuedo-shell makefile command.c proj1.c input.txt main.c proj1 command.h output.txt 
