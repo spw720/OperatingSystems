@@ -23,7 +23,7 @@
 /*-----------------------------Program Main----------------------------------*/
 
 int main(int argc, char *argv[]) {
-	setbuf(stdout, NULL);
+	//setbuf(stdout, NULL);
 
 	// TODO Figure this out...Null pointers being freed could cause this error?
 	FILE *output = NULL;
