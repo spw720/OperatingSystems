@@ -26,10 +26,10 @@ int main(int argc, char *argv[]) {
 	setbuf(stdout, NULL);
 
 	// TODO Figure this out...Null pointers being freed could cause this error?
-	FILE *output;
+	FILE *output = NULL;
 
 	// TODO Figure this out...Null pointers being freed could cause this error?
-	FILE *input;
+	FILE *input = NULL;
 
 	/*function vars */
 
@@ -231,8 +231,12 @@ int main(int argc, char *argv[]) {
 	free(cBuffer);
 
 	// TODO Figure this out...Null pointers being freed could cause this error?
-	fclose(input);
-	fclose(output);
+	if (input != stdin){
+		fclose(input);
+	}
+	if (output != NULL){
+		fclose(output);
+	}
 
 	return 0;
 
