@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
 	//char *cBuffer = NULL;
 	char *cBuffer;
 
-	size_t bufferSize = 32;
+	size_t bufferSize = 1024;
 	size_t inputSize;
 
 	char *token = NULL;//TODO set to NULL;
