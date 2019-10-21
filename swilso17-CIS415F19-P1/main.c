@@ -238,6 +238,9 @@ int main(int argc, char *argv[]) {
 
 	} while (1); // end of do-while loop
 
+	/*Free the allocated memory*/
+	free(cBuffer);
+
 	// TODO Figure this out...Null pointers being freed could cause this error?
 	if (input != stdin){
 		fclose(input);
@@ -245,9 +248,6 @@ int main(int argc, char *argv[]) {
 	if (output != NULL){
 		fclose(output);
 	}
-
-	/*Free the allocated memory*/
-	free(cBuffer);
 
 	return 0;
 
