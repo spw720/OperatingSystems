@@ -264,7 +264,9 @@ int main(int argc, char *argv[]) {
 
 
 	//**************
-	free(cBuffer);
+	if (cBuffer != NULL){
+		free(cBuffer);
+	}
 
 //**************
 
