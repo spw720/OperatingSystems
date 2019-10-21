@@ -23,7 +23,7 @@
 /*-----------------------------Program Main----------------------------------*/
 
 int main(int argc, char *argv[]) {
-	//setbuf(stdout, NULL);
+	setbuf(stdout, NULL);
 
 	// TODO Figure this out...Null pointers being freed could cause this error?
 	FILE *output = NULL;
@@ -34,10 +34,10 @@ int main(int argc, char *argv[]) {
 	/*function vars */
 
 	//TODO set to NULL
-	char *cBuffer = NULL;
+	//char *cBuffer = NULL;
+	char *cBuffer
 
-	//size_t bufferSize = 32;
-	size_t bufferSize;
+	size_t bufferSize = 32;
 	size_t inputSize;
 
 	char *token = NULL;//TODO set to NULL;
