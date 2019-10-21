@@ -46,12 +46,15 @@ int main(int argc, char *argv[]) {
 	char *token3 = NULL;//TODO set to NULL;
 
 	/* Allocate memory to the input buffer. */
-	cBuffer = (char *)malloc(bufferSize * sizeof(char));
-	if( cBuffer == NULL)
-	{
-		printf("Error! Unable to allocate input buffer. \n");
-		exit(1);
-	}
+
+	//cBuffer = (char *)malloc(bufferSize * sizeof(char));
+
+
+	//if( cBuffer == NULL)
+	//{
+	//	printf("Error! Unable to allocate input buffer. \n");
+	//	exit(1);
+	//}
 
 	//File mode check
 	if (argc >= 3 && (strncmp(argv[1], "-f", 2) == 0)){
@@ -72,6 +75,10 @@ int main(int argc, char *argv[]) {
 		if (input == stdin) {
 			printf( ">>> ");
 		}
+
+//**************
+		cBuffer = (char *)malloc(bufferSize * sizeof(char));
+		//**************
 
 		inputSize = getline(&cBuffer, &bufferSize, input);
 
@@ -232,14 +239,27 @@ int main(int argc, char *argv[]) {
 
 		}// end of while(token not null)
 
+
+//**************
+		free(cBuffer);
+//**************
+
+
 		if(token != NULL) {
 			if(strcmp(token, "exit\n") == 0 || strcmp(token, "exit") == 0) { break; }
 		}
 
+
 	} while (1); // end of do-while loop
 
 	/*Free the allocated memory*/
-	free(cBuffer);
+
+
+	//**************
+	//free(cBuffer);
+
+//**************
+
 
 	// TODO Figure this out...Null pointers being freed could cause this error?
 	if (input != stdin){
