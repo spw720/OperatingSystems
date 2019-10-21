@@ -240,14 +240,22 @@ int main(int argc, char *argv[]) {
 		}// end of while(token not null)
 
 
-//**************
-		free(cBuffer);
-//**************
-
 
 		if(token != NULL) {
-			if(strcmp(token, "exit\n") == 0 || strcmp(token, "exit") == 0) { break; }
+			if(strcmp(token, "exit\n") == 0 || strcmp(token, "exit") == 0) {
+
+				//**************
+						free(cBuffer);
+				//**************
+
+
+				break;
+			}
 		}
+
+		//**************
+				free(cBuffer);
+		//**************
 
 
 	} while (1); // end of do-while loop
