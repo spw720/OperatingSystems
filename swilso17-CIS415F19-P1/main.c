@@ -36,7 +36,8 @@ int main(int argc, char *argv[]) {
 	//TODO set to NULL
 	char *cBuffer = NULL;
 
-	size_t bufferSize = 32;
+	//size_t bufferSize = 32;
+	size_t bufferSize;
 	size_t inputSize;
 
 	char *token = NULL;//TODO set to NULL;
@@ -104,6 +105,8 @@ int main(int argc, char *argv[]) {
 				else{listDir();}
 			}//end of ls
 
+
+
 			else if(strcmp(token, "pwd\n") == 0) {
 				showCurrentDir();
 			}//end of pwd
@@ -137,6 +140,8 @@ int main(int argc, char *argv[]) {
 				else {makeDir(token);}
 			}//end of mkdir
 
+
+
 			else if(strncmp(token, "cd", 2) == 0) {
 				token = strtok(NULL, " \n");
 				token3 = strtok(NULL, " \n");
@@ -151,6 +156,8 @@ int main(int argc, char *argv[]) {
 				else{changeDir(token);}
 			}//end of cd
 
+
+
 			else if(strncmp(token, "rm", 2) == 0) {
 				token = strtok(NULL, " \n");
 				token3 = strtok(NULL, " \n");
@@ -164,6 +171,8 @@ int main(int argc, char *argv[]) {
 				}
 				else{deleteFile(token);}
 			}//end of rm
+
+
 
 			else if(strncmp(token, "cat", 3) == 0) {
 				token = strtok(NULL, " \n");
@@ -194,6 +203,8 @@ int main(int argc, char *argv[]) {
 				}
 				else{copyFile(token, token2);}
 			}//end of cp
+
+
 
 			else if(strncmp(token, "mv", 2) == 0) {
 				token = strtok(NULL, " ");
