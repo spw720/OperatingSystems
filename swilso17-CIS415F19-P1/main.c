@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 
 	//TODO set to NULL
 	//char *cBuffer = NULL;
-	char *cBuffer;
+	char *cBuffer = NULL;
 
 	size_t bufferSize = 2048;
 	size_t inputSize;
