@@ -17,8 +17,11 @@ int main(int argc, char *argv[]) {
 
   char *command;
   char comm[5][20];
-  for (int i = 0; i < 5; i++) {
+
+  int i = 4;
+  while(i >= 0){
     strcpy(comm[i], "");}
+    i -= 1;}
 
   input = fopen(argv[1], "r");
 
@@ -50,8 +53,10 @@ int main(int argc, char *argv[]) {
 
     printf("%s %s %s %s %s %s\n", command, comm[0], comm[1], comm[2], comm[3], comm[4]);
 
-    for (int i = 0; i < 5; i++) {
-      strcpy(comm[i], "");}
+    int j = 4;
+    while(j >= 0){
+      strcpy(comm[j], "");}
+      j -= 1;}
 
     temp_index = -1;
 
