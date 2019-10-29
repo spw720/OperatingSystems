@@ -5,8 +5,6 @@
 #include <string.h>
 #include <unistd.h>
 
-
-
 int main(int argc, char *argv[]) {
 
   FILE *input;
@@ -16,12 +14,10 @@ int main(int argc, char *argv[]) {
   char *token;
 
   char *command;
-  char comm[5][20];
+  char comm[6][20];
 
-  int i = 4;
-  while(i >= 0){
-    strcpy(comm[i], "");
-    i -= 1;}
+  int i = 4; while(i >= 0){strcpy(comm[i], "");i -= 1;}
+  strcpy(comm[5], NULL);
 
   input = fopen(argv[1], "r");
 
@@ -53,14 +49,14 @@ int main(int argc, char *argv[]) {
 
     printf("%s %s %s %s %s %s\n", command, comm[0], comm[1], comm[2], comm[3], comm[4]);
 
-    int j = 4;
-    while(j >= 0){
-      strcpy(comm[j], "");
-      j -= 1;}
+    execvp(command, comm);
+
+    //reset char array
+    int j = 4; while(j >= 0){ strcpy(comm[j], ""); j -= 1;}
 
     temp_index = -1;
 
-  } while(!feof(input));
+  } while(!feof(input)); //end of do while(not end of file)
 
   free(cBuffer);
   fclose(input);
