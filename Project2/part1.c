@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
 
     printf("%s %s %s %s %s %s\n", command, comm[0], comm[1], comm[2], comm[3], comm[4]);
 
-    char *args[]={"ls", "-a", NULL};
+    char *args[]={command, comm[0], comm[1], comm[2], NULL};
     execvp(args[0], args);
 
     //reset char array
