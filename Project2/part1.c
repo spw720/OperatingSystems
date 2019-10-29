@@ -17,7 +17,6 @@ int main(int argc, char *argv[]) {
   char comm[6][20];
 
   int i = 4; while(i >= 0){strcpy(comm[i], "");i -= 1;}
-  strcpy(comm[5], NULL);
 
   input = fopen(argv[1], "r");
 
