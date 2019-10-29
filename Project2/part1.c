@@ -49,7 +49,8 @@ int main(int argc, char *argv[]) {
 
     printf("%s %s %s %s %s %s\n", command, comm[0], comm[1], comm[2], comm[3], comm[4]);
 
-    execvp(command, comm);
+    char *args[]={comm[0], comm[1], comm[2], NULL}; 
+    execvp(command, args);
 
     //reset char array
     int j = 4; while(j >= 0){ strcpy(comm[j], ""); j -= 1;}
