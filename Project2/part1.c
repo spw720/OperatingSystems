@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
         printf("Token: %s\n", token);
         token = strtok(NULL, " \n");
     }
-  } while(1);
+  } while(!feof(input));
 
   free(cBuffer);
   fclose(input);
