@@ -16,20 +16,20 @@ int main(int argc, char *argv[]) {
   input = fopen(argv[1], "r");
 
   cBuffer = (char *)malloc(bufferSize * sizeof(char));
-  if( cBuffer == NULL){
+  if(cBuffer == NULL){
     printf("Error! Unable to allocate input buffer. \n");
 	  exit(1);}
 
   do {
     inputSize = getline(&cBuffer, &bufferSize, input);
 
-    token = strtok(cBuffer, " ");
+    token = strtok(cBuffer, " \n");
 
     if (token == NULL){break;}
 
-    while(token != NULL) {
+    while(token != NULL && strcmp(token, "\n")) {
         printf("Token: %s\n", token);
-        token = strtok(NULL, " ");
+        token = strtok(NULL, " \n");
     }
   } while(1);
 
