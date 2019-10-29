@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 
   int i = 4;
   while(i >= 0){
-    strcpy(comm[i], "");}
+    strcpy(comm[i], "");
     i -= 1;}
 
   input = fopen(argv[1], "r");
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
 
     int j = 4;
     while(j >= 0){
-      strcpy(comm[j], "");}
+      strcpy(comm[j], "");
       j -= 1;}
 
     temp_index = -1;
