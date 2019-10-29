@@ -9,13 +9,14 @@ int main(int argc, char *argv[]) {
 
   FILE *input;
   char *cBuffer;
-  size_t bufferSize;
+  size_t bufferSize = 2048;
 	size_t inputSize;
   char *token;
 
   input = fopen(argv[1], "r");
 
   cBuffer = (char *)malloc(bufferSize * sizeof(char));
+
   if(cBuffer == NULL){
     printf("Error! Unable to allocate input buffer. \n");
 	  exit(1);}
