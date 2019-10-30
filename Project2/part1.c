@@ -83,8 +83,8 @@ int main(int argc, char *argv[]) {
   pid_t temp_p;
 
   while ((temp_p = wait(&status)) > 0){
-    printf("Waiting for children...\n");
-    sleep(1);
+    //printf("Waiting for children...\n");
+    //sleep(1);
   }
 
   free(cBuffer);
