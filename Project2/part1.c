@@ -68,10 +68,10 @@ int main(int argc, char *argv[]) {
       execvp(args[0], args);
       exit(-1);
     }
-    else {
-      printf("PARENT WAITING...\n");
-      waitpid(pid, &status, 0);
-    }
+    //else {
+    //  printf("PARENT WAITING...\n");
+    //  waitpid(pid, &status, 0);
+    //}
 
 
     //char *args[]={command, comm[0], comm[1], comm[2], NULL};
