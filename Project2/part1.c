@@ -50,17 +50,6 @@ int main(int argc, char *argv[]) {
 
     if (token == NULL){break;}
 
-
-
-    do {
-
-      args[index] = token;
-      printf("Args[%d] = %s\n", index, token);
-      index += 1;
-
-      token = strtok(NULL, " \n");
-    } while(token != NULL);
-    /*
     while(token != NULL) {
 
       args[index] = token;
@@ -69,9 +58,6 @@ int main(int argc, char *argv[]) {
 
       token = strtok(NULL, " \n");
     }
-    */
-
-
 
     pid_t pid = fork();
     //***TODO
@@ -96,7 +82,8 @@ int main(int argc, char *argv[]) {
         printf("*** ERROR: exec failed\n");
         exit(1);
       }
-    }
+    }//end of if pid==0
+
     /*
     else do {
       int status;
@@ -114,22 +101,22 @@ int main(int argc, char *argv[]) {
     } while (pid == 0);
     */
 
-  } while(!feof(input)); //end of do while(not end of file)
+  //} while(!feof(input)); //end of do while(not end of file)
+} while (1);
 
   //***TODO
   int status;
   pid_t temp_p;
 
   while ((temp_p = wait(&status)) > 0){
-
+    printf("Waiting for children...\n");
+    sleep(1);
   }
 
   //for (int p = 0; p <= line; p++) {
   //  printf("Waiting for %d\n", my_pids[p]);
   //  temp_p = waitpid(my_pids[p], &status, WNOHANG);
   //}
-
-
 
   free(cBuffer);
   fclose(input);
