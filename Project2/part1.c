@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
         perror("wait() error");
       else if (pid == 0) {
         printf("child is still running...\n");
-        sleep(1);
+        //sleep(1);
       }
       else {
         if (WIFEXITED(status))
