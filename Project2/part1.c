@@ -78,6 +78,7 @@ int main(int argc, char *argv[]) {
       execvp(args[0], args);
       exit(EXIT_FAILURE);
     }
+    /*
     else do {
       int status;
       if ((pid = waitpid(pid, &status, WNOHANG)) == -1)
@@ -92,16 +93,19 @@ int main(int argc, char *argv[]) {
         else puts("child did not exit successfully");
       }
     } while (pid == 0);
+    */
 
   } while(!feof(input)); //end of do while(not end of file)
 
   //***TODO
-  //int status;
+  int status;
+  pid_t temp_p;
 
-  //for (int p = 0; p <= line; p++) {
-  //  printf("Waiting for %d\n", my_pids[p]);
-  //  waitpid(my_pids[p], &status, 0);
-  //}
+  for (int p = 0; p <= line; p++) {
+    printf("Waiting for %d\n", my_pids[p]);
+    temp_p = waitpid(my_pids[p], &status, WNOHANG);
+    while(!WIFEXITED(status)){sleep(1);}
+  }
 
 
 
