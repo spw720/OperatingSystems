@@ -17,6 +17,10 @@ int main(int argc, char *argv[]) {
 	size_t inputSize;
   char *token;
 
+  //****create array of pid's****
+  pid_t my_pids[20];
+  line = 0;
+
   input = fopen(argv[1], "r");
 
   cBuffer = (char *)malloc(bufferSize * sizeof(char));
@@ -55,6 +59,10 @@ int main(int argc, char *argv[]) {
     }
 
     pid_t pid = fork();
+    //***TODO
+    my_pids[line] = pid;
+    line += 1;
+    //***TODO
 
     //FORK ERROR
     if (pid < 0){
@@ -65,7 +73,6 @@ int main(int argc, char *argv[]) {
     if (pid == 0){
       //free/close bc child process terminates here
       free(cBuffer);
-
       fclose(input);
 
       printf("CHILD\n");
@@ -75,6 +82,12 @@ int main(int argc, char *argv[]) {
 
   } while(!feof(input)); //end of do while(not end of file)
 
+  //***TODO
+  int status;
+  for (int p = 0; p <= line; p++) {
+    waitpid(my_pids[p], &status, 0);
+  }
+  //***TODO
 
   free(cBuffer);
   fclose(input);
