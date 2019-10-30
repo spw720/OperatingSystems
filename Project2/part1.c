@@ -75,7 +75,6 @@ int main(int argc, char *argv[]) {
       free(cBuffer);
       fclose(input);
 
-      printf("CHILD: %s %s\n", args[0], args[1]);
       execvp(args[0], args);
       exit(-1);
     }
@@ -84,7 +83,7 @@ int main(int argc, char *argv[]) {
       if ((pid = waitpid(pid, &status, WNOHANG)) == -1)
         perror("wait() error");
       else if (pid == 0) {
-        printf("child is still running at %s");
+        printf("child is still running...\n");
         sleep(1);
       }
       else {
