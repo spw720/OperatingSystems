@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
 
     if (token == NULL){break;}
 
-    while(token != NULL && strcmp(token, "\n") != 0) {
+    while(token != NULL) {
 
       args[index] = token;
       printf("Args[%d] = %s\n", index, token);
@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
     } while (pid == 0);
     */
 
-  } while(!feof(input)); //end of do while(not end of file)
+  } while(!feof(input) || token == NULL); //end of do while(not end of file)
 
   //***TODO
   int status;
