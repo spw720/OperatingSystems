@@ -55,12 +55,6 @@ int main(int argc, char *argv[]) {
       token = strtok(NULL, " \n");
     }
 
-    printf("ARGS: ");
-    for (int i = 0; i < tokens; i++) {
-      printf("%s ", args[i]);
-    }
-    printf("\n");
-
     pid_t pid = fork();
     int status;
 
