@@ -84,7 +84,9 @@ int main(int argc, char *argv[]) {
 
   //***TODO
   int status;
+
   for (int p = 0; p <= line; p++) {
+    printf("Waiting for %d\n", my_pids[p]);
     waitpid(my_pids[p], &status, 0);
   }
   //***TODO
