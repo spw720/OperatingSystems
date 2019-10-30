@@ -83,8 +83,6 @@ int main(int argc, char *argv[]) {
     lines += 1;
     //Dynamic Array
 
-    int status;
-
     //FORK ERROR
     if (pid < 0){
       perror("fork");
@@ -105,18 +103,15 @@ int main(int argc, char *argv[]) {
       execvp(args[0], args);
       exit(-1);
     }
-    //WAITS FOR CHILD TO FINISH...WRONG!
-    else {
-      printf("PARENT WAITING...\n");
-      waitpid(pid, &status, 0);
-    }
 
   } while(!feof(input)); //end of do while(not end of file)
 
 
   //Dynamic Array
+  int status;
   for (int proc = 0; proc < capacity; proc++) {
-    printf("%d\n", proc);
+    waitpid(arr[proc], &status, 0);
+    printf("Done waiting\n");
   }
 
 
