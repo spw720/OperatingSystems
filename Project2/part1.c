@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
       free(cBuffer);
       fclose(input);
 
-      printf("CHILD\n");
+      printf("CHILD: %s %s\n", args[0], args[1]);
       execvp(args[0], args);
       exit(-1);
     }
