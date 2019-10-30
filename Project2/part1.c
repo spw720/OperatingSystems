@@ -63,10 +63,12 @@ int main(int argc, char *argv[]) {
       exit(EXIT_FAILURE);
     }
     if (pid == 0){
+      printf("CHILD\n");
       execvp(args[0], args);
       exit(-1);
     }
     else {
+      printf("PARENT WAITING...\n");
       waitpid(pid, &status, 0);
     }
 
