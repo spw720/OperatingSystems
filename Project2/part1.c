@@ -53,6 +53,7 @@ int main(int argc, char *argv[]) {
     while(token != NULL){// && strcmp(token, "\n")) {
 
       args[index] = token;
+      printf("Args[%d] = %s\n", index, token);
       index += 1;
 
       token = strtok(NULL, " \n");
@@ -75,7 +76,7 @@ int main(int argc, char *argv[]) {
       free(cBuffer);
       fclose(input);
 
-      printf("Fire! %s %s\n", args[0], args[1]);
+      //printf("Fire! %s %s\n", args[0], args[1]);
 
       execvp(args[0], args);
       exit(EXIT_FAILURE);
