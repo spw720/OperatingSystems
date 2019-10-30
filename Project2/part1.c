@@ -9,13 +9,34 @@
 #include <ctype.h>
 #include <sys/wait.h>
 
+//Dynamic Array
+void push(int *arr, int index, pid_t value, int *size, int *capacity){
+     if(*size > *capacity){
+          realloc(arr, sizeof(arr) * 2);
+          *capacity = sizeof(arr) * 2;
+     }
+     arr[index] = value;
+     *size = *size + 1;
+}
+//Dynamic Array
+
 int main(int argc, char *argv[]) {
+
+  //Dynamic Array
+  int size = 0;
+  int capacity = 2;
+  int* arr = malloc(2 * sizeof(pid_t));
+  //Dynamic Array
 
   FILE *input;
   char *cBuffer;
   size_t bufferSize = 2048;
 	size_t inputSize;
   char *token;
+
+  //Dynamic Array
+  int lines = 0;
+  //Dynamic Array
 
   input = fopen(argv[1], "r");
 
@@ -56,6 +77,12 @@ int main(int argc, char *argv[]) {
     }
 
     pid_t pid = fork();
+
+    //Dynamic Array
+    push(arr, lines, pid, &size, &capacity);
+    lines += 1;
+    //Dynamic Array
+
     int status;
 
     //FORK ERROR
@@ -67,6 +94,11 @@ int main(int argc, char *argv[]) {
     if (pid == 0){
       //free/close bc child process terminates here
       free(cBuffer);
+
+      //Dynamic Array
+      free(arr);
+      //Dynamic Array
+
       fclose(input);
 
       printf("CHILD\n");
@@ -80,6 +112,16 @@ int main(int argc, char *argv[]) {
     }
 
   } while(!feof(input)); //end of do while(not end of file)
+
+
+  //Dynamic Array
+  for (int proc = 0; proc < capacity; proc++) {
+    printf("%d\n", proc);
+  }
+
+
+  free(arr);
+  //Dynamic Array
 
   free(cBuffer);
   fclose(input);
