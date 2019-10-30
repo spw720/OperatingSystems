@@ -102,7 +102,7 @@ int main(int argc, char *argv[]) {
     */
 
   //} while(!feof(input)); //end of do while(not end of file)
-} while (1);
+} while (1 || !feof(input));
 
   //***TODO
   int status;
