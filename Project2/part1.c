@@ -75,6 +75,8 @@ int main(int argc, char *argv[]) {
       free(cBuffer);
       fclose(input);
 
+      printf("Fire! %s %s\n", args[0], args[1]);
+
       execvp(args[0], args);
       exit(EXIT_FAILURE);
     }
@@ -101,7 +103,9 @@ int main(int argc, char *argv[]) {
   int status;
   pid_t temp_p;
 
-  while ((temp_p = wait(&status)) > 0);
+  while ((temp_p = wait(&status)) > 0){
+
+  }
 
   //for (int p = 0; p <= line; p++) {
   //  printf("Waiting for %d\n", my_pids[p]);
