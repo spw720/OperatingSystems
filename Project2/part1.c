@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
 
     if (token == NULL){break;}
 
-    while(token != NULL){// && strcmp(token, "\n")) {
+    while(token != NULL && strcmp(token, "\n")) {
 
       args[index] = token;
       printf("Args[%d] = %s\n", index, token);
