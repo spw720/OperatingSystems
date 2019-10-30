@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
       exit(EXIT_FAILURE);
     }
     //CHILD
-    if (pid == 0){
+    else if (pid == 0){
       //free/close bc child process terminates here
       free(cBuffer);
       fclose(input);
@@ -79,17 +79,32 @@ int main(int argc, char *argv[]) {
       execvp(args[0], args);
       exit(-1);
     }
+    else do {
+      int status;
+      if ((pid = waitpid(pid, &status, WNOHANG)) == -1)
+        perror("wait() error");
+      else if (pid == 0) {
+        printf("child is still running at %s");
+        sleep(1);
+      }
+      else {
+        if (WIFEXITED(status))
+          printf("child exited with status of %d\n", WEXITSTATUS(status));
+        else puts("child did not exit successfully");
+      }
+    } while (pid == 0);
 
   } while(!feof(input)); //end of do while(not end of file)
 
   //***TODO
-  int status;
+  //int status;
 
-  for (int p = 0; p <= line; p++) {
-    printf("Waiting for %d\n", my_pids[p]);
-    waitpid(my_pids[p], &status, 0);
-  }
-  //***TODO
+  //for (int p = 0; p <= line; p++) {
+  //  printf("Waiting for %d\n", my_pids[p]);
+  //  waitpid(my_pids[p], &status, 0);
+  //}
+
+
 
   free(cBuffer);
   fclose(input);
