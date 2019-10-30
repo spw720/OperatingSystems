@@ -11,15 +11,11 @@
 
 int main(int argc, char *argv[]) {
 
-  FILE *input;
-  char *cBuffer;
+  FILE *input = NULL;
+  char *cBuffer = NULL;
   size_t bufferSize = 2048;
-	size_t inputSize;
-  char *token;
-
-  //****create array of pid's****
-  pid_t my_pids[20];
-  int line = 0;
+	size_t inputSize = 0;
+  char *token = NULL;
 
   input = fopen(argv[1], "r");
 
@@ -60,10 +56,6 @@ int main(int argc, char *argv[]) {
     }
 
     pid_t pid = fork();
-    //***TODO
-    my_pids[line] = pid;
-    line += 1;
-    //***TODO
 
     //FORK ERROR
     if (pid < 0){
@@ -84,25 +76,7 @@ int main(int argc, char *argv[]) {
       }
     }//end of if pid==0
 
-    /*
-    else do {
-      int status;
-      if ((pid = waitpid(pid, &status, WNOHANG)) == -1)
-        perror("wait() error");
-      else if (pid == 0) {
-        printf("child is still running...\n");
-        sleep(1);
-      }
-      else {
-        if (WIFEXITED(status))
-          printf("child exited with status of %d\n", WEXITSTATUS(status));
-        else puts("child did not exit successfully");
-      }
-    } while (pid == 0);
-    */
-
-  //} while(!feof(input)); //end of do while(not end of file)
-} while (!feof(input));
+  } while (!feof(input));
 
   //***TODO
   int status;
@@ -112,11 +86,6 @@ int main(int argc, char *argv[]) {
     printf("Waiting for children...\n");
     sleep(1);
   }
-
-  //for (int p = 0; p <= line; p++) {
-  //  printf("Waiting for %d\n", my_pids[p]);
-  //  temp_p = waitpid(my_pids[p], &status, WNOHANG);
-  //}
 
   free(cBuffer);
   fclose(input);
