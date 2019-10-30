@@ -101,14 +101,12 @@ int main(int argc, char *argv[]) {
   int status;
   pid_t temp_p;
 
-  for (int p = 0; p <= line; p++) {
-    printf("Waiting for %d\n", my_pids[p]);
-    temp_p = waitpid(my_pids[p], &status, WNOHANG);
-    while(!WIFEXITED(status)){
-      printf("Running...\n");
-      sleep(1);
-    }
-  }
+  while ((temp_p = wait(&status)) > 0);
+
+  //for (int p = 0; p <= line; p++) {
+  //  printf("Waiting for %d\n", my_pids[p]);
+  //  temp_p = waitpid(my_pids[p], &status, WNOHANG);
+  //}
 
 
 
