@@ -4,6 +4,7 @@
 #include <dirent.h>
 #include <string.h>
 #include <unistd.h>
+#include <ctype.h>
 
 int main(int argc, char *argv[]) {
 
@@ -13,22 +14,31 @@ int main(int argc, char *argv[]) {
 	size_t inputSize;
   char *token;
 
-  char *command;
-  char comm[6][20];
-
-  int i = 4; while(i >= 0){strcpy(comm[i], "");i -= 1;}
-
   input = fopen(argv[1], "r");
 
   cBuffer = (char *)malloc(bufferSize * sizeof(char));
-  if(cBuffer == NULL){
-    printf("Error! Unable to allocate input buffer. \n");
-	  exit(1);}
-
-  int temp_index = -1;
+  if(cBuffer == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
 
   do {
     inputSize = getline(&cBuffer, &bufferSize, input);
+
+    //Check line for whitspace (hint from piazza)
+    int spaces = 0;
+    int tokens = 0;
+    int arguments = 0;
+
+    for (int i = 0; i < inputSize; i++) {
+      if (cBuffer[i] == ' '){spaces += 1;}
+    }
+
+    tokens = spaces + 1;
+    arguments = tokens - 1;
+
+    //char *args[]={command, comm[0], comm[1], comm[2], NULL};
+    char *args[tokens+1];
+    args[tokens+1] = NULL;
+
+    int index = 0;
 
     token = strtok(cBuffer, " \n");
 
@@ -36,26 +46,20 @@ int main(int argc, char *argv[]) {
 
     while(token != NULL && strcmp(token, "\n")) {
 
-        if (temp_index == -1){
-          command = token;
-        }
-        else {
-          strcpy(comm[temp_index], token);
-        }
-        temp_index += 1;
-        token = strtok(NULL, " \n");
+      args[index] = token;
+      index += 1;
+
+      token = strtok(NULL, " \n");
     }
 
-    printf("%s %s %s %s %s %s\n", command, comm[0], comm[1], comm[2], comm[3], comm[4]);
+    printf("ARGS: ");
+    for (int i = 0; i < tokens; i++) {
+      printf("%s ", args[i]);
+    }
+    printf("\n");
 
-    char *args[]={command, comm[0], comm[1], comm[2], comm[3], comm[4], NULL};
-
-    execvp(args[0], args);
-
-    //reset char array
-    int j = 4; while(j >= 0){ strcpy(comm[j], ""); j -= 1;}
-
-    temp_index = -1;
+    //char *args[]={command, comm[0], comm[1], comm[2], NULL};
+    //execvp(args[0], args);
 
   } while(!feof(input)); //end of do while(not end of file)
 
