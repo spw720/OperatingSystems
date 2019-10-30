@@ -24,6 +24,8 @@ int main(int argc, char *argv[]) {
 
   do {
     inputSize = getline(&cBuffer, &bufferSize, input);
+    printf("Input Size: %d\n", inputSize);
+    if(feof(input)) {break;}
 
     //Check line for whitspace (hint from piazza)
     int spaces = 0;
