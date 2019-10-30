@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
       fclose(input);
 
       execvp(args[0], args);
-      exit(-1);
+      exit(EXIT_FAILURE);
     }
     else do {
       int status;
