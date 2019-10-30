@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 
   //****create array of pid's****
   pid_t my_pids[20];
-  line = 0;
+  int line = 0;
 
   input = fopen(argv[1], "r");
 
