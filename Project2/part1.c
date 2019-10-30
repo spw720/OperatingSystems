@@ -56,7 +56,8 @@ int main(int argc, char *argv[]) {
       printf("Args[%d] = %s\n", index, token);
       index += 1;
 
-      token = strtok(NULL, " \n");
+      //token = strtok(NULL, " \n");
+      token = strtok(NULL, " ");
     }
 
     pid_t pid = fork();
@@ -100,7 +101,7 @@ int main(int argc, char *argv[]) {
     } while (pid == 0);
     */
 
-  } while(!feof(input) || token == NULL); //end of do while(not end of file)
+  } while(!feof(input)); //end of do while(not end of file)
 
   //***TODO
   int status;
