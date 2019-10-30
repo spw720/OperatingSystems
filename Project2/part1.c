@@ -7,6 +7,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <ctype.h>
+#include <sys/wait.h>
 
 int main(int argc, char *argv[]) {
 
@@ -59,6 +60,22 @@ int main(int argc, char *argv[]) {
       printf("%s ", args[i]);
     }
     printf("\n");
+
+    pid_t pid = fork();
+    int status;
+
+    if (pid < 0){
+      perror("fork");
+      exit(EXIT_FAILURE);
+    }
+    if (pid == 0){
+      execvp(args[0], args);
+      exit(-1);
+    }
+    else {
+      waitpid(pid, &status, 0);
+    }
+
 
     //char *args[]={command, comm[0], comm[1], comm[2], NULL};
     //execvp(args[0], args);
