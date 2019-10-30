@@ -78,8 +78,10 @@ int main(int argc, char *argv[]) {
 
       //printf("Fire! %s %s\n", args[0], args[1]);
 
-      execvp(args[0], args);
-      exit(EXIT_FAILURE);
+      if (execvp(args[0], args) < 0){
+        printf("*** ERROR: exec failed\n");
+        exit(1);
+      }
     }
     /*
     else do {
