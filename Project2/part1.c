@@ -49,12 +49,11 @@ int main(int argc, char *argv[]) {
     while(token != NULL) {
 
       args[index] = token;
-      printf("Args[%d] = %s", index, token);
+      printf("Args[%d] = (%s)\n", index, token);
       index += 1;
 
       token = strtok(NULL, " \n");
     }
-    printf("---\n");
 
     pid_t pid = fork();
 
