@@ -46,11 +46,21 @@ int main(int argc, char *argv[]) {
 
     int index = 0;
 
-    //token = strtok(cBuffer, " \n");
-    token = strtok(cBuffer, " ");
+    token = strtok(cBuffer, " \n");
 
     if (token == NULL){break;}
 
+
+
+    do {
+
+      args[index] = token;
+      printf("Args[%d] = %s\n", index, token);
+      index += 1;
+
+      token = strtok(NULL, " \n");
+    } while(token != NULL);
+    /*
     while(token != NULL) {
 
       args[index] = token;
@@ -59,6 +69,9 @@ int main(int argc, char *argv[]) {
 
       token = strtok(NULL, " \n");
     }
+    */
+
+
 
     pid_t pid = fork();
     //***TODO
