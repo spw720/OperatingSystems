@@ -54,31 +54,38 @@ int main(int argc, char *argv[]) {
 
       token = strtok(NULL, " \n");
     }
+    
 
-    if (token != NULL){
+    pid_t pid = fork();
+    int status;
 
-      pid_t pid = fork();
-      int status;
+    if (pid < 0){
+      perror("fork");
+      exit(EXIT_FAILURE);
+    }
+    if (pid == 0){
+      printf("CHILD\n");
+      execvp(args[0], args);
+      exit(-1);
+    }
+    else {
+      printf("PARENT WAITING...\n");
+      waitpid(pid, &status, 0);
+    }
 
-      if (pid < 0){
-        perror("fork");
-        exit(EXIT_FAILURE);
-      }
-      if (pid == 0){
-        printf("CHILD\n");
-        execvp(args[0], args);
-        exit(-1);
-      }
-      else {
-        printf("PARENT WAITING...\n");
-        waitpid(pid, &status, 0);
-      }
-    }//end of if token not null
+
+    //char *args[]={command, comm[0], comm[1], comm[2], NULL};
+    //execvp(args[0], args);
 
   } while(!feof(input)); //end of do while(not end of file)
 
   free(cBuffer);
   fclose(input);
+
+
+
+
+
 
   return 0;
 
