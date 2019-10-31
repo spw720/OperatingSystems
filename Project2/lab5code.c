@@ -18,6 +18,8 @@ void handler(int signal, pid_t pid){
   }
 }
 
+signal(SIGUSR1, handler);
+
 void signaler(pid_t arr[5]){
   for (int i = 0; i < 5; i++) {
     kill(arr[i], SIGUSR1);
@@ -42,7 +44,7 @@ int main(int argc, char *argv[]) {
 
     else if (pid[i] == 0){
 
-      signal(SIGUSR1, handler);
+      //signal(SIGUSR1, handler);
 
       while(1) {
   			i++;
@@ -50,6 +52,7 @@ int main(int argc, char *argv[]) {
   			     printf("	Child Process: %i - Running infinite loop...\n", getpid());
              i=0;
   			}
+
   		}//end of inf loop
 
     }//end of if pid == 0
