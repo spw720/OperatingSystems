@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
       int argu = 0;
       while(1){
         if (args[argu] != NULL){
-          printf("Exec arg[%c] = [%s] \n", argu, args[argu]);
+          printf("Exec arg[%d] = [%s] \n", argu, args[argu]);
           argu += 1;
         }
         else{break;}
