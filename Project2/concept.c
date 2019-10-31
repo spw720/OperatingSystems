@@ -12,29 +12,28 @@
 
 int main(int argc, char *argv[]) {
 
-  FILE *fp;
-  int count = 0;
-  char c;
+  FILE *input = NULL;
+  char *cBuffer = NULL;
+  size_t bufferSize = 2048;
+	size_t inputSize = 0;
 
-  fp = fopen(argv[1], "r");
+  int num_lines = 0;
 
-  // Check if file exists
-  if (fp == NULL) {
-    printf("Could not open file\n");
-    return 0;
+  input = fopen(argv[1], "r");
+
+  cBuffer = (char *)malloc(bufferSize * sizeof(char));
+  if(cBuffer == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
+
+
+  while( (inputSize = getline(&cBuffer, &bufferSize, input) ) != -1){
+    num_lines += 1;
   }
 
-  // Extract characters from file and store in character c
-  for (c = getc(fp); c != EOF; c = getc(fp)){
-    if (c == '\n'){ // Increment count if this character is newline
-      count = count + 1;
-    }
-  }
-
-  printf("Number of lines in file: %d\n", count);
+  printf("NumLines: %d\n", num_lines);
 
   // Close the file
   fclose(fp);
+  free(cBuffer);
 
   //************************************************************
 /*
