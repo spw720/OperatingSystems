@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
   			i++;
   			if(i%10000) {
   			     printf("	Child Process: %i - Running infinite loop...\n", getpid());
-             i=0
+             i=0;
   			}
   		}//end of inf loop
 
