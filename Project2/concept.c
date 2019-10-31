@@ -77,8 +77,8 @@ int main(int argc, char *argv[]) {
       args[index] = token;
       index += 1;
 
-      token = strtok(NULL, " ");
       printf("Token2: [%s]\n", token);
+      token = strtok(NULL, " ");
     }
 
 
