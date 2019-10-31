@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
     int index = 0;
 
     token = strtok(buffy, " ");
-    printf("Token: [%s]\n", token);
+    //printf("Token1: [%s]\n", token);
 
     while(token != NULL) {
 
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
       index += 1;
 
       token = strtok(NULL, " ");
-      printf("Token: [%s]\n", token);
+      printf("Token2: [%s]\n", token);
     }
 
 
