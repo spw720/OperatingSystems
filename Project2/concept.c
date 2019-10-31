@@ -30,23 +30,33 @@ int main() {
     if (array[i] == 0){
 
       if(i == 0){
+        printf("Fire: ls\n");
         execvp(args0[0], args0);
+        printf("ERROR: ls\n");
         exit(-1);
       }
       else if(i == 1){
+        printf("Fire: sleep\n");
         execvp(args1[0], args1);
+        printf("ERROR: sleep\n");
         exit(-1);
       }
       else if(i == 2){
+        printf("Fire: invalid\n");
         execvp(args2[0], args2);
+        printf("ERROR: invalid\n");
         exit(-1);
       }
       else if(i == 3){
+        printf("Fire: iobound\n");
         execvp(args3[0], args3);
+        printf("ERROR: iobound\n");
         exit(-1);
       }
       else if(i == 4){
+        printf("Fire: cpubound\n");
         execvp(args4[0], args4);
+        printf("ERROR: cpubound\n");
         exit(-1);
       }
 
@@ -58,8 +68,8 @@ int main() {
   pid_t temp_p;
 
   while ((temp_p = wait(&status)) > 0){
-    //printf("Waiting for children...\n");
-    //sleep(1);
+    printf("Waiting for children [%d] ...\n", temp_p);
+    sleep(1);
   }
 
 
