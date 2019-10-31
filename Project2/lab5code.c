@@ -12,12 +12,26 @@
 #include <signal.h>
 
 void handler(int signal){
+
   pid_t pid = getpid();
-  printf("Child process: <%d> received signal: <%d>\n", pid, signal);
+  printf("Child process: <%i> received signal: <%d>\n", pid, signal);
+/*
+  if (signal == 0){
+    int sig;
+    sigset_t sigset;
+    int result = sigwait(&sigset, &sig);
+    if(result == 0){
+      printf("sigwait got signal: %d\n", sig);
+      kill(pid, SIGINT);
+    }
+  }
+*/
+  //if signal == 0: sigwait()
+  //else do sigaction? With passed in signal??
 
 }
 
-void signaler(pid_t arr[5]){
+void signaler(pid_t arr[5], int signal){
   for (int i = 0; i < 5; i++) {
     kill(arr[i], SIGUSR1);
   }
@@ -29,9 +43,10 @@ void signaler(pid_t arr[5]){
   }
 }//end of signaler
 
+
 int main(int argc, char *argv[]) {
 
-  signal(SIGUSR1, handler);
+  signal(SIGUSR1, &handler);
 
   pid_t pid[5];
 
@@ -42,6 +57,8 @@ int main(int argc, char *argv[]) {
     if (pid[i] < 0){perror("fork");exit(EXIT_FAILURE);}
 
     else if (pid[i] == 0){
+
+      kill(pid[i], SIGUSR1);
 
       while(1) {
   			printf("	Child Process: %i - Running infinite loop...\n", getpid());
