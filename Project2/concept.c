@@ -12,10 +12,10 @@
 
 int main(int argc, char *argv[]) {
 
-  FILE *input = NULL;
-  char *cBuffer = NULL;
+  FILE *input;
+  char *cBuffer;
   size_t bufferSize = 2048;
-	size_t inputSize = 0;
+	size_t inputSize;
 
   int num_lines = 0;
 
@@ -23,7 +23,6 @@ int main(int argc, char *argv[]) {
 
   cBuffer = (char *)malloc(bufferSize * sizeof(char));
   if(cBuffer == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
-
 
   while( (inputSize = getline(&cBuffer, &bufferSize, input) ) != -1){
     num_lines += 1;
@@ -34,6 +33,57 @@ int main(int argc, char *argv[]) {
   // Close the file
   fclose(input);
   free(cBuffer);
+
+  //***********************
+
+  pid_t array[num_lines];
+
+  FILE *fp;
+  char *buffy;
+	size_t file_size;
+  
+  char *token;
+
+  fp = fopen(argv[1], "r");
+
+  buffy = (char *)malloc(bufferSize * sizeof(char));
+  if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
+
+  int spaces = 0;
+  int tokens = 0;
+  int arguments = 0;
+
+  for (int line = 0; line < num_lines; line++) {
+
+    file_size = getline(&buffy, &bufferSize, fp);
+
+    for (int i = 0; i < file_size; i++) {
+      if (buffy[i] == ' '){spaces += 1;}
+    }
+
+    tokens = spaces + 1;
+    arguments = tokens - 1;
+
+    char *args[tokens+1];
+    args[tokens+1] = NULL;
+
+    token = strtok(buffy, " ");
+    printf("Token: %s\n", token);
+
+    while(token != NULL) {
+
+      args[index] = token;
+
+      token = strtok(NULL, " ");
+      printf("Token: %s\n", token);
+    }
+
+
+
+  }//end of for num lines
+
+  free(buffy);
+  fclose(fp);
 
   //************************************************************
 /*
