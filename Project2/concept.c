@@ -51,11 +51,11 @@ int main(int argc, char *argv[]) {
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
 
-  int spaces = 0;
-  int tokens = 0;
-  int arguments = 0;
-
   for (int line = 0; line < num_lines; line++) {
+
+    int spaces = 0;
+    int tokens = 0;
+    int arguments = 0;
 
     file_size = getline(&buffy, &bufferSize, fp);
 
