@@ -66,16 +66,6 @@ int main(int argc, char *argv[]) {
     //CHILD
     else if (pid == 0){
 
-      int argu = 0;
-      int flag = 1;
-      while(flag == 1){
-        if (args[argu] != NULL){
-          printf("Exec arg[%d] = [%s] \n", argu, args[argu]);
-          argu += 1;
-        }
-        else{flag = 0;}
-      }
-
       //free/close bc child process terminates here
       free(cBuffer);
       fclose(input);
