@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
   for (size_t i = 0; i < 5; i++) {
 
     pid[i] = fork();
-    kill(pid[i], SIGUSR1);
+    //kill(pid[i], SIGUSR1);
 
     if (pid[i] < 0){perror("fork");exit(EXIT_FAILURE);}
 
