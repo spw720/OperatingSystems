@@ -18,7 +18,7 @@ void handler(int signal){
 
   if (signal == 0){
     int sig;
-    sigset_t sigset;
+    sigset_t sigset = SIGUSR1;
     int result = sigwait(&sigset, &sig);
     if(result == 0){
       printf("sigwait got signal: %d\n", sig);
