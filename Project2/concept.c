@@ -78,6 +78,9 @@ int main(int argc, char *argv[]) {
       index += 1;
 
       printf("Token2: [%s]\n", token);
+      if (token[-1] == '\n'){
+        printf("Caught new line!\n");
+      }
       token = strtok(NULL, " ");
     }
 
