@@ -18,7 +18,7 @@ void handler(int signal){
 
   if (signal == 0){
     int sig;
-    sigset_t sigset = SIGUSR1;
+    sigset_t sigset;
     int result = sigwait(&sigset, &sig);
     if(result == 0){
       printf("sigwait got signal: %d\n", sig);
@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
 
   //}//end of for(range 5)
 
-  //signaler(pid);
+  signaler(pid);
 
   int status;
   pid_t temp_p;
