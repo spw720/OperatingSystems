@@ -10,7 +10,7 @@
 #include <sys/wait.h>
 
 
-int int main() {
+int main() {
 
   pid_t array[5];
 
