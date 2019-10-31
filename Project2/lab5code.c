@@ -61,6 +61,7 @@ int main(int argc, char *argv[]) {
     else if (pid == 0){
 
       kill(pid, SIGUSR1);
+      kill(pid, SIGUSR1);
 
       while(1) {
   			printf("	Child Process: %i - Running infinite loop...\n", getpid());
