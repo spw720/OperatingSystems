@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
     arguments = tokens - 1;
 
     char *args[tokens+1];
-    args[tokens+1] = NULL;
+    args[tokens] = NULL;
 
     int index = 0;
 
