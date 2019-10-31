@@ -66,15 +66,21 @@ int main() {
       }
       */
 
-      if(i == 1){
+      if(i == 0){
         printf("Fire: sleep\n");
         execvp(args9[0], args9);
         printf("ERROR: sleep\n");
         exit(-1);
       }
-      else if(i == 2){
+      else if(i == 1){
         printf("Fire: sleep\n");
         execvp(args8[0], args8);
+        printf("ERROR: sleep\n");
+        exit(-1);
+      }
+      else if(i == 2){
+        printf("Fire: sleep\n");
+        execvp(args7[0], args7);
         printf("ERROR: sleep\n");
         exit(-1);
       }
@@ -85,12 +91,6 @@ int main() {
         exit(-1);
       }
       else if(i == 4){
-        printf("Fire: sleep\n");
-        execvp(args7[0], args7);
-        printf("ERROR: sleep\n");
-        exit(-1);
-      }
-      else if(i == 5){
         printf("Fire: sleep\n");
         execvp(args7[0], args7);
         printf("ERROR: sleep\n");
