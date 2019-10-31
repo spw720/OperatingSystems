@@ -77,11 +77,11 @@ int main(int argc, char *argv[]) {
       args[index] = token;
       index += 1;
 
-      printf("Token1: [%s]\n", token);
+      printf("1: [%s]\n", token);
 
       int length = strlen(token);
       if (length > 0 && token[length - 1] == '\n') token[length-1] = '\0';
-      printf("Token1: [%s]\n", token);
+      printf("2: [%s]\n", token);
 
       token = strtok(NULL, " ");
     }
