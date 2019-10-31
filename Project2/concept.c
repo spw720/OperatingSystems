@@ -97,8 +97,8 @@ int main(int argc, char *argv[]) {
     //CHILD
     else if (child == 0){
       //free/close bc child process terminates here
-      free(buffy);
-      fclose(fp);
+      //free(buffy);
+      //fclose(fp);
 
       if (execvp(args[0], args) < 0){
         printf("*** ERROR: exec [%s] failed\n", args[0]);
