@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
   FILE *fp;
   char *buffy;
 	size_t file_size;
-  
+
   char *token;
 
   fp = fopen(argv[1], "r");
@@ -67,12 +67,15 @@ int main(int argc, char *argv[]) {
     char *args[tokens+1];
     args[tokens+1] = NULL;
 
+    int index = 0;
+
     token = strtok(buffy, " ");
     printf("Token: %s\n", token);
 
     while(token != NULL) {
 
       args[index] = token;
+      index += 1;
 
       token = strtok(NULL, " ");
       printf("Token: %s\n", token);
