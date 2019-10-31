@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
 
   }//end of for(range 5)
 
-  signaler(pid);
+  //signaler(pid);
 
   int status;
   pid_t temp_p;
