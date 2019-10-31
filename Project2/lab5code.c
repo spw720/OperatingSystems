@@ -11,14 +11,11 @@
 
 #include <signal.h>
 
-void handler(int signal, pid_t pid){
-  if (signal == SIGUSR1){
-    printf("Child process: <%d> received signal: <%d>\n", pid, signal);
-    //sigwait()?
-  }
-}
+void handler(int signal){
+  pid_t pid = getpid();
+  printf("Child process: <%d> received signal: <%d>\n", pid, signal);
 
-signal(SIGUSR1, handler);
+}
 
 void signaler(pid_t arr[5]){
   for (int i = 0; i < 5; i++) {
@@ -30,9 +27,11 @@ void signaler(pid_t arr[5]){
   for (int j = 0; j < 5; j++) {
     kill(arr[j], SIGINT);
   }
-}
+}//end of signaler
 
 int main(int argc, char *argv[]) {
+
+  signal(SIGUSR1, handler);
 
   pid_t pid[5];
 
@@ -44,16 +43,10 @@ int main(int argc, char *argv[]) {
 
     else if (pid[i] == 0){
 
-      //signal(SIGUSR1, handler);
-
       while(1) {
-  			i++;
-  			if(i%10000) {
-  			     printf("	Child Process: %i - Running infinite loop...\n", getpid());
-             i=0;
-  			}
-
-  		}//end of inf loop
+  			printf("	Child Process: %i - Running infinite loop...\n", getpid());
+        sleep(1);
+  		}
 
     }//end of if pid == 0
 
