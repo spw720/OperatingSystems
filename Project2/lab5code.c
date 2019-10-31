@@ -15,7 +15,7 @@ void handler(int signal){
 
   pid_t pid = getpid();
   printf("Child process: <%i> received signal: <%d>\n", pid, signal);
-/*
+
   if (signal == 0){
     int sig;
     sigset_t sigset;
@@ -25,7 +25,7 @@ void handler(int signal){
       kill(pid, SIGINT);
     }
   }
-*/
+
   //if signal == 0: sigwait()
   //else do sigaction? With passed in signal??
 
