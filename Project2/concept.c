@@ -67,10 +67,7 @@ int main() {
   int status;
   pid_t temp_p;
 
-  while ((temp_p = wait(&status)) > 0){
-    printf("Waiting for children [%d] ...\n", temp_p);
-    sleep(1);
-  }
+  while ((temp_p = wait(&status)) > 0){}
 
 
 
