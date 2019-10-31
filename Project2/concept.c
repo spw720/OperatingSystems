@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
 
   }//end of for num lines
 
-/*
+
   int status;
   pid_t temp_p;
 
@@ -123,7 +123,10 @@ int main(int argc, char *argv[]) {
 
   free(buffy);
   fclose(fp);
-*/
+
+  return 0;
+}//end of main()
+
   //************************************************************
 /*
   pid_t array[5];
@@ -192,6 +195,3 @@ int main(int argc, char *argv[]) {
   //  waitpid(array[j], &status, 0);
   //}
 */
-
-  return 0;
-}//end of main()
