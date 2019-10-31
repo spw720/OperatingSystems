@@ -77,10 +77,12 @@ int main(int argc, char *argv[]) {
       args[index] = token;
       index += 1;
 
-      printf("Token2: [%s]\n", token);
-      if (token[-1] == '\n'){
-        printf("Caught new line!\n");
-      }
+      printf("Token1: [%s]\n", token);
+
+      int length = strlen(token);
+      if (length > 0 && token[length - 1] == '\n') token[length-1] = '\0';
+      printf("Token1: [%s]\n", token);
+
       token = strtok(NULL, " ");
     }
 
