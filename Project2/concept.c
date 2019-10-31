@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
       //fclose(fp);
 
       if (execvp(args[0], args) < 0){
-        printf("*** ERROR: exec [%s] failed\n", args[0]);
+        perror("Exec");
         exit(-1);
       }
     }//end of if pid==0
