@@ -48,18 +48,19 @@ int main(int argc, char *argv[]) {
 
   signal(SIGUSR1, &handler);
 
-  pid_t pid[5];
+  //pid_t pid[5];
+  pid_t pid;
 
-  for (size_t i = 0; i < 5; i++) {
+  //for (size_t i = 0; i < 5; i++) {
 
-    pid[i] = fork();
+    pid = fork();
     //kill(pid[i], SIGUSR1);
 
-    if (pid[i] < 0){perror("fork");exit(EXIT_FAILURE);}
+    if (pid < 0){perror("fork");exit(EXIT_FAILURE);}
 
-    else if (pid[i] == 0){
+    else if (pid == 0){
 
-      kill(pid[i], SIGUSR1);
+      kill(pid, SIGUSR1);
 
       while(1) {
   			printf("	Child Process: %i - Running infinite loop...\n", getpid());
@@ -68,7 +69,7 @@ int main(int argc, char *argv[]) {
 
     }//end of if pid == 0
 
-  }//end of for(range 5)
+  //}//end of for(range 5)
 
   //signaler(pid);
 
