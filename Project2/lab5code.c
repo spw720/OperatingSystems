@@ -31,7 +31,11 @@ void handler(int signal){
 
 }
 
-void signaler(pid_t arr[5]){
+void signaler(pid_t arr){
+  kill(arr, SIGUSR1);
+  kill(arr, SIGUSR1);
+  kill(arr, SIGINT);
+  /*
   for (int i = 0; i < 5; i++) {
     kill(arr[i], SIGUSR1);
   }
@@ -41,6 +45,7 @@ void signaler(pid_t arr[5]){
   for (int j = 0; j < 5; j++) {
     kill(arr[j], SIGINT);
   }
+  */
 }//end of signaler
 
 
