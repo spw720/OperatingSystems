@@ -67,9 +67,11 @@ int main() {
   int status;
   pid_t temp_p;
 
-  while ((temp_p = wait(&status)) > 0){}
+  //while ((temp_p = wait(&status)) > 0){}
 
-
+  for (int j = 0; j < 5; j++) {
+    waitpid(array[j], &status, 0);
+  }
 
   return 0;
 }
