@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
   printf("NumLines: %d\n", num_lines);
 
   // Close the file
-  fclose(fp);
+  fclose(input);
   free(cBuffer);
 
   //************************************************************
