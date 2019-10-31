@@ -10,8 +10,34 @@
 #include <sys/wait.h>
 
 
-int main() {
+int main(int argc, char *argv[]) {
 
+  FILE *fp;
+  int count = 0;
+  char c;
+
+  fp = fopen(argv[1], "r");
+
+  // Check if file exists
+  if (fp == NULL) {
+    printf("Could not open file %s", filename);
+    return 0;
+  }
+
+  // Extract characters from file and store in character c
+  for (c = getc(fp); c != EOF; c = getc(fp)){
+    if (c == '\n'){ // Increment count if this character is newline
+      count = count + 1;
+    }
+  }
+
+  printf("Number of lines in file: %d\n", count);
+
+  // Close the file
+  fclose(fp);
+
+  //************************************************************
+/*
   pid_t array[5];
 
   char *args0[] = {"ls", "-a", "-r", "-s", NULL};
@@ -32,7 +58,7 @@ int main() {
       printf("FORK ERROR\n");
     }
     if (array[i] == 0){
-      
+
       if(i == 0){
         printf("Fire: ls\n");
         execvp(args0[0], args0);
@@ -65,39 +91,6 @@ int main() {
         exit(-1);
       }
 
-      /*
-      if(i == 0){
-        printf("Fire: sleep\n");
-        execvp(args9[0], args9);
-        printf("ERROR: sleep\n");
-        exit(-1);
-      }
-      else if(i == 1){
-        printf("Fire: sleep\n");
-        execvp(args8[0], args8);
-        printf("ERROR: sleep\n");
-        exit(-1);
-      }
-      else if(i == 2){
-        printf("Fire: sleep\n");
-        execvp(args7[0], args7);
-        printf("ERROR: sleep\n");
-        exit(-1);
-      }
-      else if(i == 3){
-        printf("Fire: sleep\n");
-        execvp(args7[0], args7);
-        printf("ERROR: sleep\n");
-        exit(-1);
-      }
-      else if(i == 4){
-        printf("Fire: sleep\n");
-        execvp(args7[0], args7);
-        printf("ERROR: sleep\n");
-        exit(-1);
-      }
-      */
-
     }//end of if pid==0
 
   }//end of for(numprograms)
@@ -105,11 +98,12 @@ int main() {
   int status;
   pid_t temp_p;
 
-  while ((temp_p = wait(&status)) > 0){}
+  while ( (temp_p = wait(&status) ) > 0){}
 
   //for (int j = 0; j < 5; j++) {
   //  waitpid(array[j], &status, 0);
   //}
+*/
 
   return 0;
-}
+}//end of main()
