@@ -65,9 +65,6 @@ int main(int argc, char *argv[]) {
     }
     //CHILD
     else if (pid == 0){
-      //free/close bc child process terminates here
-      free(cBuffer);
-      fclose(input);
 
       int argu = 0;
       while(1){
@@ -77,6 +74,10 @@ int main(int argc, char *argv[]) {
         }
         else{break;}
       }
+
+      //free/close bc child process terminates here
+      free(cBuffer);
+      fclose(input);
 
       if (execvp(args[0], args) < 0){
         printf("*** ERROR: exec [%s] failed\n", args[0]);
