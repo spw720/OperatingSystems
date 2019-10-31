@@ -1,4 +1,4 @@
-//#define _GNU_SOURCE
+#define _GNU_SOURCE
 
 #include<fcntl.h>
 #include <stdio.h>
@@ -79,7 +79,6 @@ int main(int argc, char *argv[]) {
       //printf("1: [%s]\n", token);
       int length = strlen(token);
       if (length > 0 && token[length - 1] == '\n') token[length-1] = '\0';
-      printf("2: [%s]\n", token);
 
       args[index] = token;
       printf("args[%d] = [%s]\n", index, token);
@@ -97,21 +96,17 @@ int main(int argc, char *argv[]) {
     }
     //CHILD
     else if (child == 0){
-
       //free/close bc child process terminates here
       free(buffy);
       fclose(fp);
 
       if (execvp(args[0], args) < 0){
         printf("*** ERROR: exec [%s] failed\n", args[0]);
-
         exit(-1);
       }
     }//end of if pid==0
 
-
   }//end of for num lines
-
 
   int status;
   pid_t temp_p;
