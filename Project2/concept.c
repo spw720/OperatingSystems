@@ -32,7 +32,7 @@ int main() {
       printf("FORK ERROR\n");
     }
     if (array[i] == 0){
-      /*
+      
       if(i == 0){
         printf("Fire: ls\n");
         execvp(args0[0], args0);
@@ -64,8 +64,8 @@ int main() {
         printf("ERROR: cpubound\n");
         exit(-1);
       }
-      */
 
+      /*
       if(i == 0){
         printf("Fire: sleep\n");
         execvp(args9[0], args9);
@@ -96,6 +96,7 @@ int main() {
         printf("ERROR: sleep\n");
         exit(-1);
       }
+      */
 
     }//end of if pid==0
 
@@ -104,11 +105,11 @@ int main() {
   int status;
   pid_t temp_p;
 
-  //while ((temp_p = wait(&status)) > 0){}
+  while ((temp_p = wait(&status)) > 0){}
 
-  for (int j = 0; j < 5; j++) {
-    waitpid(array[j], &status, 0);
-  }
+  //for (int j = 0; j < 5; j++) {
+  //  waitpid(array[j], &status, 0);
+  //}
 
   return 0;
 }
