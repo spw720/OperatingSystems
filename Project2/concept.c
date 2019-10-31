@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 
   // Check if file exists
   if (fp == NULL) {
-    printf("Could not open file %s", filename);
+    printf("Could not open file\n");
     return 0;
   }
 
