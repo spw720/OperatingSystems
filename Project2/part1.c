@@ -51,7 +51,6 @@ int main(int argc, char *argv[]) {
     while(token != NULL) {
 
       args[index] = token;
-      printf("Args[%d] = (%s)\n", index, token);
       index += 1;
 
       token = strtok(NULL, " \n");
@@ -70,7 +69,14 @@ int main(int argc, char *argv[]) {
       free(cBuffer);
       fclose(input);
 
-      //printf("Fire! %s %s\n", args[0], args[1]);
+      int argu = 0;
+      while(1){
+        if (args[argu] != NULL){
+          printf("Exec arg[%c] = [%s] \n", argu, args[argu]);
+          argu += 1;
+        }
+        else{break;}
+      }
 
       if (execvp(args[0], args) < 0){
         printf("*** ERROR: exec [%s] failed\n", args[0]);
