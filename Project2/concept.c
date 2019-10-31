@@ -44,6 +44,8 @@ int main(int argc, char *argv[]) {
 
   char *token;
 
+  pid_t child;
+
   fp = fopen(argv[1], "r");
 
   buffy = (char *)malloc(bufferSize * sizeof(char));
@@ -74,25 +76,54 @@ int main(int argc, char *argv[]) {
 
     while(token != NULL) {
 
-      args[index] = token;
-      index += 1;
-
       printf("1: [%s]\n", token);
-
       int length = strlen(token);
       if (length > 0 && token[length - 1] == '\n') token[length-1] = '\0';
       printf("2: [%s]\n", token);
 
+      args[index] = token;
+      printf("args[%d] = [%s]\n", index, token);
+      index += 1;
+
       token = strtok(NULL, " ");
+
     }
+/*
+    child = fork();
 
+    if (child < 0){
+      perror("fork");
+      exit(EXIT_FAILURE);
+    }
+    //CHILD
+    else if (child == 0){
 
+      //free/close bc child process terminates here
+      free(buffy);
+      fclose(fp);
+
+      if (execvp(args[0], args) < 0){
+        printf("*** ERROR: exec [%s] failed\n", args[0]);
+
+        exit(-1);
+      }
+    }//end of if pid==0
+*/
 
   }//end of for num lines
 
+/*
+  int status;
+  pid_t temp_p;
+
+  while ((temp_p = wait(&status)) > 0){
+    printf("Waiting for children...\n");
+    sleep(1);
+  }
+
   free(buffy);
   fclose(fp);
-
+*/
   //************************************************************
 /*
   pid_t array[5];
