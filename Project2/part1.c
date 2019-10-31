@@ -67,12 +67,13 @@ int main(int argc, char *argv[]) {
     else if (pid == 0){
 
       int argu = 0;
-      while(1){
+      int flag = 1;
+      while(flag == 1){
         if (args[argu] != NULL){
           printf("Exec arg[%d] = [%s] \n", argu, args[argu]);
           argu += 1;
         }
-        else{break;}
+        else{flag = 0;}
       }
 
       //free/close bc child process terminates here
