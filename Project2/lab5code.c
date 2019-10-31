@@ -11,7 +11,7 @@
 
 #include <signal.h>
 
-void handler(int signal, pid_t pid){]
+void handler(int signal, pid_t pid){
   if (signal == SIGUSR1){
     printf("Child process: <%d> received signal: <%d>\n", pid, signal);
     //sigwait()?
