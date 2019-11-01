@@ -123,6 +123,8 @@ int main(int argc, char *argv[]) {
         sleep(1);
       }
 
+      printf("Executing\n");
+
       if (execvp(args[0], args) < 0){
         perror("Exec");
         exit(-1);
@@ -136,6 +138,7 @@ int main(int argc, char *argv[]) {
     printf("1: Sending SIGUSR1 to pid[%d]\n", pid_array[i]);
     kill(pid_array[i], SIGUSR1);
   }
+  sleep(5);
   for (size_t j = 0; j < num_lines; j++) {
     printf("2: Sending SIGUSR1 to pid[%d]\n", pid_array[j]);
     kill(pid_array[j], SIGUSR1);
