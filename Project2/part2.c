@@ -133,8 +133,12 @@ int main(int argc, char *argv[]) {
   }//end of for num lines
 
   for (size_t i = 0; i < num_lines; i++) {
-    printf("Sending SIGUSR1 to pid[%d]\n", pid_array[i]);
+    printf("1: Sending SIGUSR1 to pid[%d]\n", pid_array[i]);
     kill(pid_array[i], SIGUSR1);
+  }
+  for (size_t j = 0; j < num_lines; j++) {
+    printf("2: Sending SIGUSR1 to pid[%d]\n", pid_array[j]);
+    kill(pid_array[j], SIGUSR1);
   }
 
   int status;
