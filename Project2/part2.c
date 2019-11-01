@@ -9,8 +9,17 @@
 #include <ctype.h>
 #include <sys/wait.h>
 
+void handler(int signal){
+
+  printf("Child process: <%d> received signal: <%d>\n", getpid(), signal);
+  //write(STDOUT_FILENO, "Child received signal!\n", strlen("Child received signal!\n"));
+}
 
 int main(int argc, char *argv[]) {
+
+  struct sigaction sa;
+  sa.sa_handler = handler;
+  sigaction(SIGUSR1, &sa, NULL);
 
   FILE *input;
   char *cBuffer;
