@@ -109,6 +109,7 @@ int main(int argc, char *argv[]) {
       int result = sigwait(&sigset, &sig);
 
       while(result != 0){
+        printf("Waiting on SIGUSR1 for pid[%d]\n", getpid());
         result = sigwait(&sigset, &sig);
         sleep(1);
       }
@@ -123,6 +124,7 @@ int main(int argc, char *argv[]) {
   }//end of for num lines
 
   for (size_t i = 0; i < num_lines; i++) {
+    printf("Sending SIGUSR1 to pid[%d]\n", pid_array[i]);
     kill(pid_array[i], SIGUSR1);
   }
 
