@@ -26,6 +26,7 @@ void signaler(pid_t arr[]){
   for (int x = 0; x < 5; x++) {
     kill(arr[x], SIGUSR1);
   }
+  sleep(5);
   for (int j = 0; j < 5; j++) {
     kill(arr[j], SIGINT);
   }
