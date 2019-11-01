@@ -63,7 +63,7 @@ int main() {
 
   }//end of for(range 5)
 
-  sleep(5);
+  //sleep(5);
   printf("Parent executing signaler\n");
   signaler(pid);
 
