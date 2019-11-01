@@ -18,30 +18,21 @@ void handler(int signal){
 
 }
 
-void signaler(pid_t arr[]){
+void signaler(pid_t arr[], int signal){
 
   for (int i = 0; i < 5; i++) {
-    kill(arr[i], SIGUSR1);
-  }
-  for (int x = 0; x < 5; x++) {
-    kill(arr[x], SIGUSR1);
-  }
-  sleep(5);
-  for (int j = 0; j < 5; j++) {
-    kill(arr[j], SIGINT);
+    kill(arr[i], signal);
   }
 
 }//end of signaler
 
+//---------------------------------------------------------------------------
 
 int main() {
 
   struct sigaction sa;
   sa.sa_handler = handler;
-
   sigaction(SIGUSR1, &sa, NULL);
-
-  //signal(SIGUSR1, handler);
 
   pid_t pid[5];
   //pid_t pid;
@@ -49,24 +40,29 @@ int main() {
   for (size_t i = 0; i < 5; i++) {
 
     pid[i] = fork();
-    //kill(pid[i], SIGUSR1);
 
     if (pid[i] < 0){perror("fork");exit(EXIT_FAILURE);}
 
     else if (pid[i] == 0){
 
-      while(1) {
-  			printf("Child Process: %i - Running infinite loop...\n", getpid());
-        sleep(1);
-  		}
+    while(1) {
+			printf("Child Process: %i - Running infinite loop...\n", getpid());
+      sleep(1);
+		}
 
     }//end of if pid == 0
 
   }//end of for(range 5)
 
   //sleep(5);
-  printf("Parent executing signaler\n");
-  signaler(pid);
+
+  printf("Fire one!\n");
+  signaler(pid, SIGUSR1);
+  printf("Fire two!\n");
+  signaler(pid, SIGUSR1);
+  sleep(5);
+  printf("Fire SIGINT!\n");
+  signaler(pid, SIGINT);
 
   int status;
   pid_t temp_p;
