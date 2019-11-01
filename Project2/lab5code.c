@@ -15,6 +15,7 @@ void handler(int signal){
 
   //printf("Child process: <%d> received signal: <%d>\n", getpid(), signal);
   write(STDOUT_FILENO, "Child received signal!\n", strlen("Child received signal!\n"));
+  sleep(1);
 
 }
 
@@ -36,6 +37,8 @@ void signaler(pid_t arr[]){
 int main() {
 
   signal(SIGUSR1, handler);
+
+  write(STDOUT_FILENO, "test\n", strlen("test\n"));
 
   pid_t pid[5];
   //pid_t pid;
