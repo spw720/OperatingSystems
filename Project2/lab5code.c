@@ -26,9 +26,9 @@ void signaler(pid_t arr[]){
   for (int x = 0; x < 5; x++) {
     kill(arr[x], SIGUSR1);
   }
-  //for (int j = 0; j < 5; j++) {
-  //  kill(arr[j], SIGINT);
-  //}
+  for (int j = 0; j < 5; j++) {
+    kill(arr[j], SIGINT);
+  }
 
 }//end of signaler
 
@@ -55,7 +55,7 @@ int main() {
     else if (pid[i] == 0){
 
       while(1) {
-  			printf("	Child Process: %i - Running infinite loop...\n", getpid());
+  			printf("Child Process: %i - Running infinite loop...\n", getpid());
         sleep(1);
   		}
 
