@@ -15,6 +15,18 @@ void handler(int signal){
   //write(STDOUT_FILENO, "Child received signal!\n", strlen("Child received signal!\n"));
 }
 
+//-----------------------------------------------------------------------------
+
+void signaler(pid_t arr[], int signal){
+
+  for (int i = 0; i < 5; i++) {
+    kill(arr[i], signal);
+  }
+
+}//end of signaler
+
+//-----------------------------------------------------------------------------
+
 int main(int argc, char *argv[]) {
 
   struct sigaction sa;
@@ -134,6 +146,10 @@ int main(int argc, char *argv[]) {
 
   }//end of for num lines
 
+  // signaler(pid_array, SIGUSR1);
+  // sleep(5);
+  // signaler(pid_array, SIGUSR1);
+
   for (size_t i = 0; i < num_lines; i++) {
     printf("Fire 1: Sending SIGUSR1 to pid[%d]\n", pid_array[i]);
     kill(pid_array[i], SIGUSR1);
@@ -145,6 +161,7 @@ int main(int argc, char *argv[]) {
     printf("Fire 2: Sending SIGUSR1 to pid[%d]\n", pid_array[j]);
     kill(pid_array[j], SIGUSR1);
   }
+
 
   int status;
   pid_t temp_p;
