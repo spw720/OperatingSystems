@@ -27,18 +27,21 @@ void signaler(pid_t arr[]){
   for (int x = 0; x < 5; x++) {
     kill(arr[x], SIGUSR1);
   }
-  for (int j = 0; j < 5; j++) {
-    kill(arr[j], SIGINT);
-  }
+  //for (int j = 0; j < 5; j++) {
+  //  kill(arr[j], SIGINT);
+  //}
 
 }//end of signaler
 
 
 int main() {
 
-  signal(SIGUSR1, handler);
+  struct sigaction sa;
+  sa.sa_handler = handler;
 
-  write(STDOUT_FILENO, "test\n", strlen("test\n"));
+  sigaction(SIGUSR1, &sa, NULL);
+
+  //signal(SIGUSR1, handler);
 
   pid_t pid[5];
   //pid_t pid;
