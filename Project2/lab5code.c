@@ -49,12 +49,16 @@ int main() {
     else if (pid[i] == 0){
 
       sigset_t sigset;
-      sigemptyset(&sigset);
-      sigaddset(&sigset, SIGUSR1);
-      sigprocmask(SIG_BLOCK, &sigset, NULL);
 
+      sigemptyset(&sigset);
+
+      sigaddset(&sigset, SIGUSR1);
+
+      sigprocmask(SIG_BLOCK, &sigset, NULL);
+      
       int sig;
       int result = sigwait(&sigset, &sig);
+
       if(result == 0){
 
         while(1) {
@@ -74,16 +78,6 @@ int main() {
   sleep(5);
 
   printf("Fire two!\n");
-  signaler(pid, SIGUSR1);
-
-  sleep(5);
-
-  printf("Fire three!\n");
-  signaler(pid, SIGUSR1);
-
-  sleep(5);
-
-  printf("Fire four!\n");
   signaler(pid, SIGUSR1);
 
   sleep(5);
