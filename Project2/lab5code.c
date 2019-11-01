@@ -74,6 +74,8 @@ int main() {
   printf("Fire one!\n");
   signaler(pid, SIGUSR1);
 
+  sleep(5);
+
   printf("Fire two!\n");
   signaler(pid, SIGUSR1);
 
