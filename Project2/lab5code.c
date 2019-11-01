@@ -15,8 +15,8 @@
 
 void handler(int signal){
 
-  //printf("Child process: <%d> received signal: <%d>\n", getpid(), signal);
-  write(STDOUT_FILENO, "Child received signal!\n", strlen("Child received signal!\n"));
+  printf("Child process: <%d> received signal: <%d>\n", getpid(), signal);
+  //write(STDOUT_FILENO, "Child received signal!\n", strlen("Child received signal!\n"));
 }
 
 //---------------------------------------------------------------------------
