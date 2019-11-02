@@ -162,10 +162,27 @@ int main(int argc, char *argv[]) {
     kill(pid_array[j], SIGUSR1);
   }
 
+  sleep(2);
+
+  for (size_t i = 0; i < num_lines; i++) {
+    printf("Fire 3: Sending SIGSTOP to pid[%d]\n", pid_array[i]);
+    kill(pid_array[i], SIGSTOP);
+  }
+
+  sleep(1);
+  printf("\npid[%d] paused execution...\n\n", pid_array[j]);
+  sleep(1);
+
+  for (size_t j = 0; j < num_lines; j++) {
+    printf("Fire 4: Sending SIGCONT to pid[%d]\n", pid_array[j]);
+    kill(pid_array[j], SIGCONT);
+  }
+
 
   int status;
   pid_t temp_p;
 
+  //May need to change to waitpid(...,...,0)
   while ((temp_p = wait(&status)) > 0){
     printf("Waiting for children...\n");
     sleep(1);
