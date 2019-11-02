@@ -135,11 +135,15 @@ int main(int argc, char *argv[]) {
         sleep(1);
       }
 
-      printf("Executing pid[%d]\n", getpid());
+      //printf("Executing pid[%d]\n", getpid());
 
-      if (execvp(args[0], args) < 0){
-        perror("Exec");
-        exit(-1);
+      // if (execvp(args[0], args) < 0){
+      //   perror("Exec");
+      //   exit(-1);
+      // }
+      while (1) {
+        printf("Executing pid[%d]\n", getpid());
+        sleep(1);
       }
 
     }//end of if pid==0
