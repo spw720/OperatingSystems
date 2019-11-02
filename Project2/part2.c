@@ -170,7 +170,9 @@ int main(int argc, char *argv[]) {
   }
 
   sleep(1);
-  printf("\npid[%d] paused execution...\n\n", pid_array[j]);
+  for (size_t i = 0; i < num_lines; i++) {
+    printf("\npid[%d] paused execution...\n\n", pid_array[i]);
+  }
   sleep(1);
 
   for (size_t j = 0; j < num_lines; j++) {
