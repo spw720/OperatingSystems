@@ -55,6 +55,18 @@ int main(void)
     printf("SIGCONT\n");
     kill(pid, SIGCONT);
     sleep(1);
+    printf("SIGSTOP\n");
+    kill(pid, SIGSTOP);
+    sleep(3);
+    printf("SIGCONT\n");
+    kill(pid, SIGCONT);
+    sleep(1);
+    printf("SIGSTOP\n");
+    kill(pid, SIGSTOP);
+    sleep(3);
+    printf("SIGCONT\n");
+    kill(pid, SIGCONT);
+    sleep(1);
 
 
 
