@@ -9,10 +9,19 @@
 #include <ctype.h>
 #include <sys/wait.h>
 
+int pid_pool[10] = [0,0,0,0,0,0,0,0,0,0];
+
 void handler(int signal){
 
   printf("Child process: <%d> received signal: <%d>\n", getpid(), signal);
   //write(STDOUT_FILENO, "Child received signal!\n", strlen("Child received signal!\n"));
+}
+
+void alarm_handler(int signal){
+
+  printf("Alarm signal received\n");
+  //WANT TO STOP CURRENT PID AND START NEXT PID USING SIGSTOP/SIGCONT
+
 }
 
 //-----------------------------------------------------------------------------
@@ -118,22 +127,6 @@ int main(int argc, char *argv[]) {
     }
     //CHILD
     else if (child == 0){
-      //free/close bc child process terminates here?
-      //free(buffy);
-      //fclose(fp);
-
-      sigset_t sigset;
-      sigemptyset(&sigset);
-      sigaddset(&sigset, SIGUSR1);
-      sigprocmask(SIG_BLOCK, &sigset, NULL);
-      int sig;
-      int result = sigwait(&sigset, &sig);
-
-      while(result != 0){
-        printf("Waiting on SIGUSR1 for pid[%d]\n", getpid());
-        result = sigwait(&sigset, &sig);
-        sleep(1);
-      }
 
       printf("Executing pid[%d]\n", getpid());
 
@@ -146,39 +139,6 @@ int main(int argc, char *argv[]) {
 
   }//end of for num lines
 
-  // signaler(pid_array, SIGUSR1);
-  // sleep(5);
-  // signaler(pid_array, SIGUSR1);
-
-  for (size_t i = 0; i < num_lines; i++) {
-    printf("Fire 1: Sending SIGUSR1 to pid[%d]\n", pid_array[i]);
-    kill(pid_array[i], SIGUSR1);
-  }
-
-  sleep(5);
-
-  for (size_t j = 0; j < num_lines; j++) {
-    printf("Fire 2: Sending SIGUSR1 to pid[%d]\n", pid_array[j]);
-    kill(pid_array[j], SIGUSR1);
-  }
-
-  sleep(2);
-
-  for (size_t i = 0; i < num_lines; i++) {
-    printf("Fire 3: Sending SIGSTOP to pid[%d]\n", pid_array[i]);
-    kill(pid_array[i], SIGSTOP);
-  }
-
-  sleep(1);
-  for (size_t i = 0; i < num_lines; i++) {
-    printf("\npid[%d] paused execution...\n\n", pid_array[i]);
-  }
-  sleep(1);
-
-  for (size_t j = 0; j < num_lines; j++) {
-    printf("Fire 4: Sending SIGCONT to pid[%d]\n", pid_array[j]);
-    kill(pid_array[j], SIGCONT);
-  }
 
   int status;
   pid_t temp_p;
