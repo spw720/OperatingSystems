@@ -9,7 +9,7 @@
 #include <ctype.h>
 #include <sys/wait.h>
 
-int pid_pool[10] = [0,0,0,0,0,0,0,0,0,0];
+int pid_pool[10] = {0,0,0,0,0,0,0,0,0,0};
 
 void handler(int signal){
 
