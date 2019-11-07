@@ -31,7 +31,7 @@ void alarm_handler(int signal){
   }
 
   printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
-  kill(pid_pool[running_child], SIGCONT]);
+  kill(pid_pool[running_child], SIGCONT);
 
   if(running_child + 1 > pool_index ){
     running_child = 0;
