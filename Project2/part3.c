@@ -9,20 +9,24 @@
 #include <ctype.h>
 #include <sys/wait.h>
 
-//int pid_pool[10] = {0,0,0,0,0,0,0,0,0,0};
+int pid_pool[10] = {0,0,0,0,0,0,0,0,0,0};
+int pool_index = 0;
 
 void handler(int signal){
 
   printf("Child process: <%d> received signal: <%d>\n", getpid(), signal);
   //write(STDOUT_FILENO, "Child received signal!\n", strlen("Child received signal!\n"));
-}
+
+}//end of handler()
+
+//-----------------------------------------------------------------------------
 
 void alarm_handler(int signal){
 
   printf("Alarm signal received\n");
   //WANT TO STOP CURRENT PID AND START NEXT PID USING SIGSTOP/SIGCONT
 
-}
+}//end of alarm_handler()
 
 //-----------------------------------------------------------------------------
 
@@ -121,6 +125,10 @@ int main(int argc, char *argv[]) {
     child = fork();
     pid_array[line] = child;
 
+    //set global pool
+    pid_pool[pool_index] = child;
+    pool_index += 1;
+
     if (child < 0){
       perror("fork");
       exit(EXIT_FAILURE);
@@ -138,6 +146,10 @@ int main(int argc, char *argv[]) {
     }//end of if pid==0
 
   }//end of for num lines
+
+  for (size_t i = 0; i < 10; i++) {
+    printf("PID_POOL[%d] = [%d]\n", i, pid_pool[i]);
+  }
 
 
   int status;
