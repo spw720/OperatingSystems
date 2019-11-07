@@ -178,10 +178,10 @@ int main(int argc, char *argv[]) {
   }//end of for num lines
 
   //Checking global pid_pool to make sure we all good
-  for (size_t i = 0; i < 10; i++) {
-    printf("PID_POOL[%d] = [%d]\n", i, pid_pool[i]);
-  }
-  printf("Number of processes is: [%d]\n", pool_index);
+  // for (size_t i = 0; i < 10; i++) {
+  //   printf("PID_POOL[%d] = [%d]\n", i, pid_pool[i]);
+  // }
+  // printf("Number of processes is: [%d]\n", pool_index);
   //Checking global pid_pool to make sure we all good
 
   printf("Parent sending alarm signal...\n");
