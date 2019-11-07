@@ -49,30 +49,21 @@ int main(void)
 
     sleep(1);
 
-    printf("SIGSTOP\n");
-    kill(pid, SIGSTOP);
-    sleep(3);
-    printf("SIGCONT\n");
-    kill(pid, SIGCONT);
-    sleep(1);
-    printf("SIGSTOP\n");
-    kill(pid, SIGSTOP);
-    sleep(3);
-    printf("SIGCONT\n");
-    kill(pid, SIGCONT);
-    sleep(1);
-    printf("SIGSTOP\n");
-    kill(pid, SIGSTOP);
-    sleep(3);
-    printf("SIGCONT\n");
-    kill(pid, SIGCONT);
-    sleep(1);
+    while (w = waitpid(pid, &wstatus, WNOHANG) == 0){
+      printf("SIGSTOP\n");
+      kill(pid, SIGSTOP);
+      sleep(3);
+      printf("SIGCONT\n");
+      kill(pid, SIGCONT);
+      sleep(1);
+    }
 
 
 
-    printf("Parent process: %d - Waiting for child to complete...\n", getpid());
-    w = waitpid(pid, &wstatus, 0);
-    printf("Parent process: %d - Finished\n", getpid());
+
+    //printf("Parent process: %d - Waiting for child to complete...\n", getpid());
+    //w = waitpid(pid, &wstatus, 0);
+    //printf("Parent process: %d - Finished\n", getpid());
   }
 
   //exit out of program
