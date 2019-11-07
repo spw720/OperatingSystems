@@ -11,6 +11,7 @@
 
 int pid_pool[10] = {0,0,0,0,0,0,0,0,0,0};
 int pool_index = 0;
+int running_child = 0;
 
 void handler(int signal){
 
@@ -24,7 +25,20 @@ void handler(int signal){
 void alarm_handler(int signal){
 
   printf("Alarm signal received\n");
-  //WANT TO STOP CURRENT PID AND START NEXT PID USING SIGSTOP/SIGCONT
+  for (size_t i = 0; i < pool_index; i++) {
+    printf("ALARM: stopping child[%d]\n", i);
+    kill(pid_pool[i], SIGSTOP);
+  }
+
+  printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
+  kill(pid_pool[running_child], SIGCONT]);
+
+  if(running_child + 1 > pool_index ){
+    running_child = 0;
+  }
+  else{
+    running_child += 1;
+  }
 
 }//end of alarm_handler()
 
@@ -147,10 +161,17 @@ int main(int argc, char *argv[]) {
 
       printf("Executing pid[%d]\n", getpid());
 
-      if (execvp(args[0], args) < 0){
-        perror("Exec");
-        exit(-1);
+      //TODO-REPLACED WITH LOOP FOR TESTING
+      // if (execvp(args[0], args) < 0){
+      //   perror("Exec");
+      //   exit(-1);
+      // }
+      //TODO-REPLACED WITH LOOP FOR TESTING
+      for (size_t i = 0; i < 10; i++) {
+        printf("RUNNING pid[%d]\n", getpid());
+        sleep(1);
       }
+      //TODO-REPLACED WITH LOOP FOR TESTING
 
     }//end of if pid==0
 
@@ -163,7 +184,13 @@ int main(int argc, char *argv[]) {
   printf("Number of processes is: [%d]\n", pool_index);
   //Checking global pid_pool to make sure we all good
 
-  //alarm(1);
+  printf("Parent sending alarm signal...\n");
+  alarm(2);
+  alarm(2);
+  alarm(2);
+  alarm(2);
+  alarm(2);
+
 
 
   int status;
@@ -171,7 +198,6 @@ int main(int argc, char *argv[]) {
   //May need to change to waitpid(...,...,0)
   while ((temp_p = wait(&status)) > 0){
     printf("Waiting for children...\n");
-    alarm(1);
     sleep(1);
   }
 
