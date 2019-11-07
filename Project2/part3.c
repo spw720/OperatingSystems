@@ -53,6 +53,11 @@ int main(int argc, char *argv[]) {
 
   int num_lines = 0;
 
+  if (argc == 1){
+    printf("Missing input file!\n");
+    return 0;
+  }
+
   input = fopen(argv[1], "r");
 
   cBuffer = (char *)malloc(bufferSize * sizeof(char));
