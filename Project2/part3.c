@@ -155,6 +155,7 @@ int main(int argc, char *argv[]) {
   for (size_t i = 0; i < 10; i++) {
     printf("PID_POOL[%d] = [%d]\n", i, pid_pool[i]);
   }
+  printf("Number of processes is: [%d]\n", pool_index);
 
 
   int status;
