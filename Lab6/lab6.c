@@ -48,16 +48,14 @@ int main(void)
     //Add code to send your signals  in a loop here
 
     sleep(1);
-    int status;
-    pid_t temp_p;
-    while ((temp_p = wait(&status)) > 0){
-      printf("SIGSTOP\n");
-      kill(pid, SIGSTOP);
-      sleep(3);
-      printf("SIGCONT\n");
-      kill(pid, SIGCONT);
-      sleep(1);
-    }
+
+    printf("SIGSTOP\n");
+    kill(pid, SIGSTOP);
+    sleep(3);
+    printf("SIGCONT\n");
+    kill(pid, SIGCONT);
+    sleep(1);
+
 
 
     printf("Parent process: %d - Waiting for child to complete...\n", getpid());
