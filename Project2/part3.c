@@ -42,6 +42,10 @@ void signaler(pid_t arr[], int signal){
 
 int main(int argc, char *argv[]) {
 
+  //TODO- Put alarm signal handler here???
+  signal(SIGALRM, alarm_handler);
+  //TODO- Put alarm signal handler here???
+
   struct sigaction sa;
   sa.sa_handler = handler;
   sigaction(SIGUSR1, &sa, NULL);
@@ -152,18 +156,22 @@ int main(int argc, char *argv[]) {
 
   }//end of for num lines
 
+  //Checking global pid_pool to make sure we all good
   for (size_t i = 0; i < 10; i++) {
     printf("PID_POOL[%d] = [%d]\n", i, pid_pool[i]);
   }
   printf("Number of processes is: [%d]\n", pool_index);
+  //Checking global pid_pool to make sure we all good
+
+  //alarm(1);
 
 
   int status;
   pid_t temp_p;
-
   //May need to change to waitpid(...,...,0)
   while ((temp_p = wait(&status)) > 0){
     printf("Waiting for children...\n");
+    alarm(1);
     sleep(1);
   }
 
