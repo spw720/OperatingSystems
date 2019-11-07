@@ -35,7 +35,7 @@ int main(void)
     int time = 1;
     while(time <= 10){
       sleep(1);
-      printf("Child process <%d>- Still alive after for <%d> seconds", getpid(), time);
+      printf("Child process <%d>- Still alive after for <%d> seconds\n", getpid(), time);
       time += 1;
     }
 
@@ -51,8 +51,10 @@ int main(void)
     int status;
     pid_t temp_p;
     while ((temp_p = wait(&status)) > 0){
+      printf("SIGSTOP\n");
       kill(pid, SIGSTOP);
       sleep(3);
+      printf("SIGCONT\n");
       kill(pid, SIGCONT);
       sleep(1);
     }
