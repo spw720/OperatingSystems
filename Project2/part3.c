@@ -33,7 +33,7 @@ void alarm_handler(int signal){
   }
 
   int flag_boi = 5;
-  while (flag_boi > 0){
+  while (flag_boi >= 0){
 
     if(running_child + 1 >= pool_index ){
       running_child = 0;
