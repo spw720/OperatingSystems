@@ -41,22 +41,21 @@ void alarm_handler(int signal){
 
   while (running_children > 0){
 
-    //printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
-    //kill(pid_pool[running_child], SIGCONT);
-
     if(running_child + 1 >= pool_index ){
       running_child = 0;
-      //printf("running_child=%d\n", running_child);
     }
     else{
       running_child += 1;
-      //printf("running_child=%d\n", running_child);
     }
-    printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
-    kill(pid_pool[running_child], SIGCONT);
-    sleep(4);
-    printf("ALARM: stopping child[%d]\n", pid_pool[running_child]);
-    kill(pid_pool[running_child], SIGSTOP);
+    pid_t w;
+    int wstatus;
+    if (w = waitpid(pid_pool[running_child], &wstatus, WNOHANG) == 0){
+      printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
+      kill(pid_pool[running_child], SIGCONT);
+      sleep(4);
+      printf("ALARM: stopping child[%d]\n", pid_pool[running_child]);
+      kill(pid_pool[running_child], SIGSTOP);
+    }
   }
 
   sleep(10);
