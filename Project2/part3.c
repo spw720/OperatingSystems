@@ -52,6 +52,7 @@ void alarm_handler(int signal){
       kill(pid_pool[running_child], SIGCONT);
       sleep(4);
     }
+
     if (w = waitpid(pid_pool[running_child], &wstatus, WNOHANG) != 0){
       printf("NOPE\n");
       flag_boi -= 1;
@@ -185,17 +186,17 @@ int main(int argc, char *argv[]) {
       //printf("Executing pid[%d]\n", getpid());
 
       //************************************************************************
-      //!!!!TODO-REPLACED WITH LOOP FOR TESTING
-      // if (execvp(args[0], args) < 0){
-      //   perror("Exec");
-      //   exit(-1);
-      // }
-      //!!!!TODO-REPLACED WITH LOOP FOR TESTING
-      for (size_t i = 0; i < 5; i++) {
-        printf("RUNNING pid[%d] for [%d] seconds\n", getpid(), i+1);
-        sleep(1);
+      !!!!TODO-REPLACED WITH LOOP FOR TESTING
+      if (execvp(args[0], args) < 0){
+        perror("Exec");
+        exit(-1);
       }
-      exit(1);
+      //!!!!TODO-REPLACED WITH LOOP FOR TESTING
+      // for (size_t i = 0; i < 5; i++) {
+      //   printf("RUNNING pid[%d] for [%d] seconds\n", getpid(), i+1);
+      //   sleep(1);
+      // }
+      // exit(1);
       //!!!!TODO-REPLACED WITH LOOP FOR TESTING
       //************************************************************************
 
