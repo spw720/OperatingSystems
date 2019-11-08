@@ -39,7 +39,6 @@ void alarm_handler(int signal){
 
   int flag_boi = 5;
   while (flag_boi > 0){
-    printf("FLAGBOI: %d\n", flag_boi);
 
     if(running_child + 1 >= pool_index ){
       running_child = 0;
@@ -58,10 +57,8 @@ void alarm_handler(int signal){
       printf("NOPE\n");
       flag_boi -= 1;
     }
-    else{
-      printf("ALARM: stopping child[%d]\n", pid_pool[running_child]);
-      kill(pid_pool[running_child], SIGSTOP);
-    }
+    printf("ALARM: stopping child[%d]\n", pid_pool[running_child]);
+    kill(pid_pool[running_child], SIGSTOP);
 
   }//end of while()
 
