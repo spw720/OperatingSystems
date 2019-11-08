@@ -51,7 +51,7 @@ void alarm_handler(int signal){
       printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
       kill(pid_pool[running_child], SIGCONT);
     }
-    else(printf("NOPE\n");)
+    else{printf("NOPE\n");}
 
     sleep(4);
 
@@ -59,7 +59,7 @@ void alarm_handler(int signal){
       printf("ALARM: stopping child[%d]\n", pid_pool[running_child]);
       kill(pid_pool[running_child], SIGSTOP);
     }
-    else(printf("NOPE\n");)
+    else{printf("NOPE\n");}
 
     printf("\nEND pid_pool\n");
     for (size_t i = 0; i < pool_index; i++) {
