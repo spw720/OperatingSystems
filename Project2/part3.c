@@ -33,7 +33,7 @@ void alarm_handler(int signal){
   }
 
   for (size_t i = 0; i < pool_index; i++) {
-    printf("pid_pool[%d] = [%s], ", i, pid_pool[i]);
+    printf("pid_pool[%d] = [%d], ", i, pid_pool[i]);
   }
   printf("\n");
 
