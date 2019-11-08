@@ -32,6 +32,11 @@ void alarm_handler(int signal){
     kill(pid_pool[i], SIGSTOP);
   }
 
+  for (size_t i = 0; i < pool_index; i++) {
+    printf("pid_pool[%d] = [%s], ", i, pid_pool[i]);
+  }
+  printf("\n");
+
   int running_children = pool_index;
 
   while (running_children > 0){
