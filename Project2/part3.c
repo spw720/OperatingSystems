@@ -45,7 +45,6 @@ void alarm_handler(int signal){
     int wstatus;
     if (w = waitpid(pid_pool[running_child], &wstatus, WNOHANG) != 0){
       printf("SIGCONT not ok, process dead\n");
-      flag_boi -= 1;
     }
     else{
       printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
