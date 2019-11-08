@@ -50,7 +50,9 @@ void alarm_handler(int signal){
     kill(pid_pool[running_child], SIGCONT);
 
     sleep(4);
-    if (kill(pid_pool[running_child], 0) != 0){
+    pid_t w;
+    int wstatus;
+    if (w = waitpid(pid, &wstatus, WNOHANG) != 0){
       printf("NOPE\n");
       flag_boi -= 1;
     }
