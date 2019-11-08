@@ -49,7 +49,7 @@ void alarm_handler(int signal){
     printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
     kill(pid_pool[running_child], SIGCONT);
 
-    sleep(1);
+    sleep(4);
 
     pid_t w;
     int wstatus;
