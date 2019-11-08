@@ -26,7 +26,7 @@ void alarm_handler(int signal){
 
   printf("Alarm signal received\n");
   for (size_t i = 0; i < pool_index; i++) {
-    printf("ALARM: stopping child[%d]\n", i);
+    printf("ALARM: stopping child[%d]\n", pid_pool[i]);
     kill(pid_pool[i], SIGSTOP);
   }
 
@@ -129,16 +129,13 @@ int main(int argc, char *argv[]) {
     int index = 0;
 
     token = strtok(buffy, " ");
-    //printf("Token1: [%s]\n", token);
 
     while(token != NULL) {
 
-      //printf("1: [%s]\n", token);
       int length = strlen(token);
       if (length > 0 && token[length - 1] == '\n') token[length-1] = '\0';
 
       args[index] = token;
-      //printf("args[%d] = [%s]\n", index, token);
       index += 1;
 
       token = strtok(NULL, " ");
@@ -161,17 +158,17 @@ int main(int argc, char *argv[]) {
 
       printf("Executing pid[%d]\n", getpid());
 
-      //TODO-REPLACED WITH LOOP FOR TESTING
+      //!!!!TODO-REPLACED WITH LOOP FOR TESTING
       // if (execvp(args[0], args) < 0){
       //   perror("Exec");
       //   exit(-1);
       // }
-      //TODO-REPLACED WITH LOOP FOR TESTING
+      //!!!!TODO-REPLACED WITH LOOP FOR TESTING
       for (size_t i = 0; i < 10; i++) {
         printf("RUNNING pid[%d]\n", getpid());
         sleep(1);
       }
-      //TODO-REPLACED WITH LOOP FOR TESTING
+      //!!!!TODO-REPLACED WITH LOOP FOR TESTING
 
     }//end of if pid==0
 
@@ -184,23 +181,16 @@ int main(int argc, char *argv[]) {
   // printf("Number of processes is: [%d]\n", pool_index);
   //Checking global pid_pool to make sure we all good
 
+  while(1){
+    alarm(1);
+  }
 
-  // printf("Parent sending alarm signal...\n");
-  // alarm(2);
-  // alarm(2);
-  // alarm(2);
-  // alarm(2);
-  // alarm(2);
-
-  alarm(1);
 
   int status;
   pid_t temp_p;
   //May need to change to waitpid(...,...,0)
   while ((temp_p = wait(&status)) > 0){
-    //printf("Waiting for children...\n");
-    printf("Parent sending alarm signal...\n");
-    alarm(2);
+    printf("Waiting for children...\n");
     sleep(1);
   }
 
