@@ -13,6 +13,8 @@ int pid_pool[10] = {0,0,0,0,0,0,0,0,0,0};
 int pool_index = 0;
 int running_child = 0;
 
+//-----------------------------------------------------------------------------
+
 void handler(int signal){
 
   printf("Child process: <%d> received signal: <%d>\n", getpid(), signal);
@@ -30,14 +32,20 @@ void alarm_handler(int signal){
     kill(pid_pool[i], SIGSTOP);
   }
 
-  printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
-  kill(pid_pool[running_child], SIGCONT);
+  int status;
+  pid_t temp_p;
+  while ((temp_p = wait(&status)) > 0){
 
-  if(running_child + 1 > pool_index ){
-    running_child = 0;
-  }
-  else{
-    running_child += 1;
+    printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
+    kill(pid_pool[running_child], SIGCONT);
+
+    if(running_child + 1 > pool_index ){
+      running_child = 0;
+    }
+    else{
+      running_child += 1;
+    }
+    sleep(4);
   }
 
 }//end of alarm_handler()
@@ -50,15 +58,15 @@ void signaler(pid_t arr[], int signal){
     kill(arr[i], signal);
   }
 
-}//end of signaler
+}//end of signaler()
 
 //-----------------------------------------------------------------------------
 
 int main(int argc, char *argv[]) {
 
-  //TODO- Put alarm signal handler here???
+  // TODO - Put alarm signal handler here???
   signal(SIGALRM, alarm_handler);
-  //TODO- Put alarm signal handler here???
+  // TODO - Put alarm signal handler here???
 
   struct sigaction sa;
   sa.sa_handler = handler;
@@ -148,6 +156,7 @@ int main(int argc, char *argv[]) {
     //set global pool
     pid_pool[pool_index] = child;
     pool_index += 1;
+    //set global pool
 
     if (child < 0){
       perror("fork");
@@ -158,6 +167,7 @@ int main(int argc, char *argv[]) {
 
       //printf("Executing pid[%d]\n", getpid());
 
+      //************************************************************************
       //!!!!TODO-REPLACED WITH LOOP FOR TESTING
       // if (execvp(args[0], args) < 0){
       //   perror("Exec");
@@ -169,24 +179,13 @@ int main(int argc, char *argv[]) {
         sleep(1);
       }
       //!!!!TODO-REPLACED WITH LOOP FOR TESTING
+      //************************************************************************
 
     }//end of if pid==0
 
   }//end of for num lines
 
-  //Checking global pid_pool to make sure we all good
-  // for (size_t i = 0; i < 10; i++) {
-  //   printf("PID_POOL[%d] = [%d]\n", i, pid_pool[i]);
-  // }
-  // printf("Number of processes is: [%d]\n", pool_index);
-  //Checking global pid_pool to make sure we all good
-
-  while(1){
-    printf("Testing ");
-    sleep(1);
-    //alarm(1);
-  }
-
+  alarm(1);
 
   int status;
   pid_t temp_p;
