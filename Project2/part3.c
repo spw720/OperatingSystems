@@ -52,7 +52,7 @@ void alarm_handler(int signal){
     sleep(4);
     pid_t w;
     int wstatus;
-    if (w = waitpid(pid, &wstatus, WNOHANG) != 0){
+    if (w = waitpid(pid_pool[running_child], &wstatus, WNOHANG) != 0){
       printf("NOPE\n");
       flag_boi -= 1;
     }
