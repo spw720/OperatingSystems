@@ -29,6 +29,11 @@ void signaler(pid_t arr[], int signal){
 
 int main(int argc, char *argv[]) {
 
+  if (argc == 1){
+    printf("Missing input file!\n");
+    return 0;
+  }
+
   struct sigaction sa;
   sa.sa_handler = handler;
   sigaction(SIGUSR1, &sa, NULL);

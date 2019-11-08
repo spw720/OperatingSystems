@@ -12,6 +12,11 @@
 
 int main(int argc, char *argv[]) {
 
+  if (argc == 1){
+    printf("Missing input file!\n");
+    return 0;
+  }
+
   FILE *input;
   char *cBuffer;
   size_t bufferSize = 2048;
