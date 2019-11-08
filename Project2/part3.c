@@ -188,7 +188,7 @@ int main(int argc, char *argv[]) {
       //   exit(-1);
       // }
       //!!!!TODO-REPLACED WITH LOOP FOR TESTING
-      for (size_t i = 0; i < 10; i++) {
+      for (size_t i = 0; i < 5; i++) {
         printf("RUNNING pid[%d] for [%d] seconds\n", getpid(), i+1);
         sleep(1);
       }
