@@ -46,6 +46,21 @@ void alarm_handler(int signal){
       printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
       kill(pid_pool[running_child], SIGCONT);
       sleep(4);
+
+      char filename[1000];
+      sprintf(filename, "/proc/%d/stat", pid_pool[running_child]);
+      FILE *f = fopen(filename, "r");
+
+      int unused;
+      char comm[1000];
+      char state;
+      int ppid;
+      fscanf(f, "%d %s %c %d", &unused, comm, &state, &ppid);
+      printf("comm = %s\n", comm);
+      printf("state = %c\n", state);
+      printf("parent pid = %d\n", ppid);
+      fclose(f);
+
     }
 
     if (w = waitpid(pid_pool[running_child], &wstatus, WNOHANG) != 0){
@@ -182,22 +197,6 @@ int main(int argc, char *argv[]) {
 
   int status;
   pid_t temp_p;
-
-  for (size_t i = 0; i < pool_index; i++) {
-    char filename[1000];
-    sprintf(filename, "/proc/%d/stat", pid_pool[i]);
-    FILE *f = fopen(filename, "r");
-
-    int unused;
-    char comm[1000];
-    char state;
-    int ppid;
-    fscanf(f, "%d %s %c %d", &unused, comm, &state, &ppid);
-    printf("comm = %s\n", comm);
-    printf("state = %c\n", state);
-    printf("parent pid = %d\n", ppid);
-    fclose(f);
-  }
 
   while ((temp_p = wait(&status)) > 0){
     printf("Waiting for children...\n");
