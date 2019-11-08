@@ -28,8 +28,8 @@ void alarm_handler(int signal){
 
   printf("Alarm signal received\n");
   for (size_t i = 0; i < pool_index; i++) {
-    printf("ALARM: stopping child[%d]\n", pid_pool[i]);
     if(pid_pool[i]!=0){
+      printf("ALARM: stopping child[%d]\n", pid_pool[i]);
       kill(pid_pool[i], SIGSTOP);
     }
   }
@@ -197,6 +197,7 @@ int main(int argc, char *argv[]) {
         printf("RUNNING pid[%d] for [%d] seconds\n", getpid(), i+1);
         sleep(1);
       }
+      exit(1);
       //!!!!TODO-REPLACED WITH LOOP FOR TESTING
       //************************************************************************
 
