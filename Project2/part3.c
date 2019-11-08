@@ -32,9 +32,9 @@ void alarm_handler(int signal){
     kill(pid_pool[i], SIGSTOP);
   }
 
-  int status;
-  pid_t temp_p;
-  while ((temp_p = wait(&status)) > 0){
+  int running_children = pool_index;
+
+  while (running_children > 0){
 
     printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
     kill(pid_pool[running_child], SIGCONT);
