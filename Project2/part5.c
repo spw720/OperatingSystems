@@ -9,8 +9,12 @@
 #include <ctype.h>
 #include <sys/wait.h>
 
+//Global pid array for use by alarm handler
 int pid_pool[10] = {0,0,0,0,0,0,0,0,0,0};
+//Array to determine if dead process has been checked yet
 int been_caught[10] = {0,0,0,0,0,0,0,0,0,0};
+//Array of priorities for each process (initially all 0)
+int priorities[10] = {0,0,0,0,0,0,0,0,0,0};
 
 int pool_index = 0;
 int running_child = 0;
@@ -40,7 +44,7 @@ void alarm_handler(int signal){
     if (w = waitpid(pid_pool[running_child], &wstatus, WNOHANG) != 0){
       printf("SIGCONT[%d], process dead\n", pid_pool[running_child]);
     }
-    else {
+    else{
       printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
       kill(pid_pool[running_child], SIGCONT);
       sleep(4);
@@ -55,7 +59,7 @@ void alarm_handler(int signal){
       }
 
     }
-    else {
+    else{
       printf("ALARM: stopping child[%d]\n", pid_pool[running_child]);
       kill(pid_pool[running_child], SIGSTOP);
     }
@@ -151,6 +155,20 @@ int main(int argc, char *argv[]) {
       token = strtok(NULL, " ");
 
     }//end of while(token!=null)
+
+    //***SET PRIORITIES***
+    //if it's a ./ command
+    if(args[0][0] == '.' && args[0][1] == '/'){
+      priorities[line] = 5;
+    }
+    //if it's a ls command
+    if(args[0][0] == 'l' && args[0][1] == 's'){
+      priorities[line] = 1;
+    }
+    //if it's a ./ command
+    if(args[0][0] == '.' && args[0][1] == '/'){
+      priorities[line] = 5;
+    }
 
     child = fork();
     pid_array[line] = child;

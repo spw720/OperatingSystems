@@ -40,7 +40,7 @@ void alarm_handler(int signal){
     if (w = waitpid(pid_pool[running_child], &wstatus, WNOHANG) != 0){
       printf("SIGCONT[%d], process dead\n", pid_pool[running_child]);
     }
-    else {
+    else{
       printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
       kill(pid_pool[running_child], SIGCONT);
       sleep(4);
@@ -55,7 +55,7 @@ void alarm_handler(int signal){
       }
 
     }
-    else {
+    else{
       printf("ALARM: stopping child[%d]\n", pid_pool[running_child]);
       kill(pid_pool[running_child], SIGSTOP);
     }
@@ -65,6 +65,16 @@ void alarm_handler(int signal){
   printf("End of alarm_handler\n");
 
 }//end of alarm_handler()
+
+//-----------------------------------------------------------------------------
+
+void signaler(pid_t arr[], int signal){
+
+  for (int i = 0; i < 5; i++) {
+    kill(arr[i], signal);
+  }
+
+}//end of signaler()
 
 //-----------------------------------------------------------------------------
 
