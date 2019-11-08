@@ -61,11 +61,11 @@ void alarm_handler(int signal){
     }
     else(printf("NOPE\n");)
 
-    printf("END pid_pool\n");
+    printf("\nEND pid_pool\n");
     for (size_t i = 0; i < pool_index; i++) {
       printf("[%d] = [%d] : ",i , pid_pool[i]);
     }
-    printf("\nEND pid_pool\n");
+    printf("\nEND pid_pool\n\n");
 
   }//end of while()
 
