@@ -39,20 +39,18 @@ void alarm_handler(int signal){
   }
   printf("\n");
 
-  int running_children = pool_index;
-
-  while (running_children > 0){
+  while (1){
 
     if(running_child + 1 >= pool_index ){
       running_child = 0;
-    }
-    else{
+    }else{
       running_child += 1;
     }
+
     pid_t w;
     int wstatus;
-    
-    if (w = waitpid(pid_pool[running_child], &wstatus, WNOHANG) == 0){
+
+    if (w = waitpid(pid_pool[running_child], &wstatus, WUNTRACED) == 0){
       printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
       kill(pid_pool[running_child], SIGCONT);
     }
@@ -62,6 +60,10 @@ void alarm_handler(int signal){
     if (w = waitpid(pid_pool[running_child], &wstatus, WNOHANG) == 0){
       printf("ALARM: stopping child[%d]\n", pid_pool[running_child]);
       kill(pid_pool[running_child], SIGSTOP);
+    }
+
+    for (size_t i = 0; i < pool_index; i++) {
+      printf("END pid_pool[%d] = [%d], ",i , pid_pool[i]);
     }
 
   }//end of while()
