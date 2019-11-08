@@ -184,12 +184,13 @@ int main(int argc, char *argv[]) {
   // printf("Number of processes is: [%d]\n", pool_index);
   //Checking global pid_pool to make sure we all good
 
-  printf("Parent sending alarm signal...\n");
-  alarm(2);
-  alarm(2);
-  alarm(2);
-  alarm(2);
-  alarm(2);
+
+  // printf("Parent sending alarm signal...\n");
+  // alarm(2);
+  // alarm(2);
+  // alarm(2);
+  // alarm(2);
+  // alarm(2);
 
 
 
@@ -197,7 +198,9 @@ int main(int argc, char *argv[]) {
   pid_t temp_p;
   //May need to change to waitpid(...,...,0)
   while ((temp_p = wait(&status)) > 0){
-    printf("Waiting for children...\n");
+    //printf("Waiting for children...\n");
+    printf("Parent sending alarm signal...\n");
+    alarm(2);
     sleep(1);
   }
 
