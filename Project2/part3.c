@@ -50,14 +50,17 @@ void alarm_handler(int signal){
     kill(pid_pool[running_child], SIGCONT);
 
     sleep(1);
+
     pid_t w;
     int wstatus;
     if (w = waitpid(pid_pool[running_child], &wstatus, WNOHANG) != 0){
       printf("NOPE\n");
       flag_boi -= 1;
     }
-
-    printf("ALARM: stopping child[%d]\n", pid_pool[running_child]);
+    else{
+      printf("ALARM: stopping child[%d]\n", pid_pool[running_child]);
+      kill(pid_pool[running_child], SIGSTOP);
+    }
 
   }//end of while()
 
