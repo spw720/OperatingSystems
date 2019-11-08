@@ -192,7 +192,7 @@ int main(int argc, char *argv[]) {
   // alarm(2);
   // alarm(2);
 
-  alarm(0);
+  alarm(1);
 
   int status;
   pid_t temp_p;
