@@ -156,7 +156,7 @@ int main(int argc, char *argv[]) {
     //CHILD
     else if (child == 0){
 
-      printf("Executing pid[%d]\n", getpid());
+      //printf("Executing pid[%d]\n", getpid());
 
       //!!!!TODO-REPLACED WITH LOOP FOR TESTING
       // if (execvp(args[0], args) < 0){
@@ -182,7 +182,9 @@ int main(int argc, char *argv[]) {
   //Checking global pid_pool to make sure we all good
 
   while(1){
-    alarm(1);
+    printf("Testing ");
+    sleep(1);
+    //alarm(1);
   }
 
 
