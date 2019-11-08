@@ -46,7 +46,10 @@ void alarm_handler(int signal){
       running_child += 1;
     }
     sleep(4);
+    kill(pid_pool[running_child], SIGSTOP);
   }
+
+  sleep(10);
 
 }//end of alarm_handler()
 
