@@ -28,10 +28,8 @@ void alarm_handler(int signal){
 
   printf("Alarm signal received\n");
   for (size_t i = 0; i < pool_index; i++) {
-    if(pid_pool[i]!=0){
-      printf("ALARM: stopping child[%d]\n", pid_pool[i]);
-      kill(pid_pool[i], SIGSTOP);
-    }
+    printf("ALARM: stopping child[%d]\n", pid_pool[i]);
+    kill(pid_pool[i], SIGSTOP);
   }
 
   for (size_t i = 0; i < pool_index; i++) {
@@ -39,7 +37,8 @@ void alarm_handler(int signal){
   }
   printf("\n");
 
-  while (1){
+  int flag_boi = 5;
+  while (flag_boi > 0){
 
     if(running_child + 1 >= pool_index ){
       running_child = 0;
@@ -47,25 +46,16 @@ void alarm_handler(int signal){
       running_child += 1;
     }
 
-    if(pid_pool[running_child] != 0){
-      printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
-      kill(pid_pool[running_child], SIGCONT);
-    }
-    else{printf("NOPE\n");}
+    printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
+    kill(pid_pool[running_child], SIGCONT);
 
     sleep(4);
-
-    if(pid_pool[running_child] != 0){
-      printf("ALARM: stopping child[%d]\n", pid_pool[running_child]);
-      kill(pid_pool[running_child], SIGSTOP);
+    if (kill(pid_pool[running_child], 0) != 0){
+      printf("NOPE\n");
+      flag_boi -= 1;
     }
-    else{printf("NOPE\n");}
 
-    printf("\nEND pid_pool\n");
-    for (size_t i = 0; i < pool_index; i++) {
-      printf("[%d] = [%d] : ",i , pid_pool[i]);
-    }
-    printf("\nEND pid_pool\n\n");
+    printf("ALARM: stopping child[%d]\n", pid_pool[running_child]);
 
   }//end of while()
 
