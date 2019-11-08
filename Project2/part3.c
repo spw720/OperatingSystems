@@ -50,7 +50,7 @@ void alarm_handler(int signal){
     pid_t w;
     int wstatus;
 
-    if (w = waitpid(pid_pool[running_child], &wstatus, WUNTRACED) == 0){
+    if (w = waitpid(pid_pool[running_child], &wstatus, WNOHANG) == 0){
       printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
       kill(pid_pool[running_child], SIGCONT);
     }
