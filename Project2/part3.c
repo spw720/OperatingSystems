@@ -15,20 +15,13 @@ int been_caught[10] = {0,0,0,0,0,0,0,0,0,0};
 int pool_index = 0;
 int running_child = 0;
 
-//-----------------------------------------------------------------------------
-
-void handler(int signal){
-
-  printf("Child process: <%d> received signal: <%d>\n", getpid(), signal);
-  //write(STDOUT_FILENO, "Child received signal!\n", strlen("Child received signal!\n"));
-
-}//end of handler()
 
 //-----------------------------------------------------------------------------
 
 void alarm_handler(int signal){
 
   printf("Alarm signal received\n");
+
   for (size_t i = 0; i < pool_index; i++) {
     printf("ALARM: stopping child[%d]\n", pid_pool[i]);
     kill(pid_pool[i], SIGSTOP);
@@ -92,9 +85,13 @@ int main(int argc, char *argv[]) {
   signal(SIGALRM, alarm_handler);
   // TODO - Put alarm signal handler here???
 
-  struct sigaction sa;
-  sa.sa_handler = handler;
-  sigaction(SIGUSR1, &sa, NULL);
+  //*********SOME FUCKSHIT RIGHT HERE************
+
+
+  //struct sigaction sa;
+  //sa.sa_handler = handler;
+  //sigaction(SIGUSR1, &sa, NULL);
+  //*********SOME FUCKSHIT ENDS HERE************
 
   FILE *input;
   char *cBuffer;
