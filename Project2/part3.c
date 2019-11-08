@@ -10,6 +10,8 @@
 #include <sys/wait.h>
 
 int pid_pool[10] = {0,0,0,0,0,0,0,0,0,0};
+int been_caught[10] = {0,0,0,0,0,0,0,0,0,0};
+
 int pool_index = 0;
 int running_child = 0;
 
@@ -54,7 +56,12 @@ void alarm_handler(int signal){
 
     if (w = waitpid(pid_pool[running_child], &wstatus, WNOHANG) != 0){
       printf("SIGSTOP[%d], process dead\n", pid_pool[running_child]);
-      flag_boi -= 1;
+
+      if(been_caught[running_child] == 0){
+        flag_boi -= 1;
+        been_caught[running_child] = 1;
+      }
+      
     }
     else{
       printf("ALARM: stopping child[%d]\n", pid_pool[running_child]);
