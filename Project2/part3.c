@@ -29,7 +29,9 @@ void alarm_handler(int signal){
   printf("Alarm signal received\n");
   for (size_t i = 0; i < pool_index; i++) {
     printf("ALARM: stopping child[%d]\n", pid_pool[i]);
-    kill(pid_pool[i], SIGSTOP);
+    if(pid_pool[i]!=0){
+      kill(pid_pool[i], SIGSTOP);
+    }
   }
 
   for (size_t i = 0; i < pool_index; i++) {
