@@ -27,7 +27,7 @@ void alarm_handler(int signal){
     kill(pid_pool[i], SIGSTOP);
   }
 
-  int flag_boi = 5;
+  int flag_boi = pool_index;
   while (flag_boi > 0){
 
     if(running_child + 1 >= pool_index ){
