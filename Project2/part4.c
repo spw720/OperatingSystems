@@ -47,19 +47,41 @@ void alarm_handler(int signal){
       kill(pid_pool[running_child], SIGCONT);
       sleep(4);
 
-      char filename[1000];
-      sprintf(filename, "/proc/%d/stat", pid_pool[running_child]);
-      FILE *f = fopen(filename, "r");
+      char file[100];
+      sprintf(file, "/proc/%d/stat", pid_pool[running_child]);
 
-      int unused;
-      char comm[1000];
-      char state;
-      int ppid;
-      fscanf(f, "%d %s %c %d", &unused, comm, &state, &ppid);
-      printf("comm = %s\n", comm);
-      printf("state = %c\n", state);
-      printf("parent pid = %d\n", ppid);
-      fclose(f);
+      FILE *fp = fopen(file, "r");
+
+      int process_id;
+      char command[1000];
+      char process_state;
+      int parent;
+      int process_group;
+      int session_id;
+      int cont_term;
+      int foreground;
+      int flags;
+      int minflt;
+      int cminflt;
+      int majflt;
+      int cmajflt;
+      int utime;
+      int stime;
+
+
+
+
+      fscanf(fp, "%d %s %c %d %d %d %d %d %u %lu %lu %lu %lu %lu %lu", &process_id,
+      command, &process_state, &parent, &process_group, &session_id, &cont_term,
+      &foreground, &flags, &minflt, &cminflt, &majflt, &cmajflt, &utime, &stime);
+      printf("[%d] command = %s\n", process_id, command);
+      printf("[%d] state = %c\n", process_id, process_state);
+      printf("[%d] parent pid = %d\n", process_id, parent);
+
+      printf("[%d] User mode = %d\n", process_id, utime);
+      printf("[%d] Kernel mode = %d\n", process_id, stime);
+
+      fclose(fp);
 
     }
 
