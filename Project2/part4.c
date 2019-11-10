@@ -55,25 +55,23 @@ void alarm_handler(int signal){
       int process_id;
       char command[1000];
       char process_state;
-      int parent;
-      int process_group;
-      int session_id;
-      int cont_term;
-      int foreground;
-      int flags;
-      int minflt;
-      int cminflt;
-      int majflt;
-      int cmajflt;
-      int utime;
-      int stime;
-
-
-
+      int parent, process_group, session_id, cont_term, foreground, flags, minflt, cminflt, majflt, cmajflt, utime, stime;
+      // int process_group;
+      // int session_id;
+      // int cont_term;
+      // int foreground;
+      // int flags;
+      // int minflt;
+      // int cminflt;
+      // int majflt;
+      // int cmajflt;
+      // int utime;
+      // int stime;
 
       fscanf(fp, "%d %s %c %d %d %d %d %d %u %lu %lu %lu %lu %lu %lu", &process_id,
       command, &process_state, &parent, &process_group, &session_id, &cont_term,
       &foreground, &flags, &minflt, &cminflt, &majflt, &cmajflt, &utime, &stime);
+
       printf("[%d] command = %s\n", process_id, command);
       printf("[%d] state = %c\n", process_id, process_state);
       printf("[%d] parent pid = %d\n", process_id, parent);
