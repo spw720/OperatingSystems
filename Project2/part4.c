@@ -65,15 +65,15 @@ void alarm_handler(int signal){
       printf("[%d] state = %c\n", process_id, process_state);
       printf("[%d] parent pid = %d\n", process_id, parent);
 
-      printf("[%d] process_group = %s\n", process_id, process_group);
-      printf("[%d] session_id = %s\n", process_id, session_id);
-      printf("[%d] cont_term = %s\n", process_id, cont_term);
-      printf("[%d] foreground = %s\n", process_id, foreground);
-      printf("[%d] flags = %s\n", process_id, flags);
-      printf("[%d] minflt = %s\n", process_id, minflt);
-      printf("[%d] cminflt = %s\n", process_id, cminflt);
-      printf("[%d] majflt = %s\n", process_id, majflt);
-      printf("[%d] cmajflt = %s\n", process_id, cmajflt);
+      printf("[%d] process_group = %d\n", process_id, process_group);
+      printf("[%d] session_id = %d\n", process_id, session_id);
+      printf("[%d] cont_term = %d\n", process_id, cont_term);
+      printf("[%d] foreground = %lu\n", process_id, foreground);
+      printf("[%d] flags = %lu\n", process_id, flags);
+      printf("[%d] minflt = %lu\n", process_id, minflt);
+      printf("[%d] cminflt = %lu\n", process_id, cminflt);
+      printf("[%d] majflt = %lu\n", process_id, majflt);
+      printf("[%d] cmajflt = %lu\n", process_id, cmajflt);
 
       printf("[%d] User mode = %d\n", process_id, utime);
       printf("[%d] Kernel mode = %d\n", process_id, stime);
