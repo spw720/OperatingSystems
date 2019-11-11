@@ -38,7 +38,7 @@ void alarm_handler(int signal){
     pid_t w;
     int wstatus;
     if (w = waitpid(pid_pool[running_child], &wstatus, WNOHANG) != 0){
-      printf("Cannot SIGCONT, process [%d] exited\n\n", pid_pool[running_child]);
+      printf("Cannot SIGCONT, process [%d] exited\n", pid_pool[running_child]);
     }
     else {
       printf("SIGCONT: continuing child[%d]\n", pid_pool[running_child]);
