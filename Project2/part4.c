@@ -61,7 +61,7 @@ void alarm_handler(int signal){
       command, &process_state, &parent, &process_group, &session_id, &cont_term,
       &foreground, &flags, &minflt, &cminflt, &majflt, &cmajflt, &utime, &stime);
 
-      printf("[%d] command = %s\n", process_id, command);
+      printf("---[%d] Information---\n[%d] command = %s\n", process_id, process_id, command);
       printf("[%d] state = %c\n", process_id, process_state);
       printf("[%d] parent pid = %d\n", process_id, parent);
 
@@ -72,7 +72,7 @@ void alarm_handler(int signal){
       printf("[%d] flags = %lu\n", process_id, flags);
 
       printf("[%d] Amount of time in user mode = %d\n", process_id, utime);
-      printf("[%d] Amount of time in kernel mode = %d\n", process_id, stime);
+      printf("[%d] Amount of time in kernel mode = %d\n\n", process_id, stime);
 
       fclose(fp);
 
