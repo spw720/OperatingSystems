@@ -14,6 +14,17 @@
 int pid_pool[10] = {0,0,0,0,0,0,0,0,0,0};
 int been_caught[10] = {0,0,0,0,0,0,0,0,0,0};
 
+//Initial priority, (time quantum), for each process
+int priorities[10] = {4,4,4,4,4,4,4,4,4,4};
+
+//TO-BE  filled with u/s time data used to compute time spent
+int last_utime_read[10] = {0,0,0,0,0,0,0,0,0,0};
+int last_stime_read[10] = {0,0,0,0,0,0,0,0,0,0};
+
+//TO-BE  filled with calculated time spent in user/kernel mode
+int last_cpu_time[10] = {0,0,0,0,0,0,0,0,0,0};
+int last_IO_time[10] = {0,0,0,0,0,0,0,0,0,0};
+
 int pool_index = 0;
 int running_child = 0;
 
@@ -45,7 +56,9 @@ void alarm_handler(int signal){
     else{
       printf("SIGCONT: continuing child [%d]\n", pid_pool[running_child]);
       kill(pid_pool[running_child], SIGCONT);
-      sleep(4);
+
+      //Allows child to run for respective time quantum
+      sleep(priorities[running_child]);
 
       char file[100];
       sprintf(file, "/proc/%d/stat", pid_pool[running_child]);
@@ -73,6 +86,26 @@ void alarm_handler(int signal){
 
       printf("[%d] Amount of time in user mode = %d\n", process_id, utime);
       printf("[%d] Amount of time in kernel mode = %d\n\n", process_id, stime);
+
+      //Calculate whether the child spent more time in Kernel mode in last itration than one before
+      //i.e. decide if process is CPU intensive and needs more time to run
+      if(last_cpu_time < stime - last_stime_read[running_child]){
+        priorities[running_child] += 1;
+        printf("[%d] CPU intensive. Time quantum now: %d\n", process_id, priorities[running_child]);
+      }
+
+      //Calculate whether the child spent more time in User mode in last itration than one before
+      //i.e. decide if process is IO intensive and needs more time to run
+      if(last_IO_time < utime - last_utime_read[running_child]){
+        priorities[running_child] += 1;
+        printf("[%d] IO intensive. Time quantum now: %d\n", process_id, priorities[running_child]);
+      }
+
+      //set arrays to be referenced on next iteration
+      last_IO_time[running_child] = utime - last_utime_read[running_child];
+      last_cpu_time[running_child] = stime - last_stime_read[running_child];
+      last_utime_read[running_child] = utime;
+      last_stime_read[running_child] = stime;
 
       fclose(fp);
 
