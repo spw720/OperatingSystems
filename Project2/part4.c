@@ -21,10 +21,10 @@ int running_child = 0;
 
 void alarm_handler(int signal){
 
-  printf("Alarm signal received\n");
+  printf("Alarm signal received, stopping all children...\n");
 
   for (size_t i = 0; i < pool_index; i++) {
-    printf("ALARM: stopping child[%d]\n", pid_pool[i]);
+    printf("SIGSTOP: stopping child [%d]\n", pid_pool[i]);
     kill(pid_pool[i], SIGSTOP);
   }
 
@@ -40,10 +40,10 @@ void alarm_handler(int signal){
     pid_t w;
     int wstatus;
     if (w = waitpid(pid_pool[running_child], &wstatus, WNOHANG) != 0){
-      printf("SIGCONT[%d], process dead\n", pid_pool[running_child]);
+      printf("Cannot SIGCONT, process [%d] exited\n", pid_pool[running_child]);
     }
     else{
-      printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
+      printf("SIGCONT: continuing child [%d]\n", pid_pool[running_child]);
       kill(pid_pool[running_child], SIGCONT);
       sleep(4);
 
@@ -61,7 +61,7 @@ void alarm_handler(int signal){
       command, &process_state, &parent, &process_group, &session_id, &cont_term,
       &foreground, &flags, &minflt, &cminflt, &majflt, &cmajflt, &utime, &stime);
 
-      printf("\n\n---[%d] Information---\n[%d] command = %s\n", process_id, process_id, command);
+      printf("\n---[%d] Information---\n[%d] command = %s\n", process_id, process_id, command);
       printf("[%d] state = %c\n", process_id, process_state);
       printf("[%d] parent pid = %d\n", process_id, parent);
 
@@ -79,7 +79,7 @@ void alarm_handler(int signal){
     }
 
     if (w = waitpid(pid_pool[running_child], &wstatus, WNOHANG) != 0){
-      printf("SIGSTOP[%d], process dead\n", pid_pool[running_child]);
+      printf("Cannot SIGSTOP, process [%d] exited\n", pid_pool[running_child]);
 
       if(been_caught[running_child] == 0){
         flag_boi -= 1;
@@ -88,7 +88,7 @@ void alarm_handler(int signal){
 
     }
     else{
-      printf("ALARM: stopping child[%d]\n", pid_pool[running_child]);
+      printf("SIGSTOP: stopping child[%d]\n", pid_pool[running_child]);
       kill(pid_pool[running_child], SIGSTOP);
     }
 
