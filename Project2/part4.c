@@ -52,10 +52,10 @@ void alarm_handler(int signal){
 
       FILE *fp = fopen(file, "r");
 
-      int process_id;
       char command[1000];
       char process_state;
-      int parent, process_group, session_id, cont_term, foreground, flags, minflt, cminflt, majflt, cmajflt, utime, stime;
+      int process_id, parent, process_group, session_id, cont_term,
+      foreground, flags, minflt, cminflt, majflt, cmajflt, utime, stime;
 
       fscanf(fp, "%d %s %c %d %d %d %d %d %u %lu %lu %lu %lu %lu %lu", &process_id,
       command, &process_state, &parent, &process_group, &session_id, &cont_term,
@@ -65,18 +65,14 @@ void alarm_handler(int signal){
       printf("[%d] state = %c\n", process_id, process_state);
       printf("[%d] parent pid = %d\n", process_id, parent);
 
-      printf("[%d] process_group = %d\n", process_id, process_group);
-      printf("[%d] session_id = %d\n", process_id, session_id);
-      printf("[%d] cont_term = %d\n", process_id, cont_term);
-      printf("[%d] foreground = %lu\n", process_id, foreground);
+      printf("[%d] Process group ID = %d\n", process_id, process_group);
+      printf("[%d] Session ID = %d\n", process_id, session_id);
+      printf("[%d] Controlling terminal = %d\n", process_id, cont_term);
+      printf("[%d] Foreground process group ID = %lu\n", process_id, foreground);
       printf("[%d] flags = %lu\n", process_id, flags);
-      printf("[%d] minflt = %lu\n", process_id, minflt);
-      printf("[%d] cminflt = %lu\n", process_id, cminflt);
-      printf("[%d] majflt = %lu\n", process_id, majflt);
-      printf("[%d] cmajflt = %lu\n", process_id, cmajflt);
 
-      printf("[%d] User mode = %d\n", process_id, utime);
-      printf("[%d] Kernel mode = %d\n", process_id, stime);
+      printf("[%d] Amount of time in user mode = %d\n", process_id, utime);
+      printf("[%d] Amount of time in kernel mode = %d\n", process_id, stime);
 
       fclose(fp);
 
