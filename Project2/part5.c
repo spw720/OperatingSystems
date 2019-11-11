@@ -8,13 +8,11 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <sys/wait.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
-//Global pid array for use by alarm handler
 int pid_pool[10] = {0,0,0,0,0,0,0,0,0,0};
-//Array to determine if dead process has been checked yet
 int been_caught[10] = {0,0,0,0,0,0,0,0,0,0};
-//Array of priorities for each process (initially all 0)
-int priorities[10] = {0,0,0,0,0,0,0,0,0,0};
 
 int pool_index = 0;
 int running_child = 0;
@@ -23,10 +21,10 @@ int running_child = 0;
 
 void alarm_handler(int signal){
 
-  printf("Alarm signal received\n");
+  printf("Alarm signal received, stopping all children...\n");
 
   for (size_t i = 0; i < pool_index; i++) {
-    printf("ALARM: stopping child[%d]\n", pid_pool[i]);
+    printf("SIGSTOP: stopping child [%d]\n", pid_pool[i]);
     kill(pid_pool[i], SIGSTOP);
   }
 
@@ -42,16 +40,46 @@ void alarm_handler(int signal){
     pid_t w;
     int wstatus;
     if (w = waitpid(pid_pool[running_child], &wstatus, WNOHANG) != 0){
-      printf("SIGCONT[%d], process dead\n", pid_pool[running_child]);
+      printf("Cannot SIGCONT, process [%d] exited\n", pid_pool[running_child]);
     }
     else{
-      printf("ALARM: continuing child[%d]\n", pid_pool[running_child]);
+      printf("SIGCONT: continuing child [%d]\n", pid_pool[running_child]);
       kill(pid_pool[running_child], SIGCONT);
       sleep(4);
+
+      char file[100];
+      sprintf(file, "/proc/%d/stat", pid_pool[running_child]);
+
+      FILE *fp = fopen(file, "r");
+
+      char command[1000];
+      char process_state;
+      int process_id, parent, process_group, session_id, cont_term,
+      foreground, flags, minflt, cminflt, majflt, cmajflt, utime, stime;
+
+      fscanf(fp, "%d %s %c %d %d %d %d %d %u %lu %lu %lu %lu %lu %lu", &process_id,
+      command, &process_state, &parent, &process_group, &session_id, &cont_term,
+      &foreground, &flags, &minflt, &cminflt, &majflt, &cmajflt, &utime, &stime);
+
+      printf("\n---Process [%d] Information---\n[%d] command = %s\n", process_id, process_id, command);
+      printf("[%d] state = %c\n", process_id, process_state);
+      printf("[%d] parent pid = %d\n", process_id, parent);
+
+      printf("[%d] Process group ID = %d\n", process_id, process_group);
+      printf("[%d] Session ID = %d\n", process_id, session_id);
+      printf("[%d] Controlling terminal = %d\n", process_id, cont_term);
+      printf("[%d] Foreground process group ID = %lu\n", process_id, foreground);
+      printf("[%d] flags = %lu\n", process_id, flags);
+
+      printf("[%d] Amount of time in user mode = %d\n", process_id, utime);
+      printf("[%d] Amount of time in kernel mode = %d\n\n", process_id, stime);
+
+      fclose(fp);
+
     }
 
     if (w = waitpid(pid_pool[running_child], &wstatus, WNOHANG) != 0){
-      printf("SIGSTOP[%d], process dead\n", pid_pool[running_child]);
+      printf("Cannot SIGSTOP, process [%d] exited\n", pid_pool[running_child]);
 
       if(been_caught[running_child] == 0){
         flag_boi -= 1;
@@ -60,7 +88,7 @@ void alarm_handler(int signal){
 
     }
     else{
-      printf("ALARM: stopping child[%d]\n", pid_pool[running_child]);
+      printf("SIGSTOP: stopping child[%d]\n", pid_pool[running_child]);
       kill(pid_pool[running_child], SIGSTOP);
     }
 
@@ -155,20 +183,6 @@ int main(int argc, char *argv[]) {
       token = strtok(NULL, " ");
 
     }//end of while(token!=null)
-
-    //***SET PRIORITIES***
-    //if it's a ./ command
-    if(args[0][0] == '.' && args[0][1] == '/'){
-      priorities[line] = 5;
-    }
-    //if it's a ls command
-    if(args[0][0] == 'l' && args[0][1] == 's'){
-      priorities[line] = 1;
-    }
-    //if it's a ./ command
-    if(args[0][0] == '.' && args[0][1] == '/'){
-      priorities[line] = 5;
-    }
 
     child = fork();
     pid_array[line] = child;

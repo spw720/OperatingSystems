@@ -61,7 +61,7 @@ void alarm_handler(int signal){
       command, &process_state, &parent, &process_group, &session_id, &cont_term,
       &foreground, &flags, &minflt, &cminflt, &majflt, &cmajflt, &utime, &stime);
 
-      printf("\n---[%d] Information---\n[%d] command = %s\n", process_id, process_id, command);
+      printf("\n---Process [%d] Information---\n[%d] command = %s\n", process_id, process_id, command);
       printf("[%d] state = %c\n", process_id, process_state);
       printf("[%d] parent pid = %d\n", process_id, parent);
 

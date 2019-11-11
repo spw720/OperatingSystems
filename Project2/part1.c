@@ -33,8 +33,6 @@ int main(int argc, char *argv[]) {
     num_lines += 1;
   }
 
-  printf("NumLines: %d\n", num_lines);
-
   // Close the file
   fclose(input);
   free(cBuffer);
@@ -77,16 +75,13 @@ int main(int argc, char *argv[]) {
     int index = 0;
 
     token = strtok(buffy, " ");
-    //printf("Token1: [%s]\n", token);
 
     while(token != NULL) {
 
-      //printf("1: [%s]\n", token);
       int length = strlen(token);
       if (length > 0 && token[length - 1] == '\n') token[length-1] = '\0';
 
       args[index] = token;
-      printf("args[%d] = [%s]\n", index, token);
       index += 1;
 
       token = strtok(NULL, " ");
