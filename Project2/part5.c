@@ -89,16 +89,14 @@ void alarm_handler(int signal){
 
       //Calculate whether the child spent more time in Kernel mode in last itration than one before
       //i.e. decide if process is CPU intensive and needs more time to run
-      int temp1 = stime - last_stime_read[running_child];
-      if(last_cpu_time < temp1){
+      if(last_cpu_time[running_child] < (stime - last_stime_read[running_child])){
         priorities[running_child] += 1;
         printf("[%d] CPU intensive. Time quantum now: %d\n", process_id, priorities[running_child]);
       }
 
       //Calculate whether the child spent more time in User mode in last itration than one before
       //i.e. decide if process is IO intensive and needs more time to run
-      int temp2 = utime - last_utime_read[running_child];
-      if(last_IO_time < temp2){
+      if(last_IO_time[running_child] < (utime - last_utime_read[running_child])){
         priorities[running_child] += 1;
         printf("[%d] IO intensive. Time quantum now: %d\n", process_id, priorities[running_child]);
       }
