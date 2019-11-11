@@ -57,7 +57,7 @@ void alarm_handler(int signal){
       printf("SIGCONT: continuing child [%d]\n", pid_pool[running_child]);
       kill(pid_pool[running_child], SIGCONT);
 
-      //Sleep for one second to calculate usage over 1-second
+      //Sleep for one second to calculate IO/CPU usage over 1-second
       sleep(1);
 
       char file[100];
