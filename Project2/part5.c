@@ -57,8 +57,8 @@ void alarm_handler(int signal){
       printf("SIGCONT: continuing child [%d]\n", pid_pool[running_child]);
       kill(pid_pool[running_child], SIGCONT);
 
-      //Allows child to run for respective time quantum
-      sleep(priorities[running_child]);
+      //Sleep for one second to calculate usage over 1-second
+      sleep(1);
 
       char file[100];
       sprintf(file, "/proc/%d/stat", pid_pool[running_child]);
@@ -106,6 +106,9 @@ void alarm_handler(int signal){
       last_cpu_time[running_child] = (stime - last_stime_read[running_child]);
       last_utime_read[running_child] = utime;
       last_stime_read[running_child] = stime;
+
+      //Allows child to run for respective time quantum
+      sleep(priorities[running_child]);
 
       fclose(fp);
 
