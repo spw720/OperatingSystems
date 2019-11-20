@@ -55,35 +55,35 @@ MTQ *registry[MAXQUEUES];
 int main(){
 
   //initialize all MTQ structs
-  MTQ breakfast;
-  *breakfast.name = "breakfast";
+  MTQ brk;
+  *brk.name = "Breakfast";
   mealTicket *buffer1[BUFFER_SIZE];
-  *breakfast.buffer = &buffer1;
+  brk.buffer = &buffer1;
 
-  MTQ lunch;
-  *lunch.name = "lunch";
+  MTQ lun;
+  *lun.name = "Lunch";
   mealTicket *buffer2[BUFFER_SIZE];
-  *lunch.buffer = &buffer2;
+  lun.buffer = &buffer2;
 
-  MTQ dinner;
-  *dinner.name = "dinner";
+  MTQ din;
+  *din.name = "Dinner";
   mealTicket *buffer3[BUFFER_SIZE];
-  *dinner.buffer = &buffer3;
+  din.buffer = &buffer3;
 
   MTQ bar;
-  *bar.name = "bar";
+  *bar.name = "Bar";
   mealTicket *buffer4[BUFFER_SIZE];
-  *bar.buffer = &buffer4;
+  bar.buffer = &buffer4;
 
-  printf("BFAST: %s\n", *breakfast.name);
-  printf("LUNCH: %s\n", *lunch.name);
-  printf("DINNER: %s\n", *dinner.name);
+  printf("BFAST: %s\n", *brk.name);
+  printf("LUNCH: %s\n", *lun.name);
+  printf("DINNER: %s\n", *din.name);
   printf("BAR: %s\n", *bar.name);
 
   //push all MTQ's onto register
-  registry[0] = &breakfast;
-  registry[1] = &lunch;
-  registry[2] = &dinner;
+  registry[0] = &brk;
+  registry[1] = &lun;
+  registry[2] = &din;
   registry[3] = &bar;
 
   //create and initialize 3 meal-tickets
@@ -100,17 +100,17 @@ int main(){
   m3.dish = "three";
 
   //push meal tickets into MTQ's
-  // enqueue(&breakfast.name, &m1);
-  // enqueue(&breakfast.name, &m2);
-  // enqueue(&breakfast.name, &m3);
+  // enqueue(&brk.name, &m1);
+  // enqueue(&brk.name, &m2);
+  // enqueue(&brk.name, &m3);
   //
-  // enqueue(&lunch.name, &m1);
-  // enqueue(&lunch.name, &m2);
-  // enqueue(&lunch.name, &m3);
+  // enqueue(&lun.name, &m1);
+  // enqueue(&lun.name, &m2);
+  // enqueue(&lun.name, &m3);
   //
-  // enqueue(&dinner.name, &m1);
-  // enqueue(&dinner.name, &m2);
-  // enqueue(&dinner.name, &m3);
+  // enqueue(&din.name, &m1);
+  // enqueue(&din.name, &m2);
+  // enqueue(&dins.name, &m3);
   //
   // enqueue(&bar.name, &m1);
   // enqueue(&bar.name, &m2);
