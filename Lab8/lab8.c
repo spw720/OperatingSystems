@@ -31,43 +31,55 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
 
 MTQ *registry[MAXQUEUES];
 
+
 int main(){
 
   //initialize all MTQ structs
   struct MTQ breakfast;
   *breakfast.name = "breakfast";
-
   struct MTQ lunch;
   *lunch.name = "lunch";
-
   struct MTQ dinner;
   *dinner.name = "dinner";
-
   struct MTQ bar;
   *bar.name = "bar";
 
   //push all MTQ's onto register
-  *registry[0] = breakfast;
-  *registry[1] = lunch;
-  *registry[2] = dinner;
-  *registry[3] = bar;
+  // registry[0] = breakfast;
+  // registry[1] = lunch;
+  // registry[2] = dinner;
+  // registry[3] = bar;
+
+  registry = {breakfast, lunch, dinner, bar};
 
   //create and initialize 3 meal-tickets
   struct mealTicket m1;
-  struct mealTicket m2;
-  struct mealTicket m3;
-
   m1.ticketNum = 0;
   m1.dish = "one";
 
+  struct mealTicket m2;
   m2.ticketNum = 1;
   m2.dish = "two";
 
+  struct mealTicket m3;
   m3.ticketNum = 2;
   m3.dish = "three";
 
   //push meal tickets into MTQ's
   breakfast.buffer[0] = m1;
+  lunch.buffer[0] = m1;
+  dinner.buffer[0] = m1;
+  bar.buffer[0] = m1;
+
+  breakfast.buffer[1] = m2;
+  lunch.buffer[1] = m2;
+  dinner.buffer[1] = m2;
+  bar.buffer[1] = m2;
+
+  breakfast.buffer[2] = m3;
+  lunch.buffer[2] = m3;
+  dinner.buffer[2] = m3;
+  bar.buffer[2] = m3;
 
 
 
