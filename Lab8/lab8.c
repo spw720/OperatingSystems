@@ -35,13 +35,13 @@ int main(){
 
   //initialize all MTQ structs
   struct MTQ breakfast;
-  breakfast->name = "breakfast";
+  *breakfast->name = "breakfast";
   struct MTQ lunch;
-  lunch->name = "lunch";
+  *lunch->name = "lunch";
   struct MTQ dinner;
-  dinner->name = "dinner";
+  *dinner->name = "dinner";
   struct MTQ bar;
-  bar->name = "bar";
+  *bar->name = "bar";
 
   //push all MTQ's onto register
   registry[0] = breakfast;
