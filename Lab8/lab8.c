@@ -47,10 +47,10 @@ int main(){
   *bar.name = "bar";
 
   //push all MTQ's onto register
-  registry[0] = &breakfast;
-  registry[1] = &lunch;
-  registry[2] = &dinner;
-  registry[3] = &bar;
+  &registry[0] = breakfast;
+  &registry[1] = lunch;
+  &registry[2] = dinner;
+  &registry[3] = bar;
 
   //create and initialize 3 meal-tickets
   struct mealTicket m1;
