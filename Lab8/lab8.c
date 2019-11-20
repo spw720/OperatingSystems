@@ -56,7 +56,7 @@ int main(){
     .buffer = buffer1,
     .head = 0,
     .tail = 0,
-    .length = BUFFER_SIZE
+    .length = BUFFER_SIZE;
   }
 
   //*brk.name = "Breakfast";
