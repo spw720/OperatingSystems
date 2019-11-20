@@ -49,11 +49,14 @@ MTQ *registry[MAXQUEUES];
 
 int main(){
 
+  mealTicket m1;
+
   //initialize all MTQ structs
   MTQ brk;
   *brk.name = "Breakfast";
   mealTicket buffer1[BUFFER_SIZE];
-  *brk.buffer = &buffer1;
+  //*brk.buffer = buffer1;
+  *brk.buffer = m1;
 
   // MTQ lun;
   // *lun.name = "Lunch";
