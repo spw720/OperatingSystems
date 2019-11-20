@@ -59,6 +59,12 @@ int main(){
     .length = BUFFER_SIZE
   };
 
+  printf("Name: %s\n", brk.name);
+  printf("Buffer[0]: %d\n", brk.buffer[0]);
+  printf("Head: %d\n", brk.head);
+  printf("Tail: %d\n", brk.tail);
+  printf("Length: %d\n", brk.length);
+
   //*brk.name = "Breakfast";
 
   //*brk.buffer = buffer1;
