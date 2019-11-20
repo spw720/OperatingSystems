@@ -52,23 +52,23 @@ int main(){
   //initialize all MTQ structs
   MTQ brk;
   *brk.name = "Breakfast";
-  mealTicket *buffer1[BUFFER_SIZE];
-  **brk.buffer = buffer1;
+  mealTicket buffer1[BUFFER_SIZE];
+  *brk.buffer = buffer1;
 
   MTQ lun;
   *lun.name = "Lunch";
-  mealTicket *buffer2[BUFFER_SIZE];
-  **lun.buffer = buffer2;
+  mealTicket buffer2[BUFFER_SIZE];
+  *lun.buffer = buffer2;
 
   MTQ din;
   *din.name = "Dinner";
-  mealTicket *buffer3[BUFFER_SIZE];
-  **din.buffer = buffer3;
+  mealTicket buffer3[BUFFER_SIZE];
+  *din.buffer = buffer3;
 
   MTQ bar;
   *bar.name = "Bar";
-  mealTicket *buffer4[BUFFER_SIZE];
-  **bar.buffer = buffer4;
+  mealTicket buffer4[BUFFER_SIZE];
+  *bar.buffer = buffer4;
 
   printf("BFAST: %s\n", *brk.name);
   printf("LUNCH: %s\n", *lun.name);
