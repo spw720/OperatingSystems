@@ -10,6 +10,8 @@ struct mealTicket {
   char *dish;
 };
 
+typedef struct mealTicket mealTicket;
+
 struct MTQ {
   char *name[MAXNAME];
   mealTicket *const buffer;
@@ -18,7 +20,6 @@ struct MTQ {
   const int length;
 };
 
-typedef struct mealTicket mealTicket;
 typedef struct MTQ MTQ;
 
 MTQ *registry[MAXQUEUES];
