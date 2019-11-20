@@ -9,7 +9,6 @@ struct mealTicket {
   int ticketNum;
   char *dish;
 };
-
 typedef struct mealTicket mealTicket;
 
 struct MTQ {
@@ -19,7 +18,6 @@ struct MTQ {
   int tail;
   const int length;
 };
-
 typedef struct MTQ MTQ;
 
 MTQ *registry[MAXQUEUES];
@@ -65,7 +63,7 @@ int main(){
   m3.dish = "three";
 
   //push meal tickets into MTQ's
-  breakfast.buffer[0] =
+  //breakfast.buffer[0] = 
 
 
 
