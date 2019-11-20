@@ -52,8 +52,8 @@ int main(){
   //initialize all MTQ structs
   MTQ brk;
   *brk.name = "Breakfast";
-  struct mealTicket buffer1[BUFFER_SIZE];
-  *brk.buffer = buffer1;
+  mealTicket *buffer1[BUFFER_SIZE];
+  *brk.buffer = &buffer1;
 
   // MTQ lun;
   // *lun.name = "Lunch";
