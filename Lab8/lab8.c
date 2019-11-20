@@ -86,9 +86,9 @@ int main(){
   // registry[3] = &bar;
 
   //create and initialize 3 meal-tickets
-  mealTicket m1;
-  m1.ticketNum = 0;
-  m1.dish = "one";
+  // mealTicket m1;
+  // m1.ticketNum = 0;
+  // m1.dish = "one";
 
   mealTicket m2;
   m2.ticketNum = 1;
