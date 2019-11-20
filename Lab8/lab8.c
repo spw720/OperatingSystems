@@ -18,6 +18,9 @@ struct MTQ {
   const int length;
 };
 
+typedef struct mealTicket mealTicket;
+typedef struct MTQ MTQ;
+
 MTQ *registry[MAXQUEUES];
 
 int enqueue(char *MTQ_ID, mealTicket *MT){
