@@ -29,14 +29,13 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
 }//end of dequeue()
 
 
-MTQ *registry[MAXQUEUES];
+MTQ registry[MAXQUEUES];
 
 int main(){
 
   //initialize all MTQ structs
   struct MTQ breakfast;
-  char * temp = "breakfast";
-  breakfast.name = temp;
+  breakfast.name = "breakfast";
   struct MTQ lunch;
   lunch.name = "lunch";
   struct MTQ dinner;
