@@ -50,7 +50,7 @@ int main(){
   // registry[2] = dinner;
   // registry[3] = bar;
 
-  registry = {breakfast, lunch, dinner, bar};
+  *registry = {breakfast, lunch, dinner, bar};
 
   //create and initialize 3 meal-tickets
   struct mealTicket m1;
