@@ -48,10 +48,10 @@ int main(){
   MTQ bar;
   *bar.name = "bar";
 
-  printf("BFAST: %s\n", breakfast.name);
-  printf("LUNCH: %s\n", lunch.name);
-  printf("DINNER: %s\n", dinner.name);
-  printf("BAR: %s\n", bar.name);
+  printf("BFAST: %s\n", *breakfast.name);
+  printf("LUNCH: %s\n", *lunch.name);
+  printf("DINNER: %s\n", *dinner.name);
+  printf("BAR: %s\n", *bar.name);
 
 
   //push all MTQ's onto register
