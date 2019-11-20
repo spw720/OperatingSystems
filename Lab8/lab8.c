@@ -68,21 +68,21 @@ int main(){
   m3.dish = "three";
 
   //push meal tickets into MTQ's
-  enqueue(breakfast.name, &m1);
-  enqueue(breakfast.name, &m2);
-  enqueue(breakfast.name, &m3);
+  enqueue(&breakfast.name, &m1);
+  enqueue(&breakfast.name, &m2);
+  enqueue(&breakfast.name, &m3);
 
-  enqueue(lunch.name, &m1);
-  enqueue(lunch.name, &m2);
-  enqueue(lunch.name, &m3);
+  enqueue(&lunch.name, &m1);
+  enqueue(&lunch.name, &m2);
+  enqueue(&lunch.name, &m3);
 
-  enqueue(dinner.name, &m1);
-  enqueue(dinner.name, &m2);
-  enqueue(dinner.name, &m3);
+  enqueue(&dinner.name, &m1);
+  enqueue(&dinner.name, &m2);
+  enqueue(&dinner.name, &m3);
 
-  enqueue(bar.name, &m1);
-  enqueue(bar.name, &m2);
-  enqueue(bar.name, &m3);
+  enqueue(&bar.name, &m1);
+  enqueue(&bar.name, &m2);
+  enqueue(&bar.name, &m3);
 
 
 
