@@ -48,6 +48,12 @@ int main(){
   MTQ bar;
   *bar.name = "bar";
 
+  printf("BFAST: %s\n", *breakfast.name);
+  printf("LUNCH: %s\n", *lunch.name);
+  printf("DINNER: %s\n", *dinner.name);
+  printf("BAR: %s\n", *bar.name);
+
+
   //push all MTQ's onto register
   registry[0] = &breakfast;
   registry[1] = &lunch;
@@ -68,21 +74,21 @@ int main(){
   m3.dish = "three";
 
   //push meal tickets into MTQ's
-  enqueue(&breakfast.name, &m1);
-  enqueue(&breakfast.name, &m2);
-  enqueue(&breakfast.name, &m3);
-
-  enqueue(&lunch.name, &m1);
-  enqueue(&lunch.name, &m2);
-  enqueue(&lunch.name, &m3);
-
-  enqueue(&dinner.name, &m1);
-  enqueue(&dinner.name, &m2);
-  enqueue(&dinner.name, &m3);
-
-  enqueue(&bar.name, &m1);
-  enqueue(&bar.name, &m2);
-  enqueue(&bar.name, &m3);
+  // enqueue(&breakfast.name, &m1);
+  // enqueue(&breakfast.name, &m2);
+  // enqueue(&breakfast.name, &m3);
+  //
+  // enqueue(&lunch.name, &m1);
+  // enqueue(&lunch.name, &m2);
+  // enqueue(&lunch.name, &m3);
+  //
+  // enqueue(&dinner.name, &m1);
+  // enqueue(&dinner.name, &m2);
+  // enqueue(&dinner.name, &m3);
+  //
+  // enqueue(&bar.name, &m1);
+  // enqueue(&bar.name, &m2);
+  // enqueue(&bar.name, &m3);
 
 
 
