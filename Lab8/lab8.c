@@ -49,14 +49,19 @@ MTQ *registry[MAXQUEUES];
 
 int main(){
 
-  mealTicket m1;
-
   //initialize all MTQ structs
-  MTQ brk;
-  *brk.name = "Breakfast";
   mealTicket buffer1[BUFFER_SIZE];
+  MTQ brk = {
+    .name = "Breakfast",
+    .buffer = buffer1,
+    .head = 0,
+    .tail = 0,
+    .length = BUFFER_SIZE
+  }
+
+  //*brk.name = "Breakfast";
+
   //*brk.buffer = buffer1;
-  *brk.buffer = m1;
 
   // MTQ lun;
   // *lun.name = "Lunch";
@@ -86,17 +91,17 @@ int main(){
   // registry[3] = &bar;
 
   //create and initialize 3 meal-tickets
-  // mealTicket m1;
-  // m1.ticketNum = 0;
-  // m1.dish = "one";
+  mealTicket m1;
+  m1.ticketNum = 0;
+  m1.dish = "d_one";
 
   mealTicket m2;
   m2.ticketNum = 1;
-  m2.dish = "two";
+  m2.dish = "d_two";
 
   mealTicket m3;
   m3.ticketNum = 2;
-  m3.dish = "three";
+  m3.dish = "d_three";
 
   //push meal tickets into MTQ's
   // enqueue(&brk.name, &m1);
