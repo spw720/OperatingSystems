@@ -58,22 +58,22 @@ int main(){
   MTQ breakfast;
   *breakfast.name = "breakfast";
   mealTicket buffer1[BUFFER_SIZE];
-  breakfast.buffer = &buffer1;
+  *breakfast.buffer = &buffer1;
 
   MTQ lunch;
   *lunch.name = "lunch";
   mealTicket buffer2[BUFFER_SIZE];
-  lunch.buffer = &buffer2;
+  *lunch.buffer = &buffer2;
 
   MTQ dinner;
   *dinner.name = "dinner";
   mealTicket buffer3[BUFFER_SIZE];
-  dinner.buffer = &buffer3;
+  *dinner.buffer = &buffer3;
 
   MTQ bar;
   *bar.name = "bar";
   mealTicket buffer4[BUFFER_SIZE];
-  bar.buffer = &buffer4;
+  *bar.buffer = &buffer4;
 
   printf("BFAST: %s\n", *breakfast.name);
   printf("LUNCH: %s\n", *lunch.name);
