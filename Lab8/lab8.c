@@ -53,7 +53,7 @@ int main(){
   MTQ brk;
   *brk.name = "Breakfast";
   mealTicket buffer1[BUFFER_SIZE];
-  brk.buffer = &buffer1;
+  brk.*buffer = &buffer1;
 
   // MTQ lun;
   // *lun.name = "Lunch";
@@ -70,10 +70,11 @@ int main(){
   // mealTicket buffer4[BUFFER_SIZE];
   // *bar.buffer = buffer4;
 
-  printf("BFAST: %s\n", *brk.name);
-  printf("LUNCH: %s\n", *lun.name);
-  printf("DINNER: %s\n", *din.name);
-  printf("BAR: %s\n", *bar.name);
+
+  // printf("BFAST: %s\n", *brk.name);
+  // printf("LUNCH: %s\n", *lun.name);
+  // printf("DINNER: %s\n", *din.name);
+  // printf("BAR: %s\n", *bar.name);
 
   //push all MTQ's onto register
   registry[0] = &brk;
