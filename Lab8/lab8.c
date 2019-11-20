@@ -67,7 +67,7 @@ int main(){
   m3.dish = "three";
 
   //push meal tickets into MTQ's
-  //breakfast.buffer[0] =
+  breakfast.buffer[0] = m1;
 
 
 
