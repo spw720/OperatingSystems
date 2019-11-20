@@ -22,11 +22,13 @@ typedef struct MTQ MTQ;
 
 int enqueue(char *MTQ_ID, mealTicket *MT){
 
-
+  return 0;
 
 }//end of enqueue()
 
 int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
+
+  return 0;
 
 }//end of dequeue()
 
@@ -66,21 +68,21 @@ int main(){
   m3.dish = "three";
 
   //push meal tickets into MTQ's
-  enqueue(&breakfast, &m1);
-  enqueue(&breakfast, &m2);
-  enqueue(&breakfast, &m3);
+  enqueue(breakfast.name, &m1);
+  enqueue(breakfast.name, &m2);
+  enqueue(breakfast.name, &m3);
 
-  enqueue(&lunch, &m1);
-  enqueue(&lunch, &m2);
-  enqueue(&lunch, &m3);
+  enqueue(lunch.name, &m1);
+  enqueue(lunch.name, &m2);
+  enqueue(lunch.name, &m3);
 
-  enqueue(&dinner, &m1);
-  enqueue(&dinner, &m2);
-  enqueue(&dinner, &m3);
+  enqueue(dinner.name, &m1);
+  enqueue(dinner.name, &m2);
+  enqueue(dinner.name, &m3);
 
-  enqueue(&bar, &m1);
-  enqueue(&bar, &m2);
-  enqueue(&bar, &m3);
+  enqueue(bar.name, &m1);
+  enqueue(bar.name, &m2);
+  enqueue(bar.name, &m3);
 
 
 
