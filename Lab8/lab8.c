@@ -20,8 +20,6 @@ struct MTQ {
 };
 typedef struct MTQ MTQ;
 
-MTQ *registry[MAXQUEUES];
-
 int enqueue(char *MTQ_ID, mealTicket *MT){
 
 }//end of enqueue()
@@ -30,11 +28,15 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
 
 }//end of dequeue()
 
+
+MTQ *registry[MAXQUEUES];
+
 int main(){
 
   //initialize all MTQ structs
   struct MTQ breakfast;
-  breakfast.name = "breakfast";
+  char * temp = "breakfast";
+  breakfast.name = temp;
   struct MTQ lunch;
   lunch.name = "lunch";
   struct MTQ dinner;
@@ -63,7 +65,7 @@ int main(){
   m3.dish = "three";
 
   //push meal tickets into MTQ's
-  //breakfast.buffer[0] = 
+  //breakfast.buffer[0] =
 
 
 
