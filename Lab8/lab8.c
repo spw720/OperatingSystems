@@ -77,10 +77,10 @@ int main(){
   // printf("BAR: %s\n", *bar.name);
 
   //push all MTQ's onto register
-  registry[0] = &brk;
-  registry[1] = &lun;
-  registry[2] = &din;
-  registry[3] = &bar;
+  // registry[0] = &brk;
+  // registry[1] = &lun;
+  // registry[2] = &din;
+  // registry[3] = &bar;
 
   //create and initialize 3 meal-tickets
   mealTicket m1;
