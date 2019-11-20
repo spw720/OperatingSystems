@@ -5,8 +5,6 @@
 #define MAXNAME 100
 #define MAXQUEUES 10
 
-MTQ *registry[MAXQUEUES];
-
 struct mealTicket {
   int ticketNum;
   char *dish;
@@ -14,11 +12,13 @@ struct mealTicket {
 
 struct MTQ {
   char *name[MAXNAME];
-  mealTicket * const buffer;
+  mealTicket *const buffer;
   int head;
   int tail;
   const int length;
 };
+
+MTQ *registry[MAXQUEUES];
 
 int enqueue(char *MTQ_ID, mealTicket *MT){
 
@@ -29,7 +29,7 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
 }//end of dequeue()
 
 int main(){
-  
+
   //initialize all MTQ structs
   struct MTQ breakfast;
   breakfast.name = "breakfast";
@@ -61,6 +61,7 @@ int main(){
   m3.dish = "three";
 
   //push meal tickets into MTQ's
+  breakfast.buffer[0] =
 
 
 
