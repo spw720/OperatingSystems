@@ -21,7 +21,7 @@ typedef struct mealTicket mealTicket;
 
 struct MTQ {
   char *name[MAXNAME];
-  mealTicket *const buffer;
+  mealTicket * const buffer;
   int head;
   int tail;
   const int length;
@@ -57,22 +57,22 @@ int main(){
   //initialize all MTQ structs
   MTQ breakfast;
   *breakfast.name = "breakfast";
-  mealTicket buffer1[BUFFER_SIZE];
+  mealTicket *buffer1[BUFFER_SIZE];
   *breakfast.buffer = &buffer1;
 
   MTQ lunch;
   *lunch.name = "lunch";
-  mealTicket buffer2[BUFFER_SIZE];
+  mealTicket *buffer2[BUFFER_SIZE];
   *lunch.buffer = &buffer2;
 
   MTQ dinner;
   *dinner.name = "dinner";
-  mealTicket buffer3[BUFFER_SIZE];
+  mealTicket *buffer3[BUFFER_SIZE];
   *dinner.buffer = &buffer3;
 
   MTQ bar;
   *bar.name = "bar";
-  mealTicket buffer4[BUFFER_SIZE];
+  mealTicket *buffer4[BUFFER_SIZE];
   *bar.buffer = &buffer4;
 
   printf("BFAST: %s\n", *breakfast.name);
