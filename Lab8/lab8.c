@@ -53,7 +53,7 @@ int main(){
   MTQ brk;
   *brk.name = "Breakfast";
   mealTicket buffer1[BUFFER_SIZE];
-  int temp = &buffer1;
+  mealTicket * temp = &buffer1;
   *brk.buffer = temp;
 
   // MTQ lun;
