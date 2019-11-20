@@ -22,6 +22,8 @@ typedef struct MTQ MTQ;
 
 int enqueue(char *MTQ_ID, mealTicket *MT){
 
+
+
 }//end of enqueue()
 
 int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
@@ -35,13 +37,13 @@ MTQ *registry[MAXQUEUES];
 int main(){
 
   //initialize all MTQ structs
-  struct MTQ breakfast;
+  MTQ breakfast;
   *breakfast.name = "breakfast";
-  struct MTQ lunch;
+  MTQ lunch;
   *lunch.name = "lunch";
-  struct MTQ dinner;
+  MTQ dinner;
   *dinner.name = "dinner";
-  struct MTQ bar;
+  MTQ bar;
   *bar.name = "bar";
 
   //push all MTQ's onto register
@@ -51,33 +53,34 @@ int main(){
   registry[3] = &bar;
 
   //create and initialize 3 meal-tickets
-  struct mealTicket m1;
+  mealTicket m1;
   m1.ticketNum = 0;
   m1.dish = "one";
 
-  struct mealTicket m2;
+  mealTicket m2;
   m2.ticketNum = 1;
   m2.dish = "two";
 
-  struct mealTicket m3;
+  mealTicket m3;
   m3.ticketNum = 2;
   m3.dish = "three";
 
   //push meal tickets into MTQ's
-  breakfast.buffer[0] = m1;
-  lunch.buffer[0] = m1;
-  dinner.buffer[0] = m1;
-  bar.buffer[0] = m1;
+  enqueue(&breakfast, &m1);
+  enqueue(&breakfast, &m2);
+  enqueue(&breakfast, &m3);
 
-  breakfast.buffer[1] = m2;
-  lunch.buffer[1] = m2;
-  dinner.buffer[1] = m2;
-  bar.buffer[1] = m2;
+  enqueue(&lunch, &m1);
+  enqueue(&lunch, &m2);
+  enqueue(&lunch, &m3);
 
-  breakfast.buffer[2] = m3;
-  lunch.buffer[2] = m3;
-  dinner.buffer[2] = m3;
-  bar.buffer[2] = m3;
+  enqueue(&dinner, &m1);
+  enqueue(&dinner, &m2);
+  enqueue(&dinner, &m3);
+
+  enqueue(&bar, &m1);
+  enqueue(&bar, &m2);
+  enqueue(&bar, &m3);
 
 
 
