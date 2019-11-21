@@ -127,7 +127,7 @@ int main(){
   m3.dish = "d_three";
 
   //push meal tickets into MTQ's
-  printf("%s\n", brk.name);
+  printf("%s\n", *brk->name);
   // enqueue(brk.name, &m1);
   // enqueue(brk.name, &m2);
   // enqueue(brk.name, &m3);
