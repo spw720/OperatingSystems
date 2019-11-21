@@ -112,8 +112,8 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
         registry[i]->buffer[registry[i]->head-1].dish = "default";
 
         printf("HEAD-1 now has: [%d, %s]\n",
-        registry[i]->buffer[registry[i]->head].ticketNum,
-        registry[i]->buffer[registry[i]->head].dish);
+        registry[i]->buffer[registry[i]->head-1].ticketNum,
+        registry[i]->buffer[registry[i]->head-1].dish);
 
 
         printf("HEAD was: %d\n", registry[i]->head);
