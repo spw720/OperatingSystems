@@ -59,7 +59,10 @@ int enqueue(char *MTQ_ID, mealTicket *MT){
           registry[i]->tail);
 
         //increment tail
-        registry[i]->tail += 1; //TODO make this wraparound
+        //registry[i]->tail += 1; //TODO make this wraparound
+        printf("TAIL BEFORE: [%d]\n", registry[i]->tail);
+        registry[i]->tail = registry[i]->tail + 1 % BUFFER_SIZE;
+        printf("TAIL AFTER: [%d]\n", registry[i]->tail);
 
         return 1;
       }
@@ -100,7 +103,10 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
         registry[i]->buffer[registry[i]->head].dish = "null";
 
         //Increment head
-        registry[i]->head += 1; //TODO make this wraparound
+        //registry[i]->head += 1; //TODO make this wraparound
+        printf("HEAD BEFORE: [%d]\n", registry[i]->head);
+        registry[i]->head = registry[i]->head + 1 % BUFFER_SIZE;
+        printf("HEAD AFTER: [%d]\n", registry[i]->head);
 
         return 1;
 
