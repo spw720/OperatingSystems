@@ -218,13 +218,13 @@ int main(){
     printf("\n");
 
     if (dequeue(*brk.name, 1, &test) == 0) {is_empty--;}
-    else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *brk.name, test.ticketNum, test.dish);}
+    //else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *brk.name, test.ticketNum, test.dish);}
     if (dequeue(*lun.name, 1, &test) == 0) {is_empty--;}
-    else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *lun.name, test.ticketNum, test.dish);}
+    //else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *lun.name, test.ticketNum, test.dish);}
     if (dequeue(*din.name, 1, &test) == 0) {is_empty--;}
-    else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *din.name, test.ticketNum, test.dish);}
+    //else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *din.name, test.ticketNum, test.dish);}
     if (dequeue(*bar.name, 1, &test) == 0) {is_empty--;}
-    else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *bar.name, test.ticketNum, test.dish);}
+    //else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *bar.name, test.ticketNum, test.dish);}
 
   }//end of while(not all queues are empty)
 
