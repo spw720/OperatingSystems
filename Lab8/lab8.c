@@ -188,6 +188,10 @@ int main(){
   m3.ticketNum = 0;
   m3.dish = "d_three";
 
+  mealTicket default;
+  default.ticketNum = 0;
+  default.dish = "default";
+
   //push meal tickets into MTQ's
   enqueue(*brk.name, &m1);
   enqueue(*brk.name, &m2);
@@ -238,6 +242,10 @@ int main(){
   enqueue(*lun.name, &m2);
   enqueue(*lun.name, &m3);
   enqueue(*lun.name, &m1);
+  enqueue(*lun.name, &m1);
+  enqueue(*lun.name, &m2);
+  enqueue(*lun.name, &m3);
+  enqueue(*lun.name, &m1);
   enqueue(*lun.name, &m2);
   enqueue(*lun.name, &m3);
   enqueue(*lun.name, &m1);
@@ -265,6 +273,11 @@ int main(){
   printf("\n***TEST [D]***\n");
   printf("Test Case: <D> - Result: <%d>\n", enqueue(*bar.name, &m1));
 
+  dequeue(*lun.name, 1, &test);
+  dequeue(*lun.name, 1, &test);
+  dequeue(*lun.name, 1, &test);
+  dequeue(*lun.name, 1, &test);
+  dequeue(*lun.name, 1, &test);
   dequeue(*lun.name, 1, &test);
   dequeue(*lun.name, 1, &test);
   dequeue(*lun.name, 1, &test);
