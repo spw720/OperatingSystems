@@ -54,12 +54,12 @@ int enqueue(char *MTQ_ID, mealTicket *MT){
         global_ticket++;
 
         printf("placed ticket[%s, %d] @ index[%d]\n",
-        registry[i]->buffer[registry[i]->tail].dish,
-        registry[i]->buffer[registry[i]->tail].ticketNum,
-        registry[i]->tail);
+          registry[i]->buffer[registry[i]->tail].dish,
+          registry[i]->buffer[registry[i]->tail].ticketNum,
+          registry[i]->tail);
 
         //increment tail
-        registry[i]->tail += 1;
+        registry[i]->tail += 1; //TODO make this wraparound
 
         return 1;
       }
@@ -91,16 +91,16 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
         MT->ticketNum = registry[i]->buffer[registry[i]->head].ticketNum;
         MT->dish = registry[i]->buffer[registry[i]->head].dish;
 
+        //Set data @ tail to blank data entry
+        registry[i]->buffer[registry[i]->tail].ticketNum = 0;
+        registry[i]->buffer[registry[i]->tail].dish = "default";
+
         //Set where head is to NULL
         registry[i]->buffer[registry[i]->head].ticketNum = -1;
         registry[i]->buffer[registry[i]->head].dish = "null";
 
-        //Set where NULL ~WAS~ to blank data entry
-        registry[i]->buffer[registry[i]->head-1].ticketNum = 0;
-        registry[i]->buffer[registry[i]->head-1].dish = "default";
-
         //Increment head
-        registry[i]->head += 1;
+        registry[i]->head += 1; //TODO make this wraparound
 
         return 1;
 
@@ -206,7 +206,7 @@ int main(){
   while(is_empty > 0){
 
     for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-      printf("%s, ", *registry[0]->buffer[i].dish);
+      printf("%s, ", registry[0]->buffer[i].dish);
     }
 
     if (dequeue(*brk.name, 1, &test) == 0) {is_empty--;}
@@ -254,27 +254,29 @@ int main(){
   // printf("\n***TEST [D]***\n");
   // printf("Test Case: <D> - Result: <%d>\n", enqueue(*bar.name, &m1));
 
-  for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-    printf("%d, \n", registry[0]->buffer[i].ticketNum);
-  }
+  //More testing.........
 
-  printf("\n\n");
-
-  for (size_t i = 0; i < BUFFER_SIZE+1; i++) {
-    printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  }
-
-  printf("\n\n");
-
-  for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-    printf("%d, \n", registry[0]->buffer[i].ticketNum);
-  }
-
-  for (size_t i = 0; i < BUFFER_SIZE+1; i++) {
-    printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
-  }
-
-  printf("\n\n");
+  // for (size_t i = 0; i <= BUFFER_SIZE; i++) {
+  //   printf("%d, \n", registry[0]->buffer[i].ticketNum);
+  // }
+  //
+  // printf("\n\n");
+  //
+  // for (size_t i = 0; i < BUFFER_SIZE+1; i++) {
+  //   printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  // }
+  //
+  // printf("\n\n");
+  //
+  // for (size_t i = 0; i <= BUFFER_SIZE; i++) {
+  //   printf("%d, \n", registry[0]->buffer[i].ticketNum);
+  // }
+  //
+  // for (size_t i = 0; i < BUFFER_SIZE+1; i++) {
+  //   printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  // }
+  //
+  // printf("\n\n");
 
 
   return 0;
