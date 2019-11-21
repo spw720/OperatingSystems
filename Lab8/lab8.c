@@ -38,7 +38,7 @@ MTQ *registry[MAXQUEUES];
 int enqueue(char *MTQ_ID, mealTicket *MT){
 
   for (size_t i = 0; i < MAXQUEUES; i++) {
-    if (strcmp(registry[i].name, MTQ_ID) == 0){
+    if (strcmp(*registry[i].name, MTQ_ID) == 0){
 
     }
   }
