@@ -39,8 +39,6 @@ int global_ticket = 1;
 
 int enqueue(char *MTQ_ID, mealTicket *MT){
 
-  printf("\n--------------------------------\n\n");
-
   for (size_t i = 0; i < MAXQUEUES; i++) {
 
     if (strcmp(*registry[i]->name, MTQ_ID) == 0){
@@ -61,9 +59,7 @@ int enqueue(char *MTQ_ID, mealTicket *MT){
         registry[i]->tail);
 
         //increment tail
-        printf("tail was: %d\n", registry[i]->tail);
         registry[i]->tail += 1;
-        printf("tail is now: %d\n", registry[i]->tail);
 
         return 1;
       }
