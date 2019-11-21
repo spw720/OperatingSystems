@@ -175,6 +175,16 @@ int main(){
   registry[2] = &din;
   registry[3] = &bar;
 
+  mealTicket def;
+  def.ticketNum = 0;
+  def.dish = "default";
+  for (size_t i = 0; i < BUFFER_SIZE; i++) {
+    brk.buffer[i] = def;
+    lun.buffer[i] = def;
+    din.buffer[i] = def;
+    bar.buffer[i] = def;
+  }
+
   //create and initialize 3 meal-tickets
   mealTicket m1;
   m1.ticketNum = 0;
