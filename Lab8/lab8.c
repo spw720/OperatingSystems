@@ -84,8 +84,6 @@ int enqueue(char *MTQ_ID, mealTicket *MT){
 
 int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
 
-  printf("\n--------------------------------\n\n");
-
   for (size_t i = 0; i < MAXQUEUES; i++) {
 
     if (strcmp(*registry[i]->name, MTQ_ID) == 0){
