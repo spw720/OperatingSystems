@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 
 #define MAXNAME 100 //max name of mealTicket queue
-#define MAXQUEUES 10 //max number of queues
+#define MAXQUEUES 4 //max number of queues
 
 #define BUFFER_SIZE 8 //max entries in each MTQ Buffer
 
@@ -124,8 +124,6 @@ int main(){
   m3.dish = "d_three";
 
   //push meal tickets into MTQ's
-  printf("%s\n", *brk.name);
-
   enqueue(*brk.name, &m1);
   enqueue(*brk.name, &m2);
   enqueue(*brk.name, &m3);
