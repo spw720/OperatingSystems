@@ -205,9 +205,11 @@ int main(){
 
   while(is_empty > 0){
 
+    printf("\n");
     for (size_t i = 0; i <= BUFFER_SIZE; i++) {
       printf("%s, ", registry[0]->buffer[i].dish);
     }
+    printf("\n");
 
     if (dequeue(*brk.name, 1, &test) == 0) {is_empty--;}
     else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *brk.name, test.ticketNum, test.dish);}
