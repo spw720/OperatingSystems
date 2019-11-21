@@ -148,6 +148,11 @@ int main(){
   enqueue(*brk.name, &m1);
   enqueue(*brk.name, &m2);
   enqueue(*brk.name, &m3);
+  enqueue(*brk.name, &m2);
+  enqueue(*brk.name, &m3);
+  enqueue(*brk.name, &m1);
+  enqueue(*brk.name, &m2);
+  enqueue(*brk.name, &m3);
 
   // enqueue(*lun.name, &m1);
   // enqueue(*lun.name, &m2);
