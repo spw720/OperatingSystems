@@ -99,15 +99,26 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
         //if tail null:
         if (registry[i]->buffer[registry[i]->tail].ticketNum == -1){
 
-          //set tail to 0
-          registry[i]->buffer[registry[i]->tail].ticketNum = 0;
-          registry[i]->buffer[registry[i]->tail].dish = "default";
+          // //set tail to 0
+          // registry[i]->buffer[registry[i]->tail].ticketNum = 0;
+          // registry[i]->buffer[registry[i]->tail].dish = "default";
+          //
+          // //Set where head is to NULL
+          // //TODO set head-1 modulo to null
+          // int head_minus1 = (registry[i]->head - 1) % (BUFFER_SIZE+1);
+          // registry[i]->buffer[head_minus1].ticketNum = -1;
+          // registry[i]->buffer[head_minus1].dish = "null";
 
-          //Set where head is to NULL
-          //TODO set head-1 modulo to null
+          registry[i]->buffer[registry[i]->head].ticketNum = -1;
+          registry[i]->buffer[registry[i]->head].dish = "null";
+
           int head_minus1 = (registry[i]->head - 1) % (BUFFER_SIZE+1);
-          registry[i]->buffer[head_minus1].ticketNum = -1;
-          registry[i]->buffer[head_minus1].dish = "null";
+          registry[i]->buffer[head_minus1].ticketNum = 0;
+          registry[i]->buffer[head_minus1].dish = "default";
+
+          int new_head = (registry[i]->head + 1) % (BUFFER_SIZE+1);
+          registry[i]->head = new_head;
+
 
         }
         else{
