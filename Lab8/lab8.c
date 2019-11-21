@@ -334,7 +334,7 @@ int main(){
 
   //test D.
   printf("\n***TEST [D] (enqueue empty queue)***\n");
-  printf("BAR BUFFER WAS:\t");
+  printf("BAR BUFFER WAS:    \t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[3]->buffer[i].ticketNum);
   }
