@@ -288,22 +288,22 @@ int main(){
 
   //test B.
   printf("\n***TEST [B] (dequeue full queue)***\n");
+  enqueue(*lun.name, &m1);
+  enqueue(*lun.name, &m2);
+  enqueue(*lun.name, &m3);
+  enqueue(*lun.name, &m1);
+  enqueue(*lun.name, &m1);
+  enqueue(*lun.name, &m2);
+  enqueue(*lun.name, &m3);
+  enqueue(*lun.name, &m1);
+  enqueue(*lun.name, &m2);
+  enqueue(*lun.name, &m3);
+  enqueue(*lun.name, &m3);
   printf("LUNCH BUFF WAS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[1]->buffer[i].ticketNum);
   }
   printf("\n");
-  enqueue(*lun.name, &m1);
-  enqueue(*lun.name, &m2);
-  enqueue(*lun.name, &m3);
-  enqueue(*lun.name, &m1);
-  enqueue(*lun.name, &m1);
-  enqueue(*lun.name, &m2);
-  enqueue(*lun.name, &m3);
-  enqueue(*lun.name, &m1);
-  enqueue(*lun.name, &m2);
-  enqueue(*lun.name, &m3);
-  enqueue(*lun.name, &m3);
   printf("Test Case: <B> - Result: <%d>\n", dequeue(*lun.name, 1, &test));
   printf("LUNCH BUFF NOW IS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
@@ -313,20 +313,20 @@ int main(){
 
   //test C.
   printf("\n***TEST [C] (enqueue full queue)***\n");
+  enqueue(*din.name, &m1);
+  enqueue(*din.name, &m2);
+  enqueue(*din.name, &m3);
+  enqueue(*din.name, &m1);
+  enqueue(*din.name, &m2);
+  enqueue(*din.name, &m2);
+  enqueue(*din.name, &m3);
+  enqueue(*din.name, &m1);
+  enqueue(*din.name, &m3);
   printf("DINNER BUFF WAS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[2]->buffer[i].ticketNum);
   }
   printf("\n");
-  enqueue(*din.name, &m1);
-  enqueue(*din.name, &m2);
-  enqueue(*din.name, &m3);
-  enqueue(*din.name, &m1);
-  enqueue(*din.name, &m2);
-  enqueue(*din.name, &m2);
-  enqueue(*din.name, &m3);
-  enqueue(*din.name, &m1);
-  enqueue(*din.name, &m3);
   printf("Test Case: <C> - Result: <%d>\n", enqueue(*din.name, &m3));
   printf("DINNER BUF NOW IS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
