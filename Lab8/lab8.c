@@ -59,7 +59,7 @@ int enqueue(char *MTQ_ID, mealTicket *MT){
         registry[i]->tail);
 
         //increment tail
-        registry[i]->tail += 1;
+        registry[i]->tail += 1 % BUFFER_SIZE;
 
         return 1;
       }
@@ -104,7 +104,7 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
         registry[i]->buffer[registry[i]->head-1].dish = "default";
 
         //Increment head
-        registry[i]->head += 1;
+        registry[i]->head += 1 % BUFFER_SIZE;
 
         return 1;
 
