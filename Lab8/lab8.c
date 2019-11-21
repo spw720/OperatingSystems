@@ -297,7 +297,7 @@ int main(){
   enqueue(*lun.name, &m3);
   enqueue(*lun.name, &m1);
   enqueue(*lun.name, &m2);
-  printf("LUNCH BUFF WAS:\t");
+  printf("LUNCH BUFFER WAS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[1]->buffer[i].ticketNum);
   }
@@ -334,7 +334,7 @@ int main(){
 
   //test D.
   printf("\n***TEST [D] (enqueue empty queue)***\n");
-  printf("BAR BUFF WAS:\t");
+  printf("BAR BUFFER WAS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[3]->buffer[i].ticketNum);
   }
