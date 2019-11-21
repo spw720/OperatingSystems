@@ -35,6 +35,8 @@ MTQ *registry[MAXQUEUES];
 
 //-----------------------------------------------------------------------------
 
+int global_ticket = 1;
+
 int enqueue(char *MTQ_ID, mealTicket *MT){
 
   for (size_t i = 0; i < MAXQUEUES; i++) {
@@ -44,9 +46,17 @@ int enqueue(char *MTQ_ID, mealTicket *MT){
       //if tail is NOT located @ null
       if (registry[i]->buffer[registry[i]->tail].ticketNum != -1){
 
+        //Set MT ticketNum
+        registry[i]->buffer[registry[i]->tail].ticketNum = global_ticket;
+        global_ticket += 1;
+
         //place MT at tail location
         registry[i]->buffer[registry[i]->tail] = *MT;
-        printf("ticknum: %d dish: %s\n", registry[i]->buffer[registry[i]->tail].ticketNum, registry[i]->buffer[registry[i]->tail].dish);
+        
+        printf("\nplaced ticket %s %d in queue @ index[%d]\n",
+        registry[i]->buffer[registry[i]->tail].dish,
+        registry[i]->buffer[registry[i]->tail].ticketNum,
+        registry[i]->tail);
 
         //increment tail
         printf("tail was: %d\n", registry[i]->tail);
@@ -131,11 +141,11 @@ int main(){
   m1.dish = "d_one";
 
   mealTicket m2;
-  m2.ticketNum = 1;
+  m2.ticketNum = 0;
   m2.dish = "d_two";
 
   mealTicket m3;
-  m3.ticketNum = 2;
+  m3.ticketNum = 0;
   m3.dish = "d_three";
 
   //push meal tickets into MTQ's
@@ -148,23 +158,21 @@ int main(){
   enqueue(*brk.name, &m1);
   enqueue(*brk.name, &m2);
   enqueue(*brk.name, &m3);
-  enqueue(*brk.name, &m2);
-  enqueue(*brk.name, &m3);
   enqueue(*brk.name, &m1);
   enqueue(*brk.name, &m2);
   enqueue(*brk.name, &m3);
 
-  // enqueue(*lun.name, &m1);
-  // enqueue(*lun.name, &m2);
-  // enqueue(*lun.name, &m3);
-  //
-  // enqueue(*din.name, &m1);
-  // enqueue(*din.name, &m2);
-  // enqueue(*din.name, &m3);
-  //
-  // enqueue(*bar.name, &m1);
-  // enqueue(*bar.name, &m2);
-  // enqueue(*bar.name, &m3);
+  enqueue(*lun.name, &m1);
+  enqueue(*lun.name, &m2);
+  enqueue(*lun.name, &m3);
+
+  enqueue(*din.name, &m1);
+  enqueue(*din.name, &m2);
+  enqueue(*din.name, &m3);
+
+  enqueue(*bar.name, &m1);
+  enqueue(*bar.name, &m2);
+  enqueue(*bar.name, &m3);
 
 
 
