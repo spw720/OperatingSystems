@@ -11,6 +11,11 @@
 
 //-----------------------------------------------------------------------------
 
+//Global registry
+MTQ *registry[MAXQUEUES];
+
+//-----------------------------------------------------------------------------
+
 struct mealTicket {
   int ticketNum;
   char *dish;
@@ -48,11 +53,6 @@ int enqueue(char *MTQ_ID, mealTicket *MT){
 int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
   return 0;
 }//end of dequeue()
-
-//-----------------------------------------------------------------------------
-
-//Global registry
-MTQ *registry[MAXQUEUES];
 
 //-----------------------------------------------------------------------------
 
