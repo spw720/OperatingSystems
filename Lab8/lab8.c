@@ -97,29 +97,20 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
         MT->ticketNum = registry[i]->buffer[registry[i]->head].ticketNum;
         MT->dish = registry[i]->buffer[registry[i]->head].dish;
 
-        printf("MT now has: [%d, %s]\n", MT->ticketNum, MT->dish);
-
         //Set where head is to NULL
         registry[i]->buffer[registry[i]->head].ticketNum = -1;
         registry[i]->buffer[registry[i]->head].dish = "null";
 
-        printf("HEAD now has: [%d, %s]\n",
-        registry[i]->buffer[registry[i]->head].ticketNum,
-        registry[i]->buffer[registry[i]->head].dish);
+        // printf("HEAD now has: [%d, %s]\n",
+        // registry[i]->buffer[registry[i]->head].ticketNum,
+        // registry[i]->buffer[registry[i]->head].dish);
 
         //Set where NULL ~WAS~ to blank data entry
         registry[i]->buffer[registry[i]->head-1].ticketNum = 0;
         registry[i]->buffer[registry[i]->head-1].dish = "default";
 
-        printf("HEAD-1 now has: [%d, %s]\n",
-        registry[i]->buffer[registry[i]->head-1].ticketNum,
-        registry[i]->buffer[registry[i]->head-1].dish);
-
-
-        printf("HEAD was: %d\n", registry[i]->head);
         //Increment head
         registry[i]->head += 1;
-        printf("HEAD is now: %d\n", registry[i]->head);
 
         return 1;
 
