@@ -374,16 +374,8 @@ int main(){
   }
 
   printf("\nBRK BUFF NOW IS:\t");
-
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-
     printf("%d, ", registry[1]->buffer[i].ticketNum);
-
-    for (size_t j = 0; j <= BUFFER_SIZE; j++) {
-      printf("%d, ", registry[1]->buffer[j].ticketNum);
-    }
-    printf("\nHEAD[%d] TAIL[%d]\n", registry[1]->head, registry[1]->tail);
-
   }
   printf("\nHEAD[%d] TAIL[%d]\n", registry[1]->head, registry[1]->tail);
 
@@ -391,6 +383,10 @@ int main(){
 
   for (size_t i = 0; i < BUFFER_SIZE+2; i++) {
     dequeue(*lun.name, 1, &test);
+    for (size_t j = 0; j <= BUFFER_SIZE; j++) {
+      printf("%d, ", registry[1]->buffer[j].ticketNum);
+    }
+    printf("\nHEAD[%d] TAIL[%d]\n", registry[1]->head, registry[1]->tail);
   }
 
   printf("\nBRK BUFF NOW IS:\t");
