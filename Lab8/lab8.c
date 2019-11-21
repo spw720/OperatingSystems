@@ -365,7 +365,7 @@ int main(){
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[1]->buffer[i].ticketNum);
   }
-  printf("\nHEAD[%d] TAIL[%d]\n", registry[1].head, registry[1].tail);
+  printf("\nHEAD[%d] TAIL[%d]\n", registry[1]->head, registry[1]->tail);
 
   printf("\n\nENQUING A FUCK TON\n");
 
@@ -377,7 +377,7 @@ int main(){
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[1]->buffer[i].ticketNum);
   }
-  printf("\nHEAD[%d] TAIL[%d]\n", registry[1].head, registry[1].tail);
+  printf("\nHEAD[%d] TAIL[%d]\n", registry[1]->head, registry[1]->tail);
 
   printf("\n\nDEQUING A FUCK TON\n");
 
@@ -389,7 +389,7 @@ int main(){
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[1]->buffer[i].ticketNum);
   }
-  printf("\nHEAD[%d] TAIL[%d]\n", registry[1].head, registry[1].tail);
+  printf("\nHEAD[%d] TAIL[%d]\n", registry[1]->head, registry[1]->tail);
 
   printf("\n\nENQUING A FUCK TON\n");
 
@@ -401,7 +401,7 @@ int main(){
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[1]->buffer[i].ticketNum);
   }
-  printf("\nHEAD[%d] TAIL[%d]\n", registry[1].head, registry[1].tail);
+  printf("\nHEAD[%d] TAIL[%d]\n", registry[1]->head, registry[1]->tail);
 
   printf("\n\nDEQUING A FUCK TON\n");
 
@@ -413,7 +413,7 @@ int main(){
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[1]->buffer[i].ticketNum);
   }
-  printf("\nHEAD[%d] TAIL[%d]\n", registry[1].head, registry[1].tail);
+  printf("\nHEAD[%d] TAIL[%d]\n", registry[1]->head, registry[1]->tail);
 
   printf("\n\nENQUING A FUCK TON\n");
 
@@ -425,7 +425,7 @@ int main(){
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[1]->buffer[i].ticketNum);
   }
-  printf("\nHEAD[%d] TAIL[%d]\n", registry[1].head, registry[1].tail);
+  printf("\nHEAD[%d] TAIL[%d]\n", registry[1]->head, registry[1]->tail);
 
   printf("\n\n");
 
