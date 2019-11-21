@@ -365,6 +365,18 @@ int main(){
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[1]->buffer[i].ticketNum);
   }
+
+  printf("\n\nENQUING A FUCK TON\n");
+
+  for (size_t i = 0; i < BUFFER_SIZE+2; i++) {
+    enqueue(*lun.name, &test);
+  }
+
+  printf("\nBRK BUFF NOW IS:\t");
+  for (size_t i = 0; i <= BUFFER_SIZE; i++) {
+    printf("%d, ", registry[1]->buffer[i].ticketNum);
+  }
+  
   printf("\n\nDEQUING A FUCK TON\n");
 
   for (size_t i = 0; i < BUFFER_SIZE+2; i++) {
