@@ -113,6 +113,7 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
           registry[i]->buffer[registry[i]->head].dish = "null";
 
           int head_minus1 = (registry[i]->head - 1) % (BUFFER_SIZE+1);
+          printf("[if] HEAD-1=[%d]\n", head_minus1);
           registry[i]->buffer[head_minus1].ticketNum = 0;
           registry[i]->buffer[head_minus1].dish = "default";
 
@@ -125,6 +126,7 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
           //Set where head is to NULL
 
           int head_minus2 = (registry[i]->head - 1) % (BUFFER_SIZE+1);
+          printf("[else] HEAD-1=[%d]\n", head_minus2);
           registry[i]->buffer[head_minus2].ticketNum = 0;
           registry[i]->buffer[head_minus2].dish = "default";
 
