@@ -43,20 +43,26 @@ int enqueue(char *MTQ_ID, mealTicket *MT){
 
       //if tail is NOT located @ null
       if (registry[i]->buffer[registry[i]->tail].ticketNum != -1){
+
         //place MT at tail location
         registry[i]->buffer[registry[i]->tail] = *MT;
         printf("ticknum: %d dish: %s\n", registry[i]->buffer[registry[i]->tail].ticketNum, registry[i]->buffer[registry[i]->tail].dish);
+
         //increment tail
-        printf("TAIL WAS: %d\n", registry[i]->tail);
+        printf("tail was: %d\n", registry[i]->tail);
         registry[i]->tail += 1;
-        printf("TAIL IS NOW: %d\n", registry[i]->tail);
+        printf("tail is now: %d\n", registry[i]->tail);
+
+        return 1;
+      }
+      else{
+        printf("BUFFER FULL\n");
+        return 0;
       }
 
     }//end of if registry is correct
 
   }//end for loop
-
-  return 1;
 
   return 0;
 
@@ -136,18 +142,24 @@ int main(){
   enqueue(*brk.name, &m1);
   enqueue(*brk.name, &m2);
   enqueue(*brk.name, &m3);
+  enqueue(*brk.name, &m1);
+  enqueue(*brk.name, &m2);
+  enqueue(*brk.name, &m3);
+  enqueue(*brk.name, &m1);
+  enqueue(*brk.name, &m2);
+  enqueue(*brk.name, &m3);
 
-  enqueue(*lun.name, &m1);
-  enqueue(*lun.name, &m2);
-  enqueue(*lun.name, &m3);
-
-  enqueue(*din.name, &m1);
-  enqueue(*din.name, &m2);
-  enqueue(*din.name, &m3);
-
-  enqueue(*bar.name, &m1);
-  enqueue(*bar.name, &m2);
-  enqueue(*bar.name, &m3);
+  // enqueue(*lun.name, &m1);
+  // enqueue(*lun.name, &m2);
+  // enqueue(*lun.name, &m3);
+  //
+  // enqueue(*din.name, &m1);
+  // enqueue(*din.name, &m2);
+  // enqueue(*din.name, &m3);
+  //
+  // enqueue(*bar.name, &m1);
+  // enqueue(*bar.name, &m2);
+  // enqueue(*bar.name, &m3);
 
 
 
