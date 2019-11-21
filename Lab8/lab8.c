@@ -207,25 +207,46 @@ int main(){
   int is_empty = MAXQUEUES;
 
   mealTicket test;
+
   while(is_empty > 0){
-    if (dequeue(*brk.name, 1, &test) == 0){
-      is_empty--;
-    } else{printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *brk.name, test.ticketNum, test.dish);}
-    if (dequeue(*lun.name, 1, &test) == 0){
-      is_empty--;
-    } else{printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *lun.name, test.ticketNum, test.dish);}
-    if (dequeue(*din.name, 1, &test) == 0){
-      is_empty--;
-    } else{printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *din.name, test.ticketNum, test.dish);}
-    if (dequeue(*bar.name, 1, &test) == 0){
-      is_empty--;
-    } else{printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *bar.name, test.ticketNum, test.dish);}
 
-  }
+    if (dequeue(*brk.name, 1, &test) == 0) {is_empty--;}
+    else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *brk.name, test.ticketNum, test.dish);}
+    if (dequeue(*lun.name, 1, &test) == 0) {is_empty--;}
+    else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *lun.name, test.ticketNum, test.dish);}
+    if (dequeue(*din.name, 1, &test) == 0) {is_empty--;}
+    else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *din.name, test.ticketNum, test.dish);}
+    if (dequeue(*bar.name, 1, &test) == 0) {is_empty--;}
+    else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *bar.name, test.ticketNum, test.dish);}
 
-  // mealTicket test;
-  // printf("\n\ntst: %s : %d\n", test.dish, test.ticketNum);
+  }//end of while(not all queues are empty)
+  //test A.
+  printf("Test Case: <A> - Result: <%d>\n", dequeue(*brk.name, 1, &test));
 
+  //test B.
+  enqueue(*lun.name, &m1);
+  enqueue(*lun.name, &m2);
+  enqueue(*lun.name, &m3);
+  enqueue(*lun.name, &m1);
+  enqueue(*lun.name, &m2);
+  enqueue(*lun.name, &m3);
+  enqueue(*lun.name, &m1);
+  enqueue(*lun.name, &m2);
+  printf("Test Case: <B> - Result: <%d>\n", dequeue(*lun.name, &m3));
+
+  //test C.
+  enqueue(*din.name, &m1);
+  enqueue(*din.name, &m2);
+  enqueue(*din.name, &m3);
+  enqueue(*din.name, &m1);
+  enqueue(*din.name, &m2);
+  enqueue(*din.name, &m3);
+  enqueue(*din.name, &m1);
+  enqueue(*din.name, &m2);
+  printf("Test Case: <C> - Result: <%d>\n", enqueue(*din.name, &m3));
+
+  //test D.
+  printf("Test Case: <D> - Result: <%d>\n", enqueue(*bar.name, &m1));
 
   return 0;
 
