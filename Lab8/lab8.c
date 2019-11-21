@@ -108,7 +108,6 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
 
         return 1;
 
-
       }
       else {
         printf("BUFFER EMPTY\n");
@@ -220,6 +219,7 @@ int main(){
     else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *bar.name, test.ticketNum, test.dish);}
 
   }//end of while(not all queues are empty)
+
   //test A.
   printf("Test Case: <A> - Result: <%d>\n", dequeue(*brk.name, 1, &test));
 
@@ -242,6 +242,7 @@ int main(){
   enqueue(*din.name, &m2);
   enqueue(*din.name, &m3);
   enqueue(*din.name, &m1);
+  enqueue(*din.name, &m2);
   enqueue(*din.name, &m2);
   printf("Test Case: <C> - Result: <%d>\n", enqueue(*din.name, &m3));
 
