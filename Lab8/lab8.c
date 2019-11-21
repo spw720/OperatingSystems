@@ -52,8 +52,8 @@ int enqueue(char *MTQ_ID, mealTicket *MT){
 
         //place MT at tail location
         registry[i]->buffer[registry[i]->tail] = *MT;
-        
-        printf("\nplaced ticket %s %d in queue @ index[%d]\n",
+
+        printf("\nplaced ticket[%s, %d] @ index[%d]\n",
         registry[i]->buffer[registry[i]->tail].dish,
         registry[i]->buffer[registry[i]->tail].ticketNum,
         registry[i]->tail);
@@ -64,10 +64,12 @@ int enqueue(char *MTQ_ID, mealTicket *MT){
         printf("tail is now: %d\n", registry[i]->tail);
 
         return 1;
+        exit(1);
       }
       else{
         printf("BUFFER FULL\n");
         return 0;
+        exit(0);
       }
 
     }//end of if registry is correct
