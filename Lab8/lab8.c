@@ -207,7 +207,7 @@ int main(){
 
     printf("\n");
     for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-      printf("%s, ", *registry[0]->buffer[i].dish);
+      printf("%d, ", registry[0]->buffer[i].ticketNum);
     }
     printf("\n");
 
