@@ -95,10 +95,6 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
         registry[i]->buffer[registry[i]->head].ticketNum = -1;
         registry[i]->buffer[registry[i]->head].dish = "null";
 
-        // printf("HEAD now has: [%d, %s]\n",
-        // registry[i]->buffer[registry[i]->head].ticketNum,
-        // registry[i]->buffer[registry[i]->head].dish);
-
         //Set where NULL ~WAS~ to blank data entry
         registry[i]->buffer[registry[i]->head-1].ticketNum = 0;
         registry[i]->buffer[registry[i]->head-1].dish = "default";
@@ -220,39 +216,54 @@ int main(){
 
   }//end of while(not all queues are empty)
 
-  //test A.
-  printf("\n***TEST [A]***\n");
-  printf("Test Case: <A> - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  // //test A.
+  // printf("\n***TEST [A]***\n");
+  // printf("Test Case: <A> - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  //
+  // //test B.
+  // printf("\n***TEST [B]***\n");
+  // enqueue(*lun.name, &m1);
+  // enqueue(*lun.name, &m2);
+  // enqueue(*lun.name, &m3);
+  // enqueue(*lun.name, &m1);
+  // enqueue(*lun.name, &m2);
+  // enqueue(*lun.name, &m3);
+  // enqueue(*lun.name, &m1);
+  // enqueue(*lun.name, &m2);
+  // enqueue(*lun.name, &m3);
+  // printf("Test Case: <B> - Result: <%d>\n", dequeue(*lun.name, 1, &test));
+  //
+  // //test C.
+  // printf("\n***TEST [C]***\n");
+  // enqueue(*din.name, &m1);
+  // enqueue(*din.name, &m2);
+  // enqueue(*din.name, &m3);
+  // enqueue(*din.name, &m1);
+  // enqueue(*din.name, &m2);
+  // enqueue(*din.name, &m3);
+  // enqueue(*din.name, &m1);
+  // enqueue(*din.name, &m2);
+  // enqueue(*din.name, &m2);
+  // printf("Test Case: <C> - Result: <%d>\n", enqueue(*din.name, &m3));
+  //
+  // //test D.
+  // printf("\n***TEST [D]***\n");
+  // printf("Test Case: <D> - Result: <%d>\n", enqueue(*bar.name, &m1));
 
-  //test B.
-  printf("\n***TEST [B]***\n");
-  enqueue(*lun.name, &m1);
-  enqueue(*lun.name, &m2);
-  enqueue(*lun.name, &m3);
-  enqueue(*lun.name, &m1);
-  enqueue(*lun.name, &m2);
-  enqueue(*lun.name, &m3);
-  enqueue(*lun.name, &m1);
-  enqueue(*lun.name, &m2);
-  enqueue(*lun.name, &m3);
-  printf("Test Case: <B> - Result: <%d>\n", dequeue(*lun.name, 1, &test));
 
-  //test C.
-  printf("\n***TEST [C]***\n");
-  enqueue(*din.name, &m1);
-  enqueue(*din.name, &m2);
-  enqueue(*din.name, &m3);
-  enqueue(*din.name, &m1);
-  enqueue(*din.name, &m2);
-  enqueue(*din.name, &m3);
-  enqueue(*din.name, &m1);
-  enqueue(*din.name, &m2);
-  enqueue(*din.name, &m2);
-  printf("Test Case: <C> - Result: <%d>\n", enqueue(*din.name, &m3));
+  for (size_t i = 0; i < BUFFER_SIZE+1; i++) {
+    printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  }
+  for (size_t i = 0; i < BUFFER_SIZE+1; i++) {
+    printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  }
+  for (size_t i = 0; i < BUFFER_SIZE+1; i++) {
+    printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  }
+  for (size_t i = 0; i < BUFFER_SIZE+1; i++) {
+    printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  }
 
-  //test D.
-  printf("\n***TEST [D]***\n");
-  printf("Test Case: <D> - Result: <%d>\n", enqueue(*bar.name, &m1));
 
   return 0;
 
