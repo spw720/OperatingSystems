@@ -297,8 +297,6 @@ int main(){
   enqueue(*lun.name, &m3);
   enqueue(*lun.name, &m1);
   enqueue(*lun.name, &m2);
-  enqueue(*lun.name, &m3);
-  enqueue(*lun.name, &m3);
   printf("LUNCH BUFF WAS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[1]->buffer[i].ticketNum);
