@@ -304,6 +304,10 @@ int main(){
   printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
   printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
 
+  for (size_t i = 0; i <= BUFFER_SIZE; i++) {
+    printf("%s, \n", register[0].buffer[i].name);
+  }
+
 
 
   return 0;
