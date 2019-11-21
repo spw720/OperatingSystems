@@ -95,17 +95,33 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
         MT->dish = registry[i]->buffer[registry[i]->head].dish;
 
         //Set data @ tail to blank data entry
-        registry[i]->buffer[registry[i]->tail].ticketNum = 0;
-        registry[i]->buffer[registry[i]->tail].dish = "default";
+        //if tail null:
+        if (registry[i]->buffer[registry[i]->tail].ticketNum == -1){
 
-        //Set where head is to NULL
-        registry[i]->buffer[registry[i]->head].ticketNum = -1;
-        registry[i]->buffer[registry[i]->head].dish = "null";
+          //set tail to 0
+          registry[i]->buffer[registry[i]->tail].ticketNum = 0;
+          registry[i]->buffer[registry[i]->tail].dish = "default";
+
+          //Set where head is to NULL
+          registry[i]->buffer[registry[i]->head].ticketNum = -1;
+          registry[i]->buffer[registry[i]->head].dish = "null";
+
+        }
+        else{
+          //Set where head is to NULL
+
+          registry[i]->buffer[registry[i]->head-1 % BUFFER_SIZE+1].ticketNum = 0;
+          registry[i]->buffer[registry[i]->head-1 % BUFFER_SIZE+1].dish = "default";
+
+          registry[i]->buffer[registry[i]->head].ticketNum = -1;
+          registry[i]->buffer[registry[i]->head].dish = "null";
+
+        }
 
         //Increment head
         //registry[i]->head += 1; //TODO make this wraparound
         printf("HEAD BEFORE: [%d]\n", registry[i]->head);
-        registry[i]->head = registry[i]->head + 1 % BUFFER_SIZE;
+        registry[i]->head = registry[i]->head + 1 % BUFFER_SIZE+1;
         printf("HEAD AFTER: [%d]\n", registry[i]->head);
 
         return 1;
