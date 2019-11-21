@@ -272,16 +272,21 @@ int main(){
 
   //test A.
   printf("\n***TEST [A]***\n");
-  printf("BREAKFATS BUFF:\t");
+  printf("BREAKFATS BUFF WAS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[0]->buffer[i].ticketNum);
   }
   printf("\n");
   printf("Test Case: <A> - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("BREAKFATS BUFF NOW IS:\t");
+  for (size_t i = 0; i <= BUFFER_SIZE; i++) {
+    printf("%d, ", registry[0]->buffer[i].ticketNum);
+  }
+  printf("\n");
 
   //test B.
   printf("\n***TEST [B]***\n");
-  printf("LUNCH BUFF:\t");
+  printf("LUNCH BUFF WAS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[1]->buffer[i].ticketNum);
   }
@@ -300,10 +305,15 @@ int main(){
   enqueue(*lun.name, &m2);
   enqueue(*lun.name, &m3);
   printf("Test Case: <B> - Result: <%d>\n", dequeue(*lun.name, 1, &test));
+  printf("LUNCH BUFF NOW IS:\t");
+  for (size_t i = 0; i <= BUFFER_SIZE; i++) {
+    printf("%d, ", registry[1]->buffer[i].ticketNum);
+  }
+  printf("\n");
 
   //test C.
   printf("\n***TEST [C]***\n");
-  printf("DINNER BUFF:\t");
+  printf("DINNER BUFF WAS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[2]->buffer[i].ticketNum);
   }
@@ -321,15 +331,25 @@ int main(){
   enqueue(*din.name, &m2);
   enqueue(*din.name, &m2);
   printf("Test Case: <C> - Result: <%d>\n", enqueue(*din.name, &m3));
+  printf("DINNER BUF NOW IS:\t");
+  for (size_t i = 0; i <= BUFFER_SIZE; i++) {
+    printf("%d, ", registry[2]->buffer[i].ticketNum);
+  }
+  printf("\n");
 
   //test D.
   printf("\n***TEST [D]***\n");
-  printf("BAR BUFF:\t");
+  printf("BAR BUFF WAS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[3]->buffer[i].ticketNum);
   }
   printf("\n");
   printf("Test Case: <D> - Result: <%d>\n", enqueue(*bar.name, &m1));
+  printf("BAR BUFF NOW IS:\t");
+  for (size_t i = 0; i <= BUFFER_SIZE; i++) {
+    printf("%d, ", registry[3]->buffer[i].ticketNum);
+  }
+  printf("\n");
   //
   // dequeue(*lun.name, 1, &test);
   // dequeue(*lun.name, 1, &test);
