@@ -234,6 +234,9 @@ int main(){
   enqueue(*lun.name, &m3);
   enqueue(*lun.name, &m1);
   enqueue(*lun.name, &m2);
+  enqueue(*lun.name, &m3);
+  enqueue(*lun.name, &m1);
+  enqueue(*lun.name, &m2);
   printf("Test Case: <B> - Result: <%d>\n", dequeue(*lun.name, 1, &test));
 
   //test C.
