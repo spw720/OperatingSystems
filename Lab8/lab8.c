@@ -37,20 +37,15 @@ MTQ *registry[MAXQUEUES];
 
 int enqueue(char *MTQ_ID, mealTicket *MT){
 
-  printf("TEST ENQUE PARAMS: %s\n", MTQ_ID);
-
   for (size_t i = 0; i < MAXQUEUES; i++) {
 
     if (strcmp(*registry[i]->name, MTQ_ID) == 0){
 
       //if tail is NOT located @ null
       if (registry[i]->buffer[registry[i]->tail].ticketNum != -1){
-        printf("IS NOT NULL\n");
         //place MT at tail location
-
         registry[i]->buffer[registry[i]->tail] = *MT;
-
-        printf("PLACED THE THING\n");
+        printf("ticknum: %d dish: %s\n", registry[i]->buffer[registry[i]->tail].ticketNum, registry[i]->buffer[registry[i]->tail].dish);
         //increment tail
         printf("TAIL WAS: %d\n", registry[i]->tail);
         registry[i]->tail += 1;
