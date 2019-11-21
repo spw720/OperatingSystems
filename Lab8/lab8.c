@@ -361,30 +361,30 @@ int main(){
 
   printf("\n\n");
 
-  printf("\nBRK BUFF WAS IS:\t");
+  printf("\nBRK BUFF WAS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-    printf("%d, ", registry[0]->buffer[i].ticketNum);
+    printf("%d, ", registry[1]->buffer[i].ticketNum);
   }
   printf("\nDEQUING A FUCK TON");
 
   for (size_t i = 0; i < BUFFER_SIZE+1; i++) {
-    printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+    printf("deQ - Result: <%d>\n", dequeue(*lun.name, 1, &test));
   }
 
   printf("\nBRK BUFF NOW IS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-    printf("%d, ", registry[0]->buffer[i].ticketNum);
+    printf("%d, ", registry[1]->buffer[i].ticketNum);
   }
 
   printf("\n\nENQUING A FUCK TON");
 
   for (size_t i = 0; i < BUFFER_SIZE+1; i++) {
-    printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+    printf("enQ - Result: <%d>\n", enqueue(*lun.name, &test));
   }
 
   printf("\nBRK BUFF NOW IS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-    printf("%d, ", registry[0]->buffer[i].ticketNum);
+    printf("%d, ", registry[1]->buffer[i].ticketNum);
   }
 
   printf("\n\n");
