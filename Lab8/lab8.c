@@ -226,15 +226,15 @@ int main(){
     for (size_t i = 0; i <= BUFFER_SIZE; i++) {
       printf("%d, ", registry[0]->buffer[i].ticketNum);
     }
-    printf("LUNCH BUFF: ");
+    printf("\nLUNCH BUFF: ");
     for (size_t i = 0; i <= BUFFER_SIZE; i++) {
       printf("%d, ", registry[1]->buffer[i].ticketNum);
     }
-    printf("DINNER BUFF: ");
+    printf("\nDINNER BUFF: ");
     for (size_t i = 0; i <= BUFFER_SIZE; i++) {
       printf("%d, ", registry[2]->buffer[i].ticketNum);
     }
-    printf("BAR BUFF: ");
+    printf("\nBAR BUFF: ");
     for (size_t i = 0; i <= BUFFER_SIZE; i++) {
       printf("%d, ", registry[3]->buffer[i].ticketNum);
     }
