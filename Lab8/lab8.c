@@ -4,10 +4,10 @@
 
 //-----------------------------------------------------------------------------
 
-#define MAXNAME 100
-#define MAXQUEUES 10
+#define MAXNAME 100 //max name of mealTicket queue
+#define MAXQUEUES 10 //max number of queues
 
-#define BUFFER_SIZE 8
+#define BUFFER_SIZE 8 //max entries in each MTQ Buffer
 
 //-----------------------------------------------------------------------------
 
@@ -50,14 +50,36 @@ MTQ *registry[MAXQUEUES];
 int main(){
 
   //initialize all MTQ structs
-  mealTicket buffer1[BUFFER_SIZE];
+
+  mealTicket buffer1[BUFFER_SIZE + 1];
+  mealTicket buffer2[BUFFER_SIZE + 1];
+  mealTicket buffer3[BUFFER_SIZE + 1];
+  mealTicket buffer4[BUFFER_SIZE + 1];
+
   MTQ brk = {
     .name = "Breakfast",
     .buffer = buffer1,
     .head = 0,
     .tail = 0,
-    .length = BUFFER_SIZE
-  };
+    .length = BUFFER_SIZE + 1 };
+  MTQ lun = {
+    .name = "Lunch",
+    .buffer = buffer2,
+    .head = 0,
+    .tail = 0,
+    .length = BUFFER_SIZE + 1 };
+  MTQ din = {
+    .name = "Dinner",
+    .buffer = buffer3,
+    .head = 0,
+    .tail = 0,
+    .length = BUFFER_SIZE + 1 };
+  MTQ bar = {
+    .name = "Bar",
+    .buffer = buffer4,
+    .head = 0,
+    .tail = 0,
+    .length = BUFFER_SIZE + 1 };
 
   printf("Name: %s\n", *brk.name);
   printf("Buffer[0]: %d\n", brk.buffer[0]);
@@ -65,36 +87,16 @@ int main(){
   printf("Tail: %d\n", brk.tail);
   printf("Length: %d\n", brk.length);
 
-  //*brk.name = "Breakfast";
-
-  //*brk.buffer = buffer1;
-
-  // MTQ lun;
-  // *lun.name = "Lunch";
-  // mealTicket buffer2[BUFFER_SIZE];
-  // *lun.buffer = buffer2;
-  //
-  // MTQ din;
-  // *din.name = "Dinner";
-  // mealTicket buffer3[BUFFER_SIZE];
-  // *din.buffer = buffer3;
-  //
-  // MTQ bar;
-  // *bar.name = "Bar";
-  // mealTicket buffer4[BUFFER_SIZE];
-  // *bar.buffer = buffer4;
-
-
   // printf("BFAST: %s\n", *brk.name);
   // printf("LUNCH: %s\n", *lun.name);
   // printf("DINNER: %s\n", *din.name);
   // printf("BAR: %s\n", *bar.name);
 
   //push all MTQ's onto register
-  // registry[0] = &brk;
-  // registry[1] = &lun;
-  // registry[2] = &din;
-  // registry[3] = &bar;
+  registry[0] = &brk;
+  registry[1] = &lun;
+  registry[2] = &din;
+  registry[3] = &bar;
 
   //create and initialize 3 meal-tickets
   mealTicket m1;
