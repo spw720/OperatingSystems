@@ -121,6 +121,7 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
         registry[i]->head += 1;
         printf("HEAD is now: %d\n", registry[i]->head);
 
+        return 1;
 
 
       }
