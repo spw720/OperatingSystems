@@ -31,7 +31,16 @@ typedef struct MTQ MTQ;
 //-----------------------------------------------------------------------------
 
 int enqueue(char *MTQ_ID, mealTicket *MT){
+
+  for (size_t i = 0; i < MAXQUEUES; i++) {
+    if (strcmp(registry[i].name, MTQ_ID) == 0){
+
+    }
+  }
+  return 1;
+
   return 0;
+
 }//end of enqueue()
 
 //-----------------------------------------------------------------------------
@@ -81,6 +90,12 @@ int main(){
     .tail = 0,
     .length = BUFFER_SIZE + 1 };
 
+  //Set last element of buffer to NULL
+  brk.buffer[BUFFER_SIZE] = NULL;
+  lun.buffer[BUFFER_SIZE] = NULL;
+  din.buffer[BUFFER_SIZE] = NULL;
+  bar.buffer[BUFFER_SIZE] = NULL;
+
   printf("Name: %s\n", *brk.name);
   printf("Buffer[0]: %d\n", brk.buffer[0]);
   printf("Head: %d\n", brk.head);
@@ -111,25 +126,23 @@ int main(){
   m3.ticketNum = 2;
   m3.dish = "d_three";
 
-  brk.buffer[0] = m1;
-  printf("Buffer[0]: %s\n", brk.buffer[0].dish);
-
   //push meal tickets into MTQ's
-  // enqueue(&brk.name, &m1);
-  // enqueue(&brk.name, &m2);
-  // enqueue(&brk.name, &m3);
+  printf("%s\n", brk.name);
+  // enqueue(brk.name, &m1);
+  // enqueue(brk.name, &m2);
+  // enqueue(brk.name, &m3);
   //
-  // enqueue(&lun.name, &m1);
-  // enqueue(&lun.name, &m2);
-  // enqueue(&lun.name, &m3);
+  // enqueue(lun.name, &m1);
+  // enqueue(lun.name, &m2);
+  // enqueue(lun.name, &m3);
   //
-  // enqueue(&din.name, &m1);
-  // enqueue(&din.name, &m2);
-  // enqueue(&dins.name, &m3);
+  // enqueue(din.name, &m1);
+  // enqueue(din.name, &m2);
+  // enqueue(din.name, &m3);
   //
-  // enqueue(&bar.name, &m1);
-  // enqueue(&bar.name, &m2);
-  // enqueue(&bar.name, &m3);
+  // enqueue(bar.name, &m1);
+  // enqueue(bar.name, &m2);
+  // enqueue(bar.name, &m3);
 
 
 
