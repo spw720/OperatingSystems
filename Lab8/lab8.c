@@ -252,6 +252,9 @@ int main(){
   enqueue(*din.name, &m3);
   enqueue(*din.name, &m1);
   enqueue(*din.name, &m2);
+  enqueue(*din.name, &m2);
+  enqueue(*din.name, &m3);
+  enqueue(*din.name, &m1);
   enqueue(*din.name, &m3);
   enqueue(*din.name, &m1);
   enqueue(*din.name, &m2);
@@ -261,6 +264,18 @@ int main(){
   //test D.
   printf("\n***TEST [D]***\n");
   printf("Test Case: <D> - Result: <%d>\n", enqueue(*bar.name, &m1));
+
+  dequeue(*lun.name, 1, &test)
+  dequeue(*lun.name, 1, &test)
+  dequeue(*lun.name, 1, &test)
+  dequeue(*lun.name, 1, &test)
+  dequeue(*lun.name, 1, &test)
+  dequeue(*lun.name, 1, &test)
+  dequeue(*lun.name, 1, &test)
+  dequeue(*lun.name, 1, &test)
+  dequeue(*lun.name, 1, &test)
+  dequeue(*lun.name, 1, &test)
+  dequeue(*lun.name, 1, &test)
 
   //More testing.........
 
