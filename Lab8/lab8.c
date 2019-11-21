@@ -112,7 +112,7 @@ int main(){
   m3.dish = "d_three";
 
   brk.buffer[0] = m1;
-  printf("Buffer[0]: %d\n", brk.buffer[0]);
+  printf("Buffer[0]: %s\n", brk.buffer[0].dish);
 
   //push meal tickets into MTQ's
   // enqueue(&brk.name, &m1);
