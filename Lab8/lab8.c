@@ -35,7 +35,7 @@ MTQ *registry[MAXQUEUES];
 
 //-----------------------------------------------------------------------------
 
-int global_ticket = 1;
+int global_ticket = 0001;
 
 int enqueue(char *MTQ_ID, mealTicket *MT){
 
