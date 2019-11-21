@@ -361,14 +361,14 @@ int main(){
 
   printf("\n\n");
 
-  printf("\nBRK BUFF WAS:\t");
+  printf("BRK BUFF WAS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[1]->buffer[i].ticketNum);
   }
-  printf("\nDEQUING A FUCK TON");
+  printf("\n\nDEQUING A FUCK TON");
 
   for (size_t i = 0; i < BUFFER_SIZE+2; i++) {
-    printf("deQ - Result: <%d>\n", dequeue(*lun.name, 1, &test));
+    dequeue(*lun.name, 1, &test);
   }
 
   printf("\nBRK BUFF NOW IS:\t");
@@ -379,7 +379,7 @@ int main(){
   printf("\n\nENQUING A FUCK TON");
 
   for (size_t i = 0; i < BUFFER_SIZE+2; i++) {
-    printf("enQ - Result: <%d>\n", enqueue(*lun.name, &test));
+    enqueue(*lun.name, &test);
   }
 
   printf("\nBRK BUFF NOW IS:\t");
@@ -387,10 +387,10 @@ int main(){
     printf("%d, ", registry[1]->buffer[i].ticketNum);
   }
 
-  printf("\nDEQUING A FUCK TON");
+  printf("\n\nDEQUING A FUCK TON");
 
   for (size_t i = 0; i < BUFFER_SIZE+2; i++) {
-    printf("deQ - Result: <%d>\n", dequeue(*lun.name, 1, &test));
+    dequeue(*lun.name, 1, &test);
   }
 
   printf("\nBRK BUFF NOW IS:\t");
@@ -401,7 +401,7 @@ int main(){
   printf("\n\nENQUING A FUCK TON");
 
   for (size_t i = 0; i < BUFFER_SIZE+2; i++) {
-    printf("enQ - Result: <%d>\n", enqueue(*lun.name, &test));
+    enqueue(*lun.name, &test);
   }
 
   printf("\nBRK BUFF NOW IS:\t");
