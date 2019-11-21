@@ -48,12 +48,12 @@ int enqueue(char *MTQ_ID, mealTicket *MT){
       //if tail is NOT located @ null
       if (registry[i]->buffer[registry[i]->tail].ticketNum != -1){
 
-        //Set MT ticketNum
-        registry[i]->buffer[registry[i]->tail].ticketNum = global_ticket;
-        global_ticket += 1;
-
         //place MT at tail location
         registry[i]->buffer[registry[i]->tail] = *MT;
+
+        //Set MT ticketNum
+        registry[i]->buffer[registry[i]->tail].ticketNum = global_ticket;
+        global_ticket++;
 
         printf("placed ticket[%s, %d] @ index[%d]\n",
         registry[i]->buffer[registry[i]->tail].dish,
