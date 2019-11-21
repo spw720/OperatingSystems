@@ -376,6 +376,10 @@ int main(){
   printf("\nBRK BUFF NOW IS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[1]->buffer[i].ticketNum);
+    for (size_t i = 0; i <= BUFFER_SIZE; i++) {
+      printf("%d, ", registry[1]->buffer[i].ticketNum);
+    }
+    printf("\nHEAD[%d] TAIL[%d]\n", registry[1]->head, registry[1]->tail);
   }
   printf("\nHEAD[%d] TAIL[%d]\n", registry[1]->head, registry[1]->tail);
 
