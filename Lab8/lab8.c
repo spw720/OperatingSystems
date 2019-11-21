@@ -35,7 +35,7 @@ MTQ *registry[MAXQUEUES];
 
 //-----------------------------------------------------------------------------
 
-int global_ticket = 0001;
+int global_ticket = 1;
 
 int enqueue(char *MTQ_ID, mealTicket *MT){
 
@@ -83,7 +83,58 @@ int enqueue(char *MTQ_ID, mealTicket *MT){
 //-----------------------------------------------------------------------------
 
 int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
+
+  printf("\n--------------------------------\n\n");
+
+  for (size_t i = 0; i < MAXQUEUES; i++) {
+
+    if (strcmp(*registry[i]->name, MTQ_ID) == 0){
+
+      //If tail != head
+      if (registry[i]->tail != registry[i]->head){
+
+        //Set MT with data @ head
+        MT.ticketNum = registry[i]->buffer[registry[i]->head].ticketNum;
+        MT.dish = registry[i]->buffer[registry[i]->head].dish;
+
+        printf("MT now has: [%d, %s]\n", MT.ticketNum, MT.dish);
+
+        //Set where head is to NULL
+        registry[i]->buffer[registry[i]->head].ticketNum = -1;
+        registry[i]->buffer[registry[i]->head].dish = "null";
+
+        printf("HEAD now has: [%d, %s]\n",
+        registry[i]->buffer[registry[i]->head].ticketNum,
+        registry[i]->buffer[registry[i]->head].dish);
+
+        //Set where NULL ~WAS~ to blank data entry
+        registry[i]->buffer[registry[i]->(head-1)].ticketNum = 0;
+        registry[i]->buffer[registry[i]->(head-1)].dish = "default";
+
+        printf("HEAD-1 now has: [%d, %s]\n",
+        registry[i]->buffer[registry[i]->head].ticketNum,
+        registry[i]->buffer[registry[i]->head].dish);
+
+
+        printf("HEAD was: %d\n", registry[i]->head);
+        //Increment head
+        registry[i]->head += 1;
+        printf("HEAD is now: %d\n", registry[i]->head);
+
+
+
+      }
+      else {
+        printf("BUFFER EMPTY\n");
+        return 0;
+      }
+
+    }//end of if registry is correct
+
+  }//end for loop
+
   return 0;
+
 }//end of dequeue()
 
 //-----------------------------------------------------------------------------
