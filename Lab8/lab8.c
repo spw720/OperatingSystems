@@ -61,7 +61,7 @@ int enqueue(char *MTQ_ID, mealTicket *MT){
         //increment tail
         //registry[i]->tail += 1; //TODO make this wraparound
         printf("TAIL BEFORE: [%d]\n", registry[i]->tail);
-        registry[i]->tail = registry[i]->((tail + 1) % BUFFER_SIZE);
+        registry[i]->tail = registry[i]->(tail + 1) % BUFFER_SIZE;
         printf("TAIL AFTER: [%d]\n", registry[i]->tail);
 
         return 1;
@@ -110,8 +110,8 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
         else{
           //Set where head is to NULL
 
-          registry[i]->buffer[registry[i]->((head-1) % (BUFFER_SIZE+1))].ticketNum = 0;
-          registry[i]->buffer[registry[i]->((head-1) % (BUFFER_SIZE+1))].dish = "default";
+          registry[i]->buffer[registry[i]->(head-1) % (BUFFER_SIZE+1)].ticketNum = 0;
+          registry[i]->buffer[registry[i]->(head-1) % (BUFFER_SIZE+1)].dish = "default";
 
           registry[i]->buffer[registry[i]->head].ticketNum = -1;
           registry[i]->buffer[registry[i]->head].dish = "null";
@@ -121,7 +121,7 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
         //Increment head
         //registry[i]->head += 1; //TODO make this wraparound
         printf("HEAD BEFORE: [%d]\n", registry[i]->head);
-        registry[i]->head = registry[i]->((head + 1) % (BUFFER_SIZE+1));
+        registry[i]->head = registry[i]->(head + 1) % (BUFFER_SIZE+1);
         printf("HEAD AFTER: [%d]\n", registry[i]->head);
 
         return 1;
