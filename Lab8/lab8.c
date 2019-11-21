@@ -168,17 +168,17 @@ int main(){
   enqueue(*brk.name, &m2);
   enqueue(*brk.name, &m3);
 
-  enqueue(*lun.name, &m1);
-  enqueue(*lun.name, &m2);
-  enqueue(*lun.name, &m3);
-
-  enqueue(*din.name, &m1);
-  enqueue(*din.name, &m2);
-  enqueue(*din.name, &m3);
-
-  enqueue(*bar.name, &m1);
-  enqueue(*bar.name, &m2);
-  enqueue(*bar.name, &m3);
+  // enqueue(*lun.name, &m1);
+  // enqueue(*lun.name, &m2);
+  // enqueue(*lun.name, &m3);
+  //
+  // enqueue(*din.name, &m1);
+  // enqueue(*din.name, &m2);
+  // enqueue(*din.name, &m3);
+  //
+  // enqueue(*bar.name, &m1);
+  // enqueue(*bar.name, &m2);
+  // enqueue(*bar.name, &m3);
 
 
 
