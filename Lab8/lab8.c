@@ -205,15 +205,10 @@ int main(){
   enqueue(*brk.name, &m1);
   enqueue(*brk.name, &m2);
   enqueue(*brk.name, &m3);
-  enqueue(*brk.name, &m1);
-  enqueue(*brk.name, &m2);
-  enqueue(*brk.name, &m3);
-  enqueue(*brk.name, &m1);
-  enqueue(*brk.name, &m2);
-  enqueue(*brk.name, &m3);
-  enqueue(*brk.name, &m1);
-  enqueue(*brk.name, &m2);
-  enqueue(*brk.name, &m3);
+
+  mealTicket test;
+  dequeue(*brk.name, 1, &test);
+  printf("\n\ntst: %s : %d\n", *test.dish, test.ticketNum);
 
   // enqueue(*lun.name, &m1);
   // enqueue(*lun.name, &m2);
