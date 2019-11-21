@@ -47,7 +47,9 @@ int enqueue(char *MTQ_ID, mealTicket *MT){
       if (registry[i]->buffer[registry[i]->tail].ticketNum != -1){
         printf("IS NOT NULL\n");
         //place MT at tail location
-        registry[i]->buffer[registry[i]->tail] = MT;
+
+        registry[i]->buffer[registry[i]->tail] = *MT;
+
         printf("PLACED THE THING\n");
         //increment tail
         printf("TAIL WAS: %d\n", registry[i]->tail);
