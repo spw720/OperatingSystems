@@ -276,7 +276,8 @@ int main(){
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[0]->buffer[i].ticketNum);
   }
-  printf("\nTest Case: <A> - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("\n");
+  printf("Test Case: <A> - Result: <%d>\n", dequeue(*brk.name, 1, &test));
 
   //test B.
   printf("\n***TEST [B]***\n");
@@ -284,6 +285,7 @@ int main(){
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[1]->buffer[i].ticketNum);
   }
+  printf("\n");
   enqueue(*lun.name, &m1);
   enqueue(*lun.name, &m2);
   enqueue(*lun.name, &m3);
@@ -297,7 +299,7 @@ int main(){
   enqueue(*lun.name, &m1);
   enqueue(*lun.name, &m2);
   enqueue(*lun.name, &m3);
-  printf("\nTest Case: <B> - Result: <%d>\n", dequeue(*lun.name, 1, &test));
+  printf("Test Case: <B> - Result: <%d>\n", dequeue(*lun.name, 1, &test));
 
   //test C.
   printf("\n***TEST [C]***\n");
@@ -305,6 +307,7 @@ int main(){
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[2]->buffer[i].ticketNum);
   }
+  printf("\n");
   enqueue(*din.name, &m1);
   enqueue(*din.name, &m2);
   enqueue(*din.name, &m3);
@@ -317,7 +320,7 @@ int main(){
   enqueue(*din.name, &m1);
   enqueue(*din.name, &m2);
   enqueue(*din.name, &m2);
-  printf("\nTest Case: <C> - Result: <%d>\n", enqueue(*din.name, &m3));
+  printf("Test Case: <C> - Result: <%d>\n", enqueue(*din.name, &m3));
 
   //test D.
   printf("\n***TEST [D]***\n");
@@ -325,7 +328,8 @@ int main(){
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[3]->buffer[i].ticketNum);
   }
-  printf("\nTest Case: <D> - Result: <%d>\n", enqueue(*bar.name, &m1));
+  printf("\n");
+  printf("Test Case: <D> - Result: <%d>\n", enqueue(*bar.name, &m1));
   //
   // dequeue(*lun.name, 1, &test);
   // dequeue(*lun.name, 1, &test);
