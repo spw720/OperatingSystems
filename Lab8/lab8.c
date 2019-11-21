@@ -37,9 +37,11 @@ MTQ *registry[MAXQUEUES];
 
 int enqueue(char *MTQ_ID, mealTicket *MT){
 
+  printf("TEST ENQUE PARAMS: %s\n", MTQ_ID);
+
   for (size_t i = 0; i < MAXQUEUES; i++) {
     if (strcmp(*registry[i]->name, MTQ_ID) == 0){
-
+      printf("CAUGHT ONE!\n");
     }
   }
   return 1;
@@ -102,11 +104,6 @@ int main(){
   printf("Tail: %d\n", brk.tail);
   printf("Length: %d\n", brk.length);
 
-  // printf("BFAST: %s\n", *brk.name);
-  // printf("LUNCH: %s\n", *lun.name);
-  // printf("DINNER: %s\n", *din.name);
-  // printf("BAR: %s\n", *bar.name);
-
   //push all MTQ's onto register
   registry[0] = &brk;
   registry[1] = &lun;
@@ -128,21 +125,22 @@ int main(){
 
   //push meal tickets into MTQ's
   printf("%s\n", *brk.name);
-  // enqueue(brk.name, &m1);
-  // enqueue(brk.name, &m2);
-  // enqueue(brk.name, &m3);
-  //
-  // enqueue(lun.name, &m1);
-  // enqueue(lun.name, &m2);
-  // enqueue(lun.name, &m3);
-  //
-  // enqueue(din.name, &m1);
-  // enqueue(din.name, &m2);
-  // enqueue(din.name, &m3);
-  //
-  // enqueue(bar.name, &m1);
-  // enqueue(bar.name, &m2);
-  // enqueue(bar.name, &m3);
+
+  enqueue(*brk.name, &m1);
+  enqueue(*brk.name, &m2);
+  enqueue(*brk.name, &m3);
+
+  enqueue(*lun.name, &m1);
+  enqueue(*lun.name, &m2);
+  enqueue(*lun.name, &m3);
+
+  enqueue(*din.name, &m1);
+  enqueue(*din.name, &m2);
+  enqueue(*din.name, &m3);
+
+  enqueue(*bar.name, &m1);
+  enqueue(*bar.name, &m2);
+  enqueue(*bar.name, &m3);
 
 
 
