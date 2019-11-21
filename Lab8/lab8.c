@@ -276,9 +276,7 @@ int main(){
   printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
   printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
   printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
   printf("\n\n");
-  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
   printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
   printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
   printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
@@ -296,9 +294,7 @@ int main(){
   printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
   printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
   printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
   printf("\n\n");
-  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
   printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
   printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
   printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
