@@ -39,6 +39,8 @@ int global_ticket = 1;
 
 int enqueue(char *MTQ_ID, mealTicket *MT){
 
+  printf("\n--------------------------------\n\n");
+
   for (size_t i = 0; i < MAXQUEUES; i++) {
 
     if (strcmp(*registry[i]->name, MTQ_ID) == 0){
@@ -77,6 +79,8 @@ int enqueue(char *MTQ_ID, mealTicket *MT){
   }//end for loop
 
   return 0;
+
+  printf("\n\n--------------------------------\n");
 
 }//end of enqueue()
 
