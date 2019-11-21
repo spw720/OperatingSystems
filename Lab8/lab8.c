@@ -244,6 +244,8 @@ int main(){
   enqueue(*din.name, &m1);
   enqueue(*din.name, &m2);
   enqueue(*din.name, &m2);
+  enqueue(*din.name, &m2);
+  enqueue(*din.name, &m2);
   printf("Test Case: <C> - Result: <%d>\n", enqueue(*din.name, &m3));
 
   //test D.
