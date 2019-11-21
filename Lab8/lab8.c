@@ -188,9 +188,9 @@ int main(){
   m3.ticketNum = 0;
   m3.dish = "d_three";
 
-  mealTicket default;
-  default.ticketNum = 0;
-  default.dish = "default";
+  mealTicket def;
+  def.ticketNum = 0;
+  def.dish = "default";
 
   //push meal tickets into MTQ's
   enqueue(*brk.name, &m1);
