@@ -94,10 +94,10 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
       if (registry[i]->tail != registry[i]->head){
 
         //Set MT with data @ head
-        MT.ticketNum = registry[i]->buffer[registry[i]->head].ticketNum;
-        MT.dish = registry[i]->buffer[registry[i]->head].dish;
+        MT->ticketNum = registry[i]->buffer[registry[i]->head].ticketNum;
+        MT->dish = registry[i]->buffer[registry[i]->head].dish;
 
-        printf("MT now has: [%d, %s]\n", MT.ticketNum, MT.dish);
+        printf("MT now has: [%d, %s]\n", MT->ticketNum, MT->dish);
 
         //Set where head is to NULL
         registry[i]->buffer[registry[i]->head].ticketNum = -1;
@@ -108,8 +108,8 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
         registry[i]->buffer[registry[i]->head].dish);
 
         //Set where NULL ~WAS~ to blank data entry
-        registry[i]->buffer[registry[i]->(head-1)].ticketNum = 0;
-        registry[i]->buffer[registry[i]->(head-1)].dish = "default";
+        registry[i]->buffer[registry[i]->head-1].ticketNum = 0;
+        registry[i]->buffer[registry[i]->head-1].dish = "default";
 
         printf("HEAD-1 now has: [%d, %s]\n",
         registry[i]->buffer[registry[i]->head].ticketNum,
