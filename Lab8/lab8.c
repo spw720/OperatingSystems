@@ -41,7 +41,7 @@ int enqueue(char *MTQ_ID, mealTicket *MT){
 
   for (size_t i = 0; i < MAXQUEUES; i++) {
     if (strcmp(*registry[i]->name, MTQ_ID) == 0){
-      printf("CAUGHT ONE!\n");
+      printf("CAUGHT ONE, now stick it in!\n");
     }
   }
   return 1;
@@ -97,12 +97,6 @@ int main(){
   // lun.buffer[BUFFER_SIZE] = NULL;
   // din.buffer[BUFFER_SIZE] = NULL;
   // bar.buffer[BUFFER_SIZE] = NULL;
-
-  printf("Name: %s\n", *brk.name);
-  printf("Buffer[0]: %d\n", brk.buffer[0]);
-  printf("Head: %d\n", brk.head);
-  printf("Tail: %d\n", brk.tail);
-  printf("Length: %d\n", brk.length);
 
   //push all MTQ's onto register
   registry[0] = &brk;
