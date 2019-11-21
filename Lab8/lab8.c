@@ -82,7 +82,7 @@ int main(){
     .length = BUFFER_SIZE + 1 };
 
   printf("Name: %s\n", *brk.name);
-  printf("Buffer[0]: %d\n", *brk.buffer[0]);
+  printf("Buffer[0]: %d\n", brk.buffer[0]);
   printf("Head: %d\n", brk.head);
   printf("Tail: %d\n", brk.tail);
   printf("Length: %d\n", brk.length);
@@ -110,6 +110,9 @@ int main(){
   mealTicket m3;
   m3.ticketNum = 2;
   m3.dish = "d_three";
+
+  brk.buffer[0] = m1;
+  printf("Buffer[0]: %d\n", brk.buffer[0]);
 
   //push meal tickets into MTQ's
   // enqueue(&brk.name, &m1);
