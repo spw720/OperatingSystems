@@ -40,10 +40,25 @@ int enqueue(char *MTQ_ID, mealTicket *MT){
   printf("TEST ENQUE PARAMS: %s\n", MTQ_ID);
 
   for (size_t i = 0; i < MAXQUEUES; i++) {
+
     if (strcmp(*registry[i]->name, MTQ_ID) == 0){
-      printf("CAUGHT ONE, now stick it in!\n");
-    }
-  }
+
+      //if tail is NOT located @ null
+      if (registry[i]->buffer[registry[i]->tail].ticketNum != -1){
+        printf("IS NOT NULL\n");
+        //place MT at tail location
+        registry[i]->buffer[registry[i]->tail] = MT;
+        printf("PLACED THE THING\n");
+        //increment tail
+        printf("TAIL WAS: %d\n", registry[i]->tail);
+        registry[i]->tail += 1;
+        printf("TAIL IS NOW: %d\n", registry[i]->tail);
+      }
+
+    }//end of if registry is correct
+
+  }//end for loop
+
   return 1;
 
   return 0;
@@ -93,10 +108,13 @@ int main(){
     .length = BUFFER_SIZE + 1 };
 
   //Set last element of buffer to NULL
-  // brk.buffer[BUFFER_SIZE] = NULL;
-  // lun.buffer[BUFFER_SIZE] = NULL;
-  // din.buffer[BUFFER_SIZE] = NULL;
-  // bar.buffer[BUFFER_SIZE] = NULL;
+  mealTicket null;
+  null.ticketNum = -1;
+  null.dish = "null";
+  brk.buffer[BUFFER_SIZE] = null;
+  lun.buffer[BUFFER_SIZE] = null;
+  din.buffer[BUFFER_SIZE] = null;
+  bar.buffer[BUFFER_SIZE] = null;
 
   //push all MTQ's onto register
   registry[0] = &brk;
