@@ -267,45 +267,64 @@ int main(){
   // for (size_t i = 0; i < BUFFER_SIZE+1; i++) {
   //   printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
   // }
-  printf("\n\n");
-  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  printf("\n\n");
-  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
-  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
-  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
-  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
-  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
-  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
-  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
-  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
-  printf("\n\n");
-  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  printf("\n\n");
-  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
-  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
-  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
-  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
-  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
-  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
-  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
-  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
-
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-    printf("%s, \n", registry[0]->buffer[i].dish);
+    printf("%d, \n", registry[0]->buffer[i].ticketNum);
+  }
+  printf("\n\n");
+  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("\n\n");
+  for (size_t i = 0; i <= BUFFER_SIZE; i++) {
+    printf("%d, \n", registry[0]->buffer[i].ticketNum);
+  }
+  printf("\n\n");
+  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  printf("\n\n");
+  for (size_t i = 0; i <= BUFFER_SIZE; i++) {
+    printf("%d, \n", registry[0]->buffer[i].ticketNum);
+  }
+  printf("\n\n");
+  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("deQ - Result: <%d>\n", dequeue(*brk.name, 1, &test));
+  printf("\n\n");
+  for (size_t i = 0; i <= BUFFER_SIZE; i++) {
+    printf("%d, \n", registry[0]->buffer[i].ticketNum);
+  }
+  printf("\n\n");
+  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  printf("enQ - Result: <%d>\n", enqueue(*brk.name, &test));
+  printf("\n\n");
+  for (size_t i = 0; i <= BUFFER_SIZE; i++) {
+    printf("%d, \n", registry[0]->buffer[i].ticketNum);
   }
 
 
