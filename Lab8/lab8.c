@@ -222,19 +222,19 @@ int main(){
   while(is_empty > 0){
 
     printf("\n");
-    printf("BREAKFATS BUFF: ");
+    printf("BREAKFATS BUFF:\t");
     for (size_t i = 0; i <= BUFFER_SIZE; i++) {
       printf("%d, ", registry[0]->buffer[i].ticketNum);
     }
-    printf("\nLUNCH BUFF: ");
+    printf("\nLUNCH BUFF:\t");
     for (size_t i = 0; i <= BUFFER_SIZE; i++) {
       printf("%d, ", registry[1]->buffer[i].ticketNum);
     }
-    printf("\nDINNER BUFF: ");
+    printf("\nDINNER BUFF:\t");
     for (size_t i = 0; i <= BUFFER_SIZE; i++) {
       printf("%d, ", registry[2]->buffer[i].ticketNum);
     }
-    printf("\nBAR BUFF: ");
+    printf("\nBAR BUFF:\t");
     for (size_t i = 0; i <= BUFFER_SIZE; i++) {
       printf("%d, ", registry[3]->buffer[i].ticketNum);
     }
