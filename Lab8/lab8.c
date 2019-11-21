@@ -38,7 +38,7 @@ MTQ *registry[MAXQUEUES];
 int enqueue(char *MTQ_ID, mealTicket *MT){
 
   for (size_t i = 0; i < MAXQUEUES; i++) {
-    if (strcmp(*registry[i].name, MTQ_ID) == 0){
+    if (strcmp(*registry[i]->name, MTQ_ID) == 0){
 
     }
   }
@@ -91,10 +91,10 @@ int main(){
     .length = BUFFER_SIZE + 1 };
 
   //Set last element of buffer to NULL
-  brk.buffer[BUFFER_SIZE] = NULL;
-  lun.buffer[BUFFER_SIZE] = NULL;
-  din.buffer[BUFFER_SIZE] = NULL;
-  bar.buffer[BUFFER_SIZE] = NULL;
+  // brk.buffer[BUFFER_SIZE] = NULL;
+  // lun.buffer[BUFFER_SIZE] = NULL;
+  // din.buffer[BUFFER_SIZE] = NULL;
+  // bar.buffer[BUFFER_SIZE] = NULL;
 
   printf("Name: %s\n", *brk.name);
   printf("Buffer[0]: %d\n", brk.buffer[0]);
