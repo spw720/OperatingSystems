@@ -7,7 +7,7 @@
 #define MAXNAME 100 //max name of mealTicket queue
 #define MAXQUEUES 4 //max number of queues
 
-#define BUFFER_SIZE 8 //max entries in each MTQ Buffer
+#define BUFFER_SIZE 4 //max entries in each MTQ Buffer
 
 //-----------------------------------------------------------------------------
 
