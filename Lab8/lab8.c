@@ -95,25 +95,13 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
         MT->ticketNum = registry[i]->buffer[registry[i]->head].ticketNum;
         MT->dish = registry[i]->buffer[registry[i]->head].dish;
 
-        //Set data @ tail to blank data entry
         //if tail null:
         if (registry[i]->buffer[registry[i]->tail].ticketNum == -1){
-
-          // //set tail to 0
-          // registry[i]->buffer[registry[i]->tail].ticketNum = 0;
-          // registry[i]->buffer[registry[i]->tail].dish = "default";
-          //
-          // //Set where head is to NULL
-          // //TODO set head-1 modulo to null
-          // int head_minus1 = (registry[i]->head - 1) % (BUFFER_SIZE+1);
-          // registry[i]->buffer[head_minus1].ticketNum = -1;
-          // registry[i]->buffer[head_minus1].dish = "null";
 
           registry[i]->buffer[registry[i]->head].ticketNum = -1;
           registry[i]->buffer[registry[i]->head].dish = "null";
 
           int head_minus1 = (registry[i]->head - 1) % (BUFFER_SIZE+1);
-          printf("[if] HEAD-1=[%d]\n", head_minus1);
           if (head_minus1 == -1) {
             head_minus1 = BUFFER_SIZE;
           }
@@ -123,13 +111,11 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
           int new_head = (registry[i]->head + 1) % (BUFFER_SIZE+1);
           registry[i]->head = new_head;
 
-
         }
         else{
           //Set where head is to NULL
 
           int head_minus2 = (registry[i]->head - 1) % (BUFFER_SIZE+1);
-          printf("[else] HEAD-1=[%d]\n", head_minus2);
           if (head_minus2 == -1) {
             head_minus2 = BUFFER_SIZE;
           }
@@ -139,10 +125,8 @@ int dequeue(char *MTQ_ID, int ticketNum, mealTicket *MT){
           registry[i]->buffer[registry[i]->head].ticketNum = -1;
           registry[i]->buffer[registry[i]->head].dish = "null";
 
-          //printf("HEAD BEFORE: [%d]\n", registry[i]->head);
           int new_head = (registry[i]->head + 1) % (BUFFER_SIZE+1);
           registry[i]->head = new_head;
-          //printf("HEAD AFTER: [%d]\n", registry[i]->head);
 
         }
 
@@ -279,167 +263,81 @@ int main(){
     printf("\n");
 
     if (dequeue(*brk.name, 1, &test) == 0) {is_empty--;}
-    //else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *brk.name, test.ticketNum, test.dish);}
+    else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *brk.name, test.ticketNum, test.dish);}
     if (dequeue(*lun.name, 1, &test) == 0) {is_empty--;}
-    //else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *lun.name, test.ticketNum, test.dish);}
+    else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *lun.name, test.ticketNum, test.dish);}
     if (dequeue(*din.name, 1, &test) == 0) {is_empty--;}
-    //else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *din.name, test.ticketNum, test.dish);}
+    else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *din.name, test.ticketNum, test.dish);}
     if (dequeue(*bar.name, 1, &test) == 0) {is_empty--;}
-    //else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *bar.name, test.ticketNum, test.dish);}
+    else {printf("Queue: <%s> - Ticket Number: <%d> - Dish: <%s>\n", *bar.name, test.ticketNum, test.dish);}
 
   }//end of while(not all queues are empty)
 
-  // //test A.
-  // printf("\n***TEST [A] (dequeue empty queue)***\n");
-  // printf("BREAKFATS BUFF WAS:\t");
-  // for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-  //   printf("%d, ", registry[0]->buffer[i].ticketNum);
-  // }
-  // printf("\n");
-  //
-  // printf("Test Case: <A> - Result: <%d>\n", dequeue(*brk.name, 1, &test));
-  //
-  // printf("BREAKFATS BUFF NOW IS:\t");
-  // for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-  //   printf("%d, ", registry[0]->buffer[i].ticketNum);
-  // }
-  // printf("\n");
-  //
-  // //test B.
-  // printf("\n***TEST [B] (dequeue full queue)***\n");
-  // enqueue(*lun.name, &m1);
-  // enqueue(*lun.name, &m2);
-  // enqueue(*lun.name, &m3);
-  // enqueue(*lun.name, &m1);
-  // enqueue(*lun.name, &m1);
-  // enqueue(*lun.name, &m2);
-  // enqueue(*lun.name, &m3);
-  // enqueue(*lun.name, &m1);
-  // enqueue(*lun.name, &m2);
-  // printf("LUNCH BUFFER WAS:\t");
-  // for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-  //   printf("%d, ", registry[1]->buffer[i].ticketNum);
-  // }
-  // printf("\n");
-  // printf("Test Case: <B> - Result: <%d>\n", dequeue(*lun.name, 1, &test));
-  // printf("LUNCH BUFF NOW IS:\t");
-  // for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-  //   printf("%d, ", registry[1]->buffer[i].ticketNum);
-  // }
-  // printf("\n");
-  //
-  // //test C.
-  // printf("\n***TEST [C] (enqueue full queue)***\n");
-  // enqueue(*din.name, &m1);
-  // enqueue(*din.name, &m2);
-  // enqueue(*din.name, &m3);
-  // enqueue(*din.name, &m1);
-  // enqueue(*din.name, &m2);
-  // enqueue(*din.name, &m2);
-  // enqueue(*din.name, &m3);
-  // enqueue(*din.name, &m1);
-  // enqueue(*din.name, &m3);
-  // printf("DINNER BUFF WAS:\t");
-  // for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-  //   printf("%d, ", registry[2]->buffer[i].ticketNum);
-  // }
-  // printf("\n");
-  // printf("Test Case: <C> - Result: <%d>\n", enqueue(*din.name, &m3));
-  // printf("DINNER BUF NOW IS:\t");
-  // for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-  //   printf("%d, ", registry[2]->buffer[i].ticketNum);
-  // }
-  // printf("\n");
-  //
-  // //test D.
-  // printf("\n***TEST [D] (enqueue empty queue)***\n");
-  // printf("BAR BUFFER WAS:    \t");
-  // for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-  //   printf("%d, ", registry[3]->buffer[i].ticketNum);
-  // }
-  // printf("\n");
-  // printf("Test Case: <D> - Result: <%d>\n", enqueue(*bar.name, &m1));
-  // printf("BAR BUFF NOW IS:\t");
-  // for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-  //   printf("%d, ", registry[3]->buffer[i].ticketNum);
-  // }
-  // printf("\n");
+  //test A.
+  printf("\n***TEST [A] (dequeue empty queue)***\n");
+  printf("BREAKFAST BUFF WAS:\t");
+  for (size_t i = 0; i <= BUFFER_SIZE; i++) {
+    printf("%d, ", registry[0]->buffer[i].ticketNum);
+  }
+  printf("\n");
 
-  //More testing.........
+  printf("Test Case: <A> - Result: <%d>\n", dequeue(*brk.name, 1, &test));
 
-  printf("\n\n");
+  printf("BREAKFATS BUFF NOW IS:\t");
+  for (size_t i = 0; i <= BUFFER_SIZE; i++) {
+    printf("%d, ", registry[0]->buffer[i].ticketNum);
+  }
+  printf("\n");
 
-  printf("BRK BUFF WAS:\t");
+  //test B.
+  printf("\n***TEST [B] (dequeue full queue)***\n");
+  enqueue(*lun.name, &m1);
+  enqueue(*lun.name, &m2);
+  enqueue(*lun.name, &m3);
+  enqueue(*lun.name, &m1);
+  printf("LUNCH BUFFER WAS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[1]->buffer[i].ticketNum);
   }
-  printf("\nHEAD[%d] TAIL[%d]\n", registry[1]->head, registry[1]->tail);
-
-  printf("\n\nENQUING A FUCK TON\n");
-
-  for (size_t i = 0; i < BUFFER_SIZE+2; i++) {
-    enqueue(*lun.name, &test);
-  }
-
-  printf("\nBRK BUFF NOW IS:\t");
+  printf("\n");
+  printf("Test Case: <B> - Result: <%d>\n", dequeue(*lun.name, 1, &test));
+  printf("LUNCH BUFF NOW IS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
     printf("%d, ", registry[1]->buffer[i].ticketNum);
   }
-  printf("\nHEAD[%d] TAIL[%d]\n", registry[1]->head, registry[1]->tail);
+  printf("\n");
 
-  printf("\n\nDEQUING A FUCK TON\n");
-
-  for (size_t i = 0; i < BUFFER_SIZE+2; i++) {
-    dequeue(*lun.name, 1, &test);
-    for (size_t j = 0; j <= BUFFER_SIZE; j++) {
-      printf("%d, ", registry[1]->buffer[j].ticketNum);
-    }
-    printf("\nHEAD[%d] TAIL[%d]\n\n\n", registry[1]->head, registry[1]->tail);
-  }
-
-  printf("\nBRK BUFF NOW IS:\t");
+  //test C.
+  printf("\n***TEST [C] (enqueue full queue)***\n");
+  enqueue(*din.name, &m1);
+  enqueue(*din.name, &m2);
+  enqueue(*din.name, &m3);
+  enqueue(*din.name, &m1);
+  printf("DINNER BUFF WAS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-    printf("%d, ", registry[1]->buffer[i].ticketNum);
+    printf("%d, ", registry[2]->buffer[i].ticketNum);
   }
-  printf("\nHEAD[%d] TAIL[%d]\n", registry[1]->head, registry[1]->tail);
-
-  printf("\n\nENQUING A FUCK TON\n");
-
-  for (size_t i = 0; i < BUFFER_SIZE+2; i++) {
-    enqueue(*lun.name, &test);
-  }
-
-  printf("\nBRK BUFF NOW IS:\t");
+  printf("\n");
+  printf("Test Case: <C> - Result: <%d>\n", enqueue(*din.name, &m3));
+  printf("DINNER BUF NOW IS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-    printf("%d, ", registry[1]->buffer[i].ticketNum);
+    printf("%d, ", registry[2]->buffer[i].ticketNum);
   }
-  printf("\nHEAD[%d] TAIL[%d]\n", registry[1]->head, registry[1]->tail);
+  printf("\n");
 
-  printf("\n\nDEQUING A FUCK TON\n");
-
-  for (size_t i = 0; i < BUFFER_SIZE+2; i++) {
-    dequeue(*lun.name, 1, &test);
-  }
-
-  printf("\nBRK BUFF NOW IS:\t");
+  //test D.
+  printf("\n***TEST [D] (enqueue empty queue)***\n");
+  printf("BAR BUFFER WAS:    \t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-    printf("%d, ", registry[1]->buffer[i].ticketNum);
+    printf("%d, ", registry[3]->buffer[i].ticketNum);
   }
-  printf("\nHEAD[%d] TAIL[%d]\n", registry[1]->head, registry[1]->tail);
-
-  printf("\n\nENQUING A FUCK TON\n");
-
-  for (size_t i = 0; i < BUFFER_SIZE+2; i++) {
-    enqueue(*lun.name, &test);
-  }
-
-  printf("\nBRK BUFF NOW IS:\t");
+  printf("\n");
+  printf("Test Case: <D> - Result: <%d>\n", enqueue(*bar.name, &m1));
+  printf("BAR BUFF NOW IS:\t");
   for (size_t i = 0; i <= BUFFER_SIZE; i++) {
-    printf("%d, ", registry[1]->buffer[i].ticketNum);
+    printf("%d, ", registry[3]->buffer[i].ticketNum);
   }
-  printf("\nHEAD[%d] TAIL[%d]\n", registry[1]->head, registry[1]->tail);
-
-  printf("\n\n");
+  printf("\n");
 
 
   return 0;
