@@ -1,3 +1,7 @@
+//Project 3 - Sean Wilson - CIS415 @ UofO F'19
+
+//------------------------------------------------------------------------------
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -71,9 +75,17 @@ int enqueue(char *QID, topicEntry *TE){
       if (registry[i]->buffer[registry[i]->tail].entryNum != -1){
         //place TE at tail location
         registry[i]->buffer[registry[i]->tail] = *TE;
+
         //Set TE entryNum
         registry[i]->buffer[registry[i]->tail].entryNum = entry_number;
         entry_number++;
+
+        //Set timeStamp
+        struct timeval time;
+        gettimeofday(&time, NULL);
+        registry[i]->buffer[registry[i]->tail].timeStamp = time;
+        printf("\n\nTIME:%d\n\n", time.tv_sec);
+
         //increment tail
         int new_tail = (registry[i]->tail + 1) % (MAXENTRIES+1);
         registry[i]->tail = new_tail;
