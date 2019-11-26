@@ -55,14 +55,16 @@ int entry_number = 1;
 
 void printQ(char *QID){
   for (size_t i = 0; i < MAXTOPICS; i++) {
-    if (strcmp(*registry[i]->name, QID) == 0){
-      printf("\n---Entries of Q[%s]---\n>\t[", *registry[i]->name);
-      for (size_t j = 0; j <= MAXENTRIES; j++) {
-        printf("%d, ", registry[i]->buffer[j].entryNum);
-      }
-      printf("]\n\n");
-    }
-  }
+    if(*registry[i]->name != NULL){
+      if (strcmp(*registry[i]->name, QID) == 0){
+        printf("\n---Entries of Q[%s]---\n>\t[", *registry[i]->name);
+        for (size_t j = 0; j <= MAXENTRIES; j++) {
+          printf("%d, ", registry[i]->buffer[j].entryNum);
+        }
+        printf("]\n\n");
+      }//end of if name = QID
+    }//end of if registry[i] != NULL
+  }//end of for-loop
 }//end of printQ()
 
 //------------------------------------------------------------------------------
@@ -70,28 +72,34 @@ void printQ(char *QID){
 int enqueue(char *QID, topicEntry *TE){
 
   for (size_t i = 0; i < MAXTOPICS; i++) {
-    if (strcmp(*registry[i]->name, QID) == 0){
-      //if tail is NOT located @ null
-      if (registry[i]->buffer[registry[i]->tail].entryNum != -1){
-        //place TE at tail location
-        registry[i]->buffer[registry[i]->tail] = *TE;
-        //Set TE entryNum
-        registry[i]->buffer[registry[i]->tail].entryNum = entry_number;
-        entry_number++;
-        //Set timeStamp
-        struct timeval time;
-        gettimeofday(&time, NULL);
-        registry[i]->buffer[registry[i]->tail].timeStamp = time;
-        //increment tail
-        int new_tail = (registry[i]->tail + 1) % (MAXENTRIES+1);
-        registry[i]->tail = new_tail;
-        return 1;
-      }
-      else{
-        printf("BUFFER FULL\n");
-        return 0;
-      }
-    }//end of if registry is correct
+
+    if(*registry[i]->name != NULL){
+
+      if (strcmp(*registry[i]->name, QID) == 0){
+        //if tail is NOT located @ null
+        if (registry[i]->buffer[registry[i]->tail].entryNum != -1){
+          //place TE at tail location
+          registry[i]->buffer[registry[i]->tail] = *TE;
+          //Set TE entryNum
+          registry[i]->buffer[registry[i]->tail].entryNum = entry_number;
+          entry_number++;
+          //Set timeStamp
+          struct timeval time;
+          gettimeofday(&time, NULL);
+          registry[i]->buffer[registry[i]->tail].timeStamp = time;
+          //increment tail
+          int new_tail = (registry[i]->tail + 1) % (MAXENTRIES+1);
+          registry[i]->tail = new_tail;
+          return 1;
+        }
+        else{
+          printf("BUFFER FULL\n");
+          return 0;
+        }
+      }//end of if registry is correct
+
+    }//end of if registry[i] != NULL
+
   }//end for loop
   return 0;
 }//end of enqueue()
@@ -101,35 +109,41 @@ int enqueue(char *QID, topicEntry *TE){
 int getEntry(char *QID, int lastEntry, topicEntry *TE){
 
   for (size_t i = 0; i < MAXTOPICS; i++) {
-    if (strcmp(*registry[i]->name, QID) == 0){
-      //Case1: topic queue is empty: return 0
-      if (registry[i]->tail == registry[i]->head){
-        printf(">\tgetEntry: <queue is empty>\n");
+
+    if(*registry[i]->name != NULL){
+
+      if (strcmp(*registry[i]->name, QID) == 0){
+        //Case1: topic queue is empty: return 0
+        if (registry[i]->tail == registry[i]->head){
+          printf(">\tgetEntry: <queue is empty>\n");
+          return 0;
+        }
+        //Case2: lastEntry+1 is in Queue: copy lastEntry+1 data to TE, return 1)
+        for (size_t j = 0; j < MAXENTRIES+1; j++) {
+          if (registry[i]->buffer[j].entryNum == lastEntry+1){
+            //copy data over
+            *TE = registry[i]->buffer[j];
+            printf(">\tgetEntry: <found lastEntry+1>\n");
+            return 1;
+          }
+        }
+        //Case3: Topic queue is NOT empty & lastEntry+1 is NOT in queues
+        for (size_t j = 0; j < MAXENTRIES+1; j++) {
+          //ii: if there exists entry.entryNum > lastEntry+1:
+          if (registry[i]->buffer[j].entryNum > lastEntry+1){
+            //copy entry data to TE, return entry.entryNum
+            *TE = registry[i]->buffer[j];
+            printf(">\tgetEntry: <found something bigger>\n");
+            return registry[i]->buffer[j].entryNum;
+          }
+        }
+        //i: if all entries < lastEntry+1: return 0
+        printf(">\tgetEntry: <all enties less than lastEntry+1>\n");
         return 0;
       }
-      //Case2: lastEntry+1 is in Queue: copy lastEntry+1 data to TE, return 1)
-      for (size_t j = 0; j < MAXENTRIES+1; j++) {
-        if (registry[i]->buffer[j].entryNum == lastEntry+1){
-          //copy data over
-          *TE = registry[i]->buffer[j];
-          printf(">\tgetEntry: <found lastEntry+1>\n");
-          return 1;
-        }
-      }
-      //Case3: Topic queue is NOT empty & lastEntry+1 is NOT in queues
-      for (size_t j = 0; j < MAXENTRIES+1; j++) {
-        //ii: if there exists entry.entryNum > lastEntry+1:
-        if (registry[i]->buffer[j].entryNum > lastEntry+1){
-          //copy entry data to TE, return entry.entryNum
-          *TE = registry[i]->buffer[j];
-          printf(">\tgetEntry: <found something bigger>\n");
-          return registry[i]->buffer[j].entryNum;
-        }
-      }
-      //i: if all entries < lastEntry+1: return 0
-      printf(">\tgetEntry: <all enties less than lastEntry+1>\n");
-      return 0;
-    }
+
+    }//end of if registry[i] != NULL
+
   }
   printf(">\tgetEntry: Invalid Queue name!\n");
   return 0;
@@ -140,39 +154,45 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
 int dequeue(char *QID){
 
   for (size_t i = 0; i < MAXTOPICS; i++) {
-    if (strcmp(*registry[i]->name, QID) == 0){
-      //If tail != head
-      if (registry[i]->tail != registry[i]->head){
-        //if tail null:
-        if (registry[i]->buffer[registry[i]->tail].entryNum == -1){
-          //set head entryNum to -1 (null)
-          registry[i]->buffer[registry[i]->head].entryNum = -1;
-          int head_minus1 = (registry[i]->head - 1) % (MAXENTRIES+1);
-          if (head_minus1 == -1) { head_minus1 = MAXENTRIES; }
-          //set head-1 entryNum to 0 (empty)
-          registry[i]->buffer[head_minus1].entryNum = 0;
-          //Increment head
-          int new_head = (registry[i]->head + 1) % (MAXENTRIES+1);
-          registry[i]->head = new_head;
+
+    if(*registry[i]->name != NULL){
+
+      if (strcmp(*registry[i]->name, QID) == 0){
+        //If tail != head
+        if (registry[i]->tail != registry[i]->head){
+          //if tail null:
+          if (registry[i]->buffer[registry[i]->tail].entryNum == -1){
+            //set head entryNum to -1 (null)
+            registry[i]->buffer[registry[i]->head].entryNum = -1;
+            int head_minus1 = (registry[i]->head - 1) % (MAXENTRIES+1);
+            if (head_minus1 == -1) { head_minus1 = MAXENTRIES; }
+            //set head-1 entryNum to 0 (empty)
+            registry[i]->buffer[head_minus1].entryNum = 0;
+            //Increment head
+            int new_head = (registry[i]->head + 1) % (MAXENTRIES+1);
+            registry[i]->head = new_head;
+          }
+          else {
+            int head_minus2 = (registry[i]->head - 1) % (MAXENTRIES+1);
+            if (head_minus2 == -1) { head_minus2 = MAXENTRIES; }
+            //set head-1 entryNum to 0 (empty)
+            registry[i]->buffer[head_minus2].entryNum = 0;
+            //set head entryNum to -1 (null)
+            registry[i]->buffer[registry[i]->head].entryNum = -1;
+            //increment head
+            int new_head = (registry[i]->head + 1) % (MAXENTRIES+1);
+            registry[i]->head = new_head;
+          }
+          return 1;
         }
         else {
-          int head_minus2 = (registry[i]->head - 1) % (MAXENTRIES+1);
-          if (head_minus2 == -1) { head_minus2 = MAXENTRIES; }
-          //set head-1 entryNum to 0 (empty)
-          registry[i]->buffer[head_minus2].entryNum = 0;
-          //set head entryNum to -1 (null)
-          registry[i]->buffer[registry[i]->head].entryNum = -1;
-          //increment head
-          int new_head = (registry[i]->head + 1) % (MAXENTRIES+1);
-          registry[i]->head = new_head;
+          printf("BUFFER EMPTY\n");
+          return 0;
         }
-        return 1;
-      }
-      else {
-        printf("BUFFER EMPTY\n");
-        return 0;
-      }
-    }//end of if registry is correct
+      }//end of if registry is correct
+
+    }//end of if registry[i] != NULL
+
   }//end for loop
   return 0;
 }//end of dequeue()
