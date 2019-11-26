@@ -96,7 +96,7 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
     if (strcmp(*registry[i]->name, QID) == 0){
       //Case1: topic queue is empty: return 0
       if (registry[i]->tail == registry[i]->head){
-        printf("getEntry: <queue is empty>\n");
+        printf(">\tgetEntry: <queue is empty>\n");
         return 0;
       }
       //Case2: lastEntry+1 is in Queue: copy lastEntry+1 data to TE, return 1)
@@ -107,7 +107,7 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
 
           *TE = registry[i]->buffer[j];
 
-          printf("getEntry: <found lastEntry+1>\n");
+          printf(">\tgetEntry: <found lastEntry+1>\n");
           return 1;
         }
       }
@@ -117,16 +117,16 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
         if (registry[i]->buffer[j].entryNum > lastEntry+1){
           //copy entry data to TE, return entry.entryNum
           *TE = registry[i]->buffer[j];
-          printf("getEntry: <found something bigger>\n");
+          printf(">\tgetEntry: <found something bigger>\n");
           return registry[i]->buffer[j].entryNum;
         }
       }
       //i: if all entries < lastEntry+1: return 0
-      printf("getEntry: <all enties less than lastEntry+1>\n");
+      printf(">\tgetEntry: <all enties less than lastEntry+1>\n");
       return 0;
     }
   }
-  printf("Invalid Queue name!\n");
+  printf(">\tgetEntry: Invalid Queue name!\n");
   return 0;
 }//end of getEntry()
 
@@ -248,6 +248,9 @@ int main(int argc, char const *argv[]) {
   printf(">\tResult:[%d]\n", getEntry(*testy.name, -420, &place_hold));
   //printQ(*testy.name);
   printf(">\tplace_hold[%d]\n", place_hold.entryNum);
+
+  //Case 4 (invalid queue name)
+  printf(">\tResult:[%d]\n", getEntry("nonsense", -420, &place_hold));
 
   return 0;
 
