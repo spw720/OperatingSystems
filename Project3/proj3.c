@@ -6,7 +6,7 @@
 
 //-----------------------------------------------------------------------------
 
-#define MAXENTRIES 101 //compare to BUFFER_SIZE
+#define MAXENTRIES 6 //compare to BUFFER_SIZE
 #define MAXTOPICS 1 //compare to MAXQUEUES
 #define MAXNAME 100 //max name of topic queue
 
@@ -90,7 +90,44 @@ int enqueue(char *QID, topicEntry *TE){
 
 //-----------------------------------------------------------------------------
 
-int getEntry(){
+int getEntry(char *QID, int lastEntry, topicEntry *TE){
+
+  for (size_t i = 0; i < MAXTOPICS; i++) {
+    if (strcmp(*registry[i]->name, QID) == 0){
+
+      //Case1: topic queue is empty: return 0
+      if (registry[i]->tail == registry[i]->head){
+        printf("getEntry: <queue is empty>\n");
+        return 0;
+      }
+
+      //Case2: lastEntry+1 is in Queue: copy lastEntry+1 data to TE, return 1)
+      for (size_t j = 0; j < MAXENTRIES+1; j++) {
+        if (registry[i]->buffer[j].entryNum == lastEntry+1){
+          TE = registry[i]->buffer[j];
+          printf("getEntry: <found lastEntry+1>\n");
+          return 1;
+        }
+      }
+
+      //Case3: Topic queue is NOT empty & lastEntry+1 is NOT in queues
+      for (size_t j = 0; j < MAXENTRIES+1; j++) {
+        //ii: if there exists entry.entryNum > lastEntry+1:
+        if (registry[i]->buffer[j].entryNum > lastEntry+1){
+          //copy entry data to TE, return entry.entryNum
+          TE = registry[i]->buffer[j];
+          printf("getEntry: <found something bigger>\n");
+          return registry[i]->buffer[j].entryNum;
+        }
+      }
+      //i: if all entries < lastEntry+1: return 0
+      printf("getEntry: <all enties less than lastEntry+1>\n");
+      return 0;
+    }
+  }
+
+  printf("Invalid Queue name!\n");
+  return 0;
 
 }//end of getEntry()
 
@@ -164,17 +201,50 @@ int main(int argc, char const *argv[]) {
 
   topicEntry tst;
 
-  printf("Testing enqueue()\n");
-  for (size_t z = 0; z < MAXENTRIES+1; z++) {
-    printQ(*testy.name);
-    enqueue(*testy.name, &tst);
-  }
-
   printf("\nTesting getEntry()\n");
   for (size_t z = 0; z < MAXENTRIES+1; z++) {
     printQ(*testy.name);
     dequeue(*testy.name);
   }
+
+  topicEntry place_hold;
+  place_hold.entryNum = -999;
+
+  printf("\n\nWe're now empty, lets try case one (empty queue)...\n");
+  printQ(*testy.name);
+  printf("\tResult:[%d]\n", getEntry(*testy.name, entry_number, &place_hold));
+  printQ(*testy.name);
+  printf("place_hold[%d]\n\n", place_hold.entryNum);
+
+
+  for (size_t z = 0; z < MAXENTRIES+1; z++) {
+    //printQ(*testy.name);
+    enqueue(*testy.name, &tst);
+  }
+  printf("We're now full, lets try case two (lastEntry+1 in queue)...\n");
+  printQ(*testy.name);
+  printf("\tResult:[%d]\n", getEntry(*testy.name, 3, &place_hold));
+  printQ(*testy.name);
+  printf("place_hold[%d]\n\n", place_hold.entryNum);
+
+
+  printf("lets try case three.1 (not empty, all are less)...\n");
+  printQ(*testy.name);
+  printf("\tResult:[%d]\n", getEntry(*testy.name, 999, &place_hold));
+  printQ(*testy.name);
+  printf("place_hold[%d]\n\n", place_hold.entryNum);
+
+  printf("lets try case three.2 (not empty, found something bigger)...\n");
+  printQ(*testy.name);
+  printf("\tResult:[%d]\n", getEntry(*testy.name, -420, &place_hold));
+  printQ(*testy.name);
+  printf("place_hold[%d]\n", place_hold.entryNum);
+
+
+  // for (size_t z = 0; z < MAXENTRIES+1; z++) {
+  //   printQ(*testy.name);
+  //   enqueue(*testy.name, &tst);
+  // }
 
   return 0;
 
