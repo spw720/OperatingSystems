@@ -84,7 +84,7 @@ int enqueue(char *QID, topicEntry *TE){
         struct timeval time;
         gettimeofday(&time, NULL);
         registry[i]->buffer[registry[i]->tail].timeStamp = time;
-        printf("\n\nTIME:%d\n\n", time.tv_sec);
+        printf("\n\nTIME:%d\n\n", time.tv_min);
 
         //increment tail
         int new_tail = (registry[i]->tail + 1) % (MAXENTRIES+1);
