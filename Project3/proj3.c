@@ -88,9 +88,9 @@ int enqueue(char *QID, topicEntry *TE){
 
 //-----------------------------------------------------------------------------
 
-int dequeue(){
+int getEntry(){
 
-}//end of dequeue()
+}//end of getEntry()
 
 //-----------------------------------------------------------------------------
 
@@ -132,7 +132,7 @@ int dequeue(char *QID){
     }//end of if registry is correct
   }//end for loop
   return 0;
-}//end of getEntry()
+}//end of dequeue()
 
 //-----------------------------------------------------------------------------
 
