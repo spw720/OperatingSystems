@@ -162,50 +162,17 @@ int main(int argc, char const *argv[]) {
 
   topicEntry tst;
 
-  printQ(*testy.name);
-  enqueue(*testy.name, &tst);
-  printQ(*testy.name);
-  enqueue(*testy.name, &tst);
-  printQ(*testy.name);
-  enqueue(*testy.name, &tst);
-  printQ(*testy.name);
-  enqueue(*testy.name, &tst);
-  printQ(*testy.name);
-  enqueue(*testy.name, &tst);
-  printQ(*testy.name);
-  enqueue(*testy.name, &tst);
-  printQ(*testy.name);
-  enqueue(*testy.name, &tst);
-  printQ(*testy.name);
-  enqueue(*testy.name, &tst);
-  printQ(*testy.name);
-  enqueue(*testy.name, &tst);
-  printQ(*testy.name);
-  enqueue(*testy.name, &tst);
-  printQ(*testy.name);
+  printf("Testing enqueue()\n");
+  for (size_t z = 0; z < MAXENTRIES+1; z++) {
+    printQ(*testy.name);
+    enqueue(*testy.name, &tst);
+  }
 
-  getEntry(*testy.name);
-  printQ(*testy.name);
-  getEntry(*testy.name);
-  printQ(*testy.name);
-  getEntry(*testy.name);
-  printQ(*testy.name);
-  getEntry(*testy.name);
-  printQ(*testy.name);
-  getEntry(*testy.name);
-  printQ(*testy.name);
-  getEntry(*testy.name);
-  printQ(*testy.name);
-  getEntry(*testy.name);
-  printQ(*testy.name);
-  getEntry(*testy.name);
-  printQ(*testy.name);
-  getEntry(*testy.name);
-  printQ(*testy.name);
-  getEntry(*testy.name);
-  printQ(*testy.name);
-  getEntry(*testy.name);
-  printQ(*testy.name);
+  printf("\nTesting getEntry()\n");
+  for (size_t z = 0; z < MAXENTRIES+1; z++) {
+    printQ(*testy.name);
+    getEntry(*testy.name);
+  }
 
 
   return 0;
