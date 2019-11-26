@@ -6,7 +6,7 @@
 
 //-----------------------------------------------------------------------------
 
-#define MAXENTRIES 16 //compare to BUFFER_SIZE
+#define MAXENTRIES 101 //compare to BUFFER_SIZE
 #define MAXTOPICS 1 //compare to MAXQUEUES
 #define MAXNAME 100 //max name of topic queue
 
@@ -60,6 +60,8 @@ void printQ(char *QID){
     }
   }
 }//end of printQ()
+
+//-----------------------------------------------------------------------------
 
 int enqueue(char *QID, topicEntry *TE){
 
