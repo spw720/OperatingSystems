@@ -52,7 +52,7 @@ int entry_number = 1;
 void printQ(char *QID){
   for (size_t i = 0; i < MAXTOPICS; i++) {
     if (strcmp(*registry[i]->name, QID) == 0){
-      printf("\n\n---Entries of Q[%s]---\n\t[", *registry[i]->name);
+      printf("\n\n---Entries of Q[%s]---\n[", *registry[i]->name);
       for (size_t j = 0; j <= MAXENTRIES; j++) {
         printf("%d, ", registry[i]->buffer[j].entryNum);
       }
@@ -162,7 +162,6 @@ int main(int argc, char const *argv[]) {
 
   topicEntry tst;
 
-  enqueue(*testy.name, &tst);
   printQ(*testy.name);
   enqueue(*testy.name, &tst);
   printQ(*testy.name);
@@ -181,6 +180,31 @@ int main(int argc, char const *argv[]) {
   enqueue(*testy.name, &tst);
   printQ(*testy.name);
   enqueue(*testy.name, &tst);
+  printQ(*testy.name);
+  enqueue(*testy.name, &tst);
+  printQ(*testy.name);
+
+  getEntry(*testy.name);
+  printQ(*testy.name);
+  getEntry(*testy.name);
+  printQ(*testy.name);
+  getEntry(*testy.name);
+  printQ(*testy.name);
+  getEntry(*testy.name);
+  printQ(*testy.name);
+  getEntry(*testy.name);
+  printQ(*testy.name);
+  getEntry(*testy.name);
+  printQ(*testy.name);
+  getEntry(*testy.name);
+  printQ(*testy.name);
+  getEntry(*testy.name);
+  printQ(*testy.name);
+  getEntry(*testy.name);
+  printQ(*testy.name);
+  getEntry(*testy.name);
+  printQ(*testy.name);
+  getEntry(*testy.name);
   printQ(*testy.name);
 
 
