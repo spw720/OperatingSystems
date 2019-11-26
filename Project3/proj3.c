@@ -103,7 +103,9 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
       for (size_t j = 0; j < MAXENTRIES+1; j++) {
         if (registry[i]->buffer[j].entryNum == lastEntry+1){
 
-          TE = &registry[i]->buffer[j];
+          //TE = &registry[i]->buffer[j];
+
+          *TE = &registry[i]->buffer[j];
 
           printf("getEntry: <found lastEntry+1>\n");
           return 1;
@@ -221,6 +223,7 @@ int main(int argc, char const *argv[]) {
     //printQ(*testy.name);
     enqueue(*testy.name, &tst);
   }
+  printQ(*testy.name);
 
   //Case 2
   printf("We're now full, lets try case 2 (lastEntry+1 in queue)...\n");
@@ -229,12 +232,14 @@ int main(int argc, char const *argv[]) {
   //printQ(*testy.name);
   printf(">\tplace_hold[%d]\n\n", place_hold.entryNum);
 
+
   //Case 3.1
   printf("lets try case 3.1 (not empty, all are less)...\n");
   //printQ(*testy.name);
   printf(">\tResult:[%d]\n", getEntry(*testy.name, 999, &place_hold));
   //printQ(*testy.name);
   printf(">\tplace_hold[%d]\n\n", place_hold.entryNum);
+
 
   //Case 3.2
   printf("lets try case 3.2 (not empty, found something bigger)...\n");
