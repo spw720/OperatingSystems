@@ -105,7 +105,7 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
 
           //TE = &registry[i]->buffer[j];
 
-          *TE = &registry[i]->buffer[j];
+          *TE = registry[i]->buffer[j];
 
           printf("getEntry: <found lastEntry+1>\n");
           return 1;
