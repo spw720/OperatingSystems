@@ -4,7 +4,7 @@
 
 #include <sys/time.h>
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 #define MAXENTRIES 6 //compare to BUFFER_SIZE
 #define MAXTOPICS 1 //compare to MAXQUEUES
@@ -15,7 +15,7 @@
 
 #define DELTA 999
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 struct topicEntry {
   int entryNum;
@@ -26,7 +26,7 @@ struct topicEntry {
 };
 typedef struct topicEntry topicEntry;
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 struct topicQ {
   char *name[MAXNAME];
@@ -37,17 +37,17 @@ struct topicQ {
 };
 typedef struct topicQ topicQ;
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 //Global registry for topic Q's
 topicQ *registry[MAXTOPICS];
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 //global variable for entry number
 int entry_number = 1;
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 void printQ(char *QID){
   for (size_t i = 0; i < MAXTOPICS; i++) {
@@ -61,7 +61,7 @@ void printQ(char *QID){
   }
 }//end of printQ()
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 int enqueue(char *QID, topicEntry *TE){
 
@@ -88,19 +88,17 @@ int enqueue(char *QID, topicEntry *TE){
   return 0;
 }//end of enqueue()
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 int getEntry(char *QID, int lastEntry, topicEntry *TE){
 
   for (size_t i = 0; i < MAXTOPICS; i++) {
     if (strcmp(*registry[i]->name, QID) == 0){
-
       //Case1: topic queue is empty: return 0
       if (registry[i]->tail == registry[i]->head){
         printf("getEntry: <queue is empty>\n");
         return 0;
       }
-
       //Case2: lastEntry+1 is in Queue: copy lastEntry+1 data to TE, return 1)
       for (size_t j = 0; j < MAXENTRIES+1; j++) {
         if (registry[i]->buffer[j].entryNum == lastEntry+1){
@@ -111,15 +109,12 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
           return 1;
         }
       }
-
       //Case3: Topic queue is NOT empty & lastEntry+1 is NOT in queues
       for (size_t j = 0; j < MAXENTRIES+1; j++) {
         //ii: if there exists entry.entryNum > lastEntry+1:
         if (registry[i]->buffer[j].entryNum > lastEntry+1){
-
           //copy entry data to TE, return entry.entryNum
           TE = &registry[i]->buffer[j];
-
           printf("getEntry: <found something bigger>\n");
           return registry[i]->buffer[j].entryNum;
         }
@@ -129,13 +124,11 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
       return 0;
     }
   }
-
   printf("Invalid Queue name!\n");
   return 0;
-
 }//end of getEntry()
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 int dequeue(char *QID){
 
@@ -177,7 +170,7 @@ int dequeue(char *QID){
   return 0;
 }//end of dequeue()
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 int main(int argc, char const *argv[]) {
 
@@ -205,50 +198,50 @@ int main(int argc, char const *argv[]) {
 
   topicEntry tst;
 
+  //Emptying buffer
   printf("\nTesting getEntry()\n");
   for (size_t z = 0; z < MAXENTRIES+1; z++) {
     printQ(*testy.name);
     dequeue(*testy.name);
   }
 
+  //empty struct to-be filled by getEntry()
   topicEntry place_hold;
   place_hold.entryNum = -999;
 
-  printf("\n\nWe're now empty, lets try case one (empty queue)...\n");
+  //Case 1
+  printf("\n\nWe're now empty, lets try case 1 (empty queue)...\n");
   printQ(*testy.name);
   printf("\tResult:[%d]\n", getEntry(*testy.name, entry_number, &place_hold));
   printQ(*testy.name);
   printf("place_hold[%d]\n\n", place_hold.entryNum);
 
-
+  //Fill test buffer
   for (size_t z = 0; z < MAXENTRIES+1; z++) {
     //printQ(*testy.name);
     enqueue(*testy.name, &tst);
   }
-  printf("We're now full, lets try case two (lastEntry+1 in queue)...\n");
-  printQ(*testy.name);
+
+  //Case 2
+  printf("We're now full, lets try case 2 (lastEntry+1 in queue)...\n");
+  //printQ(*testy.name);
   printf("\tResult:[%d]\n", getEntry(*testy.name, 3, &place_hold));
-  printQ(*testy.name);
+  //printQ(*testy.name);
   printf("place_hold[%d]\n\n", place_hold.entryNum);
 
-
-  printf("lets try case three.1 (not empty, all are less)...\n");
-  printQ(*testy.name);
+  //Case 3.1
+  printf("lets try case 3.1 (not empty, all are less)...\n");
+  //printQ(*testy.name);
   printf("\tResult:[%d]\n", getEntry(*testy.name, 999, &place_hold));
-  printQ(*testy.name);
+  //printQ(*testy.name);
   printf("place_hold[%d]\n\n", place_hold.entryNum);
 
-  printf("lets try case three.2 (not empty, found something bigger)...\n");
-  printQ(*testy.name);
+  //Case 3.2
+  printf("lets try case 3.2 (not empty, found something bigger)...\n");
+  //printQ(*testy.name);
   printf("\tResult:[%d]\n", getEntry(*testy.name, -420, &place_hold));
-  printQ(*testy.name);
+  //printQ(*testy.name);
   printf("place_hold[%d]\n", place_hold.entryNum);
-
-
-  // for (size_t z = 0; z < MAXENTRIES+1; z++) {
-  //   printQ(*testy.name);
-  //   enqueue(*testy.name, &tst);
-  // }
 
   return 0;
 
