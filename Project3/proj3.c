@@ -247,9 +247,10 @@ int main(int argc, char const *argv[]) {
   //printQ(*testy.name);
   printf(">\tResult:[%d]\n", getEntry(*testy.name, -420, &place_hold));
   //printQ(*testy.name);
-  printf(">\tplace_hold[%d]\n", place_hold.entryNum);
+  printf(">\tplace_hold[%d]\n\n", place_hold.entryNum);
 
   //Case 4 (invalid queue name)
+  printf("Case 4 (invalid queue name)...\n");
   printf(">\tResult:[%d]\n", getEntry("nonsense", -420, &place_hold));
 
   return 0;
