@@ -211,10 +211,10 @@ int main(int argc, char const *argv[]) {
 
   //Case 1
   printf("\n\nWe're now empty, lets try case 1 (empty queue)...\n");
-  printQ(*testy.name);
-  printf("\tResult:[%d]\n", getEntry(*testy.name, entry_number, &place_hold));
-  printQ(*testy.name);
-  printf("place_hold[%d]\n\n", place_hold.entryNum);
+  //printQ(*testy.name);
+  printf(">\tResult:[%d]\n", getEntry(*testy.name, entry_number, &place_hold));
+  //printQ(*testy.name);
+  printf(">\tplace_hold[%d]\n\n", place_hold.entryNum);
 
   //Fill test buffer
   for (size_t z = 0; z < MAXENTRIES+1; z++) {
