@@ -11,7 +11,7 @@
 //------------------------------------------------------------------------------
 
 #define MAXENTRIES 6 //compare to BUFFER_SIZE
-#define MAXTOPICS 1 //compare to MAXQUEUES
+#define MAXTOPICS 10 //compare to MAXQUEUES
 #define MAXNAME 100 //max name of topic queue
 
 #define URLSIZE 100
@@ -75,17 +75,13 @@ int enqueue(char *QID, topicEntry *TE){
       if (registry[i]->buffer[registry[i]->tail].entryNum != -1){
         //place TE at tail location
         registry[i]->buffer[registry[i]->tail] = *TE;
-
         //Set TE entryNum
         registry[i]->buffer[registry[i]->tail].entryNum = entry_number;
         entry_number++;
-
         //Set timeStamp
         struct timeval time;
         gettimeofday(&time, NULL);
         registry[i]->buffer[registry[i]->tail].timeStamp = time;
-        printf("\n\nTIME:%d\n\n", time.tv_min);
-
         //increment tail
         int new_tail = (registry[i]->tail + 1) % (MAXENTRIES+1);
         registry[i]->tail = new_tail;
@@ -114,11 +110,8 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
       //Case2: lastEntry+1 is in Queue: copy lastEntry+1 data to TE, return 1)
       for (size_t j = 0; j < MAXENTRIES+1; j++) {
         if (registry[i]->buffer[j].entryNum == lastEntry+1){
-
-          //TE = &registry[i]->buffer[j];
-
+          //copy data over
           *TE = registry[i]->buffer[j];
-
           printf(">\tgetEntry: <found lastEntry+1>\n");
           return 1;
         }
@@ -245,14 +238,12 @@ int main(int argc, char const *argv[]) {
   //printQ(*testy.name);
   printf(">\tplace_hold[%d]\n\n", place_hold.entryNum);
 
-
   //Case 3.1
   printf("Case 3.1 le[999](not empty, all are less)...\n");
   //printQ(*testy.name);
   printf(">\tResult:[%d]\n", getEntry(*testy.name, 999, &place_hold));
   //printQ(*testy.name);
   printf(">\tplace_hold[%d]\n\n", place_hold.entryNum);
-
 
   //Case 3.2
   printf("Case 3.2 le[-420](not empty, found something bigger)...\n");
