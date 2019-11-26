@@ -55,7 +55,9 @@ int entry_number = 1;
 
 void printQ(char *QID){
   for (size_t i = 0; i < MAXTOPICS; i++) {
-    if(*registry[i]->name != NULL){
+
+    if(registry[i] != NULL){
+
       if (strcmp(*registry[i]->name, QID) == 0){
         printf("\n---Entries of Q[%s]---\n>\t[", *registry[i]->name);
         for (size_t j = 0; j <= MAXENTRIES; j++) {
@@ -63,7 +65,9 @@ void printQ(char *QID){
         }
         printf("]\n\n");
       }//end of if name = QID
+
     }//end of if registry[i] != NULL
+
   }//end of for-loop
 }//end of printQ()
 
@@ -73,7 +77,7 @@ int enqueue(char *QID, topicEntry *TE){
 
   for (size_t i = 0; i < MAXTOPICS; i++) {
 
-    if(*registry[i]->name != NULL){
+    if(registry[i] != NULL){
 
       if (strcmp(*registry[i]->name, QID) == 0){
         //if tail is NOT located @ null
@@ -110,7 +114,7 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
 
   for (size_t i = 0; i < MAXTOPICS; i++) {
 
-    if(*registry[i]->name != NULL){
+    if(registry[i] != NULL){
 
       if (strcmp(*registry[i]->name, QID) == 0){
         //Case1: topic queue is empty: return 0
@@ -155,7 +159,7 @@ int dequeue(char *QID){
 
   for (size_t i = 0; i < MAXTOPICS; i++) {
 
-    if(*registry[i]->name != NULL){
+    if(registry[i] != NULL){
 
       if (strcmp(*registry[i]->name, QID) == 0){
         //If tail != head
