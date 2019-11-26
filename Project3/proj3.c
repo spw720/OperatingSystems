@@ -6,7 +6,7 @@
 
 //-----------------------------------------------------------------------------
 
-#define MAXENTRIES 5 //compare to BUFFER_SIZE
+#define MAXENTRIES 6 //compare to BUFFER_SIZE
 #define MAXTOPICS 1 //compare to MAXQUEUES
 #define MAXNAME 100 //max name of topic queue
 
@@ -94,7 +94,7 @@ int dequeue(){
 
 //-----------------------------------------------------------------------------
 
-int getEntry(char *QID){
+int dequeue(char *QID){
 
   for (size_t i = 0; i < MAXTOPICS; i++) {
     if (strcmp(*registry[i]->name, QID) == 0){
@@ -171,7 +171,7 @@ int main(int argc, char const *argv[]) {
   printf("\nTesting getEntry()\n");
   for (size_t z = 0; z < MAXENTRIES+1; z++) {
     printQ(*testy.name);
-    getEntry(*testy.name);
+    dequeue(*testy.name);
   }
 
 
