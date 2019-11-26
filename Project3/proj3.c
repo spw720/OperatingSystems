@@ -116,7 +116,7 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
         //ii: if there exists entry.entryNum > lastEntry+1:
         if (registry[i]->buffer[j].entryNum > lastEntry+1){
           //copy entry data to TE, return entry.entryNum
-          TE = &registry[i]->buffer[j];
+          *TE = registry[i]->buffer[j];
           printf("getEntry: <found something bigger>\n");
           return registry[i]->buffer[j].entryNum;
         }
@@ -212,7 +212,7 @@ int main(int argc, char const *argv[]) {
   place_hold.entryNum = -999;
 
   //Case 1
-  printf("\n\nWe're now empty, lets try case 1 (empty queue)...\n");
+  printf("\n\nCase 1 le[%d](empty queue)...\n", entry_number);
   //printQ(*testy.name);
   printf(">\tResult:[%d]\n", getEntry(*testy.name, entry_number, &place_hold));
   //printQ(*testy.name);
@@ -226,7 +226,7 @@ int main(int argc, char const *argv[]) {
   printQ(*testy.name);
 
   //Case 2
-  printf("We're now full, lets try case 2 (lastEntry+1 in queue)...\n");
+  printf("Case 2 le[3](lastEntry+1 in queue)...\n");
   //printQ(*testy.name);
   printf(">\tResult:[%d]\n", getEntry(*testy.name, 3, &place_hold));
   //printQ(*testy.name);
@@ -234,7 +234,7 @@ int main(int argc, char const *argv[]) {
 
 
   //Case 3.1
-  printf("lets try case 3.1 (not empty, all are less)...\n");
+  printf("Case 3.1 le[999](not empty, all are less)...\n");
   //printQ(*testy.name);
   printf(">\tResult:[%d]\n", getEntry(*testy.name, 999, &place_hold));
   //printQ(*testy.name);
@@ -242,7 +242,7 @@ int main(int argc, char const *argv[]) {
 
 
   //Case 3.2
-  printf("lets try case 3.2 (not empty, found something bigger)...\n");
+  printf("Case 3.2 le[-420](not empty, found something bigger)...\n");
   //printQ(*testy.name);
   printf(">\tResult:[%d]\n", getEntry(*testy.name, -420, &place_hold));
   //printQ(*testy.name);
