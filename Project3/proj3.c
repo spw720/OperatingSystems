@@ -40,7 +40,7 @@ typedef struct topicQ topicQ;
 //-----------------------------------------------------------------------------
 
 //Global registry for topic Q's
-MTQ *registry[MAXTOPICS];
+topicQ *registry[MAXTOPICS];
 
 //-----------------------------------------------------------------------------
 
