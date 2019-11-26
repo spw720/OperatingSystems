@@ -225,23 +225,23 @@ int main(int argc, char const *argv[]) {
   //Case 2
   printf("We're now full, lets try case 2 (lastEntry+1 in queue)...\n");
   //printQ(*testy.name);
-  printf("\tResult:[%d]\n", getEntry(*testy.name, 3, &place_hold));
+  printf(">\tResult:[%d]\n", getEntry(*testy.name, 3, &place_hold));
   //printQ(*testy.name);
-  printf("place_hold[%d]\n\n", place_hold.entryNum);
+  printf(">\tplace_hold[%d]\n\n", place_hold.entryNum);
 
   //Case 3.1
   printf("lets try case 3.1 (not empty, all are less)...\n");
   //printQ(*testy.name);
-  printf("\tResult:[%d]\n", getEntry(*testy.name, 999, &place_hold));
+  printf(">\tResult:[%d]\n", getEntry(*testy.name, 999, &place_hold));
   //printQ(*testy.name);
-  printf("place_hold[%d]\n\n", place_hold.entryNum);
+  printf(">\tplace_hold[%d]\n\n", place_hold.entryNum);
 
   //Case 3.2
   printf("lets try case 3.2 (not empty, found something bigger)...\n");
   //printQ(*testy.name);
-  printf("\tResult:[%d]\n", getEntry(*testy.name, -420, &place_hold));
+  printf(">\tResult:[%d]\n", getEntry(*testy.name, -420, &place_hold));
   //printQ(*testy.name);
-  printf("place_hold[%d]\n", place_hold.entryNum);
+  printf(">\tplace_hold[%d]\n", place_hold.entryNum);
 
   return 0;
 
