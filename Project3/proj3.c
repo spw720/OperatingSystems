@@ -201,7 +201,7 @@ int dequeue(char *QID){
 
 int main(int argc, char const *argv[]) {
 
-  topicEntry buffer1[MAXENTRIES+1];
+  topicEntry buffer1[MAXENTRIES+1] = {};
 
   topicQ testy = {
     .name = "test",
