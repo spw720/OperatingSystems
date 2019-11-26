@@ -52,11 +52,11 @@ int entry_number = 1;
 void printQ(char *QID){
   for (size_t i = 0; i < MAXTOPICS; i++) {
     if (strcmp(*registry[i]->name, QID) == 0){
-      printf("\n\n---Entries of Q[%s]---\n[", *registry[i]->name);
+      printf("\n\n---Entries of Q[%s]---\n>\t[", *registry[i]->name);
       for (size_t j = 0; j <= MAXENTRIES; j++) {
         printf("%d, ", registry[i]->buffer[j].entryNum);
       }
-      printf("]\n-------------------------\n\n");
+      printf("]\n\n");
     }
   }
 }//end of printQ()
