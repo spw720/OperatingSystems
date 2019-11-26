@@ -104,7 +104,9 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
       //Case2: lastEntry+1 is in Queue: copy lastEntry+1 data to TE, return 1)
       for (size_t j = 0; j < MAXENTRIES+1; j++) {
         if (registry[i]->buffer[j].entryNum == lastEntry+1){
-          TE = registry[i]->buffer[j];
+
+          TE = &registry[i]->buffer[j];
+
           printf("getEntry: <found lastEntry+1>\n");
           return 1;
         }
@@ -114,8 +116,10 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
       for (size_t j = 0; j < MAXENTRIES+1; j++) {
         //ii: if there exists entry.entryNum > lastEntry+1:
         if (registry[i]->buffer[j].entryNum > lastEntry+1){
+
           //copy entry data to TE, return entry.entryNum
-          TE = registry[i]->buffer[j];
+          TE = &registry[i]->buffer[j];
+
           printf("getEntry: <found something bigger>\n");
           return registry[i]->buffer[j].entryNum;
         }
