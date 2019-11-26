@@ -6,7 +6,7 @@
 
 //-----------------------------------------------------------------------------
 
-#define MAXENTRIES 6 //compare to BUFFER_SIZE
+#define MAXENTRIES 16 //compare to BUFFER_SIZE
 #define MAXTOPICS 1 //compare to MAXQUEUES
 #define MAXNAME 100 //max name of topic queue
 
@@ -112,7 +112,7 @@ int dequeue(char *QID){
           int new_head = (registry[i]->head + 1) % (MAXENTRIES+1);
           registry[i]->head = new_head;
         }
-        else{
+        else {
           int head_minus2 = (registry[i]->head - 1) % (MAXENTRIES+1);
           if (head_minus2 == -1) { head_minus2 = MAXENTRIES; }
           //set head-1 entryNum to 0 (empty)
@@ -173,7 +173,6 @@ int main(int argc, char const *argv[]) {
     printQ(*testy.name);
     dequeue(*testy.name);
   }
-
 
   return 0;
 
