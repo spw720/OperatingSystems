@@ -56,7 +56,7 @@ void printQ(char *QID){
       for (size_t j = 0; j <= MAXENTRIES; j++) {
         printf("%d, ", registry[i]->buffer[j].entryNum);
       }
-      printf("]\n");
+      printf("]\n\n");
     }
   }
 }//end of printQ()
@@ -213,7 +213,7 @@ int main(int argc, char const *argv[]) {
   place_hold.entryNum = -999;
 
   //Case 1
-  printf("\n\nCase 1 le[%d](empty queue)...\n", entry_number);
+  printf("\nCase 1 le[%d](empty queue)...\n", entry_number);
   //printQ(*testy.name);
   printf(">\tResult:[%d]\n", getEntry(*testy.name, entry_number, &place_hold));
   //printQ(*testy.name);
