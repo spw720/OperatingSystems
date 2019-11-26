@@ -197,15 +197,16 @@ int main(int argc, char const *argv[]) {
   for (size_t i = 0; i < MAXENTRIES; i++) {
     testy.buffer[i] = def;
   }
+  printQ(*testy.name);
 
   topicEntry tst;
 
-  //Emptying buffer
-  printf("\nTesting getEntry()\n");
-  for (size_t z = 0; z < MAXENTRIES+1; z++) {
-    printQ(*testy.name);
-    dequeue(*testy.name);
-  }
+  // //Emptying buffer
+  // printf("\nTesting getEntry()\n");
+  // for (size_t z = 0; z < MAXENTRIES+1; z++) {
+  //   printQ(*testy.name);
+  //   dequeue(*testy.name);
+  // }
 
   //empty struct to-be filled by getEntry()
   topicEntry place_hold;
