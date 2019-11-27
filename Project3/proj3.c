@@ -208,7 +208,7 @@ int dequeue(char *QID){
 
 //------------------------------------------------------------------------------
 
-void * cleanup(void * arg){
+void *cleanup(void *arg){
   //Spin forever! (until thread is cancelled elsewhere)
   while(1){
     //for topic in topicQ
@@ -291,7 +291,7 @@ int main(int argc, char const *argv[]) {
   sleep(5);
   printQ(*testy.name);
 
-  pthread_cancel(cleanup_thread, NULL);
+  pthread_cancel(cleanup_thread);
   pthread_join(cleanup_thread, NULL);
 
   // //Case 1
