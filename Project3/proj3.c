@@ -215,9 +215,9 @@ void cleanup(void){
               printf("YOINK IT!\n");
               registry[i]->buffer[j].timeStamp = new;
             }
-            sleep(1);
           }//end of if entry is null
         }// end of for(entries)
+        sleep(1);
       }//end of if registry==NULL
     }//end of for(topics)
   }//end of while(1)
