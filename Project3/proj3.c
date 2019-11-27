@@ -208,7 +208,7 @@ int dequeue(char *QID){
 
 //------------------------------------------------------------------------------
 
-void * cleanup(void *){
+void * cleanup(void * arg){
   //Spin forever! (until thread is cancelled elsewhere)
   while(1){
     //for topic in topicQ
