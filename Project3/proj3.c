@@ -201,7 +201,7 @@ void cleanup(void){
     for (size_t i = 0; i < MAXTOPICS; i++) {
       if(registry[i] != NULL){
         for (size_t j = 0; j < MAXENTRIES+1; j++) {
-          if(registry[i]->buffer[j].entryNum != -1){
+          if(registry[i]->buffer[j].entryNum != -1 || registry[i]->buffer[j].entryNum != 0){
             gettimeofday(&new, NULL);
 
             old = registry[i]->buffer[j].timeStamp;
