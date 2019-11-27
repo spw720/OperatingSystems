@@ -352,12 +352,12 @@ int main(int argc, char const *argv[]) {
   printQ(*testy.name);
   sleep(5);
   printQ(*testy.name);
-  sleep(5);
-  printQ(*testy.name);
 
-  pthread_cancel(cleanup_thread);
-  pthread_cancel(publisher_thread);
   pthread_cancel(subscriber_thread);
+  sleep(5);
+  pthread_cancel(publisher_thread);
+  sleep(5);
+  pthread_cancel(cleanup_thread);
 
   pthread_join(cleanup_thread, NULL);
   pthread_join(publisher_thread, NULL);
