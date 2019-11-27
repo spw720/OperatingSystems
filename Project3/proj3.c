@@ -220,7 +220,6 @@ void cleanup(void){
             }
           }//end of if entry is null
         }// end of for(entries)
-        sleep(1);
       }//end of if registry==NULL
     }//end of for(topics)
   }//end of while(1)
@@ -275,9 +274,6 @@ int main(int argc, char const *argv[]) {
   //for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy2.name, &tst); }
   cleanup();
   sleep(1);
-  cleanup();
-  sleep(1);
-  cleanup();
 
   // //Case 1
   // printf("\nCase 1 le[%d](empty queue)...\n", entry_number);
