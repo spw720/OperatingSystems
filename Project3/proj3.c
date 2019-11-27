@@ -282,7 +282,7 @@ int main(int argc, char const *argv[]) {
   printQ(*testy.name);
   for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy.name, &tst); }
   printQ(*testy.name);
-  sleep(10)
+  sleep(10);
   printQ(*testy.name);
   for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy.name, &tst); }
   printQ(*testy.name);
