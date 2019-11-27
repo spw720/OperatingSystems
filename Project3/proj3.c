@@ -244,7 +244,7 @@ int main(int argc, char const *argv[]) {
   testy.buffer[MAXENTRIES] = null;
 
   registry[0] = &testy;
-  registry[1] = &testy;
+  registry[1] = &testy2;
 
   topicEntry def;
   def.entryNum = 0;
