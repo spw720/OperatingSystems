@@ -149,6 +149,10 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
 
 int dequeue(char *QID){
 
+  struct timeval new;
+  struct timeval old;
+  double diff;
+
   for (size_t i = 0; i < MAXTOPICS; i++) {
     if(registry[i] != NULL){
       if (strcmp(*registry[i]->name, QID) == 0){
@@ -156,6 +160,19 @@ int dequeue(char *QID){
         if (registry[i]->tail != registry[i]->head){
           //if tail null:
           if (registry[i]->buffer[registry[i]->tail].entryNum == -1){
+
+            //Check if oldest entry has passed the time DELTA
+            //get current time
+            gettimeofday(&new, NULL);
+            //compute time difference
+            old = registry[i]->buffer[registry[i]->tail].timeStamp;
+            diff = (new.tv_sec - old.tv_sec) * 1e6;
+            diff = (diff + (new.tv_usec - old.tv_usec)) * 1e-6;
+            if(diff >= DELTA) {
+              printf("***\tWE GOT AN OLD BASTARD!\n");
+            }
+
+
             //set head entryNum to -1 (null)
             registry[i]->buffer[registry[i]->head].entryNum = -1;
             int head_minus1 = (registry[i]->head - 1) % (MAXENTRIES+1);
@@ -193,36 +210,17 @@ int dequeue(char *QID){
 
 void cleanup(void){
 
-  struct timeval new;
-  struct timeval old;
-  double diff;
+  //for topic in topicQ
+  for (size_t i = 0; i < MAXTOPICS; i++) {
+    if(registry[i] != NULL){
 
-  while(1){
-    for (size_t i = 0; i < MAXTOPICS; i++) {
-      if(registry[i] != NULL){
-        for (size_t j = 0; j < MAXENTRIES+1; j++) {
-          if(registry[i]->buffer[j].entryNum != -1 || registry[i]->buffer[j].entryNum != 0){
+      while(dequeue(*registry[i]->name)){
+        sleep(1);
+      }
 
-            printQ(*registry[i]->name);
+    }//end of if registry==NULL
+  }//end of for(topics)
 
-            gettimeofday(&new, NULL);
-
-            old = registry[i]->buffer[j].timeStamp;
-
-            diff = (new.tv_sec - old.tv_sec) * 1e6;
-            diff = (diff + (new.tv_usec - old.tv_usec)) * 1e-6;
-
-            //printf("Time elapsed for entry[%d] of queue[%s] : [%f]\n", registry[i]->buffer[j].entryNum, *registry[i]->name, diff);
-
-            if(diff >= DELTA) {
-              dequeue(*registry[i]->name);
-              printQ(*registry[i]->name);
-            }
-          }//end of if entry is null
-        }// end of for(entries)
-      }//end of if registry==NULL
-    }//end of for(topics)
-  }//end of while(1)
 }//end of cleanup()
 
 //------------------------------------------------------------------------------
@@ -272,6 +270,7 @@ int main(int argc, char const *argv[]) {
 
   for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy.name, &tst); }
   //for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy2.name, &tst); }
+  printQ(*testy.name);
   cleanup();
   sleep(1);
 
