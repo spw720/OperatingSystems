@@ -209,7 +209,8 @@ void cleanup(void){
           diff = (new.tv_sec - old.tv_sec) * 1e6;
           diff = (diff + (new.tv_usec - old.tv_usec)) * 1e-6;
 
-          printf("Time elapsed for entry[%d] of queue[%s] : [%f]\n", registry[i]->buffer[j].entryNum, registry[i]->name, diff);
+          printf("Time elapsed for entry[%d] of queue[%s] : [%f]\n", registry[i]->buffer[j].entryNum, *registry[i]->name, diff);
+          sleep(1);
 
         }// end of for(entries)
       }//end of if registry==NULL
