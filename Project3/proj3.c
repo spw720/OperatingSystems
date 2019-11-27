@@ -11,7 +11,7 @@
 //------------------------------------------------------------------------------
 
 #define MAXENTRIES 6 //compare to BUFFER_SIZE
-#define MAXTOPICS 10 //compare to MAXQUEUES
+#define MAXTOPICS 100 //compare to MAXQUEUES
 #define MAXNAME 100 //max name of topic queue
 
 #define URLSIZE 100
