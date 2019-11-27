@@ -168,6 +168,7 @@ int dequeue(char *QID){
             old = registry[i]->buffer[registry[i]->tail].timeStamp;
             diff = (new.tv_sec - old.tv_sec) * 1e6;
             diff = (diff + (new.tv_usec - old.tv_usec)) * 1e-6;
+            printf("DIFFERENCE: {%f}\n", diff);
             if(diff < DELTA) {
               printf("Too young to die!\n");
               return 0;
