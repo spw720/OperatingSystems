@@ -278,7 +278,8 @@ int main(int argc, char const *argv[]) {
   printQ(*testy.name);
 
   pthread_t cleanup_thread;
-  pthread_create(&cleanup_thread, NULL, cleanup, NULL);
+  int result = pthread_create(&cleanup_thread, NULL, cleanup, NULL);
+
   printQ(*testy.name);
   for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy.name, &tst); }
   printQ(*testy.name);
@@ -288,8 +289,9 @@ int main(int argc, char const *argv[]) {
   printQ(*testy.name);
   sleep(5);
   printQ(*testy.name);
-  pthread_cancel(cleanup_thread, NULL);
-  pthread_join(cleanup_thread, NULL);
+
+  int result2 = pthread_cancel(cleanup_thread, NULL);
+  int result3 = pthread_join(cleanup_thread, NULL);
 
   // //Case 1
   // printf("\nCase 1 le[%d](empty queue)...\n", entry_number);
