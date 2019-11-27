@@ -218,7 +218,7 @@ void cleanup(void){
       while(dequeue(*registry[i]->name)){}
 
     }//end of if registry==NULL
-    
+
   }//end of for(topics)
 
 }//end of cleanup()
@@ -272,7 +272,10 @@ int main(int argc, char const *argv[]) {
   //for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy2.name, &tst); }
   printQ(*testy.name);
   cleanup();
-  sleep(1);
+  printQ(*testy.name);
+  sleep(11);
+  cleanup();
+  printQ(*testy.name);
 
   // //Case 1
   // printf("\nCase 1 le[%d](empty queue)...\n", entry_number);
