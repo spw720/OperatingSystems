@@ -20,7 +20,7 @@
 #define URLSIZE 100
 #define CAPSIZE 100
 
-#define DELTA 10
+#define DELTA 1
 
 //------------------------------------------------------------------------------
 
@@ -210,7 +210,11 @@ void cleanup(void){
             diff = (diff + (new.tv_usec - old.tv_usec)) * 1e-6;
 
             printf("Time elapsed for entry[%d] of queue[%s] : [%f]\n", registry[i]->buffer[j].entryNum, *registry[i]->name, diff);
-            sleep(1);
+
+            if(diff >= DELTA) {
+              printf("YOINK IT!\n");
+              registry[i]->buffer[j].timeStamp = new;
+            }
           }//end of if entry is null
         }// end of for(entries)
       }//end of if registry==NULL
