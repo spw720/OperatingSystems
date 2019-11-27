@@ -261,7 +261,7 @@ void *subscriber(void *arg){ //getEntry()
   while(1){
 
     //try to getEntry
-    int result = getEntry(*registry[topic_index]->name, last_entry, &tst);
+    int result = getEntry(*registry[topic_index]->name, last_entry, &place_hold);
 
     if(result == 0){
       printf("***\tSUBSCRIBER YEILDING\n");
