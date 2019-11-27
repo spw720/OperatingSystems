@@ -216,6 +216,7 @@ void cleanup(void){
 
       while(dequeue(*registry[i]->name)){
         sleep(1);
+        printQ(*registry[i]->name);
       }
 
     }//end of if registry==NULL
