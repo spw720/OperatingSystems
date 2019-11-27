@@ -8,6 +8,7 @@
 #include <unistd.h>
 
 #include <pthread.h>
+#include <sched.h>
 
 #include <sys/time.h>
 
@@ -232,10 +233,10 @@ void *publisher(void *arg){ //enqueue()
   //test entry
   topicEntry tst;
 
-  topic_index = 0;
+  int topic_index = 0;
 
   while(1){
-    while(enqueue(*registry[i]->name, &tst) == 0){
+    while(enqueue(*registry[topic_index]->name, &tst) == 0){
       printf("***\tPUBLISHER YEILDING\n");
       sched_yeild();
     }
