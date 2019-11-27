@@ -223,10 +223,18 @@ void cleanup(void){
 int main(int argc, char const *argv[]) {
 
   topicEntry buffer1[MAXENTRIES+1] = {};
+  topicEntry buffer2[MAXENTRIES+1] = {};
 
   topicQ testy = {
     .name = "test",
     .buffer = buffer1,
+    .head = 0,
+    .tail = 0,
+    .length = MAXENTRIES + 1 };
+
+  topicQ testy2 = {
+    .name = "test2",
+    .buffer = buffer2,
     .head = 0,
     .tail = 0,
     .length = MAXENTRIES + 1 };
@@ -236,14 +244,16 @@ int main(int argc, char const *argv[]) {
   testy.buffer[MAXENTRIES] = null;
 
   registry[0] = &testy;
+  registry[1] = &testy;
 
   topicEntry def;
   def.entryNum = 0;
 
   for (size_t i = 0; i < MAXENTRIES; i++) {
     testy.buffer[i] = def;
+    testy2.buffer[i] = def;
   }
-  printQ(*testy.name);
+  //printQ(*testy.name);
 
   topicEntry tst;
 
@@ -252,6 +262,7 @@ int main(int argc, char const *argv[]) {
   place_hold.entryNum = -999;
 
   for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy.name, &tst); }
+  for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy2.name, &tst); }
   cleanup();
   sleep(1);
   cleanup();
