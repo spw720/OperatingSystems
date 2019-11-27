@@ -241,7 +241,7 @@ void *publisher(void *arg){ //enqueue()
       sched_yield();
     }
     printf("***\tPUBLISHER ENQU'D, sleep 1 and try again\n");
-    //sleep(1);
+    sleep(1);
   }
   return NULL;
 }//end of publisher()
@@ -277,6 +277,8 @@ void *subscriber(void *arg){ //getEntry()
       printf("***\tSUBSCRIBER found entry[%d]\n", place_hold.entryNum);
       last_entry = result;
     }
+
+    sleep(1);
 
     //case(return 0):
       //either queue is empty (or) all entries < last_entry+1
