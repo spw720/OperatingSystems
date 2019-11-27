@@ -213,11 +213,10 @@ void cleanup(void){
 
             if(diff >= DELTA) {
               printf("YOINK IT!\n");
-              registry[i]->buffer[j].timeStamp = new;
+              dequeue(*registry[i]->name);
             }
           }//end of if entry is null
         }// end of for(entries)
-        sleep(1);
       }//end of if registry==NULL
     }//end of for(topics)
   }//end of while(1)
