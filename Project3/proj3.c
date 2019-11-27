@@ -233,7 +233,7 @@ void *publisher(void *arg){ //enqueue()
   //test entry
   topicEntry tst;
 
-  int topic_index = 0;
+  int topic_index = 0; //TODO change this from hard-coded to param based
 
   while(1){
     while(enqueue(*registry[topic_index]->name, &tst) == 0){
@@ -248,9 +248,52 @@ void *publisher(void *arg){ //enqueue()
 
 //------------------------------------------------------------------------------
 
+//int getEntry(char *QID, int lastEntry, topicEntry *TE){
 void *subscriber(void *arg){ //getEntry()
 
+  //empty struct to-be filled by getEntry()
+  topicEntry place_hold;
+  place_hold.entryNum = -999;
+
+  int topic_index = 0; //TODO change this from hard-coded to param based
+  int last_entry = 1;
+
+  while(1){
+
+    //try to getEntry
+    int result = getEntry(*registry[topic_index]->name, last_entry, &tst);
+
+    if(result == 0){
+      printf("***\tSUBSCRIBER YEILDING\n");
+      sched_yield();
+    }
+
+    else if(result == 1){
+      printf("***\tSUBSCRIBER found entry[%d]\n", place_hold.entryNum);
+      last_entry++;
+    }
+
+    else{
+      printf("***\tSUBSCRIBER found entry[%d]\n", place_hold.entryNum);
+      last_entry = result;
+    }
+
+    //case(return 0):
+      //either queue is empty (or) all entries < last_entry+1
+      //SCHED_YEILD in this case
+
+    //case(return 1):
+      //found lastEntry+1
+      //PRINT place_hold and increment last_entry?
+
+    //case(return entry):
+      //found something bigger than last_entry+1
+      //PRINT place_hold then set last_entry to return value
+
+  }//end of infinite while loop
+
   return NULL;
+
 }//end of subscriber()
 
 //------------------------------------------------------------------------------
@@ -272,14 +315,6 @@ int main(int argc, char const *argv[]) {
   //DEFAULT entry
   topicEntry def;
   def.entryNum = 0;
-  //test entry
-  topicEntry tst;
-
-  //*****
-  //empty struct to-be filled by getEntry()
-  topicEntry place_hold;
-  place_hold.entryNum = -999;
-  //*****
 
   //Set last entry to null
   testy.buffer[MAXENTRIES] = null;
@@ -296,23 +331,40 @@ int main(int argc, char const *argv[]) {
 
   pthread_t cleanup_thread;
   pthread_t publisher_thread;
+  pthread_t subscriber_thread;
 
   pthread_create(&publisher_thread, NULL, publisher, NULL);
+
   printQ(*testy.name);
   sleep(5);
   printQ(*testy.name);
+
   pthread_create(&cleanup_thread, NULL, cleanup, NULL);
+
   printQ(*testy.name);
   sleep(5);
   printQ(*testy.name);
+
+  pthread_create(&subscriber_thread, NULL, subscriber, NULL);
+
+  printQ(*testy.name);
+  sleep(5);
+  printQ(*testy.name);
+  sleep(5);
+  printQ(*testy.name);
+
   pthread_cancel(cleanup_thread);
   pthread_cancel(publisher_thread);
+  pthread_cancel(subscriber_thread);
 
   pthread_join(cleanup_thread, NULL);
   pthread_join(publisher_thread, NULL);
+  pthread_join(subscriber_thread, NULL);
 
   printQ(*testy.name);
 
+  //topicEntry tst;
+  //topicEntry place_hold
   // //Case 1
   // printf("\nCase 1 le[%d](empty queue)...\n", entry_number);
   // printf(">\tResult:[%d]\n", getEntry(*testy.name, entry_number, &place_hold));
