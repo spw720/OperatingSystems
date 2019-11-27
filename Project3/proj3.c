@@ -201,17 +201,17 @@ void cleanup(void){
     for (size_t i = 0; i < MAXTOPICS; i++) {
       if(registry[i] != NULL){
         for (size_t j = 0; j < MAXENTRIES+1; j++) {
+          if(registry[i]->buffer[j].entryNum != -1){
+            gettimeofday(&new, NULL);
 
-          gettimeofday(&new, NULL);
+            old = registry[i]->buffer[j].timeStamp;
 
-          old = registry[i]->buffer[j].timeStamp;
+            diff = (new.tv_sec - old.tv_sec) * 1e6;
+            diff = (diff + (new.tv_usec - old.tv_usec)) * 1e-6;
 
-          diff = (new.tv_sec - old.tv_sec) * 1e6;
-          diff = (diff + (new.tv_usec - old.tv_usec)) * 1e-6;
-
-          printf("Time elapsed for entry[%d] of queue[%s] : [%f]\n", registry[i]->buffer[j].entryNum, *registry[i]->name, diff);
-          sleep(1);
-
+            printf("Time elapsed for entry[%d] of queue[%s] : [%f]\n", registry[i]->buffer[j].entryNum, *registry[i]->name, diff);
+            sleep(1);
+          }//end of if entry is null
         }// end of for(entries)
       }//end of if registry==NULL
     }//end of for(topics)
