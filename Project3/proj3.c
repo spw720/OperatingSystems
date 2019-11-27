@@ -356,7 +356,7 @@ int main(int argc, char const *argv[]) {
   pthread_cancel(subscriber_thread);
   sleep(5);
   pthread_cancel(publisher_thread);
-  sleep(5);
+  sleep(10);
   pthread_cancel(cleanup_thread);
 
   pthread_join(cleanup_thread, NULL);
