@@ -20,7 +20,7 @@
 #define URLSIZE 100
 #define CAPSIZE 100
 
-#define DELTA 10
+#define DELTA 5
 
 //------------------------------------------------------------------------------
 
@@ -209,18 +209,19 @@ int dequeue(char *QID){
 //------------------------------------------------------------------------------
 
 void cleanup(void){
+  //Spin forever! (until thread is cancelled elsewhere)
+  while(1){
+    //for topic in topicQ
+    for (size_t i = 0; i < MAXTOPICS; i++) {
+      if(registry[i] != NULL){
+        //While dequeue finds something legit to dequeue...Keep going!
+        while(dequeue(*registry[i]->name)){}
+      }//end of if registry==NULL
+    }//end of for(topics)
 
-  //for topic in topicQ
-  for (size_t i = 0; i < MAXTOPICS; i++) {
+    sleep(1);
 
-    if(registry[i] != NULL){
-
-      while(dequeue(*registry[i]->name)){}
-
-    }//end of if registry==NULL
-
-  }//end of for(topics)
-
+  }//end of main infinite loop
 }//end of cleanup()
 
 //------------------------------------------------------------------------------
@@ -244,38 +245,51 @@ int main(int argc, char const *argv[]) {
   //   .tail = 0,
   //   .length = MAXENTRIES + 1 };
 
+  //NULL entry
   topicEntry null;
   null.entryNum = -1;
-
-  testy.buffer[MAXENTRIES] = null;
-  //testy2.buffer[MAXENTRIES] = null;
-
-  registry[0] = &testy;
-  //registry[1] = &testy2;
-
+  //DEFAULT entry
   topicEntry def;
   def.entryNum = 0;
-
-  for (size_t i = 0; i < MAXENTRIES; i++) {
-    testy.buffer[i] = def;
-    //testy2.buffer[i] = def;
-  }
-  //printQ(*testy.name);
-
+  //test entry
   topicEntry tst;
-
   //empty struct to-be filled by getEntry()
   topicEntry place_hold;
   place_hold.entryNum = -999;
 
+  //Set last entry to null
+  testy.buffer[MAXENTRIES] = null;
+  //testy2.buffer[MAXENTRIES] = null;
+
+  //place topicQ in registry
+  registry[0] = &testy;
+  //registry[1] = &testy2;
+
+  //Set all values besides NULL to 0(default/empty)
+  for (size_t i = 0; i < MAXENTRIES; i++) {
+    testy.buffer[i] = def;
+    //testy2.buffer[i] = def;
+  }
+
   for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy.name, &tst); }
   //for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy2.name, &tst); }
+
+
   printQ(*testy.name);
-  cleanup();
+
+  pthread_t cleanup_thread;
+  pthread_create(&cleanup_thread, NULL, cleanup, NULL);
   printQ(*testy.name);
-  sleep(11);
-  cleanup();
+  for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy.name, &tst); }
   printQ(*testy.name);
+  sleep(10)
+  printQ(*testy.name);
+  for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy.name, &tst); }
+  printQ(*testy.name);
+  sleep(5);
+  printQ(*testy.name);
+  pthread_cancel(cleanup_thread, NULL);
+  pthread_join(cleanup_thread, NULL);
 
   // //Case 1
   // printf("\nCase 1 le[%d](empty queue)...\n", entry_number);
