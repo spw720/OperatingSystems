@@ -202,6 +202,9 @@ void cleanup(void){
       if(registry[i] != NULL){
         for (size_t j = 0; j < MAXENTRIES+1; j++) {
           if(registry[i]->buffer[j].entryNum != -1 || registry[i]->buffer[j].entryNum != 0){
+
+            printQ(*registry[i]->name);
+
             gettimeofday(&new, NULL);
 
             old = registry[i]->buffer[j].timeStamp;
@@ -209,14 +212,15 @@ void cleanup(void){
             diff = (new.tv_sec - old.tv_sec) * 1e6;
             diff = (diff + (new.tv_usec - old.tv_usec)) * 1e-6;
 
-            printf("Time elapsed for entry[%d] of queue[%s] : [%f]\n", registry[i]->buffer[j].entryNum, *registry[i]->name, diff);
+            //printf("Time elapsed for entry[%d] of queue[%s] : [%f]\n", registry[i]->buffer[j].entryNum, *registry[i]->name, diff);
 
             if(diff >= DELTA) {
-              printf("YOINK IT!\n");
               dequeue(*registry[i]->name);
+              printQ(*registry[i]->name);
             }
           }//end of if entry is null
         }// end of for(entries)
+        sleep(1);
       }//end of if registry==NULL
     }//end of for(topics)
   }//end of while(1)
