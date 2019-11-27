@@ -238,7 +238,7 @@ void *publisher(void *arg){ //enqueue()
   while(1){
     while(enqueue(*registry[topic_index]->name, &tst) == 0){
       printf("***\tPUBLISHER YEILDING\n");
-      sched_yeild();
+      sched_yield();
     }
     printf("***\tPUBLISHER ENQU'D, sleep 1 and try again\n");
     sleep(1);
