@@ -20,7 +20,7 @@
 #define URLSIZE 100
 #define CAPSIZE 100
 
-#define DELTA 1
+#define DELTA 10
 
 //------------------------------------------------------------------------------
 
