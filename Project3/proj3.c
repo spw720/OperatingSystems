@@ -227,10 +227,36 @@ void *cleanup(void *arg){
 
 //------------------------------------------------------------------------------
 
+void *publisher(void *arg){ //enqueue()
+
+  //test entry
+  topicEntry tst;
+
+  topic_index = 0;
+
+  while(1){
+    while(enqueue(*registry[i]->name, &tst) == 0){
+      printf("***\tPUBLISHER YEILDING\n");
+      sched_yeild();
+    }
+    printf("***\tPUBLISHER ENQU'D, sleep 1 and try again\n");
+    sleep(1);
+  }
+  return NULL;
+}//end of publisher()
+
+//------------------------------------------------------------------------------
+
+void *subscriber(void *arg){ //getEntry()
+
+  return NULL;
+}//end of subscriber()
+
+//------------------------------------------------------------------------------
+
 int main(int argc, char const *argv[]) {
 
   topicEntry buffer1[MAXENTRIES+1] = {};
-  //topicEntry buffer2[MAXENTRIES+1] = {};
 
   topicQ testy = {
     .name = "test",
@@ -238,13 +264,6 @@ int main(int argc, char const *argv[]) {
     .head = 0,
     .tail = 0,
     .length = MAXENTRIES + 1 };
-
-  // topicQ testy2 = {
-  //   .name = "test2",
-  //   .buffer = buffer2,
-  //   .head = 0,
-  //   .tail = 0,
-  //   .length = MAXENTRIES + 1 };
 
   //NULL entry
   topicEntry null;
@@ -254,45 +273,44 @@ int main(int argc, char const *argv[]) {
   def.entryNum = 0;
   //test entry
   topicEntry tst;
+
+  //*****
   //empty struct to-be filled by getEntry()
   topicEntry place_hold;
   place_hold.entryNum = -999;
+  //*****
 
   //Set last entry to null
   testy.buffer[MAXENTRIES] = null;
-  //testy2.buffer[MAXENTRIES] = null;
 
   //place topicQ in registry
   registry[0] = &testy;
-  //registry[1] = &testy2;
 
   //Set all values besides NULL to 0(default/empty)
   for (size_t i = 0; i < MAXENTRIES; i++) {
     testy.buffer[i] = def;
-    //testy2.buffer[i] = def;
   }
-
-  for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy.name, &tst); }
-  //for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy2.name, &tst); }
-
 
   printQ(*testy.name);
 
   pthread_t cleanup_thread;
-  pthread_create(&cleanup_thread, NULL, cleanup, NULL);
+  pthread_t publisher_thread;
 
-  printQ(*testy.name);
-  for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy.name, &tst); }
-  printQ(*testy.name);
-  sleep(10);
-  printQ(*testy.name);
-  for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy.name, &tst); }
+  pthread_create(&publisher_thread, NULL, publisher, NULL);
   printQ(*testy.name);
   sleep(5);
   printQ(*testy.name);
-
+  pthread_create(&cleanup_thread, NULL, cleanup, NULL);
+  printQ(*testy.name);
+  sleep(5);
+  printQ(*testy.name);
   pthread_cancel(cleanup_thread);
+  pthread_cancel(publisher_thread);
+
   pthread_join(cleanup_thread, NULL);
+  pthread_join(publisher_thread, NULL);
+
+  printQ(*testy.name);
 
   // //Case 1
   // printf("\nCase 1 le[%d](empty queue)...\n", entry_number);
