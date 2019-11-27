@@ -158,23 +158,22 @@ int dequeue(char *QID){
       if (strcmp(*registry[i]->name, QID) == 0){
         //If tail != head
         if (registry[i]->tail != registry[i]->head){
+
+          //Check if oldest entry has passed the time DELTA
+          //get current time
+          gettimeofday(&new, NULL);
+          //compute time difference
+          old = registry[i]->buffer[registry[i]->head].timeStamp;
+          diff = (new.tv_sec - old.tv_sec) * 1e6;
+          diff = (diff + (new.tv_usec - old.tv_usec)) * 1e-6;
+          printf("DIFFERENCE: {%f}\n", diff);
+          if(diff < DELTA) {
+            printf("Too young to die!\n");
+            return 0;
+          }
+
           //if tail null:
           if (registry[i]->buffer[registry[i]->tail].entryNum == -1){
-
-            //Check if oldest entry has passed the time DELTA
-            //get current time
-            gettimeofday(&new, NULL);
-            //compute time difference
-            old = registry[i]->buffer[registry[i]->tail].timeStamp;
-            diff = (new.tv_sec - old.tv_sec) * 1e6;
-            diff = (diff + (new.tv_usec - old.tv_usec)) * 1e-6;
-            printf("DIFFERENCE: {%f}\n", diff);
-            if(diff < DELTA) {
-              printf("Too young to die!\n");
-              return 0;
-            }
-
-
             //set head entryNum to -1 (null)
             registry[i]->buffer[registry[i]->head].entryNum = -1;
             int head_minus1 = (registry[i]->head - 1) % (MAXENTRIES+1);
