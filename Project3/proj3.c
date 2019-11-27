@@ -241,7 +241,7 @@ void *publisher(void *arg){ //enqueue()
       sched_yield();
     }
     printf("***\tPUBLISHER ENQU'D, sleep 1 and try again\n");
-    sleep(1);
+    //sleep(1);
   }
   return NULL;
 }//end of publisher()
