@@ -222,6 +222,7 @@ void cleanup(void){
     sleep(1);
 
   }//end of main infinite loop
+  return NULL;
 }//end of cleanup()
 
 //------------------------------------------------------------------------------
@@ -278,7 +279,7 @@ int main(int argc, char const *argv[]) {
   printQ(*testy.name);
 
   pthread_t cleanup_thread;
-  int result = pthread_create(&cleanup_thread, NULL, cleanup, NULL);
+  pthread_create(&cleanup_thread, NULL, cleanup, NULL);
 
   printQ(*testy.name);
   for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy.name, &tst); }
@@ -290,8 +291,8 @@ int main(int argc, char const *argv[]) {
   sleep(5);
   printQ(*testy.name);
 
-  int result2 = pthread_cancel(cleanup_thread, NULL);
-  int result3 = pthread_join(cleanup_thread, NULL);
+  pthread_cancel(cleanup_thread, NULL);
+  pthread_join(cleanup_thread, NULL);
 
   // //Case 1
   // printf("\nCase 1 le[%d](empty queue)...\n", entry_number);
