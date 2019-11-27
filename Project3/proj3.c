@@ -168,8 +168,9 @@ int dequeue(char *QID){
             old = registry[i]->buffer[registry[i]->tail].timeStamp;
             diff = (new.tv_sec - old.tv_sec) * 1e6;
             diff = (diff + (new.tv_usec - old.tv_usec)) * 1e-6;
-            if(diff >= DELTA) {
-              printf("***\tWE GOT AN OLD BASTARD!\n");
+            if(diff < DELTA) {
+              printf("Too young to die!\n");
+              return 0;
             }
 
 
@@ -209,7 +210,7 @@ int dequeue(char *QID){
 //------------------------------------------------------------------------------
 
 void cleanup(void){
-
+  flag:
   //for topic in topicQ
   for (size_t i = 0; i < MAXTOPICS; i++) {
     if(registry[i] != NULL){
@@ -221,6 +222,7 @@ void cleanup(void){
 
     }//end of if registry==NULL
   }//end of for(topics)
+  goto flag;
 
 }//end of cleanup()
 
