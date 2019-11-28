@@ -232,7 +232,7 @@ void *cleanup(void *arg){
       }//end of if registry==NULL
     }//end of for(topics)
 
-    //sleep(1);
+    sleep(1);
 
   }//end of main infinite loop
   return NULL;
@@ -253,17 +253,23 @@ void *publisher(void *input){ //enqueue()
         if (strcmp(*registry[i]->name, (char *)input) == 0){
 
           pthread_mutex_lock(&lock[i]);
+          int result = enqueue(*registry[i]->name, &tst);
+          pthread_mutex_unlock(&lock[i]);
 
-          while(enqueue(*registry[i]->name, &tst) == 0){
+          while(result == 0){
             printf("***\tPUBLISHER YEILDING\n");
-            //sleep(2);
+
+            pthread_mutex_lock(&lock[i]);
+            result = enqueue(*registry[i]->name, &tst);
+            pthread_mutex_unlock(&lock[i]);
+
+            sleep(2);
+
             sched_yield();
           }
 
-          pthread_mutex_unlock(&lock[i]);
-
           printf("***\tPUBLISHER ENQU'D, sleep 1 and try again\n");
-          //sleep(1);
+          sleep(1);
         }
       }
     }
@@ -291,14 +297,12 @@ void *subscriber(void *input){ //getEntry()
           //try to getEntry
 
           pthread_mutex_lock(&lock[i]);
-
           int result = getEntry(*registry[i]->name, last_entry, &place_hold);
-
           pthread_mutex_unlock(&lock[i]);
 
           if(result == 0){
             printf("***\tSUBSCRIBER YEILDING\n");
-            //sleep(2);
+            sleep(2);
             sched_yield();
           }
           else if(result == 1){
@@ -309,7 +313,7 @@ void *subscriber(void *input){ //getEntry()
             printf("***\tSUBSCRIBER found entry[%d]\n", place_hold.entryNum);
             last_entry = result;
           }
-          //sleep(1);
+          sleep(1);
         }
       }
     }
