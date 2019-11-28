@@ -52,6 +52,11 @@ topicQ *registry[MAXTOPICS];
 
 //------------------------------------------------------------------------------
 
+//Global array of locks for respective Q's
+pthread_mutex_t *lock[MAXTOPICS];
+
+//------------------------------------------------------------------------------
+
 //global variable for entry number
 int entry_number = 1;
 
@@ -217,7 +222,13 @@ void *cleanup(void *arg){
     for (size_t i = 0; i < MAXTOPICS; i++) {
       if(registry[i] != NULL){
         //While dequeue finds something legit to dequeue...Keep going!
+
+        pthread_mutex_lock(*lock[i]);
+
         while(dequeue(*registry[i]->name)){}
+
+        pthread_mutex_unlock(*lock[i]);
+
       }//end of if registry==NULL
     }//end of for(topics)
 
@@ -231,8 +242,6 @@ void *cleanup(void *arg){
 
 void *publisher(void *input){ //enqueue()
 
-  //printf("PUBLISHER: %s\n", (char *)input);
-
   //test entry
   topicEntry tst;
   int topic_index = 0; //TODO change this from hard-coded to param based
@@ -242,11 +251,17 @@ void *publisher(void *input){ //enqueue()
     for (size_t i = 0; i < MAXTOPICS; i++) {
       if(registry[i] != NULL){
         if (strcmp(*registry[i]->name, (char *)input) == 0){
+
+          pthread_mutex_lock(*lock[i]);
+
           while(enqueue(*registry[i]->name, &tst) == 0){
             printf("***\tPUBLISHER YEILDING\n");
             sleep(2);
             sched_yield();
           }
+
+          pthread_mutex_unlock(*lock[i]);
+
           printf("***\tPUBLISHER ENQU'D, sleep 1 and try again\n");
           sleep(1);
         }
@@ -259,8 +274,6 @@ void *publisher(void *input){ //enqueue()
 //------------------------------------------------------------------------------
 
 void *subscriber(void *input){ //getEntry()
-
-  //printf("SUBSCRIER: %s\n", (char *)input);
 
   //empty struct to-be filled by getEntry()
   topicEntry place_hold;
@@ -276,7 +289,12 @@ void *subscriber(void *input){ //getEntry()
         if (strcmp(*registry[i]->name, (char *)input) == 0){
 
           //try to getEntry
+
+          pthread_mutex_lock(*lock[i]);
+
           int result = getEntry(*registry[i]->name, last_entry, &place_hold);
+
+          pthread_mutex_unlock(*lock[i]);
 
           if(result == 0){
             printf("***\tSUBSCRIBER YEILDING\n");
