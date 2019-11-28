@@ -212,6 +212,7 @@ int dequeue(char *QID){
 void *cleanup(void *arg){
   //Spin forever! (until thread is cancelled elsewhere)
   while(1){
+
     //for topic in topicQ
     for (size_t i = 0; i < MAXTOPICS; i++) {
       if(registry[i] != NULL){
@@ -230,21 +231,27 @@ void *cleanup(void *arg){
 
 void *publisher(void *input){ //enqueue()
 
-  printf("PUBLISHER: %s\n", (char *)input);
+  //printf("PUBLISHER: %s\n", (char *)input);
 
   //test entry
   topicEntry tst;
-
   int topic_index = 0; //TODO change this from hard-coded to param based
 
   while(1){
-    while(enqueue(*registry[topic_index]->name, &tst) == 0){
-      printf("***\tPUBLISHER YEILDING\n");
-      sleep(2);
-      sched_yield();
+
+    for (size_t i = 0; i < MAXTOPICS; i++) {
+      if(registry[i] != NULL){
+        if (strcmp(*registry[i]->name, (char *)input) == 0){
+          while(enqueue(*registry[i]->name, &tst) == 0){
+            printf("***\tPUBLISHER YEILDING\n");
+            sleep(2);
+            sched_yield();
+          }
+          printf("***\tPUBLISHER ENQU'D, sleep 1 and try again\n");
+          sleep(1);
+        }
+      }
     }
-    printf("***\tPUBLISHER ENQU'D, sleep 1 and try again\n");
-    sleep(1);
   }
   return NULL;
 }//end of publisher()
@@ -253,7 +260,7 @@ void *publisher(void *input){ //enqueue()
 
 void *subscriber(void *input){ //getEntry()
 
-  printf("SUBSCRIER: %s\n", (char *)input);
+  //printf("SUBSCRIER: %s\n", (char *)input);
 
   //empty struct to-be filled by getEntry()
   topicEntry place_hold;
@@ -264,38 +271,30 @@ void *subscriber(void *input){ //getEntry()
 
   while(1){
 
-    //try to getEntry
-    int result = getEntry(*registry[topic_index]->name, last_entry, &place_hold);
+    for (size_t i = 0; i < MAXTOPICS; i++) {
+      if(registry[i] != NULL){
+        if (strcmp(*registry[i]->name, (char *)input) == 0){
 
-    if(result == 0){
-      //printf("***\tSUBSCRIBER YEILDING\n");
-      sleep(2);
-      sched_yield();
+          //try to getEntry
+          int result = getEntry(*registry[i]->name, last_entry, &place_hold);
+
+          if(result == 0){
+            printf("***\tSUBSCRIBER YEILDING\n");
+            sleep(2);
+            sched_yield();
+          }
+          else if(result == 1){
+            printf("***\tSUBSCRIBER found entry[%d]\n", place_hold.entryNum);
+            last_entry++;
+          }
+          else{
+            printf("***\tSUBSCRIBER found entry[%d]\n", place_hold.entryNum);
+            last_entry = result;
+          }
+          sleep(1);
+        }
+      }
     }
-
-    else if(result == 1){
-      //printf("***\tSUBSCRIBER found entry[%d]\n", place_hold.entryNum);
-      last_entry++;
-    }
-
-    else{
-      //printf("***\tSUBSCRIBER found entry[%d]\n", place_hold.entryNum);
-      last_entry = result;
-    }
-
-    sleep(1);
-
-    //case(return 0):
-      //either queue is empty (or) all entries < last_entry+1
-      //SCHED_YEILD in this case
-
-    //case(return 1):
-      //found lastEntry+1
-      //PRINT place_hold and increment last_entry?
-
-    //case(return entry):
-      //found something bigger than last_entry+1
-      //PRINT place_hold then set last_entry to return value
 
   }//end of infinite while loop
 
