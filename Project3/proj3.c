@@ -232,7 +232,7 @@ void *cleanup(void *arg){
       }//end of if registry==NULL
     }//end of for(topics)
 
-    sleep(1);
+    //sleep(1);
 
   }//end of main infinite loop
   return NULL;
@@ -256,14 +256,14 @@ void *publisher(void *input){ //enqueue()
 
           while(enqueue(*registry[i]->name, &tst) == 0){
             printf("***\tPUBLISHER YEILDING\n");
-            sleep(2);
+            //sleep(2);
             sched_yield();
           }
 
           pthread_mutex_unlock(&lock[i]);
 
           printf("***\tPUBLISHER ENQU'D, sleep 1 and try again\n");
-          sleep(1);
+          //sleep(1);
         }
       }
     }
@@ -298,7 +298,7 @@ void *subscriber(void *input){ //getEntry()
 
           if(result == 0){
             printf("***\tSUBSCRIBER YEILDING\n");
-            sleep(2);
+            //sleep(2);
             sched_yield();
           }
           else if(result == 1){
@@ -309,7 +309,7 @@ void *subscriber(void *input){ //getEntry()
             printf("***\tSUBSCRIBER found entry[%d]\n", place_hold.entryNum);
             last_entry = result;
           }
-          sleep(1);
+          //sleep(1);
         }
       }
     }
