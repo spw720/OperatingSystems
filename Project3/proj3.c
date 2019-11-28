@@ -253,7 +253,7 @@ void *publisher(void *input){ //enqueue()
 
 void *subscriber(void *input){ //getEntry()
 
-  printf("PUBLISHER: %s\n", (char *)input);
+  printf("SUBSCRIER: %s\n", (char *)input);
 
   //empty struct to-be filled by getEntry()
   topicEntry place_hold;
