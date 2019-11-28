@@ -223,11 +223,11 @@ void *cleanup(void *arg){
       if(registry[i] != NULL){
         //While dequeue finds something legit to dequeue...Keep going!
 
-        pthread_mutex_lock(*lock[i]);
+        pthread_mutex_lock(&lock[i]);
 
         while(dequeue(*registry[i]->name)){}
 
-        pthread_mutex_unlock(*lock[i]);
+        pthread_mutex_unlock(&lock[i]);
 
       }//end of if registry==NULL
     }//end of for(topics)
@@ -252,7 +252,7 @@ void *publisher(void *input){ //enqueue()
       if(registry[i] != NULL){
         if (strcmp(*registry[i]->name, (char *)input) == 0){
 
-          pthread_mutex_lock(*lock[i]);
+          pthread_mutex_lock(&lock[i]);
 
           while(enqueue(*registry[i]->name, &tst) == 0){
             printf("***\tPUBLISHER YEILDING\n");
@@ -260,7 +260,7 @@ void *publisher(void *input){ //enqueue()
             sched_yield();
           }
 
-          pthread_mutex_unlock(*lock[i]);
+          pthread_mutex_unlock(&lock[i]);
 
           printf("***\tPUBLISHER ENQU'D, sleep 1 and try again\n");
           sleep(1);
@@ -290,11 +290,11 @@ void *subscriber(void *input){ //getEntry()
 
           //try to getEntry
 
-          pthread_mutex_lock(*lock[i]);
+          pthread_mutex_lock(&lock[i]);
 
           int result = getEntry(*registry[i]->name, last_entry, &place_hold);
 
-          pthread_mutex_unlock(*lock[i]);
+          pthread_mutex_unlock(&lock[i]);
 
           if(result == 0){
             printf("***\tSUBSCRIBER YEILDING\n");
