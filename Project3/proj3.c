@@ -330,9 +330,27 @@ int main(int argc, char const *argv[]) {
 
   topicEntry buffer1[MAXENTRIES+1] = {};
 
+  topicEntry buffer2[MAXENTRIES+1] = {};
+
+  topicEntry buffer3[MAXENTRIES+1] = {};
+
   topicQ testy = {
     .name = "test",
     .buffer = buffer1,
+    .head = 0,
+    .tail = 0,
+    .length = MAXENTRIES + 1 };
+
+  topicQ testy2 = {
+    .name = "test2",
+    .buffer = buffer2,
+    .head = 0,
+    .tail = 0,
+    .length = MAXENTRIES + 1 };
+
+  topicQ testy3 = {
+    .name = "test3",
+    .buffer = buffer3,
     .head = 0,
     .tail = 0,
     .length = MAXENTRIES + 1 };
@@ -346,28 +364,76 @@ int main(int argc, char const *argv[]) {
 
   //Set last entry to null
   testy.buffer[MAXENTRIES] = null;
+  testy2.buffer[MAXENTRIES] = null;
+  testy3.buffer[MAXENTRIES] = null;
 
   //place topicQ in registry
   registry[0] = &testy;
+  registry[1] = &testy2;
+  registry[2] = &testy3;
 
   //Set all values besides NULL to 0(default/empty)
   for (size_t i = 0; i < MAXENTRIES; i++) {
     testy.buffer[i] = def;
+    testy2.buffer[i] = def;
+    testy3.buffer[i] = def;
   }
 
   printQ(*testy.name);
 
   pthread_t cleanup_thread;
-  pthread_t publisher_thread;
-  pthread_t subscriber_thread;
 
-  pthread_create(&publisher_thread, NULL, publisher, *testy.name);
+  pthread_t publisher_thread1_1;
+  pthread_t publisher_thread1_2;
+  pthread_t publisher_thread1_3;
+
+  pthread_t subscriber_thread1_1;
+  pthread_t subscriber_thread1_2;
+  pthread_t subscriber_thread1_3;
+
+  pthread_t publisher_thread2_1;
+  pthread_t publisher_thread2_2;
+  pthread_t publisher_thread2_3;
+
+  pthread_t subscriber_thread2_1;
+  pthread_t subscriber_thread2_2;
+  pthread_t subscriber_thread2_3;
+
+  pthread_t publisher_thread3_1;
+  pthread_t publisher_thread3_2;
+  pthread_t publisher_thread3_3;
+
+  pthread_t subscriber_thread3_1;
+  pthread_t subscriber_thread3_2;
+  pthread_t subscriber_thread3_3;
+
+  pthread_create(&publisher_thread1_1, NULL, publisher, *testy.name);
+  pthread_create(&publisher_thread1_2, NULL, publisher, *testy.name);
+  pthread_create(&publisher_thread1_3, NULL, publisher, *testy.name);
+
+  pthread_create(&publisher_thread2_1, NULL, publisher, *testy2.name);
+  pthread_create(&publisher_thread2_2, NULL, publisher, *testy2.name);
+  pthread_create(&publisher_thread2_3, NULL, publisher, *testy2.name);
+
+  pthread_create(&publisher_thread3_1, NULL, publisher, *testy3.name);
+  pthread_create(&publisher_thread3_2, NULL, publisher, *testy3.name);
+  pthread_create(&publisher_thread3_3, NULL, publisher, *testy3.name);
 
   //printQ(*testy.name);
   sleep(5);
   //printQ(*testy.name);
 
-  pthread_create(&subscriber_thread, NULL, subscriber, *testy.name);
+  pthread_create(&subscriber_thread1_1, NULL, subscriber, *testy.name);
+  pthread_create(&subscriber_thread1_2, NULL, subscriber, *testy.name);
+  pthread_create(&subscriber_thread1_3, NULL, subscriber, *testy.name);
+
+  pthread_create(&subscriber_thread2_1, NULL, subscriber, *testy2.name);
+  pthread_create(&subscriber_thread2_2, NULL, subscriber, *testy2.name);
+  pthread_create(&subscriber_thread2_3, NULL, subscriber, *testy2.name);
+
+  pthread_create(&subscriber_thread3_1, NULL, subscriber, *testy3.name);
+  pthread_create(&subscriber_thread3_2, NULL, subscriber, *testy3.name);
+  pthread_create(&subscriber_thread3_3, NULL, subscriber, *testy3.name);
 
   //printQ(*testy.name);
   sleep(5);
@@ -379,15 +445,61 @@ int main(int argc, char const *argv[]) {
   sleep(5);
   //printQ(*testy.name);
 
-  pthread_cancel(subscriber_thread);
+  pthread_cancel(subscriber_thread1_1);
+  pthread_cancel(subscriber_thread1_2);
+  pthread_cancel(subscriber_thread1_3);
+
+  pthread_cancel(subscriber_thread2_1);
+  pthread_cancel(subscriber_thread2_2);
+  pthread_cancel(subscriber_thread2_3);
+
+  pthread_cancel(subscriber_thread3_1);
+  pthread_cancel(subscriber_thread3_2);
+  pthread_cancel(subscriber_thread3_3);
+
   sleep(5);
-  pthread_cancel(publisher_thread);
+
+  pthread_cancel(publisher_thread1_1);
+  pthread_cancel(publisher_thread1_2);
+  pthread_cancel(publisher_thread1_3);
+
+  pthread_cancel(publisher_thread2_1);
+  pthread_cancel(publisher_thread2_2);
+  pthread_cancel(publisher_thread2_3);
+
+  pthread_cancel(publisher_thread3_1);
+  pthread_cancel(publisher_thread3_2);
+  pthread_cancel(publisher_thread3_3);
+
   sleep(10);
+
   pthread_cancel(cleanup_thread);
 
   pthread_join(cleanup_thread, NULL);
-  pthread_join(publisher_thread, NULL);
-  pthread_join(subscriber_thread, NULL);
+
+  pthread_join(publisher_thread1_1, NULL);
+  pthread_join(publisher_thread1_2, NULL);
+  pthread_join(publisher_thread1_3, NULL);
+
+  pthread_join(publisher_thread2_1, NULL);
+  pthread_join(publisher_thread2_2, NULL);
+  pthread_join(publisher_thread2_3, NULL);
+
+  pthread_join(publisher_thread3_1, NULL);
+  pthread_join(publisher_thread3_2, NULL);
+  pthread_join(publisher_thread3_3, NULL);
+
+  pthread_join(subscriber_thread1_1, NULL);
+  pthread_join(subscriber_thread1_2, NULL);
+  pthread_join(subscriber_thread1_3, NULL);
+
+  pthread_join(subscriber_thread2_1, NULL);
+  pthread_join(subscriber_thread2_2, NULL);
+  pthread_join(subscriber_thread2_3, NULL);
+
+  pthread_join(subscriber_thread3_1, NULL);
+  pthread_join(subscriber_thread3_2, NULL);
+  pthread_join(subscriber_thread3_3, NULL);
 
   printQ(*testy.name);
 
