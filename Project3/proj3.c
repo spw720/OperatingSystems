@@ -53,7 +53,7 @@ topicQ *registry[MAXTOPICS];
 //------------------------------------------------------------------------------
 
 //Global array of locks for respective Q's
-pthread_mutex_t *lock[MAXTOPICS];
+pthread_mutex_t lock[MAXTOPICS] = {};
 
 //------------------------------------------------------------------------------
 
