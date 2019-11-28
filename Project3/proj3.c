@@ -228,7 +228,9 @@ void *cleanup(void *arg){
 
 //------------------------------------------------------------------------------
 
-void *publisher(void *arg){ //enqueue()
+void *publisher(void *input){ //enqueue()
+
+  printf("PUBLISHER: %s\n", (char *)input);
 
   //test entry
   topicEntry tst;
@@ -238,6 +240,7 @@ void *publisher(void *arg){ //enqueue()
   while(1){
     while(enqueue(*registry[topic_index]->name, &tst) == 0){
       printf("***\tPUBLISHER YEILDING\n");
+      sleep(2);
       sched_yield();
     }
     printf("***\tPUBLISHER ENQU'D, sleep 1 and try again\n");
@@ -248,8 +251,9 @@ void *publisher(void *arg){ //enqueue()
 
 //------------------------------------------------------------------------------
 
-//int getEntry(char *QID, int lastEntry, topicEntry *TE){
-void *subscriber(void *arg){ //getEntry()
+void *subscriber(void *input){ //getEntry()
+
+  printf("PUBLISHER: %s\n", (char *)input);
 
   //empty struct to-be filled by getEntry()
   topicEntry place_hold;
@@ -264,17 +268,18 @@ void *subscriber(void *arg){ //getEntry()
     int result = getEntry(*registry[topic_index]->name, last_entry, &place_hold);
 
     if(result == 0){
-      printf("***\tSUBSCRIBER YEILDING\n");
+      //printf("***\tSUBSCRIBER YEILDING\n");
+      sleep(2);
       sched_yield();
     }
 
     else if(result == 1){
-      printf("***\tSUBSCRIBER found entry[%d]\n", place_hold.entryNum);
+      //printf("***\tSUBSCRIBER found entry[%d]\n", place_hold.entryNum);
       last_entry++;
     }
 
     else{
-      printf("***\tSUBSCRIBER found entry[%d]\n", place_hold.entryNum);
+      //printf("***\tSUBSCRIBER found entry[%d]\n", place_hold.entryNum);
       last_entry = result;
     }
 
@@ -335,23 +340,23 @@ int main(int argc, char const *argv[]) {
   pthread_t publisher_thread;
   pthread_t subscriber_thread;
 
-  pthread_create(&publisher_thread, NULL, publisher, NULL);
+  pthread_create(&publisher_thread, NULL, publisher, *testy.name);
 
-  printQ(*testy.name);
+  //printQ(*testy.name);
   sleep(5);
-  printQ(*testy.name);
+  //printQ(*testy.name);
+
+  pthread_create(&subscriber_thread, NULL, subscriber, *testy.name);
+
+  //printQ(*testy.name);
+  sleep(5);
+  //printQ(*testy.name);
 
   pthread_create(&cleanup_thread, NULL, cleanup, NULL);
 
-  printQ(*testy.name);
+  //printQ(*testy.name);
   sleep(5);
-  printQ(*testy.name);
-
-  pthread_create(&subscriber_thread, NULL, subscriber, NULL);
-
-  printQ(*testy.name);
-  sleep(5);
-  printQ(*testy.name);
+  //printQ(*testy.name);
 
   pthread_cancel(subscriber_thread);
   sleep(5);
