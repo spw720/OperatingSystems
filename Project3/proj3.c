@@ -1,4 +1,6 @@
+//
 //Project 3 - Sean Wilson - CIS415 @ UofO F'19
+//
 
 //------------------------------------------------------------------------------
 
@@ -6,10 +8,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-
 #include <pthread.h>
 #include <sched.h>
-
 #include <sys/time.h>
 
 //------------------------------------------------------------------------------
@@ -18,10 +18,10 @@
 #define MAXTOPICS 100 //compare to MAXQUEUES
 #define MAXNAME 100 //max name of topic queue
 
-#define URLSIZE 100
-#define CAPSIZE 100
+#define URLSIZE 100 //max URL size for an entry
+#define CAPSIZE 100 //max caption size for an entry
 
-#define DELTA 5
+#define DELTA 5 //time (in seconds) until a topic is removed from queue
 
 //------------------------------------------------------------------------------
 
@@ -57,11 +57,12 @@ pthread_mutex_t lock[MAXTOPICS] = {};
 
 //------------------------------------------------------------------------------
 
-//global variable for entry number
+//global variable for entry number (to-be incremented on each enqueue() op)
 int entry_number = 1;
 
 //------------------------------------------------------------------------------
 
+//Print contents of a queue given name
 void printQ(char *QID){
   for (size_t i = 0; i < MAXTOPICS; i++) {
     if(registry[i] != NULL){
@@ -79,10 +80,12 @@ void printQ(char *QID){
 //------------------------------------------------------------------------------
 
 int enqueue(char *QID, topicEntry *TE){
-
+  struct timeval time;
+  //for topic in registry
   for (size_t i = 0; i < MAXTOPICS; i++) {
     //if topic in registry not NULL
     if(registry[i] != NULL){
+      //if name of topic is target
       if (strcmp(*registry[i]->name, QID) == 0){
         //if tail is NOT located @ null
         if (registry[i]->buffer[registry[i]->tail].entryNum != -1){
@@ -90,9 +93,10 @@ int enqueue(char *QID, topicEntry *TE){
           registry[i]->buffer[registry[i]->tail] = *TE;
           //Set TE entryNum
           registry[i]->buffer[registry[i]->tail].entryNum = entry_number;
+          //increment entry_number for next enqueue() op
           entry_number++;
           //Set timeStamp
-          struct timeval time;
+          //struct timeval time;
           gettimeofday(&time, NULL);
           registry[i]->buffer[registry[i]->tail].timeStamp = time;
           //increment tail
@@ -101,12 +105,13 @@ int enqueue(char *QID, topicEntry *TE){
           return 1;
         }
         else{
-          printf("BUFFER FULL\n");
+          printf(">\tenqueue(): *BUFFER FULL*\n");
           return 0;
         }
       }//end of if registry is correct
     }//end of if registry[i] != NULL
   }//end for loop
+  printf(">\tenqueue(): Invalid Queue name!\n");
   return 0;
 }//end of enqueue()
 
@@ -119,7 +124,7 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
       if (strcmp(*registry[i]->name, QID) == 0){
         //Case1: topic queue is empty: return 0
         if (registry[i]->tail == registry[i]->head){
-          printf(">\tgetEntry: <queue is empty>\n");
+          printf(">\tgetEntry(): <queue is empty>\n");
           return 0;
         }
         //Case2: lastEntry+1 is in Queue: copy lastEntry+1 data to TE, return 1)
@@ -127,7 +132,7 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
           if (registry[i]->buffer[j].entryNum == lastEntry+1){
             //copy data over
             *TE = registry[i]->buffer[j];
-            printf(">\tgetEntry: <found lastEntry+1>\n");
+            printf(">\tgetEntry(): <found lastEntry+1>\n");
             return 1;
           }
         }
@@ -137,17 +142,17 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
           if (registry[i]->buffer[j].entryNum > lastEntry+1){
             //copy entry data to TE, return entry.entryNum
             *TE = registry[i]->buffer[j];
-            printf(">\tgetEntry: <found something bigger>\n");
+            printf(">\tgetEntry(): <found something bigger>\n");
             return registry[i]->buffer[j].entryNum;
           }
         }
         //i: if all entries < lastEntry+1: return 0
-        printf(">\tgetEntry: <all enties less than lastEntry+1>\n");
+        printf(">\tgetEntry(): <all enties less than lastEntry+1>\n");
         return 0;
       }
     }//end of if registry[i] != NULL
   }
-  printf(">\tgetEntry: Invalid Queue name!\n");
+  printf(">\tgetEntry(): Invalid Queue name!\n");
   return 0;
 }//end of getEntry()
 
@@ -174,6 +179,7 @@ int dequeue(char *QID){
           diff = (diff + (new.tv_usec - old.tv_usec)) * 1e-6;
           //printf("DIFFERENCE: {%f}\n", diff);
           if(diff < DELTA) {
+            printf(">\tdequeue(): Operation rejected due to DELTA\n");
             return 0;
           }
 
@@ -203,12 +209,13 @@ int dequeue(char *QID){
           return 1;
         }
         else {
-          printf("BUFFER EMPTY\n");
+          printf(">\tdequeue(): *BUFFER EMPTY*\n");
           return 0;
         }
       }//end of if registry is correct
     }//end of if registry[i] != NULL
   }//end for loop
+  printf(">\tdequeue(): Invalid Queue name!\n");
   return 0;
 }//end of dequeue()
 
@@ -217,21 +224,25 @@ int dequeue(char *QID){
 void *cleanup(void *arg){
   //Spin forever! (until thread is cancelled elsewhere)
   while(1){
-
     //for topic in topicQ
     for (size_t i = 0; i < MAXTOPICS; i++) {
       if(registry[i] != NULL){
-        //While dequeue finds something legit to dequeue...Keep going!
 
+        //lock it down with this topics lock
+        printf("*\tcleanup(): Locking up queue[%s]\n", *registry[i]->name);
         pthread_mutex_lock(&lock[i]);
 
+        //While dequeue keeps finding entries past DELTA to dequeue, keep going!
         while(dequeue(*registry[i]->name)){}
 
+        //unlock it with this topics respective lock
+        printf("*\tcleanup(): Unlocking queue[%s]\n", *registry[i]->name);
         pthread_mutex_unlock(&lock[i]);
 
       }//end of if registry==NULL
     }//end of for(topics)
 
+    //sleep as to make print statements more readable
     sleep(1);
 
   }//end of main infinite loop
@@ -244,36 +255,50 @@ void *publisher(void *input){ //enqueue()
 
   //test entry
   topicEntry tst;
-  int topic_index = 0; //TODO change this from hard-coded to param based
 
   while(1){
-
     for (size_t i = 0; i < MAXTOPICS; i++) {
       if(registry[i] != NULL){
         if (strcmp(*registry[i]->name, (char *)input) == 0){
 
+          //lock it down with this topics lock
+          printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
           pthread_mutex_lock(&lock[i]);
+
           int result = enqueue(*registry[i]->name, &tst);
+
+          //unlock it with this topics lock
+          printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
           pthread_mutex_unlock(&lock[i]);
 
+          //While enqueue returns 0 (either from full queue or wrong Q name)
           while(result == 0){
-            printf("***\tPUBLISHER YEILDING\n");
+            printf("*\tpublisher(): enqueue on [%s] failed. Full buffer?\n", *registry[i]->name);
 
+            //lock it down with this topics lock
+            printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
             pthread_mutex_lock(&lock[i]);
+
+            //try to enqueue again
             result = enqueue(*registry[i]->name, &tst);
+
+            //unlock it with this topics lock
+            printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
             pthread_mutex_unlock(&lock[i]);
 
-            sleep(2);
-
+            //Sleep to help make print statements print before thread yields
+            sleep(1);
+            //Yield CPU and put thread into ready queue
             sched_yield();
-          }
+          }//end of while enqueue() returns 0
 
-          printf("***\tPUBLISHER ENQU'D, sleep 1 and try again\n");
+          printf("*\tpublisher(): enqueue on [%s] succeeded\n", *registry[i]->name);
+          //sleep as to make print statements more readable
           sleep(1);
-        }
-      }
-    }
-  }
+        }//end of if() Q names match
+      }//end of if() Q is null
+    }//end of for() topic in topics
+  }//end of infinite while() loop
   return NULL;
 }//end of publisher()
 
@@ -285,7 +310,7 @@ void *subscriber(void *input){ //getEntry()
   topicEntry place_hold;
   place_hold.entryNum = -999;
 
-  int topic_index = 0; //TODO change this from hard-coded to param based
+  //last entry initially set to 1
   int last_entry = 1;
 
   while(1){
@@ -296,27 +321,38 @@ void *subscriber(void *input){ //getEntry()
 
           //try to getEntry
 
+          //lock it down with this topics lock
+          printf("*\tsubscriber(): Locking up queue[%s]\n", *registry[i]->name);
           pthread_mutex_lock(&lock[i]);
+
           int result = getEntry(*registry[i]->name, last_entry, &place_hold);
+
+          //unlock it with this topics lock
+          printf("*\tsubscriber(): Unlocking queue[%s]\n", *registry[i]->name);
           pthread_mutex_unlock(&lock[i]);
 
+          //if getEntry() returns 0 (all entries < lastEntry+1 <or> Q is empty)
           if(result == 0){
-            printf("***\tSUBSCRIBER YEILDING\n");
-            sleep(2);
+            printf("*\tsubscriber(): getEntry on [%s] failed\n", *registry[i]->name);
+            //sleep so print shows up
+            sleep(1);
+            //yield CPU and put back on ready Q
             sched_yield();
           }
+          //if getEntry() returns 1 (found lastEntry+1)
           else if(result == 1){
-            printf("***\tSUBSCRIBER found entry[%d]\n", place_hold.entryNum);
+            printf("*\tsubscriber(): getEntry on [%s] found entry:[%d]\n", *registry[i]->name, place_hold.entryNum);
             last_entry++;
           }
           else{
-            printf("***\tSUBSCRIBER found entry[%d]\n", place_hold.entryNum);
+            printf("*\tsubscriber(): getEntry on [%s] found entry:[%d]", *registry[i]->name, place_hold.entryNum);
+            printf(" ... lastEntry is now:[%d]\n", result);
             last_entry = result;
           }
           sleep(1);
-        }
-      }
-    }
+        }//if()
+      }//if()
+    }//for()
 
   }//end of infinite while loop
 
@@ -335,21 +371,21 @@ int main(int argc, char const *argv[]) {
   topicEntry buffer3[MAXENTRIES+1] = {};
 
   topicQ testy = {
-    .name = "test",
+    .name = "one",
     .buffer = buffer1,
     .head = 0,
     .tail = 0,
     .length = MAXENTRIES + 1 };
 
   topicQ testy2 = {
-    .name = "test2",
+    .name = "two",
     .buffer = buffer2,
     .head = 0,
     .tail = 0,
     .length = MAXENTRIES + 1 };
 
   topicQ testy3 = {
-    .name = "test3",
+    .name = "three",
     .buffer = buffer3,
     .head = 0,
     .tail = 0,
