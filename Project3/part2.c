@@ -262,7 +262,7 @@ void *cleanup(void *arg){
     }//end of for(topics)
 
     //sleep as to make print statements more readable
-    sleep(1);
+    //sleep(1);
 
   }//end of main infinite loop
   return NULL;
@@ -314,7 +314,7 @@ void *publisher(void *input){ //enqueue()
           }//end of while enqueue() returns 0
           printf("*\tpublisher(): enqueue on [%s] succeeded\n", *registry[i]->name);
           //sleep as to make print statements more readable
-          sleep(1);
+          //sleep(1);
 
           //DONT FORGET ABOUT ME!
           z++;
@@ -415,7 +415,7 @@ void *subscriber(void *input){ //getEntry()
           if(result == 0){
             printf("*\tsubscriber(): getEntry on [%s] failed\n", *registry[i]->name);
             //sleep so print shows up
-            sleep(1);
+            //sleep(1);
             //yield CPU and put back on ready Q
             sched_yield();
           }
@@ -429,7 +429,7 @@ void *subscriber(void *input){ //getEntry()
             printf(" ... lastEntry is now:[%d]\n", result);
             last_entry = result;
           }
-          sleep(1);
+          //sleep(1);
 
 
         }
