@@ -447,7 +447,7 @@ int main(int argc, char const *argv[]) {
     if(pub_avail[i] == 0){
       //set that thread to unavailable
       pub_avail[i] = 1;
-      pthread_create(pub_pool[i], NULL, publisher, (void *)trial1);
+      pthread_create(&pub_pool[i], NULL, publisher, (void *)trial1);
     }
   }
 
