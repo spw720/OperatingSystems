@@ -602,6 +602,9 @@ int main(int argc, char const *argv[]) {
       pub_avail[i] = 0;
     }
   }
+
+  sleep(5);
+
   for (size_t i = 0; i < NUMPROXIES; i++) {
     if(sub_avail[i] == 1){
       pthread_cancel(sub_pool[i]);
