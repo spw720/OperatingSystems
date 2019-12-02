@@ -308,13 +308,13 @@ void *publisher(void *input){ //enqueue()
             printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
             pthread_mutex_unlock(&lock[i]);
             //Sleep to help make print statements print before thread yields
-            sleep(1);
+            //sleep(1);
             //Yield CPU and put thread into ready queue
             sched_yield();
           }//end of while enqueue() returns 0
           printf("*\tpublisher(): enqueue on [%s] succeeded\n", *registry[i]->name);
           //sleep as to make print statements more readable
-          sleep(1);
+          //sleep(1);
 
           //DONT FORGET ABOUT ME!
           z++;
@@ -415,7 +415,7 @@ void *subscriber(void *input){ //getEntry()
           if(result == 0){
             printf("*\tsubscriber(): getEntry on [%s] failed\n", *registry[i]->name);
             //sleep so print shows up
-            sleep(1);
+            //sleep(1);
             //yield CPU and put back on ready Q
             sched_yield();
           }
@@ -429,7 +429,7 @@ void *subscriber(void *input){ //getEntry()
             printf(" ... lastEntry is now:[%d]\n", result);
             last_entry = result;
           }
-          sleep(1);
+          //sleep(1);
 
 
         }
@@ -589,7 +589,7 @@ int main(int argc, char const *argv[]) {
   pthread_t cleanup_thread;
   pthread_create(&cleanup_thread, NULL, cleanup, NULL);
 
-  sleep(10);
+  sleep(30);
 
   pthread_cancel(cleanup_thread);
 
@@ -603,7 +603,7 @@ int main(int argc, char const *argv[]) {
     }
   }
 
-  sleep(10);
+  sleep(5);
 
   for (size_t i = 0; i < NUMPROXIES; i++) {
     if(sub_avail[i] == 1){
