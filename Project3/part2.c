@@ -271,6 +271,7 @@ void *publisher(void *input){ //enqueue()
     for (size_t i = 0; i < MAXTOPICS; i++) {
       if(registry[i] != NULL){
         if (strcmp(*registry[i]->name, ((struct pub_args*)input)->queue_name) == 0){
+          printf("*\tpublisher(): FOUND MATCH[%s]\n", ((struct pub_args*)input)->queue_name);
 
           //((struct pub_args*)input)->queue_name
 
@@ -446,6 +447,9 @@ int main(int argc, char const *argv[]) {
   trial1->queue_name = name;
   trial1->tobe_pub[0] = one;
   trial1->tobe_pub[1] = two;
+  trial1->tobe_pub[2] = three;
+  trial1->tobe_pub[3] = four;
+  trial1->tobe_pub[4] = five;
 
   //iterate through pub thread pool
   for (size_t i = 0; i < NUMPROXIES; i++) {
