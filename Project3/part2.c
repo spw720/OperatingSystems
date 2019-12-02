@@ -590,10 +590,12 @@ int main(int argc, char const *argv[]) {
   pthread_create(&cleanup_thread, NULL, cleanup, NULL);
 
   sleep(10);
+  
+  free(trial1);
+  free(trial2);
 
   pthread_cancel(cleanup_thread);
 
-  free(trial1);
   //cancel all active threads
   for (size_t i = 0; i < NUMPROXIES; i++) {
     if(pub_avail[i] == 1){
