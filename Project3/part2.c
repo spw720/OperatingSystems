@@ -272,7 +272,7 @@ void *publisher(void *input){ //enqueue()
       if(registry[i] != NULL){
         if (strcmp(*registry[i]->name, ((struct pub_args*)input)->queue_name) == 0){
 
-          ((struct pub_args*)input)->queue_name
+          //((struct pub_args*)input)->queue_name
 
           //lock it down with this topics lock
           printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
