@@ -264,22 +264,18 @@ void *cleanup(void *arg){
 
 void *publisher(void *input){ //enqueue()
 
-  //test entry
-  topicEntry tst;
+  for (size_t i = 0; i < MAXTOPICS; i++) {
+    if(registry[i] != NULL){
+      if (strcmp(*registry[i]->name, ((struct pub_args*)input)->queue_name) == 0){
 
-  while(1){
-    for (size_t i = 0; i < MAXTOPICS; i++) {
-      if(registry[i] != NULL){
-        if (strcmp(*registry[i]->name, ((struct pub_args*)input)->queue_name) == 0){
-          printf("*\tpublisher(): FOUND MATCH[%s]\n", ((struct pub_args*)input)->queue_name);
-
-          //((struct pub_args*)input)->queue_name
+        int i = 0;
+        while(((struct pub_args*)input)->tobe_pub[i] != NULL){
 
           //lock it down with this topics lock
           printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
           pthread_mutex_lock(&lock[i]);
 
-          int result = enqueue(*registry[i]->name, &tst);
+          int result = enqueue(*registry[i]->name, ((struct pub_args*)input)->tobe_pub[i]);
 
           //unlock it with this topics lock
           printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
@@ -294,7 +290,7 @@ void *publisher(void *input){ //enqueue()
             pthread_mutex_lock(&lock[i]);
 
             //try to enqueue again
-            result = enqueue(*registry[i]->name, &tst);
+            result = enqueue(*registry[i]->name, ((struct pub_args*)input)->tobe_pub[i]);
 
             //unlock it with this topics lock
             printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
@@ -309,11 +305,64 @@ void *publisher(void *input){ //enqueue()
           printf("*\tpublisher(): enqueue on [%s] succeeded\n", *registry[i]->name);
           //sleep as to make print statements more readable
           sleep(1);
-        }//end of if() Q names match
-      }//end of if() Q is null
-    }//end of for() topic in topics
-  }//end of infinite while() loop
+
+          i++;
+        }
+      }
+    }
+  }
   return NULL;
+
+
+  // while(1){
+  //   for (size_t i = 0; i < MAXTOPICS; i++) {
+  //     if(registry[i] != NULL){
+  //       if (strcmp(*registry[i]->name, ((struct pub_args*)input)->queue_name) == 0){
+  //         printf("*\tpublisher(): FOUND MATCH[%s]\n", ((struct pub_args*)input)->queue_name);
+  //
+  //         //((struct pub_args*)input)->queue_name
+  //
+  //         //lock it down with this topics lock
+  //         printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
+  //         pthread_mutex_lock(&lock[i]);
+  //
+  //         int result = enqueue(*registry[i]->name, &tst);
+  //
+  //         //unlock it with this topics lock
+  //         printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
+  //         pthread_mutex_unlock(&lock[i]);
+  //
+  //         //While enqueue returns 0 (either from full queue or wrong Q name)
+  //         while(result == 0){
+  //           printf("*\tpublisher(): enqueue on [%s] failed. Full buffer?\n", *registry[i]->name);
+  //
+  //           //lock it down with this topics lock
+  //           printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
+  //           pthread_mutex_lock(&lock[i]);
+  //
+  //           //try to enqueue again
+  //           result = enqueue(*registry[i]->name, &tst);
+  //
+  //           //unlock it with this topics lock
+  //           printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
+  //           pthread_mutex_unlock(&lock[i]);
+  //
+  //           //Sleep to help make print statements print before thread yields
+  //           sleep(1);
+  //           //Yield CPU and put thread into ready queue
+  //           sched_yield();
+  //         }//end of while enqueue() returns 0
+  //
+  //         printf("*\tpublisher(): enqueue on [%s] succeeded\n", *registry[i]->name);
+  //         //sleep as to make print statements more readable
+  //         sleep(1);
+  //       }//end of if() Q names match
+  //     }//end of if() Q is null
+  //   }//end of for() topic in topics
+  // }//end of infinite while() loop
+  // return NULL;
+
+
 }//end of publisher()
 
 //------------------------------------------------------------------------------
@@ -425,26 +474,22 @@ int main(int argc, char const *argv[]) {
   registry[1] = &testy2;
   //****************************************
 
-  //list of entries to-be published
+  //Entries to-be published
   topicEntry one;
   topicEntry two;
   topicEntry three;
   topicEntry four;
   topicEntry five;
-  topicEntry to_be_pub[5] = {one, two, three, four, five};
 
   //list of topics to read entries from
   topicQ to_be_sub[2] = {testy, testy2};
 
-
-  // pub_args trial1 = {
-  //   .queue_name = "one",
-  //   .tobe_pub = to_be_pub
-  // };
-
+  //filling struct to-be sent to pub thread
   pub_args *trial1 = (pub_args *)malloc(sizeof(pub_args));
+  //name of queue to be published to
   char name[] = "one";
   trial1->queue_name = name;
+  //filling struct array with entries to be published
   trial1->tobe_pub[0] = one;
   trial1->tobe_pub[1] = two;
   trial1->tobe_pub[2] = three;
@@ -457,21 +502,21 @@ int main(int argc, char const *argv[]) {
     if(pub_avail[i] == 0){
       //set that thread to unavailable
       pub_avail[i] = 1;
+      //create it with struct we made as param
       pthread_create(&pub_pool[i], NULL, publisher, (void *)trial1);
     }
   }
 
-
-
   pthread_t cleanup_thread;
-
   pthread_create(&cleanup_thread, NULL, cleanup, NULL);
-
   pthread_cancel(cleanup_thread);
 
+  //cancel all active threads
   for (size_t i = 0; i < NUMPROXIES; i++) {
     if(pub_avail[i] == 1){
       pthread_cancel(pub_pool[i]);
+      //set thread to available
+      pub_avail[i] = 0;
     }
   }
 
@@ -483,7 +528,7 @@ int main(int argc, char const *argv[]) {
 
   pthread_join(cleanup_thread, NULL);
 
-  //free(trial1);
+  free(trial1);
 
 
   return 0;
