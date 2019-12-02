@@ -49,6 +49,15 @@ typedef struct topicQ topicQ;
 
 //------------------------------------------------------------------------------
 
+//struct to be sent to publisher threads
+struct pub_args {
+    char* queue_name;
+    topicEntry tobe_pub[MAXENTRIES];
+};
+typedef struct pub_args pub_args;
+
+//------------------------------------------------------------------------------
+
 //Global registry for topic Q's
 topicQ *registry[MAXTOPICS];
 
@@ -261,7 +270,9 @@ void *publisher(void *input){ //enqueue()
   while(1){
     for (size_t i = 0; i < MAXTOPICS; i++) {
       if(registry[i] != NULL){
-        if (strcmp(*registry[i]->name, (char *)input) == 0){
+        if (strcmp(*registry[i]->name, ((struct pub_args*)input)->queue_name) == 0){
+
+          ((struct pub_args*)input)->queue_name
 
           //lock it down with this topics lock
           printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
@@ -424,7 +435,23 @@ int main(int argc, char const *argv[]) {
   //list of topics to read entries from
   topicQ to_be_sub[2] = {testy, testy2};
 
-  
+
+  pub_args trial1 = {
+    .queue_name = "one";
+    .tobe_pub = to_be_pub
+  };
+
+  //iterate through pub thread pool
+  for (size_t i = 0; i < NUMPROXIES; i++) {
+    //if we find an available thread
+    if(pub_avail[i] == 0){
+      //set that thread to unavailable
+      pub_avail[i] = 1;
+      pthread_create(pub_pool[i], NULL, publisher, (void *)trial1);
+    }
+  }
+
+
 
   pthread_t cleanup_thread;
 
