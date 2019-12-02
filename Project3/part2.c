@@ -613,7 +613,7 @@ int main(int argc, char const *argv[]) {
   pthread_create(&cleanup_thread, NULL, cleanup, NULL);
 
 
-  //sleep(10);
+  sleep(15);
 
   pthread_cancel(cleanup_thread);
 
@@ -626,7 +626,7 @@ int main(int argc, char const *argv[]) {
     }
   }
 
-  //sleep(5);
+  sleep(5);
 
   for (size_t i = 0; i < NUMPROXIES; i++) {
     if(sub_avail[i] == 1){
