@@ -469,7 +469,21 @@ int main(int argc, char const *argv[]) {
 
   pthread_cancel(cleanup_thread);
 
+  for (size_t i = 0; i < NUMPROXIES; i++) {
+    if(pub_avail[i] == 1){
+      pthread_cancel(pub_pool[i]);
+    }
+  }
+
+  for (size_t i = 0; i < NUMPROXIES; i++) {
+    if(pub_avail[i] == 1){
+      pthread_join(pub_pool[i], NULL);
+    }
+  }
+
   pthread_join(cleanup_thread, NULL);
+
+  free(trial1);
 
 
   return 0;
