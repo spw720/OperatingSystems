@@ -268,7 +268,10 @@ void *publisher(void *input){ //enqueue()
     if(registry[i] != NULL){
       if (strcmp(*registry[i]->name, ((struct pub_args*)input)->queue_name) == 0){
 
+        //USED IN WHILE LOOP TO REFERENCE ARGUMENT IN PASSED_IN ARRAY
         int z = 0;
+
+        //TODO Do I need to check that the next entry to be published is not NULL???
         //while( ((pub_args*)input)->tobe_pub[z] != NULL ){
         while( z < MAXENTRIES){
 
@@ -277,6 +280,7 @@ void *publisher(void *input){ //enqueue()
           pthread_mutex_lock(&lock[i]);
 
           int result = enqueue(*registry[i]->name, &((struct pub_args*)input)->tobe_pub[z]);
+          printQ(*registry[i]->name);
 
           //unlock it with this topics lock
           printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
@@ -290,6 +294,7 @@ void *publisher(void *input){ //enqueue()
 
             //try to enqueue again
             result = enqueue(*registry[i]->name, &((struct pub_args*)input)->tobe_pub[z]);
+            printQ(*registry[i]->name);
 
             //unlock it with this topics lock
             printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
