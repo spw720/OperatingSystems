@@ -483,7 +483,7 @@ int main(int argc, char const *argv[]) {
 
   pthread_join(cleanup_thread, NULL);
 
-  free(trial1);
+  //free(trial1);
 
 
   return 0;
