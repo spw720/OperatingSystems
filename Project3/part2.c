@@ -60,7 +60,7 @@ typedef struct pub_args pub_args;
 
 //struct to be sent to subscriber threads
 struct sub_args {
-    topicQ tobe_sub[MAXTOPICS];
+    char tobe_sub[MAXTOPICS][MAXNAME];
 };
 typedef struct sub_args sub_args;
 
@@ -395,8 +395,8 @@ void *subscriber(void *input){ //getEntry()
       //for topic in passed in struct
       for (size_t j = 0; j < MAXTOPICS; j++) {
         //if name of topic in registry hits with a name in passed in topic array
-        if (strcmp(*registry[i]->name, ((struct sub_args*)input)->tobe_sub[j].name) == 0){
-          printf("*\tsubscriber(): HIT[%s]\n", *registry[i]->name);
+        if (strcmp(*registry[i]->name, ((struct sub_args*)input)->tobe_sub[j]) == 0){
+          printf("*\tsubscriber(): HIT[%s]\n", ((struct sub_args*)input)->tobe_sub[j]);
         }
       }
     }
@@ -525,8 +525,8 @@ int main(int argc, char const *argv[]) {
   //list of topics to read entries from
   //char to_be_sub[2] = {*testy.name, *testy2.name};
   sub_args *trial2 = (sub_args *)malloc(sizeof(sub_args));
-  *trial2.tobe_sub[0] = testy;
-  *trial2.tobe_sub[1] = testy2;
+  trial2->tobe_sub[0] = *testy.name;
+  trial2->tobe_sub[1] = *testy2.name;
 
 
   //iterate through pub thread pool
