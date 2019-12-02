@@ -262,7 +262,7 @@ void *cleanup(void *arg){
     }//end of for(topics)
 
     //sleep as to make print statements more readable
-    //sleep(1);
+    sleep(1);
 
   }//end of main infinite loop
   return NULL;
@@ -308,7 +308,7 @@ void *publisher(void *input){ //enqueue()
             printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
             pthread_mutex_unlock(&lock[i]);
             //Sleep to help make print statements print before thread yields
-            sleep(1);
+            //sleep(1);
             //Yield CPU and put thread into ready queue
             sched_yield();
           }//end of while enqueue() returns 0
