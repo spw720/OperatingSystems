@@ -397,6 +397,41 @@ void *subscriber(void *input){ //getEntry()
         //if name of topic in registry hits with a name in passed in topic array
         if (strcmp(*registry[i]->name, ((struct sub_args*)input)->tobe_sub[j]) == 0){
           printf("*\tsubscriber(): HIT[%s]\n", ((struct sub_args*)input)->tobe_sub[j]);
+
+
+          //try to getEntry
+
+          //lock it down with this topics lock
+          printf("*\tsubscriber(): Locking up queue[%s]\n", *registry[i]->name);
+          pthread_mutex_lock(&lock[i]);
+
+          int result = getEntry(*registry[i]->name, last_entry, &place_hold);
+
+          //unlock it with this topics lock
+          printf("*\tsubscriber(): Unlocking queue[%s]\n", *registry[i]->name);
+          pthread_mutex_unlock(&lock[i]);
+
+          //if getEntry() returns 0 (all entries < lastEntry+1 <or> Q is empty)
+          if(result == 0){
+            printf("*\tsubscriber(): getEntry on [%s] failed\n", *registry[i]->name);
+            //sleep so print shows up
+            sleep(1);
+            //yield CPU and put back on ready Q
+            sched_yield();
+          }
+          //if getEntry() returns 1 (found lastEntry+1)
+          else if(result == 1){
+            printf("*\tsubscriber(): getEntry on [%s] found entry:[%d]\n", *registry[i]->name, place_hold.entryNum);
+            last_entry++;
+          }
+          else{
+            printf("*\tsubscriber(): getEntry on [%s] found entry:[%d]", *registry[i]->name, place_hold.entryNum);
+            printf(" ... lastEntry is now:[%d]\n", result);
+            last_entry = result;
+          }
+          sleep(1);
+
+
         }
       }
     }
