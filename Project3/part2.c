@@ -613,7 +613,7 @@ int main(int argc, char const *argv[]) {
   pthread_create(&cleanup_thread, NULL, cleanup, NULL);
 
 
-  sleep(10);
+  //sleep(10);
 
   pthread_cancel(cleanup_thread);
 
