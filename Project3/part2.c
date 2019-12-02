@@ -444,7 +444,7 @@ int main(int argc, char const *argv[]) {
   pub_args *trial1 = (pub_args *)malloc(sizeof(pub_args));
   char name[] = "one";
   trial1->queue_name = name;
-  trial1.tobe_pub = to_be_pub;
+  *trial1.tobe_pub = to_be_pub;
 
   //iterate through pub thread pool
   for (size_t i = 0; i < NUMPROXIES; i++) {
