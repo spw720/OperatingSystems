@@ -1,5 +1,5 @@
 //
-//Project 3 - Sean Wilson - CIS415 @ UofO F'19
+//Project 3 (part2) - Sean Wilson - CIS415 @ UofO F'19
 //
 
 //------------------------------------------------------------------------------
@@ -22,6 +22,8 @@
 #define CAPSIZE 100 //max caption size for an entry
 
 #define DELTA 5 //time (in seconds) until a topic is removed from queue
+
+#define NUMPROXIES 10 //Amount of subs/pubs allowed at any given time
 
 //------------------------------------------------------------------------------
 
@@ -364,205 +366,74 @@ void *subscriber(void *input){ //getEntry()
 
 int main(int argc, char const *argv[]) {
 
+  //initialize thread pools
+  pthread_t sub_pool[NUMPROXIES] = {};
+  pthread_t pub_pool[NUMPROXIES] = {};
+
+  //arrays to-be used to decide if thread is taken
+  int sub_avail[NUMPROXIES] = {};
+  int pub_avail[NUMPROXIES] = {};
+
+  //set all entries to 0 to indicate threads are all free
+  for (size_t i = 0; i < NUMPROXIES; i++) {
+    sub_avail[i] = 0;
+    pub_avail[i] = 0;
+  }
+
+  //Initialize a topic Queue***************
   topicEntry buffer1[MAXENTRIES+1] = {};
-
   topicEntry buffer2[MAXENTRIES+1] = {};
-
-  topicEntry buffer3[MAXENTRIES+1] = {};
-
   topicQ testy = {
     .name = "one",
     .buffer = buffer1,
     .head = 0,
     .tail = 0,
     .length = MAXENTRIES + 1 };
-
   topicQ testy2 = {
     .name = "two",
     .buffer = buffer2,
     .head = 0,
     .tail = 0,
     .length = MAXENTRIES + 1 };
-
-  topicQ testy3 = {
-    .name = "three",
-    .buffer = buffer3,
-    .head = 0,
-    .tail = 0,
-    .length = MAXENTRIES + 1 };
-
   //NULL entry
   topicEntry null;
   null.entryNum = -1;
+  testy.buffer[MAXENTRIES] = null;
+  testy2.buffer[MAXENTRIES] = null;
   //DEFAULT entry
   topicEntry def;
   def.entryNum = 0;
-
-  //Set last entry to null
-  testy.buffer[MAXENTRIES] = null;
-  testy2.buffer[MAXENTRIES] = null;
-  testy3.buffer[MAXENTRIES] = null;
-
-  //place topicQ in registry
-  registry[0] = &testy;
-  registry[1] = &testy2;
-  registry[2] = &testy3;
-
   //Set all values besides NULL to 0(default/empty)
   for (size_t i = 0; i < MAXENTRIES; i++) {
     testy.buffer[i] = def;
     testy2.buffer[i] = def;
-    testy3.buffer[i] = def;
   }
+  //place topicQ in registry
+  registry[0] = &testy;
+  registry[1] = &testy2;
+  //****************************************
 
-  printQ(*testy.name);
+  //list of entries to-be published
+  topicEntry one;
+  topicEntry two;
+  topicEntry three;
+  topicEntry four;
+  topicEntry five;
+  topicEntry to_be_pub[5] = {one, two, three, four, five};
+
+  //list of topics to read entries from
+  topicQ to_be_sub[2] = {testy, testy2};
+
+  
 
   pthread_t cleanup_thread;
 
-  pthread_t publisher_thread1_1;
-  pthread_t publisher_thread1_2;
-  pthread_t publisher_thread1_3;
-
-  pthread_t subscriber_thread1_1;
-  pthread_t subscriber_thread1_2;
-  pthread_t subscriber_thread1_3;
-
-  pthread_t publisher_thread2_1;
-  pthread_t publisher_thread2_2;
-  pthread_t publisher_thread2_3;
-
-  pthread_t subscriber_thread2_1;
-  pthread_t subscriber_thread2_2;
-  pthread_t subscriber_thread2_3;
-
-  pthread_t publisher_thread3_1;
-  pthread_t publisher_thread3_2;
-  pthread_t publisher_thread3_3;
-
-  pthread_t subscriber_thread3_1;
-  pthread_t subscriber_thread3_2;
-  pthread_t subscriber_thread3_3;
-
-  pthread_create(&publisher_thread1_1, NULL, publisher, *testy.name);
-  pthread_create(&publisher_thread1_2, NULL, publisher, *testy.name);
-  pthread_create(&publisher_thread1_3, NULL, publisher, *testy.name);
-
-  pthread_create(&publisher_thread2_1, NULL, publisher, *testy2.name);
-  pthread_create(&publisher_thread2_2, NULL, publisher, *testy2.name);
-  pthread_create(&publisher_thread2_3, NULL, publisher, *testy2.name);
-
-  pthread_create(&publisher_thread3_1, NULL, publisher, *testy3.name);
-  pthread_create(&publisher_thread3_2, NULL, publisher, *testy3.name);
-  pthread_create(&publisher_thread3_3, NULL, publisher, *testy3.name);
-
-  //printQ(*testy.name);
-  sleep(5);
-  //printQ(*testy.name);
-
-  pthread_create(&subscriber_thread1_1, NULL, subscriber, *testy.name);
-  pthread_create(&subscriber_thread1_2, NULL, subscriber, *testy.name);
-  pthread_create(&subscriber_thread1_3, NULL, subscriber, *testy.name);
-
-  pthread_create(&subscriber_thread2_1, NULL, subscriber, *testy2.name);
-  pthread_create(&subscriber_thread2_2, NULL, subscriber, *testy2.name);
-  pthread_create(&subscriber_thread2_3, NULL, subscriber, *testy2.name);
-
-  pthread_create(&subscriber_thread3_1, NULL, subscriber, *testy3.name);
-  pthread_create(&subscriber_thread3_2, NULL, subscriber, *testy3.name);
-  pthread_create(&subscriber_thread3_3, NULL, subscriber, *testy3.name);
-
-  //printQ(*testy.name);
-  sleep(5);
-  //printQ(*testy.name);
-
   pthread_create(&cleanup_thread, NULL, cleanup, NULL);
-
-  //printQ(*testy.name);
-  sleep(5);
-  //printQ(*testy.name);
-
-  pthread_cancel(subscriber_thread1_1);
-  pthread_cancel(subscriber_thread1_2);
-  pthread_cancel(subscriber_thread1_3);
-
-  pthread_cancel(subscriber_thread2_1);
-  pthread_cancel(subscriber_thread2_2);
-  pthread_cancel(subscriber_thread2_3);
-
-  pthread_cancel(subscriber_thread3_1);
-  pthread_cancel(subscriber_thread3_2);
-  pthread_cancel(subscriber_thread3_3);
-
-  sleep(5);
-
-  pthread_cancel(publisher_thread1_1);
-  pthread_cancel(publisher_thread1_2);
-  pthread_cancel(publisher_thread1_3);
-
-  pthread_cancel(publisher_thread2_1);
-  pthread_cancel(publisher_thread2_2);
-  pthread_cancel(publisher_thread2_3);
-
-  pthread_cancel(publisher_thread3_1);
-  pthread_cancel(publisher_thread3_2);
-  pthread_cancel(publisher_thread3_3);
-
-  sleep(10);
 
   pthread_cancel(cleanup_thread);
 
   pthread_join(cleanup_thread, NULL);
 
-  pthread_join(publisher_thread1_1, NULL);
-  pthread_join(publisher_thread1_2, NULL);
-  pthread_join(publisher_thread1_3, NULL);
-
-  pthread_join(publisher_thread2_1, NULL);
-  pthread_join(publisher_thread2_2, NULL);
-  pthread_join(publisher_thread2_3, NULL);
-
-  pthread_join(publisher_thread3_1, NULL);
-  pthread_join(publisher_thread3_2, NULL);
-  pthread_join(publisher_thread3_3, NULL);
-
-  pthread_join(subscriber_thread1_1, NULL);
-  pthread_join(subscriber_thread1_2, NULL);
-  pthread_join(subscriber_thread1_3, NULL);
-
-  pthread_join(subscriber_thread2_1, NULL);
-  pthread_join(subscriber_thread2_2, NULL);
-  pthread_join(subscriber_thread2_3, NULL);
-
-  pthread_join(subscriber_thread3_1, NULL);
-  pthread_join(subscriber_thread3_2, NULL);
-  pthread_join(subscriber_thread3_3, NULL);
-
-  printQ(*testy.name);
-
-  //topicEntry tst;
-  //topicEntry place_hold
-  // //Case 1
-  // printf("\nCase 1 le[%d](empty queue)...\n", entry_number);
-  // printf(">\tResult:[%d]\n", getEntry(*testy.name, entry_number, &place_hold));
-  // printf(">\tplace_hold[%d]\n\n", place_hold.entryNum);
-  // //Fill test buffer
-  // for (size_t z = 0; z < MAXENTRIES+1; z++) { enqueue(*testy.name, &tst); }
-  // printQ(*testy.name);
-  // //Case 2
-  // printf("Case 2 le[3](lastEntry+1 in queue)...\n");
-  // printf(">\tResult:[%d]\n", getEntry(*testy.name, 3, &place_hold));
-  // printf(">\tplace_hold[%d]\n\n", place_hold.entryNum);
-  // //Case 3.1
-  // printf("Case 3.1 le[999](not empty, all are less)...\n");
-  // printf(">\tResult:[%d]\n", getEntry(*testy.name, 999, &place_hold));
-  // printf(">\tplace_hold[%d]\n\n", place_hold.entryNum);
-  // //Case 3.2
-  // printf("Case 3.2 le[-420](not empty, found something bigger)...\n");
-  // printf(">\tResult:[%d]\n", getEntry(*testy.name, -420, &place_hold));
-  // printf(">\tplace_hold[%d]\n\n", place_hold.entryNum);
-  // //Case 4 (invalid queue name)
-  // printf("Case 4 (invalid queue name)...\n");
-  // printf(">\tResult:[%d]\n", getEntry("nonsense", -420, &place_hold));
 
   return 0;
 
