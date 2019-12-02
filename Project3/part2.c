@@ -618,7 +618,7 @@ int main(int argc, char const *argv[]) {
 
   sleep(10);
 
-  pthread_cancel(cleanup_thread, NULL);
+  pthread_cancel(cleanup_thread);
 
   //cancel all active threads
   for (size_t i = 0; i < NUMPROXIES; i++) {
