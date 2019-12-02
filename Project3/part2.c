@@ -281,7 +281,17 @@ void *publisher(void *input){ //enqueue()
 
         //TODO Do I need to check that the next entry to be published is not NULL???
         //while( ((pub_args*)input)->tobe_pub[z] != NULL ){
-        while( z < MAXENTRIES){
+
+
+
+
+
+        //while( z < MAXENTRIES){
+        while(z < 5) {
+
+
+
+
 
           //lock it down with this topics lock
           printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
