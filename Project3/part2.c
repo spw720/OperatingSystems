@@ -486,9 +486,6 @@ int main(int argc, char const *argv[]) {
   topicEntry four;
   topicEntry five;
 
-  //list of topics to read entries from
-  topicQ to_be_sub[2] = {testy, testy2};
-
   //filling struct to-be sent to pub thread
   pub_args *trial1 = (pub_args *)malloc(sizeof(pub_args));
   //name of queue to be published to
@@ -500,6 +497,11 @@ int main(int argc, char const *argv[]) {
   trial1->tobe_pub[2] = three;
   trial1->tobe_pub[3] = four;
   trial1->tobe_pub[4] = five;
+
+
+  //list of topics to read entries from
+  topicQ to_be_sub[2] = {testy, testy2};
+
 
   //iterate through pub thread pool
   for (size_t i = 0; i < NUMPROXIES; i++) {
@@ -518,6 +520,7 @@ int main(int argc, char const *argv[]) {
 
   sleep(30);
 
+  free(trial1);
   //cancel all active threads
   for (size_t i = 0; i < NUMPROXIES; i++) {
     if(pub_avail[i] == 1){
@@ -535,7 +538,7 @@ int main(int argc, char const *argv[]) {
 
   pthread_join(cleanup_thread, NULL);
 
-  free(trial1);
+  //free(trial1);
 
 
   return 0;
