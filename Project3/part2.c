@@ -593,33 +593,37 @@ int main(int argc, char const *argv[]) {
 
   pthread_cancel(cleanup_thread);
 
-  //cancel all active threads
-  for (size_t i = 0; i < NUMPROXIES; i++) {
-    if(pub_avail[i] == 1){
-      pthread_cancel(pub_pool[i]);
-      //set thread to available
-      pub_avail[i] = 0;
-    }
-  }
-
-  sleep(5);
-
-  for (size_t i = 0; i < NUMPROXIES; i++) {
-    if(sub_avail[i] == 1){
-      pthread_cancel(sub_pool[i]);
-      //set thread to available
-      sub_avail[i] = 0;
-    }
-  }
+  // //cancel all active threads
+  // for (size_t i = 0; i < NUMPROXIES; i++) {
+  //   if(pub_avail[i] == 1){
+  //     pthread_cancel(pub_pool[i]);
+  //     //set thread to available
+  //     pub_avail[i] = 0;
+  //   }
+  // }
+  //
+  // sleep(5);
+  //
+  // for (size_t i = 0; i < NUMPROXIES; i++) {
+  //   if(sub_avail[i] == 1){
+  //     pthread_cancel(sub_pool[i]);
+  //     //set thread to available
+  //     sub_avail[i] = 0;
+  //   }
+  // }
 
   for (size_t i = 0; i < NUMPROXIES; i++) {
     if(pub_avail[i] == 1){
       pthread_join(pub_pool[i], NULL);
+      //set thread to available
+      pub_avail[i] = 0;
     }
   }
   for (size_t i = 0; i < NUMPROXIES; i++) {
     if(sub_avail[i] == 1){
       pthread_join(sub_pool[i], NULL);
+      //set thread to available
+      sub_avail[i] = 0;
     }
   }
 
