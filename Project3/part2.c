@@ -269,8 +269,8 @@ void *publisher(void *input){ //enqueue()
       if (strcmp(*registry[i]->name, ((struct pub_args*)input)->queue_name) == 0){
 
         int z = 0;
-        while( ((pub_args*)input)->tobe_pub[z] != NULL ){
-        //while( i < ){
+        //while( ((pub_args*)input)->tobe_pub[z] != NULL ){
+        while( z < MAXENTRIES){
 
           //lock it down with this topics lock
           printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
@@ -303,7 +303,10 @@ void *publisher(void *input){ //enqueue()
           //sleep as to make print statements more readable
           sleep(1);
 
-          i++;
+          //DONT FORGET ABOUT ME!
+          z++;
+          //DONT FORGET ABOUT ME!
+
         }
       }
     }
