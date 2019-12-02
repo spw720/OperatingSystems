@@ -594,7 +594,7 @@ int main(int argc, char const *argv[]) {
       //create it with struct we made as param
       //pthread_create(&sub_pool[i], NULL, subscriber, (void *)trial2);
 
-      if (0 == pthread_create(&sub_pool[i], NULL, subscriber, (void *)trial1)){
+      if (0 == pthread_create(&sub_pool[i], NULL, subscriber, (void *)trial2)){
         pthread_join(sub_pool[i], 0);
       }
 
