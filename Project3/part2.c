@@ -268,14 +268,15 @@ void *publisher(void *input){ //enqueue()
     if(registry[i] != NULL){
       if (strcmp(*registry[i]->name, ((struct pub_args*)input)->queue_name) == 0){
 
-        int i = 0;
-        while( *((struct pub_args*)input).tobe_pub[i] != NULL ){
+        int z = 0;
+        while( ((pub_args*)input)->tobe_pub[z] != NULL ){
+        //while( i < ){
 
           //lock it down with this topics lock
           printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
           pthread_mutex_lock(&lock[i]);
 
-          int result = enqueue(*registry[i]->name, &((struct pub_args*)input)->tobe_pub[i]);
+          int result = enqueue(*registry[i]->name, &((struct pub_args*)input)->tobe_pub[z]);
 
           //unlock it with this topics lock
           printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
@@ -288,7 +289,7 @@ void *publisher(void *input){ //enqueue()
             pthread_mutex_lock(&lock[i]);
 
             //try to enqueue again
-            result = enqueue(*registry[i]->name, &((struct pub_args*)input)->tobe_pub[i]);
+            result = enqueue(*registry[i]->name, &((struct pub_args*)input)->tobe_pub[z]);
 
             //unlock it with this topics lock
             printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
