@@ -585,9 +585,9 @@ int main(int argc, char const *argv[]) {
       //create it with struct we made as param
       //pthread_create(&pub_pool[i], NULL, publisher, (void *)trial1);
 
-      if (0 == pthread_create(&pub_pool[i], NULL, publisher, (void *)trial1)){
-        pthread_join(pub_pool[i], 0);
-      }
+      //if (0 == pthread_create(&pub_pool[i], NULL, publisher, (void *)trial1)){
+      //  pthread_join(pub_pool[i], 0);
+      //}
 
 
     }
