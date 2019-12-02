@@ -633,7 +633,7 @@ int main(int argc, char const *argv[]) {
 
   for (size_t i = 0; i < NUMPROXIES; i++) {
     if(sub_avail[i] == 1){
-      pthread_cancel(sub_pool[i], NULL);
+      pthread_cancel(sub_pool[i]);
       //set thread to available
       sub_avail[i] = 0;
     }
