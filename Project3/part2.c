@@ -436,10 +436,15 @@ int main(int argc, char const *argv[]) {
   topicQ to_be_sub[2] = {testy, testy2};
 
 
-  pub_args trial1 = {
-    .queue_name = "one",
-    .tobe_pub = &to_be_pub
-  };
+  // pub_args trial1 = {
+  //   .queue_name = "one",
+  //   .tobe_pub = to_be_pub
+  // };
+
+  pub_args *trial1 = (pub_args *)malloc(sizeof(pub_args));
+  char name[] = "one";
+  trial1->queue_name = name;
+  trial1->tobe_pub = to_be_pub;
 
   //iterate through pub thread pool
   for (size_t i = 0; i < NUMPROXIES; i++) {
