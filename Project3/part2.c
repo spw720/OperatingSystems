@@ -570,8 +570,16 @@ int main(int argc, char const *argv[]) {
     if(pub_avail[i] == 0){
       //set that thread to unavailable
       pub_avail[i] = 1;
+
+
       //create it with struct we made as param
-      pthread_create(&pub_pool[i], NULL, publisher, (void *)trial1);
+      //pthread_create(&pub_pool[i], NULL, publisher, (void *)trial1);
+
+      if (0 == pthread_create(&pub_pool[i], NULL, publisher, (void *)trial1)){
+        pthread_join(pub_pool[i], 0);
+      }
+
+
     }
   }
 
@@ -581,8 +589,15 @@ int main(int argc, char const *argv[]) {
     if(sub_avail[i] == 0){
       //set that thread to unavailable
       sub_avail[i] = 1;
+
+
       //create it with struct we made as param
-      pthread_create(&sub_pool[i], NULL, subscriber, (void *)trial2);
+      //pthread_create(&sub_pool[i], NULL, subscriber, (void *)trial2);
+
+      if (0 == pthread_create(&pub_pool[i], NULL, publisher, (void *)trial1)){
+        pthread_join(pub_pool[i], 0);
+      }
+
     }
   }
 
