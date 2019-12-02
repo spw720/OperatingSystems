@@ -525,8 +525,8 @@ int main(int argc, char const *argv[]) {
   //list of topics to read entries from
   //char to_be_sub[2] = {*testy.name, *testy2.name};
   sub_args *trial2 = (sub_args *)malloc(sizeof(sub_args));
-  trial2->tobe_sub[0] = &testy;
-  trial2->tobe_sub[1] = &testy2;
+  *trial2->tobe_sub[0] = testy;
+  *trial2->tobe_sub[1] = testy2;
 
 
   //iterate through pub thread pool
