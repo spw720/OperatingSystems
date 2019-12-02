@@ -58,6 +58,14 @@ typedef struct pub_args pub_args;
 
 //------------------------------------------------------------------------------
 
+//struct to be sent to subscriber threads
+struct sub_args {
+    topicQ tobe_sub[MAXTOPICS];
+};
+typedef struct sub_args sub_args;
+
+//------------------------------------------------------------------------------
+
 //Global registry for topic Q's
 topicQ *registry[MAXTOPICS];
 
@@ -381,48 +389,64 @@ void *subscriber(void *input){ //getEntry()
   //last entry initially set to 1
   int last_entry = 1;
 
-  while(1){
+  //for topic in registry
+  for (size_t i = 0; i < MAXTOPICS; i++) {
+    if(registry[i] != NULL){
+      //for topic in passed in struct
+      for (size_t j = 0; j < MAXTOPICS; j++) {
+        //if name of topic in registry hits with a name in passed in topic array
+        if (strcmp(*registry[i]->name, ((struct sub_args*)input)->tobe_sub[j].name) == 0){
+          printf("*\tsubscriber(): HIT[%s]\n", *registry[i]->name);
+        }
+      }
+    }
+  }
 
-    for (size_t i = 0; i < MAXTOPICS; i++) {
-      if(registry[i] != NULL){
-        if (strcmp(*registry[i]->name, (char *)input) == 0){
 
-          //try to getEntry
 
-          //lock it down with this topics lock
-          printf("*\tsubscriber(): Locking up queue[%s]\n", *registry[i]->name);
-          pthread_mutex_lock(&lock[i]);
 
-          int result = getEntry(*registry[i]->name, last_entry, &place_hold);
-
-          //unlock it with this topics lock
-          printf("*\tsubscriber(): Unlocking queue[%s]\n", *registry[i]->name);
-          pthread_mutex_unlock(&lock[i]);
-
-          //if getEntry() returns 0 (all entries < lastEntry+1 <or> Q is empty)
-          if(result == 0){
-            printf("*\tsubscriber(): getEntry on [%s] failed\n", *registry[i]->name);
-            //sleep so print shows up
-            sleep(1);
-            //yield CPU and put back on ready Q
-            sched_yield();
-          }
-          //if getEntry() returns 1 (found lastEntry+1)
-          else if(result == 1){
-            printf("*\tsubscriber(): getEntry on [%s] found entry:[%d]\n", *registry[i]->name, place_hold.entryNum);
-            last_entry++;
-          }
-          else{
-            printf("*\tsubscriber(): getEntry on [%s] found entry:[%d]", *registry[i]->name, place_hold.entryNum);
-            printf(" ... lastEntry is now:[%d]\n", result);
-            last_entry = result;
-          }
-          sleep(1);
-        }//if()
-      }//if()
-    }//for()
-
-  }//end of infinite while loop
+  // while(1){
+  //
+  //   for (size_t i = 0; i < MAXTOPICS; i++) {
+  //     if(registry[i] != NULL){
+  //       if (strcmp(*registry[i]->name, (char *)input) == 0){
+  //
+  //         //try to getEntry
+  //
+  //         //lock it down with this topics lock
+  //         printf("*\tsubscriber(): Locking up queue[%s]\n", *registry[i]->name);
+  //         pthread_mutex_lock(&lock[i]);
+  //
+  //         int result = getEntry(*registry[i]->name, last_entry, &place_hold);
+  //
+  //         //unlock it with this topics lock
+  //         printf("*\tsubscriber(): Unlocking queue[%s]\n", *registry[i]->name);
+  //         pthread_mutex_unlock(&lock[i]);
+  //
+  //         //if getEntry() returns 0 (all entries < lastEntry+1 <or> Q is empty)
+  //         if(result == 0){
+  //           printf("*\tsubscriber(): getEntry on [%s] failed\n", *registry[i]->name);
+  //           //sleep so print shows up
+  //           sleep(1);
+  //           //yield CPU and put back on ready Q
+  //           sched_yield();
+  //         }
+  //         //if getEntry() returns 1 (found lastEntry+1)
+  //         else if(result == 1){
+  //           printf("*\tsubscriber(): getEntry on [%s] found entry:[%d]\n", *registry[i]->name, place_hold.entryNum);
+  //           last_entry++;
+  //         }
+  //         else{
+  //           printf("*\tsubscriber(): getEntry on [%s] found entry:[%d]", *registry[i]->name, place_hold.entryNum);
+  //           printf(" ... lastEntry is now:[%d]\n", result);
+  //           last_entry = result;
+  //         }
+  //         sleep(1);
+  //       }//if()
+  //     }//if()
+  //   }//for()
+  //
+  // }//end of infinite while loop
 
   return NULL;
 
@@ -498,9 +522,11 @@ int main(int argc, char const *argv[]) {
   trial1->tobe_pub[3] = four;
   trial1->tobe_pub[4] = five;
 
-
   //list of topics to read entries from
-  topicQ to_be_sub[2] = {testy, testy2};
+  //char to_be_sub[2] = {*testy.name, *testy2.name};
+  sub_args *trial2 = (sub_args *)malloc(sizeof(sub_args));
+  trial2->tobe_sub[0] = testy;
+  trial2->tobe_sub[0] = testy2;
 
 
   //iterate through pub thread pool
@@ -514,11 +540,23 @@ int main(int argc, char const *argv[]) {
     }
   }
 
+  //iterate through pub thread pool
+  for (size_t i = 0; i < NUMPROXIES; i++) {
+    //if we find an available thread
+    if(sub_avail[i] == 0){
+      //set that thread to unavailable
+      sub_avail[i] = 1;
+      //create it with struct we made as param
+      pthread_create(&sub_pool[i], NULL, subscriber, (void *)trial2);
+    }
+  }
+
   pthread_t cleanup_thread;
   pthread_create(&cleanup_thread, NULL, cleanup, NULL);
-  pthread_cancel(cleanup_thread);
 
   sleep(30);
+
+  pthread_cancel(cleanup_thread);
 
   free(trial1);
   //cancel all active threads
