@@ -586,7 +586,7 @@ int main(int argc, char const *argv[]) {
       //pthread_create(&pub_pool[i], NULL, publisher, (void *)trial1);
 
       if (0 == pthread_create(&pub_pool[i], NULL, publisher, (void *)trial1)){
-       pthread_cancel(pub_pool[i], NULL);
+       pthread_cancel(pub_pool[i]);
       }
 
 
