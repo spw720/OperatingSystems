@@ -407,6 +407,8 @@ void *subscriber(void *input){ //getEntry()
       for (size_t j = 0; j < MAXTOPICS; j++) {
 
         //if name of topic in registry hits with a name in passed in topic array
+        printf("***\t***\tT***EST:[%s]\n", ((struct sub_args*)input)->tobe_sub[j]);
+        sleep(1);
         if (strcmp(*registry[i]->name, ((struct sub_args*)input)->tobe_sub[j]) == 0){
 
           printf("*\tsubscriber(): HIT[%s]\n", ((struct sub_args*)input)->tobe_sub[j]);
