@@ -463,6 +463,8 @@ int main(int argc, char const *argv[]) {
 
     }//end of while()
 
+    printf("ARGUMENTS: %s\n", args);
+
     if(exit == 1){
       break;
     }
