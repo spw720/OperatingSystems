@@ -393,6 +393,10 @@ void *publisher(void *input){ //enqueue()
 
 void *subscriber(void *input){ //getEntry()
 
+  sub_args *inp = input;
+  printf("*\tsubscriber(): IS THIS SHIT WORKIN??[%s]\n", input->tobe_sub[j]);
+  sleep(1);
+
   //empty struct to-be filled by getEntry()
   topicEntry place_hold;
   place_hold.entryNum = -999;
@@ -406,9 +410,9 @@ void *subscriber(void *input){ //getEntry()
       //for topic in passed in struct
       for (size_t j = 0; j < MAXTOPICS; j++) {
 
-        if(((struct sub_args*)input)->tobe_sub[j] != NULL && *registry[i]->name != NULL){
+        if(input->tobe_sub[j] != NULL && *registry[i]->name != NULL){
 
-          if (strcmp(*registry[i]->name, ((struct sub_args*)input)->tobe_sub[j]) == 0){
+          if (strcmp(*registry[i]->name, input->tobe_sub[j]) == 0){
 
             printf("*\tsubscriber(): HIT[%s]\n", ((struct sub_args*)input)->tobe_sub[j]);
 
