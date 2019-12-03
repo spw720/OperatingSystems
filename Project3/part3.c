@@ -414,7 +414,7 @@ int main(int argc, char const *argv[]) {
   cBuffer = (char *)malloc(buffy * sizeof(char));
   if(cBuffer == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
 
-  while( (inputSize = getline(&cBuffer, &buffy, input) ) != -1){
+  while( (file_size = getline(&cBuffer, &buffy, input) ) != -1){
 
     if (input == stdin){
       printf( ">>> ");
