@@ -446,6 +446,9 @@ int main(int argc, char const *argv[]) {
       if (length > 0 && token[length - 1] == '\n') token[length-1] = '\0';
 
       args[index] = token;
+      if (strcmp(token, "exit")==0){
+        break;
+      }
       printf("TOKEN[%s]\n", token);
       index += 1;
 
@@ -456,7 +459,7 @@ int main(int argc, char const *argv[]) {
     if (input == stdin){
       printf(">>> ");
     }
-    
+
   }//end of while()
 
   // Close the file
