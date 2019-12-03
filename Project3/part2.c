@@ -411,7 +411,7 @@ void *publisher(void *input){ //enqueue()
 void *subscriber(void *input){ //getEntry()
 
   sub_args *inp = input;
-  printf("*\tsubscriber(): IS THIS SHIT WORKIN??[%s]\n", inp->tobe_sub[0]);
+  printf("*\tsubscriber(): IS THIS SHIT WORKIN??[%s]\n", *inp->tobe_sub[0]->name);
   sleep(1);
 
   //empty struct to-be filled by getEntry()
@@ -429,7 +429,7 @@ void *subscriber(void *input){ //getEntry()
 
         if(inp->tobe_sub[j] != NULL && *registry[i]->name != NULL){
 
-          printf("!!!\ttobe[%s] = reg[%s]?\n", *inp->tobe_sub[j]->name, *registry[i]->name);
+          printf("!!!\ttobe[%s] = reg[%s]\n", *inp->tobe_sub[j]->name, *registry[i]->name);
 
           if (strcmp(*registry[i]->name, *inp->tobe_sub[j]->name) == 0){
 
@@ -615,6 +615,10 @@ int main(int argc, char const *argv[]) {
 
   //sub_args *trial2 = (sub_args *)malloc(sizeof(sub_args));
   sub_args trial2;
+
+  for (size_t i = 0; i < MAXTOPICS; i++) {
+    trial2.tobe_sub[i] = NULL;
+  }
 
   trial2.tobe_sub[0] = &testy;
   trial2.tobe_sub[1] = &testy2;
