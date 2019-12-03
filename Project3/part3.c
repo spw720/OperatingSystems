@@ -323,7 +323,8 @@ void *publisher(void *input){ //enqueue()
   //   }//end of if()
   // }//end of for()
 
-  printf("Proxy thread <thread id> - type: <Publisher>​\n");
+  int thread_id = 0;
+  printf("Proxy thread <%d> - type: <Publisher>​\n", thread_id);
 
   return NULL;
 
@@ -385,7 +386,8 @@ void *subscriber(void *input){ //getEntry()
   //   }
   // }
 
-  printf("Proxy thread <thread id> - type: <Subscriber>​\n");
+  int thread_id = 0;
+  printf("Proxy thread <%d> - type: <Subscriber>​\n", thread_id);
 
   return NULL;
 
