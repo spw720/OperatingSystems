@@ -596,7 +596,7 @@ int main(int argc, char const *argv[]) {
       //create it with struct we made as param
       //pthread_create(&pub_pool[i], NULL, publisher, (void *)trial1);
 
-      pthread_create(&pub_pool[i], NULL, publisher, (void *)trial1);
+      pthread_create(&pub_pool[i], NULL, publisher, (void *)&trial1);
 
 
 
@@ -614,7 +614,7 @@ int main(int argc, char const *argv[]) {
       //create it with struct we made as param
       //pthread_create(&sub_pool[i], NULL, subscriber, (void *)trial2);
 
-      pthread_create(&sub_pool[i], NULL, subscriber, (void *)trial2);
+      pthread_create(&sub_pool[i], NULL, subscriber, (void *)&trial2);
 
 
     }
