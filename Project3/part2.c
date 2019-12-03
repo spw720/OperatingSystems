@@ -394,7 +394,7 @@ void *publisher(void *input){ //enqueue()
 void *subscriber(void *input){ //getEntry()
 
   sub_args *inp = input;
-  printf("*\tsubscriber(): IS THIS SHIT WORKIN??[%s]\n", input->tobe_sub[j]);
+  printf("*\tsubscriber(): IS THIS SHIT WORKIN??[%s]\n", input->tobe_sub[0]);
   sleep(1);
 
   //empty struct to-be filled by getEntry()
