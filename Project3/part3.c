@@ -417,8 +417,8 @@ int main(int argc, char const *argv[]) {
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
 
-  //while( (file_size = getline(&buffy, &bufferSize, input) ) != -1){
-  do{
+  while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
+
     if (input == stdin){
       printf( ">>> ");
     }
@@ -446,7 +446,7 @@ int main(int argc, char const *argv[]) {
     while(token != NULL) {
 
       int length = strlen(token);
-      if (length > 0 && token[length - 1] == '\n') token[length-1] = '\0';
+      //if (length > 0 && token[length - 1] == '\n') token[length-1] = '\0';
 
       args[index] = token;
       printf("TOKEN[%s]\n", token);
@@ -455,7 +455,7 @@ int main(int argc, char const *argv[]) {
       token = strtok(NULL, " ");
 
     }//end of while()
-  }while((file_size = getline(&buffy, &bufferSize, input) ) != -1);//end of while()
+  }//end of while()
 
   // Close the file
   free(buffy);
