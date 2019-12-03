@@ -573,6 +573,7 @@ int main(int argc, char const *argv[]) {
   trial1.tobe_pub[3] = four;
   trial1.tobe_pub[4] = five;
 
+
   //list of topics to read entries from
   //char to_be_sub[2] = {*testy.name, *testy2.name};
 
@@ -647,10 +648,6 @@ int main(int argc, char const *argv[]) {
   }
 
   pthread_join(cleanup_thread, NULL);
-
-  free(trial1);
-  free(trial2);
-
 
   return 0;
 
