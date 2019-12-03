@@ -406,6 +406,7 @@ int main(int argc, char const *argv[]) {
   if (argc == 1){
     input = stdin;
     printf("Command Mode\n");
+    printf(">>> ");
   }
 
   //check for file mode
@@ -418,10 +419,6 @@ int main(int argc, char const *argv[]) {
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
 
   while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
-
-    if (input == stdin){
-      printf("\n>>> ");
-    }
 
     int spaces = 0;
     int tokens = 0;
@@ -455,6 +452,11 @@ int main(int argc, char const *argv[]) {
       token = strtok(NULL, " ");
 
     }//end of while()
+
+    if (input == stdin){
+      printf(">>> ");
+    }
+    
   }//end of while()
 
   // Close the file
