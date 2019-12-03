@@ -507,17 +507,21 @@ int main(int argc, char const *argv[]) {
   trial1.tobe_pub[3] = &four;
   trial1.tobe_pub[4] = &five;
 
+
+
   pub_args trial3;
   for (size_t i = 0; i < MAXENTRIES; i++) {
     trial3.tobe_pub[i] = NULL;
   }
   //name of queue to be published to
-  char name[] = "two";
-  trial3.queue_name = name;
+  char name2[] = "two";
+  trial3.queue_name = name2;
   //filling struct array with entries to be published
   trial3.tobe_pub[0] = &one;
   trial3.tobe_pub[1] = &two;
   trial3.tobe_pub[2] = &three;
+
+
 
 
   //list of topics to read entries from
