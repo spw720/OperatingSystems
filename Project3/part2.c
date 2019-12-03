@@ -507,6 +507,18 @@ int main(int argc, char const *argv[]) {
   trial1.tobe_pub[3] = &four;
   trial1.tobe_pub[4] = &five;
 
+  pub_args trial3;
+  for (size_t i = 0; i < MAXENTRIES; i++) {
+    trial3.tobe_pub[i] = NULL;
+  }
+  //name of queue to be published to
+  char name[] = "two";
+  trial3.queue_name = name;
+  //filling struct array with entries to be published
+  trial3.tobe_pub[0] = &one;
+  trial3.tobe_pub[1] = &two;
+  trial3.tobe_pub[2] = &three;
+
 
   //list of topics to read entries from
   //struct to be sent to subscriber
@@ -527,7 +539,8 @@ int main(int argc, char const *argv[]) {
       pub_avail[i] = 1;
 
       //create it with struct we made as param
-      pthread_create(&pub_pool[i], NULL, publisher, (void *)&trial1);
+      if(i % 2 == 1){pthread_create(&pub_pool[i], NULL, publisher, (void *)&trial1);}
+      else{pthread_create(&pub_pool[i], NULL, publisher, (void *)&trial3);}
 
     }
   }
@@ -540,6 +553,7 @@ int main(int argc, char const *argv[]) {
       sub_avail[i] = 1;
 
       //create it with struct we made as param
+
       pthread_create(&sub_pool[i], NULL, subscriber, (void *)&trial2);
 
     }
