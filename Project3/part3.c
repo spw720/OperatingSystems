@@ -438,7 +438,7 @@ int main(int argc, char const *argv[]) {
     char *args[tokens+1];
     args[tokens] = NULL;
 
-    printf("Number of arguments is: %d\n", arguments);
+    printf("Number of arguments is: %d\n", tokens);
 
     int index = 0;
     int exit = 0;
