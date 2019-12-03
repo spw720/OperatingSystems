@@ -60,7 +60,8 @@ typedef struct pub_args pub_args;
 
 //struct to be sent to subscriber threads
 struct sub_args {
-    char tobe_sub[MAXTOPICS][MAXNAME];
+    //char tobe_sub[MAXTOPICS][MAXNAME];
+    topicQ tobe_sub[MAXTOPICS];
 };
 typedef struct sub_args sub_args;
 
@@ -290,8 +291,8 @@ void *publisher(void *input){ //enqueue()
 
 
 
-        //while( z < MAXENTRIES){
-        while(z < 5) {
+        while( z < MAXENTRIES){
+        //while(z < 5) {
 
 
 
@@ -617,8 +618,11 @@ int main(int argc, char const *argv[]) {
   //sub_args *trial2 = (sub_args *)malloc(sizeof(sub_args));
   sub_args trial2;
 
-  strcpy(trial2.tobe_sub[0], *testy.name);
-  strcpy(trial2.tobe_sub[1], *testy2.name);
+  trial2.tobe_sub[0] = testy;
+  trial2.tobe_sub[1] = testy2;
+
+  //strcpy(trial2.tobe_sub[0], *testy.name);
+  //strcpy(trial2.tobe_sub[1], *testy2.name);
 
 
   //iterate through pub thread pool
