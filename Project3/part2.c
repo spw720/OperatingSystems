@@ -405,8 +405,10 @@ void *subscriber(void *input){ //getEntry()
     if(registry[i] != NULL){
       //for topic in passed in struct
       for (size_t j = 0; j < MAXTOPICS; j++) {
+
         //if name of topic in registry hits with a name in passed in topic array
         if (strcmp(*registry[i]->name, ((struct sub_args*)input)->tobe_sub[j]) == 0){
+
           printf("*\tsubscriber(): HIT[%s]\n", ((struct sub_args*)input)->tobe_sub[j]);
 
 
@@ -557,22 +559,29 @@ int main(int argc, char const *argv[]) {
   topicEntry five;
 
   //filling struct to-be sent to pub thread
-  pub_args *trial1 = (pub_args *)malloc(sizeof(pub_args));
+  //pub_args *trial1 = (pub_args *)malloc(sizeof(pub_args));
+
+  pub_args trial1;
+
   //name of queue to be published to
   char name[] = "one";
-  trial1->queue_name = name;
+  trial1.queue_name = name;
   //filling struct array with entries to be published
-  trial1->tobe_pub[0] = one;
-  trial1->tobe_pub[1] = two;
-  trial1->tobe_pub[2] = three;
-  trial1->tobe_pub[3] = four;
-  trial1->tobe_pub[4] = five;
+  trial1.tobe_pub[0] = one;
+  trial1.tobe_pub[1] = two;
+  trial1.tobe_pub[2] = three;
+  trial1.tobe_pub[3] = four;
+  trial1.tobe_pub[4] = five;
 
   //list of topics to read entries from
   //char to_be_sub[2] = {*testy.name, *testy2.name};
-  sub_args *trial2 = (sub_args *)malloc(sizeof(sub_args));
-  strcpy(trial2->tobe_sub[0], *testy.name);
-  strcpy(trial2->tobe_sub[1], *testy2.name);
+
+
+  //sub_args *trial2 = (sub_args *)malloc(sizeof(sub_args));
+  sub_args trial2;
+
+  strcpy(trial2.tobe_sub[0], *testy.name);
+  strcpy(trial2.tobe_sub[1], *testy2.name);
 
 
   //iterate through pub thread pool
