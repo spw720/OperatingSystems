@@ -486,7 +486,7 @@ int main(int argc, char const *argv[]) {
         }else{printf("MISSING VALUE!\n");}
       }
       //-----------------------------------
-      if (strcmp(args[0], "delta")==0){
+      else if (strcmp(args[0], "delta")==0){
         if (args[1] != NULL){
 
           printf("***\tDELTA %s\n", args[1]);
