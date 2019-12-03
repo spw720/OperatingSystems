@@ -424,7 +424,7 @@ int main(int argc, char const *argv[]) {
     int tokens = 0;
     int arguments = 0;
 
-    file_size = getline(&buffy, &bufferSize, input);
+    file_size = getline(&cBuffer, &buffy, input);
 
     for (int i = 0; i < file_size; i++) {
       if (buffy[i] == ' '){spaces += 1;}
