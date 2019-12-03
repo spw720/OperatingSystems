@@ -428,6 +428,8 @@ void *subscriber(void *input){ //getEntry()
 
         if(inp->tobe_sub[j] != NULL && *registry[i]->name != NULL){
 
+          inp->tobe_sub[j][strlen(inp->tobe_sub[j])] = '\0';
+
           printf("!!!\ttobe[%s] = reg[%s]?\n", inp->tobe_sub[j], *registry[i]->name);
 
           if (strcmp(*registry[i]->name, inp->tobe_sub[j]) == 0){
