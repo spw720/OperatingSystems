@@ -52,7 +52,7 @@ typedef struct topicQ topicQ;
 //struct to be sent to publisher threads
 struct pub_args {
     char* queue_name;
-    topicEntry tobe_pub[MAXENTRIES];
+    topicEntry *tobe_pub[MAXENTRIES];
 };
 typedef struct pub_args pub_args;
 
@@ -501,11 +501,11 @@ int main(int argc, char const *argv[]) {
   char name[] = "one";
   trial1.queue_name = name;
   //filling struct array with entries to be published
-  trial1.tobe_pub[0] = one;
-  trial1.tobe_pub[1] = two;
-  trial1.tobe_pub[2] = three;
-  trial1.tobe_pub[3] = four;
-  trial1.tobe_pub[4] = five;
+  trial1.tobe_pub[0] = &one;
+  trial1.tobe_pub[1] = &two;
+  trial1.tobe_pub[2] = &three;
+  trial1.tobe_pub[3] = &four;
+  trial1.tobe_pub[4] = &five;
 
 
   //list of topics to read entries from
