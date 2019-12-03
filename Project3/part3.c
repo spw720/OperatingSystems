@@ -394,10 +394,11 @@ void *subscriber(void *input){ //getEntry()
 
 int main(int argc, char const *argv[]) {
 
-  FILE *input = NULL;
-  char *cBuffer;
-  size_t buffy = 2048;
+  FILE *input;
+  char *buffy;
 	size_t file_size;
+
+  char *token;
 
   //check for command mode
   if (argc == 1){
@@ -411,10 +412,10 @@ int main(int argc, char const *argv[]) {
     printf("File Mode\n");
 	}
 
-  cBuffer = (char *)malloc(buffy * sizeof(char));
-  if(cBuffer == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
+  buffy = (char *)malloc(bufferSize * sizeof(char));
+  if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
 
-  while( (file_size = getline(&cBuffer, &buffy, input) ) != -1){
+  while( (file_size = getline(&buffy, &bufferSize, input) ) != -1){
 
     if (input == stdin){
       printf( ">>> ");
@@ -424,7 +425,7 @@ int main(int argc, char const *argv[]) {
     int tokens = 0;
     int arguments = 0;
 
-    file_size = getline(&cBuffer, &buffy, input);
+    file_size = getline(&buffy, &bufferSize, input);
 
     for (int i = 0; i < file_size; i++) {
       if (buffy[i] == ' '){spaces += 1;}
@@ -446,18 +447,17 @@ int main(int argc, char const *argv[]) {
       if (length > 0 && token[length - 1] == '\n') token[length-1] = '\0';
 
       args[index] = token;
-      printf("TOKEN: [%s]\n", token);
+      printf("TOKEN[%s]\n", token);
       index += 1;
 
       token = strtok(NULL, " ");
 
-    }//end of while(token!=Null)
-
-  }//end of while() theres a line to get
+    }//end of while()
+  }//end of while()
 
   // Close the file
-  fclose(input);
-  free(cBuffer);
+  free(buffy);
+  fclose(fp);
 
   return 0;
 
