@@ -446,7 +446,7 @@ int main(int argc, char const *argv[]) {
     while(token != NULL) {
 
       int length = strlen(token);
-      //if (length > 0 && token[length - 1] == '\n') token[length-1] = '\0';
+      if (length > 0 && token[length - 1] == '\n') token[length-1] = '\0';
 
       args[index] = token;
       printf("TOKEN[%s]\n", token);
