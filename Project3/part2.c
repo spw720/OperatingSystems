@@ -429,11 +429,9 @@ void *subscriber(void *input){ //getEntry()
 
         if(inp->tobe_sub[j] != NULL && *registry[i]->name != NULL){
 
-          inp->tobe_sub[j][strlen(inp->tobe_sub[j])-1] = '\0';
+          printf("!!!\ttobe[%s] = reg[%s]?\n", inp->tobe_sub[j].name, *registry[i]->name);
 
-          printf("!!!\ttobe[%s] = reg[%s]?\n", inp->tobe_sub[j], *registry[i]->name);
-
-          if (strcmp(*registry[i]->name, inp->tobe_sub[j]) == 0){
+          if (strcmp(*registry[i]->name, inp->tobe_sub[j].name) == 0){
 
             //printf("*\tsubscriber(): HIT[%s]\n", inp->tobe_sub[j]);
 
