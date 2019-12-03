@@ -406,7 +406,7 @@ void *subscriber(void *input){ //getEntry()
       //for topic in passed in struct
       for (size_t j = 0; j < MAXTOPICS; j++) {
 
-        if(((struct sub_args*)input)->tobe_sub[j] != NULL || *registry[i]->name != NULL){
+        if(((struct sub_args*)input)->tobe_sub[j] != NULL && *registry[i]->name != NULL){
 
           if (strcmp(*registry[i]->name, ((struct sub_args*)input)->tobe_sub[j]) == 0){
 
