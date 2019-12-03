@@ -395,8 +395,8 @@ void *subscriber(void *input){ //getEntry()
 
 int main(int argc, char const *argv[]) {
 
-  FILE *input;
-  char *buffy;
+  FILE *input = NULL;
+  char *buffy = NULL;
   size_t bufferSize = 2048;
 	size_t file_size;
 
