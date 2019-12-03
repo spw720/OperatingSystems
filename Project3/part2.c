@@ -124,7 +124,7 @@ int enqueue(char *QID, topicEntry *TE){
           return 1;
         }
         else{
-          printf(">\tenqueue(): *BUFFER FULL*\n");
+          //printf(">\tenqueue(): *BUFFER FULL*\n");
           return 0;
         }
       }//end of if registry is correct
@@ -143,7 +143,7 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
       if (strcmp(*registry[i]->name, QID) == 0){
         //Case1: topic queue is empty: return 0
         if (registry[i]->tail == registry[i]->head){
-          printf(">\tgetEntry(): <queue is empty>\n");
+          //printf(">\tgetEntry(): <queue is empty>\n");
           return 0;
         }
         //Case2: lastEntry+1 is in Queue: copy lastEntry+1 data to TE, return 1)
@@ -151,7 +151,7 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
           if (registry[i]->buffer[j].entryNum == lastEntry+1){
             //copy data over
             *TE = registry[i]->buffer[j];
-            printf(">\tgetEntry(): <found lastEntry+1>\n");
+            //printf(">\tgetEntry(): <found lastEntry+1>\n");
             return 1;
           }
         }
@@ -161,12 +161,12 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
           if (registry[i]->buffer[j].entryNum > lastEntry+1){
             //copy entry data to TE, return entry.entryNum
             *TE = registry[i]->buffer[j];
-            printf(">\tgetEntry(): <found something bigger>\n");
+            //printf(">\tgetEntry(): <found something bigger>\n");
             return registry[i]->buffer[j].entryNum;
           }
         }
         //i: if all entries < lastEntry+1: return 0
-        printf(">\tgetEntry(): <all enties less than lastEntry+1>\n");
+        //printf(">\tgetEntry(): <all enties less than lastEntry+1>\n");
         return 0;
       }
     }//end of if registry[i] != NULL
@@ -198,7 +198,7 @@ int dequeue(char *QID){
           diff = (diff + (new.tv_usec - old.tv_usec)) * 1e-6;
           //printf("DIFFERENCE: {%f}\n", diff);
           if(diff < DELTA) {
-            printf(">\tdequeue(): Operation rejected due to DELTA\n");
+            //printf(">\tdequeue(): Operation rejected due to DELTA\n");
             return 0;
           }
 
@@ -228,7 +228,7 @@ int dequeue(char *QID){
           return 1;
         }
         else {
-          printf(">\tdequeue(): *BUFFER EMPTY*\n");
+          //printf(">\tdequeue(): *BUFFER EMPTY*\n");
           return 0;
         }
       }//end of if registry is correct
@@ -248,14 +248,18 @@ void *cleanup(void *arg){
       if(registry[i] != NULL){
 
         //lock it down with this topics lock
-        printf("*\tcleanup(): Locking up queue[%s]\n", *registry[i]->name);
+
+        //printf("*\tcleanup(): Locking up queue[%s]\n", *registry[i]->name);
+
         pthread_mutex_lock(&lock[i]);
 
         //While dequeue keeps finding entries past DELTA to dequeue, keep going!
         while(dequeue(*registry[i]->name)){}
 
         //unlock it with this topics respective lock
-        printf("*\tcleanup(): Unlocking queue[%s]\n", *registry[i]->name);
+
+        //printf("*\tcleanup(): Unlocking queue[%s]\n", *registry[i]->name);
+
         pthread_mutex_unlock(&lock[i]);
 
       }//end of if registry==NULL
@@ -294,21 +298,29 @@ void *publisher(void *input){ //enqueue()
 
 
           //lock it down with this topics lock
-          printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
+
+          //printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
+
           pthread_mutex_lock(&lock[i]);
 
           int result = enqueue(*registry[i]->name, &((struct pub_args*)input)->tobe_pub[z]);
           printQ(*registry[i]->name);
 
           //unlock it with this topics lock
-          printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
+
+          //printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
+
           pthread_mutex_unlock(&lock[i]);
 
           //While enqueue returns 0 (either from full queue or wrong Q name)
           while(result == 0){
-            printf("*\tpublisher(): enqueue on [%s] failed. Full buffer?\n", *registry[i]->name);
+
+            //printf("*\tpublisher(): enqueue on [%s] failed. Full buffer?\n", *registry[i]->name);
+
             //lock it down with this topics lock
-            printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
+
+            //printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
+
             pthread_mutex_lock(&lock[i]);
 
             //try to enqueue again
@@ -316,14 +328,18 @@ void *publisher(void *input){ //enqueue()
             printQ(*registry[i]->name);
 
             //unlock it with this topics lock
-            printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
+
+            //printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
+
             pthread_mutex_unlock(&lock[i]);
             //Sleep to help make print statements print before thread yields
             sleep(1);
             //Yield CPU and put thread into ready queue
             sched_yield();
           }//end of while enqueue() returns 0
-          printf("*\tpublisher(): enqueue on [%s] succeeded\n", *registry[i]->name);
+
+          //printf("*\tpublisher(): enqueue on [%s] succeeded\n", *registry[i]->name);
+
           //sleep as to make print statements more readable
           sleep(1);
 
@@ -412,26 +428,34 @@ void *subscriber(void *input){ //getEntry()
 
         if(inp->tobe_sub[j] != NULL && *registry[i]->name != NULL){
 
+          printf("!!!\ttobe[%s] = reg[%s]?\n", inp->tobe_sub[j], *registry[i]->name);
+
           if (strcmp(*registry[i]->name, inp->tobe_sub[j]) == 0){
 
-            printf("*\tsubscriber(): HIT[%s]\n", inp->tobe_sub[j]);
+            //printf("*\tsubscriber(): HIT[%s]\n", inp->tobe_sub[j]);
 
 
             //try to getEntry
 
             //lock it down with this topics lock
-            printf("*\tsubscriber(): Locking up queue[%s]\n", *registry[i]->name);
+
+            //printf("*\tsubscriber(): Locking up queue[%s]\n", *registry[i]->name);
+
             pthread_mutex_lock(&lock[i]);
 
             int result = getEntry(*registry[i]->name, last_entry, &place_hold);
 
             //unlock it with this topics lock
-            printf("*\tsubscriber(): Unlocking queue[%s]\n", *registry[i]->name);
+
+            //printf("*\tsubscriber(): Unlocking queue[%s]\n", *registry[i]->name);
+
             pthread_mutex_unlock(&lock[i]);
 
             //if getEntry() returns 0 (all entries < lastEntry+1 <or> Q is empty)
             if(result == 0){
-              printf("*\tsubscriber(): getEntry on [%s] failed\n", *registry[i]->name);
+
+              //printf("*\tsubscriber(): getEntry on [%s] failed\n", *registry[i]->name);
+
               //sleep so print shows up
               sleep(1);
               //yield CPU and put back on ready Q
@@ -439,12 +463,16 @@ void *subscriber(void *input){ //getEntry()
             }
             //if getEntry() returns 1 (found lastEntry+1)
             else if(result == 1){
-              printf("*\tsubscriber(): getEntry on [%s] found entry:[%d]\n", *registry[i]->name, place_hold.entryNum);
+
+              //printf("*\tsubscriber(): getEntry on [%s] found entry:[%d]\n", *registry[i]->name, place_hold.entryNum);
+
               last_entry++;
             }
             else{
-              printf("*\tsubscriber(): getEntry on [%s] found entry:[%d]", *registry[i]->name, place_hold.entryNum);
-              printf(" ... lastEntry is now:[%d]\n", result);
+
+              //printf("*\tsubscriber(): getEntry on [%s] found entry:[%d]", *registry[i]->name, place_hold.entryNum);
+              //printf(" ... lastEntry is now:[%d]\n", result);
+
               last_entry = result;
             }
             sleep(1);
