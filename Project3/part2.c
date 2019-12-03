@@ -152,7 +152,7 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
           if (registry[i]->buffer[j].entryNum == lastEntry+1){
             //copy data over
             *TE = registry[i]->buffer[j];
-            printf(">\t\tgetEntry(): <found lastEntry+1> time[%d] eNum[%d]\n", TE.timeStamp.tv_sec, TE.entryNum);
+            printf(">\t\tgetEntry(): <found lastEntry+1> time[%d] eNum[%d]\n", TE->timeStamp->tv_sec, TE->entryNum);
             return 1;
           }
         }
@@ -162,7 +162,7 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
           if (registry[i]->buffer[j].entryNum > lastEntry+1){
             //copy entry data to TE, return entry.entryNum
             *TE = registry[i]->buffer[j];
-            printf(">\t\tgetEntry(): <found something bigger> time[%d] eNum[%d]\n", TE.timeStamp.tv_sec, TE.entryNum);
+            printf(">\t\tgetEntry(): <found something bigger> time[%d] eNum[%d]\n", TE->timeStamp->tv_sec, TE->entryNum);
             return registry[i]->buffer[j].entryNum;
           }
         }
