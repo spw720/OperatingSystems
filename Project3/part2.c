@@ -125,13 +125,13 @@ int enqueue(char *QID, topicEntry *TE){
           return 1;
         }
         else{
-          printf(">\tenqueue(): *BUFFER FULL*\n");
+          printf(">\t\tenqueue(): *BUFFER FULL*\n");
           return 0;
         }
       }//end of if registry is correct
     }//end of if registry[i] != NULL
   }//end for loop
-  printf(">\tenqueue(): Invalid Queue name!\n");
+  printf(">\t\tenqueue(): Invalid Queue name!\n");
   return 0;
 }//end of enqueue()
 
@@ -144,7 +144,7 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
       if (strcmp(*registry[i]->name, QID) == 0){
         //Case1: topic queue is empty: return 0
         if (registry[i]->tail == registry[i]->head){
-          printf(">\tgetEntry(): <queue is empty>\n");
+          printf(">\t\tgetEntry(): <queue is empty>\n");
           return 0;
         }
         //Case2: lastEntry+1 is in Queue: copy lastEntry+1 data to TE, return 1)
@@ -152,7 +152,7 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
           if (registry[i]->buffer[j].entryNum == lastEntry+1){
             //copy data over
             *TE = registry[i]->buffer[j];
-            printf(">\tgetEntry(): <found lastEntry+1>\n");
+            printf(">\t\tgetEntry(): <found lastEntry+1> time[%d] eNum[%d]\n", TE.timeStamp.tv_sec, TE.entryNum);
             return 1;
           }
         }
@@ -162,17 +162,17 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
           if (registry[i]->buffer[j].entryNum > lastEntry+1){
             //copy entry data to TE, return entry.entryNum
             *TE = registry[i]->buffer[j];
-            printf(">\tgetEntry(): <found something bigger>\n");
+            printf(">\t\tgetEntry(): <found something bigger> time[%d] eNum[%d]\n", TE.timeStamp.tv_sec, TE.entryNum);
             return registry[i]->buffer[j].entryNum;
           }
         }
         //i: if all entries < lastEntry+1: return 0
-        printf(">\tgetEntry(): <all enties less than lastEntry+1>\n");
+        printf(">\t\tgetEntry(): <all enties less than lastEntry+1>\n");
         return 0;
       }
     }//end of if registry[i] != NULL
   }
-  printf(">\tgetEntry(): Invalid Queue name!\n");
+  printf(">\t\tgetEntry(): Invalid Queue name!\n");
   return 0;
 }//end of getEntry()
 
@@ -199,7 +199,7 @@ int dequeue(char *QID){
           diff = (diff + (new.tv_usec - old.tv_usec)) * 1e-6;
           //printf("DIFFERENCE: {%f}\n", diff);
           if(diff < DELTA) {
-            printf(">\tdequeue(): Operation rejected due to DELTA\n");
+            printf(">\t\tdequeue(): Operation rejected due to DELTA\n");
             return 0;
           }
 
@@ -229,13 +229,13 @@ int dequeue(char *QID){
           return 1;
         }
         else {
-          printf(">\tdequeue(): *BUFFER EMPTY*\n");
+          printf(">\t\tdequeue(): *BUFFER EMPTY*\n");
           return 0;
         }
       }//end of if registry is correct
     }//end of if registry[i] != NULL
   }//end for loop
-  printf(">\tdequeue(): Invalid Queue name!\n");
+  printf(">\t\tdequeue(): Invalid Queue name!\n");
   return 0;
 }//end of dequeue()
 
