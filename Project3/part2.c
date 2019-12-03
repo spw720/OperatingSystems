@@ -618,8 +618,8 @@ int main(int argc, char const *argv[]) {
   //sub_args *trial2 = (sub_args *)malloc(sizeof(sub_args));
   sub_args trial2;
 
-  trial2.tobe_sub[0] = testy;
-  trial2.tobe_sub[1] = testy2;
+  trial2.tobe_sub[0] = &testy;
+  trial2.tobe_sub[1] = &testy2;
 
   //strcpy(trial2.tobe_sub[0], *testy.name);
   //strcpy(trial2.tobe_sub[1], *testy2.name);
