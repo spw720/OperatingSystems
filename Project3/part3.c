@@ -513,7 +513,7 @@ int main(int argc, char const *argv[]) {
             }
             else {printf("MISSING VALUE!\n");}
           }
-          else(printf("UNKNOWN VALUE AFTER <add>\n");)
+          else{printf("UNKNOWN VALUE AFTER <add>\n");}
         }
         else{printf("MISSING VALUE!\n");}
       }
