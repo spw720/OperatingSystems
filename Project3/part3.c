@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 //
 //Project 3 (part3) - Sean Wilson - CIS415 @ UofO F'19
 //
@@ -13,7 +14,6 @@
 #include <sys/time.h>
 
 //------------------------------------------------------------------------------
-#define _GNU_SOURCE
 
 #define MAXENTRIES 10 //compare to BUFFER_SIZE
 #define MAXTOPICS 100 //compare to MAXQUEUES
