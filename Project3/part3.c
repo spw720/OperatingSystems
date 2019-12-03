@@ -396,6 +396,7 @@ int main(int argc, char const *argv[]) {
 
   FILE *input;
   char *buffy;
+  size_t bufferSize = 2048;
 	size_t file_size;
 
   char *token;
@@ -457,7 +458,7 @@ int main(int argc, char const *argv[]) {
 
   // Close the file
   free(buffy);
-  fclose(fp);
+  fclose(input);
 
   return 0;
 
