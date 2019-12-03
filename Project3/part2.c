@@ -410,11 +410,11 @@ void *subscriber(void *input){ //getEntry()
       //for topic in passed in struct
       for (size_t j = 0; j < MAXTOPICS; j++) {
 
-        if(input->tobe_sub[j] != NULL && *registry[i]->name != NULL){
+        if(inp->tobe_sub[j] != NULL && *registry[i]->name != NULL){
 
-          if (strcmp(*registry[i]->name, input->tobe_sub[j]) == 0){
+          if (strcmp(*registry[i]->name, inp->tobe_sub[j]) == 0){
 
-            printf("*\tsubscriber(): HIT[%s]\n", ((struct sub_args*)input)->tobe_sub[j]);
+            printf("*\tsubscriber(): HIT[%s]\n", inp->tobe_sub[j]);
 
 
             //try to getEntry
