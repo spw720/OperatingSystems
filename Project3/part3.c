@@ -437,6 +437,7 @@ int main(int argc, char const *argv[]) {
     args[tokens] = NULL;
 
     int index = 0;
+    int exit = 0;
 
     token = strtok(buffy, " ");
 
@@ -446,14 +447,19 @@ int main(int argc, char const *argv[]) {
       if (length > 0 && token[length - 1] == '\n') token[length-1] = '\0';
 
       args[index] = token;
+
       printf("TOKEN[%s]\n", token);
+      if (strcmp(token, "exit")==0){
+        exit = 1;
+      }
+
       index += 1;
 
       token = strtok(NULL, " ");
 
     }//end of while()
 
-    if (strcmp(token, "exit")==0){
+    if(exit == 1){
       break;
     }
 
