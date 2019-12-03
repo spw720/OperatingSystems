@@ -61,7 +61,7 @@ typedef struct pub_args pub_args;
 //struct to be sent to subscriber threads
 struct sub_args {
     //char tobe_sub[MAXTOPICS][MAXNAME];
-    topicQ tobe_sub[MAXTOPICS];
+    topicQ *tobe_sub[MAXTOPICS];
 };
 typedef struct sub_args sub_args;
 
