@@ -13,6 +13,7 @@
 #include <sys/time.h>
 
 //------------------------------------------------------------------------------
+#define _GNU_SOURCE
 
 #define MAXENTRIES 10 //compare to BUFFER_SIZE
 #define MAXTOPICS 100 //compare to MAXQUEUES
