@@ -473,57 +473,79 @@ int main(int argc, char const *argv[]) {
     if(args[0] != NULL){
 
       if (strcmp(args[0], "create")==0){
-        printf("FOUND CREATE OP\n");
+        if (args[1] != NULL){
+          if (args[2] != NULL){
+            if (args[3] != NULL){
+              if (args[4] != NULL){
+
+                printf("***\tCREATE %s %s %s %s\n", args[1], args[2], args[3], args[4]);
+
+              }else{printf("MISSING VALUE!\n");}
+            }else{printf("MISSING VALUE!\n");}
+          }else{printf("MISSING VALUE!\n");}
+        }else{printf("MISSING VALUE!\n");}
       }
       //-----------------------------------
       if (strcmp(args[0], "delta")==0){
         if (args[1] != NULL){
+
           printf("***\tDELTA %s\n", args[1]);
+
         }
-        else{
-          printf("MISSING VALUE!\n");
-        }
+        else{printf("MISSING VALUE!\n");}
       }
       //-----------------------------------
-      if (strcmp(args[0], "add")==0){
+      else if (strcmp(args[0], "add")==0){
         if (args[1] != NULL){
           if (strcmp(args[1], "publisher")==0){
             if (args[2] != NULL){
+
               printf("***\tADD PUB %s\n", args[2]);
+
             }
             else {printf("MISSING VALUE!\n");}
           }
           if (strcmp(args[1], "subscriber")==0){
             if (args[2] != NULL){
+
               printf("***\tADD SUB %s\n", args[2]);
+
             }
             else {printf("MISSING VALUE!\n");}
           }
         }
-        else{
-          printf("MISSING VALUE!\n");
-        }
+        else{printf("MISSING VALUE!\n");}
       }
       //-----------------------------------
-      if (strcmp(args[0], "query")==0){
+      else if (strcmp(args[0], "query")==0){
 
         if(args[1] != NULL){
           if (strcmp(args[1], "topics")==0){
+
             printf("***\tQUERY TOPICS\n");
+
           }
           if (strcmp(args[1], "publishers")==0){
+
             printf("***\tQUERY PUB\n");
+
           }
           if (strcmp(args[1], "subscribers")==0){
+
             printf("***\tQUERY SUB\n");
+
           }
         }
+        else{printf("MISSING VALUE!\n");}
       }
       //-----------------------------------
-      if (strcmp(args[0], "start")==0){
+      else if (strcmp(args[0], "start")==0){
+
         printf("FOUND START OP\n");
+
       }
       //-----------------------------------
+      else{printf("UNKNOWN COMMAND!\n");}
 
     }
     else{printf("MISSING VALUE!\n");}
