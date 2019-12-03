@@ -470,45 +470,63 @@ int main(int argc, char const *argv[]) {
 
     //printf("ARGUMENTS: %s %s %s\n", args[0], args[1], args[2]);
 
+    if(args[0] != NULL){
 
+      if (strcmp(args[0], "create")==0){
+        printf("FOUND CREATE OP\n");
+      }
+      //-----------------------------------
+      if (strcmp(args[0], "delta")==0){
+        if (args[1] != NULL){
+          printf("***\tDELTA %s\n", args[1]);
+        }
+        else{
+          printf("MISSING VALUE!\n");
+        }
+      }
+      //-----------------------------------
+      if (strcmp(args[0], "add")==0){
+        if (args[1] != NULL){
+          if (strcmp(args[1], "publisher")==0){
+            if (args[2] != NULL){
+              printf("***\tADD PUB %s\n", args[2]);
+            }
+            else {printf("MISSING VALUE!\n");}
+          }
+          if (strcmp(args[1], "subscriber")==0){
+            if (args[2] != NULL){
+              printf("***\tADD SUB %s\n", args[2]);
+            }
+            else {printf("MISSING VALUE!\n");}
+          }
+        }
+        else{
+          printf("MISSING VALUE!\n");
+        }
+      }
+      //-----------------------------------
+      if (strcmp(args[0], "query")==0){
 
-    if (strcmp(args[0], "create")==0){
-      printf("FOUND CREATE OP\n");
-    }
-    //-----------------------------------
-    if (strcmp(args[0], "delta")==0){
-      printf("FOUND DELTA OP\n");
-    }
-    //-----------------------------------
-    if (strcmp(args[0], "add")==0){
-      if (strcmp(args[1], "publisher")==0){
-        printf("FOUND ADD PUB OP\n");
+        if(args[1] != NULL){
+          if (strcmp(args[1], "topics")==0){
+            printf("***\tQUERY TOPICS\n");
+          }
+          if (strcmp(args[1], "publishers")==0){
+            printf("***\tQUERY PUB\n");
+          }
+          if (strcmp(args[1], "subscribers")==0){
+            printf("***\tQUERY SUB\n");
+          }
+        }
       }
-      if (strcmp(args[1], "subscriber")==0){
-        printf("FOUND ADD SUB OP\n");
+      //-----------------------------------
+      if (strcmp(args[0], "start")==0){
+        printf("FOUND START OP\n");
       }
-    }
-    //-----------------------------------
-    if (strcmp(args[0], "query")==0){
-      if (strcmp(args[1], "topics")==0){
-        printf("FOUND QUERY TOPICS OP\n");
-      }
-      if (strcmp(args[1], "publishers")==0){
-        printf("FOUND QUERY PUB OP\n");
-      }
-      if (strcmp(args[1], "subscribers")==0){
-        printf("FOUND QUERY SUB OP\n");
-      }
-    }
-    //-----------------------------------
-    if (strcmp(args[0], "start")==0){
-      printf("FOUND START OP\n");
-    }
-    //-----------------------------------
+      //-----------------------------------
 
-    
-
-
+    }
+    else{printf("MISSING VALUE!\n");}
 
     if (input == stdin){
       printf(">>> ");
