@@ -505,7 +505,7 @@ int main(int argc, char const *argv[]) {
             }
             else {printf("MISSING VALUE!\n");}
           }
-          if (strcmp(args[1], "subscriber")==0){
+          else if (strcmp(args[1], "subscriber")==0){
             if (args[2] != NULL){
 
               printf("***\tADD SUB %s\n", args[2]);
@@ -513,6 +513,7 @@ int main(int argc, char const *argv[]) {
             }
             else {printf("MISSING VALUE!\n");}
           }
+          else(printf("UNKNOWN VALUE AFTER <add>\n");)
         }
         else{printf("MISSING VALUE!\n");}
       }
