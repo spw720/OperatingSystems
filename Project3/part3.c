@@ -455,7 +455,7 @@ int main(int argc, char const *argv[]) {
       token = strtok(NULL, " ");
 
     }//end of while()
-  }while((file_size = getline(&buffy, &bufferSize, input) ) != -1)//end of while()
+  }while((file_size = getline(&buffy, &bufferSize, input) ) != -1);//end of while()
 
   // Close the file
   free(buffy);
