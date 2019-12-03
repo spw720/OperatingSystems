@@ -14,7 +14,7 @@
 
 //------------------------------------------------------------------------------
 
-#define MAXENTRIES 6 //compare to BUFFER_SIZE
+#define MAXENTRIES 10 //compare to BUFFER_SIZE
 #define MAXTOPICS 100 //compare to MAXQUEUES
 #define MAXNAME 100 //max name of topic queue
 
@@ -23,7 +23,7 @@
 
 #define DELTA 2 //time (in seconds) until a topic is removed from queue
 
-#define NUMPROXIES 1 //Amount of subs/pubs allowed at any given time
+#define NUMPROXIES 5 //Amount of subs/pubs allowed at any given time
 
 //------------------------------------------------------------------------------
 
