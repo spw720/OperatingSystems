@@ -294,29 +294,29 @@ void *publisher(void *input){ //enqueue()
 
 
           //lock it down with this topics lock
-          printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
-          pthread_mutex_lock(&lock[i]);
+          //printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
+          //pthread_mutex_lock(&lock[i]);
 
           int result = enqueue(*registry[i]->name, &((struct pub_args*)input)->tobe_pub[z]);
           printQ(*registry[i]->name);
 
           //unlock it with this topics lock
-          printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
-          pthread_mutex_unlock(&lock[i]);
+          //printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
+          //pthread_mutex_unlock(&lock[i]);
           //While enqueue returns 0 (either from full queue or wrong Q name)
           while(result == 0){
             printf("*\tpublisher(): enqueue on [%s] failed. Full buffer?\n", *registry[i]->name);
             //lock it down with this topics lock
-            printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
-            pthread_mutex_lock(&lock[i]);
+            //printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
+            //pthread_mutex_lock(&lock[i]);
 
             //try to enqueue again
             result = enqueue(*registry[i]->name, &((struct pub_args*)input)->tobe_pub[z]);
             printQ(*registry[i]->name);
 
             //unlock it with this topics lock
-            printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
-            pthread_mutex_unlock(&lock[i]);
+            //printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
+            //pthread_mutex_unlock(&lock[i]);
             //Sleep to help make print statements print before thread yields
             sleep(1);
             //Yield CPU and put thread into ready queue
