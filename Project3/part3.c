@@ -420,7 +420,7 @@ int main(int argc, char const *argv[]) {
   while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
 
     if (input == stdin){
-      printf( ">>> ");
+      printf("\n>>> ");
     }
 
     int spaces = 0;
