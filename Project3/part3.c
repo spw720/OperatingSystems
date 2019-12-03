@@ -526,16 +526,17 @@ int main(int argc, char const *argv[]) {
             printf("***\tQUERY TOPICS\n");
 
           }
-          if (strcmp(args[1], "publishers")==0){
+          else if (strcmp(args[1], "publishers")==0){
 
             printf("***\tQUERY PUB\n");
 
           }
-          if (strcmp(args[1], "subscribers")==0){
+          else if (strcmp(args[1], "subscribers")==0){
 
             printf("***\tQUERY SUB\n");
 
           }
+          else{printf("UNKNOWN VALUE AFTER <query>\n");}
         }
         else{printf("MISSING VALUE!\n");}
       }
