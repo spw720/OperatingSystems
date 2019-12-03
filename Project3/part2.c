@@ -299,7 +299,7 @@ void *publisher(void *input){ //enqueue()
 
           pthread_mutex_lock(&lock[i]);
 
-          int result = enqueue(*registry[i]->name, &((struct pub_args*)input)->tobe_pub[z]);
+          int result = enqueue(*registry[i]->name, *inp->tobe_pub[z]);
           printQ(*registry[i]->name);
 
           //unlock it with this topics lock
@@ -320,7 +320,7 @@ void *publisher(void *input){ //enqueue()
             pthread_mutex_lock(&lock[i]);
 
             //try to enqueue again
-            result = enqueue(*registry[i]->name, &((struct pub_args*)input)->tobe_pub[z]);
+            result = enqueue(*registry[i]->name, *inp->tobe_pub[z]);
             printQ(*registry[i]->name);
 
             //unlock it with this topics lock
