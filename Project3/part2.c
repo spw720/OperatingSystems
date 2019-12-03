@@ -23,7 +23,7 @@
 
 #define DELTA 2 //time (in seconds) until a topic is removed from queue
 
-#define NUMPROXIES 6 //Amount of subs/pubs allowed at any given time
+#define NUMPROXIES 20 //Amount of subs/pubs allowed at any given time
 
 //------------------------------------------------------------------------------
 
