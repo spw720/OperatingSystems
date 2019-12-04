@@ -520,7 +520,7 @@ int main(int argc, char const *argv[]) {
                       i,
                       registry[i]->topicID,
                       *registry[i]->name,
-                      registry[i]->length
+                      registry[i]->length);
                     }
                     else{printf("REGISTRY[%d] NULL\n", i);}
 
