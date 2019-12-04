@@ -541,8 +541,9 @@ int main(int argc, char const *argv[]) {
                       *registry[i]->name);
                     }
                     else{printf("REGISTRY[%d] NULL\n", i);}
-                    
+
                   }
+                  printf("\n");
 
 
                   queue_loc++;
