@@ -454,7 +454,14 @@ int main(int argc, char const *argv[]) {
               if (args[4] != NULL){
 
                 //TODO!!!!!!!!!!!!!!!!!!!!!!!
-                printf("***\tCREATE %s %s %s %s\n", args[1], args[2], args[3], args[4]);
+                int topic_ID = stoi(args[2]);
+                int length = stoi(args[3]);
+                char name[MAXNAME] = args[4];
+
+                printf("***\tCREATE %s %d %d %s\n", args[1], topic_ID, length, name);
+
+
+
 
               }else{printf("MISSING VALUE!\n");}
             }else{printf("MISSING VALUE!\n");}
