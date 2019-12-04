@@ -465,9 +465,9 @@ int main(int argc, char const *argv[]) {
       else if (strcmp(args[0], "delta")==0){
         if (args[1] != NULL){
 
-          //TODO!!!!!!!!!!!!!!!!!!!!!!!
           double val = atof(args[1]);
-          printf("***\tDELTA = %f\n", val);
+          DELTA = val;
+          printf("***\tDELTA = %f\n", DELTA);
 
         }
         else{printf("MISSING VALUE!\n");}
