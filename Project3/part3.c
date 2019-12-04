@@ -501,7 +501,9 @@ int main(int argc, char const *argv[]) {
                   registry[queue_loc] = &queues[queue_loc];
 
                   registry[queue_loc]->topicID = atoi(args[2]);
+
                   *registry[queue_loc]->name = args[3];
+
                   registry[queue_loc]->length = atoi(args[4]);
 
                   registry[queue_loc]->buffer = buffer_store[queue_loc];
@@ -562,6 +564,17 @@ int main(int argc, char const *argv[]) {
           double val = atof(args[1]);
           DELTA = val;
           printf("***\tDELTA = %f\n", DELTA);
+
+          for (size_t i = 0; i < MAXTOPICS; i++) {
+            if(registry[i] != NULL){
+              printf("REGISTRY[%d] [%d] [%d] [%s] \n",
+              i,
+              registry[i]->topicID,
+              registry[i]->length,
+              *registry[i]->name);
+            }
+            else{printf("REGISTRY[%d] NULL\n", i);}
+          }
 
         }
         else{printf("MISSING VALUE!\n");}
