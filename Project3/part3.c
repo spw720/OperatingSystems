@@ -515,11 +515,11 @@ int main(int argc, char const *argv[]) {
                   registry[queue_loc] = &queues[queue_loc];
 
                   printf("***\tCREATE topic [%d] [%d] [%s] 0?:[%d] -1?:[%d]\n",
-                  registry[queue_loc].topicID,
-                  registry[queue_loc].length,
-                  *registry[queue_loc].name,
-                  registry[queue_loc].buffer[0].entryNum,
-                  registry[queue_loc].buffer[MAXENTRIES].entryNum);
+                  *registry[queue_loc]->topicID,
+                  *registry[queue_loc]->length,
+                  *registry[queue_loc]->name,
+                  *registry[queue_loc]->buffer[0].entryNum,
+                  *registry[queue_loc]->buffer[MAXENTRIES].entryNum);
 
 
                   queue_loc++;
