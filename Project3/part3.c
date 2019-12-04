@@ -503,6 +503,18 @@ int main(int argc, char const *argv[]) {
                   *registry[queue_loc]->name = topic_names[queue_loc];
 
                   registry[queue_loc]->length = atoi(args[4]);
+
+
+                  //set last entry of all topicQ buffers to NULL
+
+                  buffer_store[queue_loc][registry[queue_loc]->length] = null;
+
+                  for (size_t i = 0; i < MAXENTRIES; i++) {
+                    printf("%d ", buffer_store[queue_loc][i]);
+                  }
+
+
+
                   registry[queue_loc]->buffer = buffer_store[queue_loc];
 
                   for (size_t i = 0; i < MAXTOPICS; i++) {
