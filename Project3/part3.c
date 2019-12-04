@@ -509,51 +509,18 @@ int main(int argc, char const *argv[]) {
                   *registry[queue_loc]->name = topic_names[queue_loc];
 
 
-                  // *topic_names[queue_loc] = args[3];
-                  // registry[queue_loc]->name = *topic_names[queue_loc];
-
-
 
                   registry[queue_loc]->length = atoi(args[4]);
                   registry[queue_loc]->buffer = buffer_store[queue_loc];
 
 
-                  // queues[queue_loc].topicID = atoi(args[2]);
-                  // *queues[queue_loc].name = args[3];
-                  // queues[queue_loc].length = atoi(args[4]);
-                  //
-                  // queues[queue_loc].buffer = buffer_store[queue_loc];
-
-
-                  // printf("***\tCREATE topic [%d] [%d] [%s] 0?:[%d] -1?:[%d]\n",
-                  // queues[queue_loc].topicID,
-                  // queues[queue_loc].length,
-                  // *queues[queue_loc].name,
-                  // queues[queue_loc].buffer[0].entryNum,
-                  // queues[queue_loc].buffer[MAXENTRIES].entryNum);
-
-
-
-                  //registry[queue_loc] = &queues[queue_loc];
-
-
-
-                  // printf("***\tCREATE topic [%d] [%d] [%s] 0?:[%d] -1?:[%d]\n",
-                  // registry[queue_loc]->topicID,
-                  // registry[queue_loc]->length,
-                  // *registry[queue_loc]->name,
-                  // registry[queue_loc]->buffer[0].entryNum,
-                  // registry[queue_loc]->buffer[MAXENTRIES].entryNum);
-
                   for (size_t i = 0; i < MAXTOPICS; i++) {
                     if(registry[i] != NULL){
-                      printf("REGISTRY[%d] [%d] [%s] [%d] buff[max]:[%d] buff[0]:[%d]\n",
+                      printf("REGISTRY[%d] [%d] [%s] [%d]\n",
                       i,
                       registry[i]->topicID,
                       *registry[i]->name,
-                      registry[i]->length,
-                      registry[i]->buffer[MAXENTRIES].entryNum,
-                      registry[i]->buffer[0].entryNum);
+                      registry[i]->length
                     }
                     else{printf("REGISTRY[%d] NULL\n", i);}
 
