@@ -40,6 +40,9 @@ typedef struct topicEntry topicEntry;
 //------------------------------------------------------------------------------
 
 struct topicQ {
+
+  int topicID;
+
   char *name[MAXNAME];
   topicEntry *const buffer;
   int head;
@@ -52,7 +55,7 @@ typedef struct topicQ topicQ;
 
 //struct to be sent to publisher threads
 struct pub_args {
-    char* queue_name;
+    char *queue_name;
     topicEntry *tobe_pub[MAXENTRIES];
 };
 typedef struct pub_args pub_args;
@@ -61,7 +64,6 @@ typedef struct pub_args pub_args;
 
 //struct to be sent to subscriber threads
 struct sub_args {
-    //char tobe_sub[MAXTOPICS][MAXNAME];
     topicQ *tobe_sub[MAXTOPICS];
 };
 typedef struct sub_args sub_args;
@@ -409,7 +411,6 @@ int main(int argc, char const *argv[]) {
     printf("Command Mode\n");
     printf(">>> ");
   }
-
   //check for file mode
   if (argc == 2){
 		input = fopen(argv[1], "r");
@@ -417,13 +418,23 @@ int main(int argc, char const *argv[]) {
 	}
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
+
+
+  //========================================
+  //array of topics initialized to NULL
+  topicQ *queues[MAXTOPICS];
+  int queue_loc = 0;
+  for (size_t i = 0; i < MAXTOPICS; i++) {
+    queues[i] = NULL;
+  }
+  //========================================
+
+
   while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
     int spaces = 0;
     int tokens = 0;
     int arguments = 0;
-    for (int i = 0; i < file_size; i++) {
-      if (buffy[i] == ' '){spaces += 1;}
-    }
+    for (int i = 0; i < file_size; i++) {if (buffy[i] == ' '){spaces += 1;}}
     tokens = spaces + 1;
     arguments = tokens - 1;
     char *args[tokens+1];
@@ -433,7 +444,7 @@ int main(int argc, char const *argv[]) {
     token = strtok(buffy, " ");
     while(token != NULL) {
       int length = strlen(token);
-      if (length > 0 && token[length - 1] == '\n') token[length-1] = '\0';
+      if (length > 0 && token[length - 1] == '\n'){ token[length-1] = '\0';}
       args[index] = token;
       if (strcmp(token, "exit")==0){exit = 1;}
       index += 1;
@@ -444,7 +455,6 @@ int main(int argc, char const *argv[]) {
       break;
     }
 
-    topicQ *queues[MAXTOPICS] = {};
 
     //if there are arguments to be parsed
     if(args[0] != NULL){
@@ -463,11 +473,15 @@ int main(int argc, char const *argv[]) {
                 char *name[MAXNAME];
                 *name = args[4];
 
+                queues[queue_loc].topicID = topic_ID;
+                queues[queue_loc].length = length;
+                queues[queue_loc].name = name;
 
+                queue_loc++;
 
-                printf("***\tCREATE %s %d %d %s\n", args[1], topic_ID, length, *name);
-
-
+                printf("***\tCREATE topic %d %d %s\n",
+                queues[queue_loc].topicID, queues[queue_loc].length
+                , queues[queue_loc].name);
 
 
               }else{printf("MISSING VALUE!\n");}
