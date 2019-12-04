@@ -490,19 +490,17 @@ int main(int argc, char const *argv[]) {
                 //TODO!!!!!!!!!!!!!!!!!!!!!!!
                 int topic_ID = atoi(args[2]);
 
-                int length = atoi(args[3]);
+                int length = atoi(args[4]);
 
-                char *name[MAXNAME];
-                *name = args[4];
 
                 if(queue_loc > MAXTOPICS){
                   printf("MAX NUMBER OF QUEUES REACHED\n");
                 }
                 else{
 
-                  queues[queue_loc].topicID = topic_ID;
-                  queues[queue_loc].length = length;
-                  *queues[queue_loc].name = args[4];
+                  queues[queue_loc].topicID = atoi(args[2]);
+                  queues[queue_loc].length = atoi(args[4]);
+                  *queues[queue_loc].name = args[3];
 
                   queues[queue_loc].buffer = buffer_store[queue_loc];
 
