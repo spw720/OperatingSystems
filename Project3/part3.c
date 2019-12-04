@@ -493,7 +493,7 @@ int main(int argc, char const *argv[]) {
                 int length = atoi(args[4]);
 
 
-                if(queue_loc > MAXTOPICS){
+                if(queue_loc >= MAXTOPICS){
                   printf("MAX NUMBER OF QUEUES REACHED\n");
                 }
                 else{
