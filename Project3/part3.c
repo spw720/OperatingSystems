@@ -505,28 +505,28 @@ int main(int argc, char const *argv[]) {
                   queues[queue_loc].buffer = buffer_store[queue_loc];
 
 
-                  printf("***\tCREATE topic [%d] [%d] [%s] 0?:[%d] -1?:[%d]\n",
-                  queues[queue_loc].topicID,
-                  queues[queue_loc].length,
-                  *queues[queue_loc].name,
-                  queues[queue_loc].buffer[0].entryNum,
-                  queues[queue_loc].buffer[MAXENTRIES].entryNum);
+                  // printf("***\tCREATE topic [%d] [%d] [%s] 0?:[%d] -1?:[%d]\n",
+                  // queues[queue_loc].topicID,
+                  // queues[queue_loc].length,
+                  // *queues[queue_loc].name,
+                  // queues[queue_loc].buffer[0].entryNum,
+                  // queues[queue_loc].buffer[MAXENTRIES].entryNum);
 
                   registry[queue_loc] = &queues[queue_loc];
 
-                  printf("***\tCREATE topic [%d] [%d] [%s] 0?:[%d] -1?:[%d]\n",
-                  registry[queue_loc]->topicID,
-                  registry[queue_loc]->length,
-                  *registry[queue_loc]->name,
-                  registry[queue_loc]->buffer[0].entryNum,
-                  registry[queue_loc]->buffer[MAXENTRIES].entryNum);
+                  // printf("***\tCREATE topic [%d] [%d] [%s] 0?:[%d] -1?:[%d]\n",
+                  // registry[queue_loc]->topicID,
+                  // registry[queue_loc]->length,
+                  // *registry[queue_loc]->name,
+                  // registry[queue_loc]->buffer[0].entryNum,
+                  // registry[queue_loc]->buffer[MAXENTRIES].entryNum);
 
                   for (size_t i = 0; i < MAXTOPICS; i++) {
                     printf("***\tREGISTRY[%d] [%d] [%d] [%s] \n",
                     i,
-                    registry[queue_loc]->topicID,
-                    registry[queue_loc]->length,
-                    *registry[queue_loc]->name);
+                    registry[i]->topicID,
+                    registry[i]->length,
+                    *registry[i]->name);
                   }
 
 
