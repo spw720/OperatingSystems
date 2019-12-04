@@ -454,14 +454,11 @@ int main(int argc, char const *argv[]) {
               if (args[4] != NULL){
 
                 //TODO!!!!!!!!!!!!!!!!!!!!!!!
-                int topic_ID = 0;
-                topic_ID = atoi(args[2]);
+                int topic_ID = atoi(args[2]);
 
-                int length = 9;
-                length = atoi(args[3]);
+                int length = atoi(args[3]);
 
-                char *name[MAXNAME];
-                *name = args[4];
+                char *name[MAXNAME] = args[4];
 
                 printf("***\tCREATE %s %d %d %s\n", args[1], topic_ID, length, *name);
 
