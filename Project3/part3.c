@@ -499,8 +499,8 @@ int main(int argc, char const *argv[]) {
                 else{
 
                   queues[queue_loc].topicID = atoi(args[2]);
-                  queues[queue_loc].length = atoi(args[4]);
                   *queues[queue_loc].name = args[3];
+                  queues[queue_loc].length = atoi(args[4]);
 
                   queues[queue_loc].buffer = buffer_store[queue_loc];
 
@@ -511,6 +511,15 @@ int main(int argc, char const *argv[]) {
                   *queues[queue_loc].name,
                   queues[queue_loc].buffer[0].entryNum,
                   queues[queue_loc].buffer[MAXENTRIES].entryNum);
+
+                  registry[queue_loc] = &queues[queue_loc];
+
+                  printf("***\tCREATE topic [%d] [%d] [%s] 0?:[%d] -1?:[%d]\n",
+                  registry[queue_loc].topicID,
+                  registry[queue_loc].length,
+                  *registry[queue_loc].name,
+                  registry[queue_loc].buffer[0].entryNum,
+                  registry[queue_loc].buffer[MAXENTRIES].entryNum);
 
 
                   queue_loc++;
