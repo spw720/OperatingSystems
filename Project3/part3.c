@@ -454,8 +454,10 @@ int main(int argc, char const *argv[]) {
               if (args[4] != NULL){
 
                 //TODO!!!!!!!!!!!!!!!!!!!!!!!
-                int topic_ID = stoi(args[2]);
-                int length = stoi(args[3]);
+                int topic_ID = 0;
+                topic_ID = stoi(args[2]);
+                int length = 0;
+                length = stoi(args[3]);
                 char *name[MAXNAME];
                 *name = args[4];
 
