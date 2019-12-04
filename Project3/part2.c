@@ -451,6 +451,7 @@ int main(int argc, char const *argv[]) {
   //Initialize a topic Queue***************
   topicEntry buffer1[MAXENTRIES+1] = {};
   topicEntry buffer2[MAXENTRIES+1] = {};
+
   topicQ testy = {
     .name = "one",
     .buffer = buffer1,
