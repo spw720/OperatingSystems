@@ -481,11 +481,18 @@ int main(int argc, char const *argv[]) {
                 }
                 else{
 
-                  queues[queue_loc].topicID = topic_ID;
-                  queues[queue_loc].length = length;
-                  *queues[queue_loc].name = args[4];
+                  // queues[queue_loc].topicID = topic_ID;
+                  // queues[queue_loc].length = length;
+                  // *queues[queue_loc].name = args[4];
+                  //
+                  // queues[queue_loc].buffer = buffer_store[queue_loc];
 
-                  queues[queue_loc].buffer = &buffer_store[queue_loc];
+                  queues[queue_loc] = {
+                    .name = args[4],
+                    .topicID = topic_ID,
+                    .length = length,
+                    .buffer = buffer_store[queue_loc]
+                  };
 
                   printf("***\tCREATE topic %d %d %s\n",
                   queues[queue_loc].topicID,
