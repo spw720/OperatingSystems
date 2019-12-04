@@ -479,7 +479,7 @@ int main(int argc, char const *argv[]) {
                 else{
                   queues[queue_loc]->topicID = topic_ID;
                   queues[queue_loc]->length = length;
-                  *queues[queue_loc]->name = name;
+                  *queues[queue_loc].name = name;
 
                   queue_loc++;
 
