@@ -521,6 +521,14 @@ int main(int argc, char const *argv[]) {
                   registry[queue_loc]->buffer[0].entryNum,
                   registry[queue_loc]->buffer[MAXENTRIES].entryNum);
 
+                  for (size_t i = 0; i < MAXTOPICS; i++) {
+                    printf("***\tREGISTRY[%d] [%d] [%d] [%s] \n",
+                    i,
+                    registry[queue_loc]->topicID,
+                    registry[queue_loc]->length,
+                    *registry[queue_loc]->name);
+                  }
+
 
                   queue_loc++;
                 }
