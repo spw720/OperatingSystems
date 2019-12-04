@@ -496,32 +496,32 @@ int main(int argc, char const *argv[]) {
                 }
                 else{
 
+                  //place initilaized topicQ into registry
                   registry[queue_loc] = &queues[queue_loc];
+
+                  //set ID
                   registry[queue_loc]->topicID = atoi(args[2]);
 
+                  //set name
                   strcpy(topic_names[queue_loc], args[3]);
                   *registry[queue_loc]->name = topic_names[queue_loc];
 
+                  //set length
                   registry[queue_loc]->length = atoi(args[4]);
 
-
-                  //set last entry of all topicQ buffers to NULL
-
+                  //set last entry of topicQ buffer to NULL
                   buffer_store[queue_loc][registry[queue_loc]->length] = null;
 
                   for (size_t i = 0; i < MAXENTRIES; i++) {
                     printf("%d ", buffer_store[queue_loc][i].entryNum);
                   }
 
-
-
                   registry[queue_loc]->buffer = buffer_store[queue_loc];
 
                   for (size_t i = 0; i < MAXTOPICS; i++) {
                     if(registry[i] != NULL){
-                      printf("REGISTRY[%d] [%d] [%s] [%d]\n", i,
-                      registry[i]->topicID, *registry[i]->name,
-                      registry[i]->length);
+                      printf("REGISTRY[%d] [%d] [%s] [%d]\n", i, registry[i]->topicID, *registry[i]->name, registry[i]->length);
+                      printf("REGISTRY[%d] Buffer[0]:%d Buffer[-1]:%d\n", i, registry[i]->buffer[0], registry[i]->buffer[MAXENTRIES]);
                     }else{printf("REGISTRY[%d] NULL\n", i);}
                   }printf("\n");
 
