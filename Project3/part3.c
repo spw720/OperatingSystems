@@ -532,20 +532,20 @@ int main(int argc, char const *argv[]) {
                   // registry[queue_loc]->buffer[0].entryNum,
                   // registry[queue_loc]->buffer[MAXENTRIES].entryNum);
 
-                  for (size_t i = 0; i < MAXTOPICS; i++) {
-                    if(registry[i] != NULL){
-                      printf("REGISTRY[%d] [%d] [%d] [%s] buff[max]:[%d] buff[0]:[%d]\n",
-                      i,
-                      registry[i]->topicID,
-                      *registry[i]->name,
-                      registry[i]->length,
-                      registry[i]->buffer[MAXENTRIES].entryNum,
-                      registry[i]->buffer[0].entryNum);
-                    }
-                    else{printf("REGISTRY[%d] NULL\n", i);}
-
-                  }
-                  printf("\n");
+                  // for (size_t i = 0; i < MAXTOPICS; i++) {
+                  //   if(registry[i] != NULL){
+                  //     printf("REGISTRY[%d] [%d] [%d] [%s] buff[max]:[%d] buff[0]:[%d]\n",
+                  //     i,
+                  //     registry[i]->topicID,
+                  //     *registry[i]->name,
+                  //     registry[i]->length,
+                  //     registry[i]->buffer[MAXENTRIES].entryNum,
+                  //     registry[i]->buffer[0].entryNum);
+                  //   }
+                  //   else{printf("REGISTRY[%d] NULL\n", i);}
+                  //
+                  // }
+                  // printf("\n");
 
 
                   queue_loc++;
