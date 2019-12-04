@@ -434,7 +434,7 @@ int main(int argc, char const *argv[]) {
 
 
   //array of queue names
-  char topic_names[MAXTOPICS][MAXNAME] = {};
+  char topic_names[MAXTOPICS][MAXNAME];
 
 
 
@@ -505,8 +505,12 @@ int main(int argc, char const *argv[]) {
 
 
 
-                  *topic_names[queue_loc] = args[3];
-                  registry[queue_loc]->name = *topic_names[queue_loc];
+                  strcpy(topic_names[queue_loc], args[3]);
+                  *registry[queue_loc]->name = topic_names[queue_loc];
+
+
+                  // *topic_names[queue_loc] = args[3];
+                  // registry[queue_loc]->name = *topic_names[queue_loc];
 
 
 
