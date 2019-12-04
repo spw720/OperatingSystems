@@ -483,10 +483,10 @@ int main(int argc, char const *argv[]) {
 
                   queue_loc++;
 
-                  // printf("***\tCREATE topic %d %d %s\n",
-                  // queues[queue_loc]->topicID,
-                  // queues[queue_loc].length,
-                  // queues[queue_loc]->name);
+                  printf("***\tCREATE topic %d %d %s\n",
+                  queues[queue_loc]->topicID,
+                  queues[queue_loc]->length,
+                  *queues[queue_loc]->name);
                 }
 
 
