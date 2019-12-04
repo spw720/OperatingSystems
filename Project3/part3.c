@@ -422,7 +422,7 @@ int main(int argc, char const *argv[]) {
 
   //========================================
   //array of topics initialized to NULL
-  topicQ *queues[MAXTOPICS];
+  topicQ queues[MAXTOPICS];
   int queue_loc = 0;
   for (size_t i = 0; i < MAXTOPICS; i++) {
     queues[i] = NULL;
@@ -482,8 +482,8 @@ int main(int argc, char const *argv[]) {
                   *queues[queue_loc]->name = args[4];
 
                   printf("***\tCREATE topic %d %d %s\n",
-                  queues[queue_loc].topicID,
-                  queues[queue_loc].length,
+                  queues[queue_loc]->topicID,
+                  queues[queue_loc]->length,
                   *queues[queue_loc]->name);
 
 
