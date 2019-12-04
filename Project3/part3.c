@@ -501,18 +501,16 @@ int main(int argc, char const *argv[]) {
                 else{
 
                   registry[queue_loc] = &queues[queue_loc];
-
                   registry[queue_loc]->topicID = atoi(args[2]);
 
 
 
-                  topic_names[queue_loc] = args[3];
-                  registry[queue_loc]->name = topic_names[queue_loc];
+                  *topic_names[queue_loc] = args[3];
+                  registry[queue_loc]->name = *topic_names[queue_loc];
 
 
 
                   registry[queue_loc]->length = atoi(args[4]);
-
                   registry[queue_loc]->buffer = buffer_store[queue_loc];
 
 
