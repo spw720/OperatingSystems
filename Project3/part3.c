@@ -455,9 +455,11 @@ int main(int argc, char const *argv[]) {
 
                 //TODO!!!!!!!!!!!!!!!!!!!!!!!
                 int topic_ID = 0;
-                topic_ID = stoi(args[2]);
+                topic_ID = atoi(args[2]);
+
                 int length = 0;
-                length = stoi(args[3]);
+                length = atoi(args[3]);
+
                 char *name[MAXNAME];
                 *name = args[4];
 
