@@ -498,7 +498,7 @@ int main(int argc, char const *argv[]) {
                   registry[queue_loc]->topicID = atoi(args[2]);
 
                   //*registry[queue_loc]->name = args[3];
-                  *registry[queue_loc]->name = args[3];
+                  registry[queue_loc]->name = args[3];
 
                   registry[queue_loc]->length = atoi(args[4]);
 
@@ -539,8 +539,8 @@ int main(int argc, char const *argv[]) {
                       registry[i]->topicID,
                       *registry[i]->name,
                       registry[i]->length,
-                      registry[i]->buffer[MAXENTRIES],
-                      registry[i]->buffer[0]);
+                      registry[i]->buffer[MAXENTRIES].entryNum,
+                      registry[i]->buffer[0].entryNum);
                     }
                     else{printf("REGISTRY[%d] NULL\n", i);}
 
