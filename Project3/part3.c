@@ -428,21 +428,18 @@ int main(int argc, char const *argv[]) {
 
   //array of topics initialized to NULL
   topicQ queues[MAXTOPICS] = {};
+
   //2-d array of buffers to-be assigned to queues on create
   topicEntry buffer_store[MAXTOPICS][MAXENTRIES+1] = {};
 
-
-
   //array of queue names
   char topic_names[MAXTOPICS][MAXNAME];
-
 
 
   topicEntry null;
   null.entryNum = -1;
   topicEntry def;
   def.entryNum = 0;
-
   //set last entry of all topicQ buffers to NULL
   for (size_t i = 0; i < MAXTOPICS; i++) {
     buffer_store[i][MAXENTRIES] = null;
@@ -484,7 +481,6 @@ int main(int argc, char const *argv[]) {
       break;
     }
 
-
     //if there are arguments to be parsed
     if(args[0] != NULL){
 
@@ -503,35 +499,23 @@ int main(int argc, char const *argv[]) {
                   registry[queue_loc] = &queues[queue_loc];
                   registry[queue_loc]->topicID = atoi(args[2]);
 
-
-
                   strcpy(topic_names[queue_loc], args[3]);
                   *registry[queue_loc]->name = topic_names[queue_loc];
-
-
 
                   registry[queue_loc]->length = atoi(args[4]);
                   registry[queue_loc]->buffer = buffer_store[queue_loc];
 
-
                   for (size_t i = 0; i < MAXTOPICS; i++) {
                     if(registry[i] != NULL){
-                      printf("REGISTRY[%d] [%d] [%s] [%d]\n",
-                      i,
-                      registry[i]->topicID,
-                      *registry[i]->name,
+                      printf("REGISTRY[%d] [%d] [%s] [%d]\n", i,
+                      registry[i]->topicID, *registry[i]->name,
                       registry[i]->length);
-                    }
-                    else{printf("REGISTRY[%d] NULL\n", i);}
-
-                  }
-                  printf("\n");
-
+                    }else{printf("REGISTRY[%d] NULL\n", i);}
+                  }printf("\n");
 
                   queue_loc++;
+
                 }
-
-
               }else{printf("MISSING VALUE!\n");}
             }else{printf("MISSING VALUE!\n");}
           }else{printf("MISSING VALUE!\n");}
