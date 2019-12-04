@@ -477,14 +477,14 @@ int main(int argc, char const *argv[]) {
                   printf("MAX NUMBER OF QUEUES REACHED\n");
                 }
                 else{
-                  queues[queue_loc]->topicID = topic_ID;
-                  queues[queue_loc]->length = length;
-                  *queues[queue_loc]->name = args[4];
+                  queues[queue_loc].topicID = topic_ID;
+                  queues[queue_loc].length = length;
+                  *queues[queue_loc].name = args[4];
 
                   printf("***\tCREATE topic %d %d %s\n",
-                  queues[queue_loc]->topicID,
-                  queues[queue_loc]->length,
-                  *queues[queue_loc]->name);
+                  queues[queue_loc].topicID,
+                  queues[queue_loc].length,
+                  *queues[queue_loc].name);
 
 
                   queue_loc++;
