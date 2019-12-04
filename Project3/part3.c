@@ -425,8 +425,9 @@ int main(int argc, char const *argv[]) {
 
 
   //========================================
+
   //array of topics initialized to NULL
-  topicQ queues[MAXTOPICS];
+  topicQ queues[MAXTOPICS] = {};
   //2-d array of buffers to-be assigned to queues on create
   topicEntry buffer_store[MAXTOPICS][MAXENTRIES+1] = {};
 
@@ -447,9 +448,7 @@ int main(int argc, char const *argv[]) {
   }
 
   int queue_loc = 0;
-  // for (size_t i = 0; i < MAXTOPICS; i++) {
-  //   queues[i] = NULL;
-  // }
+
   //========================================
 
 
@@ -508,10 +507,12 @@ int main(int argc, char const *argv[]) {
                   queues[queue_loc].buffer = buffer_store[queue_loc];
 
 
-                  printf("***\tCREATE topic %d %d %s\n",
+                  printf("***\tCREATE topic [%d] [%d] [%s] 0?:[%d] -1?:[%d]\n",
                   queues[queue_loc].topicID,
                   queues[queue_loc].length,
-                  *queues[queue_loc].name);
+                  *queues[queue_loc].name,
+                  queues[queue_loc].buffer[0].entryNum,
+                  queues[queue_loc].buffer[MAXENTRIES].entryNum);
 
 
                   queue_loc++;
