@@ -444,6 +444,8 @@ int main(int argc, char const *argv[]) {
       break;
     }
 
+    topicQ *queues[MAXTOPICS] = {};
+
     //if there are arguments to be parsed
     if(args[0] != NULL){
 
@@ -458,7 +460,10 @@ int main(int argc, char const *argv[]) {
 
                 int length = atoi(args[3]);
 
-                char *name[MAXNAME] = args[4];
+                char *name[MAXNAME];
+                *name = args[4];
+
+
 
                 printf("***\tCREATE %s %d %d %s\n", args[1], topic_ID, length, *name);
 
