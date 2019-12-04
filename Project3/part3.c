@@ -16,7 +16,7 @@
 //------------------------------------------------------------------------------
 
 #define MAXENTRIES 10 //compare to BUFFER_SIZE
-#define MAXTOPICS 100 //compare to MAXQUEUES
+#define MAXTOPICS 10 //compare to MAXQUEUES
 #define MAXNAME 100 //max name of topic queue
 
 #define URLSIZE 100 //max URL size for an entry
@@ -522,11 +522,14 @@ int main(int argc, char const *argv[]) {
                   // registry[queue_loc]->buffer[MAXENTRIES].entryNum);
 
                   for (size_t i = 0; i < MAXTOPICS; i++) {
-                    printf("***\tREGISTRY[%d] [%d] [%d] [%s] \n",
-                    i,
-                    registry[i]->topicID,
-                    registry[i]->length,
-                    *registry[i]->name);
+                    if(registry[i]!=NULL){
+                      printf("***\tREGISTRY[%d] [%d] [%d] [%s] \n",
+                      i,
+                      registry[i]->topicID,
+                      registry[i]->length,
+                      *registry[i]->name);
+                    }
+                    else{printf("REGISTRY[%d] NULL\n", i);}
                   }
 
 
