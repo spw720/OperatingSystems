@@ -434,7 +434,7 @@ int main(int argc, char const *argv[]) {
 
 
   //array of queue names
-  char topic_names[MAXTOPICS][MAXNAME] = {};
+  char *topic_names[MAXTOPICS][MAXNAME] = {};
 
 
 
