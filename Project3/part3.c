@@ -499,11 +499,12 @@ int main(int argc, char const *argv[]) {
                 else{
 
                   registry[queue_loc] = &queues[queue_loc];
-                  registry[queue_loc].topicID = atoi(args[2]);
-                  *registry[queue_loc].name = args[3];
-                  registry[queue_loc].length = atoi(args[4]);
 
-                  registry[queue_loc].buffer = buffer_store[queue_loc];
+                  registry[queue_loc]->topicID = atoi(args[2]);
+                  *registry[queue_loc]->name = args[3];
+                  registry[queue_loc]->length = atoi(args[4]);
+
+                  registry[queue_loc]->buffer = buffer_store[queue_loc];
 
 
                   // queues[queue_loc].topicID = atoi(args[2]);
