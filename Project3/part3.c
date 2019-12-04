@@ -473,16 +473,21 @@ int main(int argc, char const *argv[]) {
                 char *name[MAXNAME];
                 *name = args[4];
 
-                queues[queue_loc]->topicID = topic_ID;
-                *queues[queue_loc]->length = length;
-                *queues[queue_loc]->name = name;
+                if(queue_loc > MAXTOPICS){
+                  printf("MAX NUMBER OF QUEUES REACHED\n");
+                }
+                else{
+                  queues[queue_loc]->topicID = topic_ID;
+                  queues[queue_loc]->length = length;
+                  queues[queue_loc]->name = name;
 
-                queue_loc++;
+                  queue_loc++;
 
-                printf("***\tCREATE topic %d %d %s\n",
-                queues[queue_loc]->topicID,
-                queues[queue_loc]->length,
-                queues[queue_loc]->name);
+                  printf("***\tCREATE topic %d %d %s\n",
+                  queues[queue_loc]->topicID,
+                  queues[queue_loc]->length,
+                  queues[queue_loc]->name);
+                }
 
 
               }else{printf("MISSING VALUE!\n");}
