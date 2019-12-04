@@ -456,7 +456,7 @@ int main(int argc, char const *argv[]) {
                 //TODO!!!!!!!!!!!!!!!!!!!!!!!
                 int topic_ID = stoi(args[2]);
                 int length = stoi(args[3]);
-                char name[MAXNAME] = args[4];
+                char *name[MAXNAME] = args[4];
 
                 printf("***\tCREATE %s %d %d %s\n", args[1], topic_ID, length, name);
 
