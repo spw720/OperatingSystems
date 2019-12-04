@@ -47,7 +47,7 @@ struct topicQ {
   topicEntry *const buffer;
   int head;
   int tail;
-  const int length;
+  int length;
 };
 typedef struct topicQ topicQ;
 
