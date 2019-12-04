@@ -423,6 +423,9 @@ int main(int argc, char const *argv[]) {
   //========================================
   //array of topics initialized to NULL
   topicQ queues[MAXTOPICS] = {};
+
+  topicEntry buffer_store[MAXTOPICS][MAXENTRIES+1] = {};
+
   int queue_loc = 0;
   // for (size_t i = 0; i < MAXTOPICS; i++) {
   //   queues[i] = NULL;
@@ -477,10 +480,6 @@ int main(int argc, char const *argv[]) {
                   printf("MAX NUMBER OF QUEUES REACHED\n");
                 }
                 else{
-                  printf("***\tCREATE topic %d %d %s\n",
-                  queues[queue_loc].topicID,
-                  queues[queue_loc].length,
-                  *queues[queue_loc].name);
 
                   queues[queue_loc].topicID = topic_ID;
                   queues[queue_loc].length = length;
