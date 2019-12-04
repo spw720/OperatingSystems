@@ -44,7 +44,11 @@ struct topicQ {
   int topicID;
 
   char *name[MAXNAME];
-  topicEntry *const buffer;
+
+
+  //topicEntry *const buffer;
+  topicEntry * buffer;
+
   int head;
   int tail;
   int length;
@@ -441,10 +445,6 @@ int main(int argc, char const *argv[]) {
       buffer_store[j][i] = def;
     }
   }
-  //assign each topicQ a buffer
-  for (size_t i = 0; i < MAXTOPICS; i++) {
-    queues[i].buffer = buffer_store[i];
-  }
 
   int queue_loc = 0;
   // for (size_t i = 0; i < MAXTOPICS; i++) {
@@ -505,7 +505,7 @@ int main(int argc, char const *argv[]) {
                   queues[queue_loc].length = length;
                   *queues[queue_loc].name = args[4];
 
-                  //queues[queue_loc].buffer = &buffer_store[queue_loc];
+                  queues[queue_loc].buffer = buffer_store[queue_loc];
 
 
                   printf("***\tCREATE topic %d %d %s\n",
