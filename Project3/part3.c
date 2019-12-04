@@ -485,7 +485,7 @@ int main(int argc, char const *argv[]) {
                   queues[queue_loc].length = length;
                   *queues[queue_loc].name = args[4];
 
-                  *queues[queue_loc].buffer = buffer_store[queue_loc];
+                  queues[queue_loc].buffer = &buffer_store[queue_loc];
 
                   printf("***\tCREATE topic %d %d %s\n",
                   queues[queue_loc].topicID,
