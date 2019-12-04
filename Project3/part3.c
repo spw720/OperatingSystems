@@ -506,9 +506,12 @@ int main(int argc, char const *argv[]) {
 
 
 
-                  *topic_names[queue_loc] = args[3];
+                  //*topic_names[queue_loc] = args[3];
 
-                  *registry[queue_loc]->name = *topic_names[queue_loc];
+                  char[] temp = args[3];
+                  registry[queue_loc]->name = temp;
+
+                  //registry[queue_loc]->name = topic_names[queue_loc];
 
 
 
