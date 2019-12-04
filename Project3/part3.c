@@ -477,8 +477,8 @@ int main(int argc, char const *argv[]) {
                   printf("MAX NUMBER OF QUEUES REACHED\n");
                 }
                 else{
-                  queues[queue_loc].topicID = topic_ID;
-                  queues[queue_loc].length = length;
+                  queues[queue_loc]->topicID = topic_ID;
+                  queues[queue_loc]->length = length;
                   queues[queue_loc]->name = name;
 
                   queue_loc++;
