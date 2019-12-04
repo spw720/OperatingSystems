@@ -431,6 +431,13 @@ int main(int argc, char const *argv[]) {
   //2-d array of buffers to-be assigned to queues on create
   topicEntry buffer_store[MAXTOPICS][MAXENTRIES+1] = {};
 
+
+
+  //array of queue names
+  char topic_names[MAXTOPICS][MAXNAME] = {};
+
+
+
   topicEntry null;
   null.entryNum = -1;
   topicEntry def;
@@ -497,8 +504,8 @@ int main(int argc, char const *argv[]) {
 
                   registry[queue_loc]->topicID = atoi(args[2]);
 
-                  //*registry[queue_loc]->name = args[3];
-                  *registry[queue_loc]->name = args[3];
+                  topic_names[queue_loc] = args[3];
+                  *registry[queue_loc]->name = topic_names[queue_loc];
 
                   registry[queue_loc]->length = atoi(args[4]);
 
