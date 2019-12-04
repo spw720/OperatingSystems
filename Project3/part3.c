@@ -523,7 +523,7 @@ int main(int argc, char const *argv[]) {
 
                   for (size_t i = 0; i < MAXTOPICS; i++) {
                     if(registry[i]!=NULL){
-                      printf("***\tREGISTRY[%d] [%d] [%d] [%s] \n",
+                      printf("REGISTRY[%d] [%d] [%d] [%s] \n",
                       i,
                       registry[i]->topicID,
                       registry[i]->length,
