@@ -463,7 +463,7 @@ int main(int argc, char const *argv[]) {
                 char *name[MAXNAME];
                 *name = args[4];
 
-                printf("***\tCREATE %s %d %d %s\n", args[1], topic_ID, length, name);
+                printf("***\tCREATE %s %d %d %s\n", args[1], topic_ID, length, *name);
 
 
 
