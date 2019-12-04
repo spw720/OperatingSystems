@@ -498,7 +498,7 @@ int main(int argc, char const *argv[]) {
                   registry[queue_loc]->topicID = atoi(args[2]);
 
                   //*registry[queue_loc]->name = args[3];
-                  registry[queue_loc]->name = args[3];
+                  *registry[queue_loc]->name = args[3];
 
                   registry[queue_loc]->length = atoi(args[4]);
 
