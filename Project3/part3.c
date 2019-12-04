@@ -422,11 +422,11 @@ int main(int argc, char const *argv[]) {
 
   //========================================
   //array of topics initialized to NULL
-  topicQ queues[MAXTOPICS];
+  topicQ queues[MAXTOPICS] = {};
   int queue_loc = 0;
-  for (size_t i = 0; i < MAXTOPICS; i++) {
-    queues[i] = NULL;
-  }
+  // for (size_t i = 0; i < MAXTOPICS; i++) {
+  //   queues[i] = NULL;
+  // }
   //========================================
 
 
