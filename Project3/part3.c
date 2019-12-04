@@ -22,7 +22,7 @@
 #define URLSIZE 100 //max URL size for an entry
 #define CAPSIZE 100 //max caption size for an entry
 
-#define DELTA 2 //time (in seconds) until a topic is removed from queue
+double DELTA = 2; //time (in seconds) until a topic is removed from queue
 
 #define NUMPROXIES 5 //Amount of subs/pubs allowed at any given time
 
@@ -401,7 +401,6 @@ int main(int argc, char const *argv[]) {
   char *buffy = NULL;
   size_t bufferSize = 2048;
 	size_t file_size;
-
   char *token;
 
   //check for command mode
@@ -416,60 +415,36 @@ int main(int argc, char const *argv[]) {
 		input = fopen(argv[1], "r");
     printf("File Mode\n");
 	}
-
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
-
   while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
-
     int spaces = 0;
     int tokens = 0;
     int arguments = 0;
-
-    //file_size = getline(&buffy, &bufferSize, input);
-
     for (int i = 0; i < file_size; i++) {
       if (buffy[i] == ' '){spaces += 1;}
     }
-
     tokens = spaces + 1;
     arguments = tokens - 1;
-
     char *args[tokens+1];
     args[tokens] = NULL;
-
-    //printf("Number of arguments is: %d\n", tokens);
-
     int index = 0;
     int exit = 0;
-
     token = strtok(buffy, " ");
-
     while(token != NULL) {
-
       int length = strlen(token);
       if (length > 0 && token[length - 1] == '\n') token[length-1] = '\0';
-
       args[index] = token;
-
-      //printf("TOKEN[%s]\n", token);
-
-      if (strcmp(token, "exit")==0){
-        exit = 1;
-      }
-
+      if (strcmp(token, "exit")==0){exit = 1;}
       index += 1;
-
       token = strtok(NULL, " ");
-
     }//end of while()
 
     if(exit == 1){
       break;
     }
 
-    //printf("ARGUMENTS: %s %s %s\n", args[0], args[1], args[2]);
-
+    //if there are arguments to be parsed
     if(args[0] != NULL){
 
       if (strcmp(args[0], "create")==0){
@@ -478,6 +453,7 @@ int main(int argc, char const *argv[]) {
             if (args[3] != NULL){
               if (args[4] != NULL){
 
+                //TODO!!!!!!!!!!!!!!!!!!!!!!!
                 printf("***\tCREATE %s %s %s %s\n", args[1], args[2], args[3], args[4]);
 
               }else{printf("MISSING VALUE!\n");}
@@ -489,7 +465,9 @@ int main(int argc, char const *argv[]) {
       else if (strcmp(args[0], "delta")==0){
         if (args[1] != NULL){
 
-          printf("***\tDELTA %s\n", args[1]);
+          //TODO!!!!!!!!!!!!!!!!!!!!!!!
+          double val = atof(args[1]);
+          printf("***\tDELTA = %f\n", val);
 
         }
         else{printf("MISSING VALUE!\n");}
@@ -500,6 +478,7 @@ int main(int argc, char const *argv[]) {
           if (strcmp(args[1], "publisher")==0){
             if (args[2] != NULL){
 
+              //TODO!!!!!!!!!!!!!!!!!!!!!!!
               printf("***\tADD PUB %s\n", args[2]);
 
             }
@@ -508,6 +487,7 @@ int main(int argc, char const *argv[]) {
           else if (strcmp(args[1], "subscriber")==0){
             if (args[2] != NULL){
 
+              //TODO!!!!!!!!!!!!!!!!!!!!!!!
               printf("***\tADD SUB %s\n", args[2]);
 
             }
@@ -523,16 +503,19 @@ int main(int argc, char const *argv[]) {
         if(args[1] != NULL){
           if (strcmp(args[1], "topics")==0){
 
+            //TODO!!!!!!!!!!!!!!!!!!!!!!!
             printf("***\tQUERY TOPICS\n");
 
           }
           else if (strcmp(args[1], "publishers")==0){
 
+            //TODO!!!!!!!!!!!!!!!!!!!!!!!
             printf("***\tQUERY PUB\n");
 
           }
           else if (strcmp(args[1], "subscribers")==0){
 
+            //TODO!!!!!!!!!!!!!!!!!!!!!!!
             printf("***\tQUERY SUB\n");
 
           }
@@ -543,7 +526,8 @@ int main(int argc, char const *argv[]) {
       //-----------------------------------
       else if (strcmp(args[0], "start")==0){
 
-        printf("FOUND START OP\n");
+        //TODO!!!!!!!!!!!!!!!!!!!!!!!
+        printf("***\tSTART\n");
 
       }
       //-----------------------------------

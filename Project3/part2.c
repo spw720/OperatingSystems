@@ -543,6 +543,7 @@ int main(int argc, char const *argv[]) {
       pub_avail[i] = 1;
 
       //create it with struct we made as param
+      //half publish to one topic, other half publish to other
       if(i % 2 == 1){pthread_create(&pub_pool[i], NULL, publisher, (void *)&trial1);}
       else{pthread_create(&pub_pool[i], NULL, publisher, (void *)&trial3);}
 
