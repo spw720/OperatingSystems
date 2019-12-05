@@ -279,10 +279,66 @@ void *publisher(void *inp){ //enqueue()
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
 
+  while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
+    int spaces = 0;
+    int tokens = 0;
+    int arguments = 0;
+    for (int i = 0; i < file_size; i++) {if (buffy[i] == ' '){spaces += 1;}}
+    tokens = spaces + 1;
+    arguments = tokens - 1;
+    char *args[tokens+1];
+    args[tokens] = NULL;
+    int index = 0;
+    token = strtok(buffy, " ");
+    while(token != NULL) {
+      int length = strlen(token);
+      if (length > 0 && token[length - 1] == '\n'){ token[length-1] = '\0';}
+      args[index] = token;
+      index += 1;
+      token = strtok(NULL, " ");
+    }//end of while()
+
+    //if there are arguments to be parsed
+    if(args[0] != NULL){
+
+      //get id
+      if (strcmp(args[0], "put")==0){
+        if (args[1] != NULL){
+          if (args[2] != NULL){
+            if (args[3] != NULL){
+
+              printf("put %s %s %s\n", args[1], args[2], args[3]);
+
+            }
+          }
+        }
+      }
+
+      //sleep milli
+      else if (strcmp(args[0], "sleep")==0){
+        if (args[1] != NULL){
+
+          printf("SLEEP %d\n", atoi(args[1]));
+
+        }
+      }
+
+      //stop
+      else if (strcmp(args[0], "stop")==0){
+
+        printf("STOP\n");
+
+      }
+
+      else{printf("Invalid Command\n");}
+
+    }
+
+  }//end of main while()
+
+
+
   return NULL;
-
-
-
 
 }//end of publisher()
 
@@ -657,38 +713,28 @@ int main(int argc, char const *argv[]) {
           if(sub_avail[i] == 1){
             printf("\tStarting subscriber[%d]\n", i);
 
-            // char f_name1[] = sub_file_names[i];
-            // sub_thread_args[i].file_name = f_name1;
             sub_thread_args[i].file_name = sub_file_names[i];
-
             sub_thread_args[i].thread_ID = i;
 
             pthread_create(&sub_pool[i], NULL, subscriber, (void *)&sub_thread_args[i]);
-            //pthread_create(&sub_pool[i], NULL, subscriber, NULL);
           }
 
           if(pub_avail[i] == 1){
             printf("\tStarting publisher[%d]\n", i);
 
-            // char f_name2[] = pub_file_names[i];
-            // pub_thread_args[i].file_name = f_name2;
             pub_thread_args[i].file_name = pub_file_names[i];
-
             pub_thread_args[i].thread_ID = i;
 
             pthread_create(&pub_pool[i], NULL, publisher, (void *)&pub_thread_args[i]);
-            //pthread_create(&pub_pool[i], NULL, publisher, NULL);
           }
 
           //start up the cleanup thread
           //pthread_create(&cleanup_thread, NULL, cleanup, NULL);
 
         }
-
         //========================================
 
       }
-      //-----------------------------------
       else{printf("UNKNOWN COMMAND!\n");}
 
     }
