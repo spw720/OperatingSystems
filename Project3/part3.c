@@ -521,7 +521,7 @@ int main(int argc, char const *argv[]) {
                   for (size_t i = 0; i < MAXTOPICS; i++) {
                     if(registry[i] != NULL){
                       printf("REGISTRY[%d] [%d] [%s] [%d]\n", i, registry[i]->topicID, *registry[i]->name, registry[i]->length);
-                      printf("REGISTRY[%d] Buffer[0]:%d Buffer[-1]:%d\n", i, registry[i]->buffer[0], registry[i]->buffer[MAXENTRIES]);
+                      printf("REGISTRY[%d] Buffer[0]:%d Buffer[-1]:%d\n", i, registry[i]->buffer[0].entryNum, registry[i]->buffer[MAXENTRIES].entryNum);
                     }else{printf("REGISTRY[%d] NULL\n", i);}
                   }printf("\n");
 
