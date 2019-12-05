@@ -633,7 +633,7 @@ int main(int argc, char const *argv[]) {
               }
               else{checkT ++;}
             }
-            if(checkT == MAXTOPICS){
+            if(checkT == MAXTOPICS-1){
               printf("There are no topics you fool!\n");
             }
             //========================================
@@ -650,7 +650,7 @@ int main(int argc, char const *argv[]) {
               }
               else{checkP++;}
             }
-            if(checkP == NUMPROXIES){
+            if(checkP == NUMPROXIES-1){
               printf("There are no publishers you fool!\n");
             }
             //========================================
@@ -666,7 +666,7 @@ int main(int argc, char const *argv[]) {
               }
               else{checkS++;}
             }
-            if(checkS == NUMPROXIES){
+            if(checkS == NUMPROXIES-1){
               printf("There are no subscribers you fool!\n");
             }
             //========================================
