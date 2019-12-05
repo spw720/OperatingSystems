@@ -440,10 +440,7 @@ int main(int argc, char const *argv[]) {
   null.entryNum = -1;
   topicEntry def;
   def.entryNum = 0;
-  //set last entry of all topicQ buffers to NULL
-  for (size_t i = 0; i < MAXTOPICS; i++) {
-    buffer_store[i][MAXENTRIES] = null;
-  }
+
   //set rest of values to default
   for (size_t j = 0; j < MAXTOPICS; j++) {
     for (size_t i = 0; i < MAXENTRIES; i++) {
@@ -507,7 +504,13 @@ int main(int argc, char const *argv[]) {
                   *registry[queue_loc]->name = topic_names[queue_loc];
 
                   //set length
-                  registry[queue_loc]->length = atoi(args[4]);
+                  int len = MAXENTRIES;
+                  if (atoi(args[4]) > len){
+                    registry[queue_loc]->length = len;
+                  }
+                  else{
+                    registry[queue_loc]->length = atoi(args[4]);
+                  }
 
                   //set last entry of topicQ buffer to NULL
                   buffer_store[queue_loc][registry[queue_loc]->length] = null;
@@ -519,12 +522,14 @@ int main(int argc, char const *argv[]) {
 
                   registry[queue_loc]->buffer = buffer_store[queue_loc];
 
+
                   for (size_t i = 0; i < MAXTOPICS; i++) {
                     if(registry[i] != NULL){
                       printf("REGISTRY[%d] [%d] [%s] [%d]\n", i, registry[i]->topicID, *registry[i]->name, registry[i]->length);
-                      printf("REGISTRY[%d] Buffer[0]:%d Buffer[-1]:%d\n", i, registry[i]->buffer[0].entryNum, registry[i]->buffer[MAXENTRIES].entryNum);
+                      printf("REGISTRY[%d] Buffer[0]:%d Buffer[-1]:%d BUFFER[len]:%d\n", i, registry[i]->buffer[0].entryNum, registry[i]->buffer[MAXENTRIES].entryNum, registry[i]->buffer[registry[queue_loc]->length].entryNum);
                     }else{printf("REGISTRY[%d] NULL\n", i);}
                   }printf("\n");
+
 
                   queue_loc++;
 
