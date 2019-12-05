@@ -653,6 +653,8 @@ int main(int argc, char const *argv[]) {
   pthread_t sub_pool[NUMPROXIES] = {};
   pthread_t pub_pool[NUMPROXIES] = {};
 
+  pthread_t cleanup_thread;
+
   //array of filenames
   char sub_file_names[NUMPROXIES][MAXNAME];
   char pub_file_names[NUMPROXIES][MAXNAME];
@@ -912,7 +914,7 @@ int main(int argc, char const *argv[]) {
 
         }
 
-        pthread_t cleanup_thread;
+        //start up the cleanup thread
         pthread_create(&cleanup_thread, NULL, cleanup, NULL);
 
         //========================================
