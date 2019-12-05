@@ -256,6 +256,7 @@ void *cleanup(void *arg){
 
         //While dequeue keeps finding entries past DELTA to dequeue, keep going!
         while(dequeue(*registry[i]->name)){}
+        printQ(*registry[i]->name);
 
         //unlock it with this topics respective lock
 
