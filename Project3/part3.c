@@ -585,7 +585,6 @@ int main(int argc, char const *argv[]) {
                   printf("Found available publisher thread[%d]\n", i);
                   pub_avail[i] = 1;
 
-                  pub_file_names[i] = args[2];
                   strcpy(pub_file_names[i], args[2]);
 
                   break;
