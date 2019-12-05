@@ -271,12 +271,13 @@ void *publisher(void *inp){ //enqueue()
 	size_t file_size;
   char *token;
 
-	//input = fopen(argv[1], "r");
   printf("ID: %d\n", args->thread_ID);
   printf("FILE: %s\n", args->file_name);
 
-  // buffy = (char *)malloc(bufferSize * sizeof(char));
-  // if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
+  input = fopen(args->file_name, "r");
+
+  buffy = (char *)malloc(bufferSize * sizeof(char));
+  if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
 
   return NULL;
 
@@ -300,35 +301,63 @@ void *subscriber(void *inp){ //getEntry()
   printf("ID: %d\n", args->thread_ID);
   printf("FILE: %s\n", args->file_name);
 
-	//input = fopen(argv[1], "r");
+	input = fopen(args->file_name, "r");
 
+  buffy = (char *)malloc(bufferSize * sizeof(char));
+  if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
 
-  // buffy = (char *)malloc(bufferSize * sizeof(char));
-  // if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
-  //
-  // while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
-  //   int spaces = 0;
-  //   int tokens = 0;
-  //   int arguments = 0;
-  //   for (int i = 0; i < file_size; i++) {if (buffy[i] == ' '){spaces += 1;}}
-  //   tokens = spaces + 1;
-  //   arguments = tokens - 1;
-  //   char *args[tokens+1];
-  //   args[tokens] = NULL;
-  //   int index = 0;
-  //   token = strtok(buffy, " ");
-  //   while(token != NULL) {
-  //     int length = strlen(token);
-  //     if (length > 0 && token[length - 1] == '\n'){ token[length-1] = '\0';}
-  //     args[index] = token;
-  //     index += 1;
-  //     token = strtok(NULL, " ");
-  //   }//end of while()
-  //
-  //   //if there are arguments to be parsed
-  //   if(args[0] != NULL){}
-  //
-  // }//end of main while()
+  while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
+    int spaces = 0;
+    int tokens = 0;
+    int arguments = 0;
+    for (int i = 0; i < file_size; i++) {if (buffy[i] == ' '){spaces += 1;}}
+    tokens = spaces + 1;
+    arguments = tokens - 1;
+    char *args[tokens+1];
+    args[tokens] = NULL;
+    int index = 0;
+    token = strtok(buffy, " ");
+    while(token != NULL) {
+      int length = strlen(token);
+      if (length > 0 && token[length - 1] == '\n'){ token[length-1] = '\0';}
+      args[index] = token;
+      index += 1;
+      token = strtok(NULL, " ");
+    }//end of while()
+
+    //if there are arguments to be parsed
+    if(args[0] != NULL){
+
+      //get id
+      if (strcmp(args[0], "get")==0){
+        if (args[1] != NULL){
+
+          printf("GET %d\n", ataoi(args[1]));
+
+        }
+      }
+
+      //sleep milli
+      else if (strcmp(args[0], "sleep")==0){
+        if (args[1] != NULL){
+
+          printf("SLEEP %d\n", ataoi(args[1]));
+
+        }
+      }
+
+      //stop
+      else if (strcmp(args[0], "stop")==0){
+
+        printf("STOP\n");
+
+      }
+
+      else{printf("Invalid Command\n");}
+
+    }
+
+  }//end of main while()
 
 
 
