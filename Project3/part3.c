@@ -452,6 +452,22 @@ int main(int argc, char const *argv[]) {
 
   //========================================
 
+  //initialize thread pools
+  pthread_t sub_pool[NUMPROXIES] = {};
+  pthread_t pub_pool[NUMPROXIES] = {};
+
+  //arrays to-be used to decide if thread is taken
+  int sub_avail[NUMPROXIES] = {};
+  int pub_avail[NUMPROXIES] = {};
+
+  //set all entries to 0 to indicate threads are all free
+  for (size_t i = 0; i < NUMPROXIES; i++) {
+    sub_avail[i] = 0;
+    pub_avail[i] = 0;
+  }
+
+  //========================================
+
 
   while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
     int spaces = 0;
@@ -486,8 +502,6 @@ int main(int argc, char const *argv[]) {
           if (args[2] != NULL){
             if (args[3] != NULL){
               if (args[4] != NULL){
-
-
                 if(queue_loc >= MAXTOPICS){
                   printf("MAX NUMBER OF QUEUES REACHED\n");
                 }
@@ -515,23 +529,26 @@ int main(int argc, char const *argv[]) {
                   //set last entry of topicQ buffer to NULL
                   buffer_store[queue_loc][registry[queue_loc]->length] = null;
 
-                  for (size_t i = 0; i < MAXENTRIES; i++) {
-                    printf("%d ", buffer_store[queue_loc][i].entryNum);
-                  }
-                  printf("\n");
-
+                  //set buffer of regustry to repective initialized buffer from buffer store
                   registry[queue_loc]->buffer = buffer_store[queue_loc];
 
-
-                  for (size_t i = 0; i < MAXTOPICS; i++) {
-                    if(registry[i] != NULL){
-                      printf("REGISTRY[%d] [%d] [%s] [%d]\n", i, registry[i]->topicID, *registry[i]->name, registry[i]->length);
-                      printf("REGISTRY[%d] Buffer[0]:%d Buffer[-1]:%d BUFFER[len]:%d\n", i, registry[i]->buffer[0].entryNum, registry[i]->buffer[MAXENTRIES].entryNum, registry[i]->buffer[registry[queue_loc]->length].entryNum);
-                    }else{printf("REGISTRY[%d] NULL\n", i);}
-                  }printf("\n");
-
-
+                  //increment topic locater
                   queue_loc++;
+
+
+                  //Print statements to be used for testing
+
+                    // for (size_t i = 0; i < MAXTOPICS; i++) {
+                    //   if(registry[i] != NULL){
+                    //     printf("REGISTRY[%d] [%d] [%s] [%d]\n", i, registry[i]->topicID, *registry[i]->name, registry[i]->length);
+                    //     printf("REGISTRY[%d] Buffer[0]:%d Buffer[-1]:%d BUFFER[len]:%d\n", i, registry[i]->buffer[0].entryNum, registry[i]->buffer[MAXENTRIES].entryNum, registry[i]->buffer[registry[queue_loc]->length].entryNum);
+                    //   }else{printf("REGISTRY[%d] NULL\n", i);}
+                    // }printf("\n");
+
+                    // for (size_t i = 0; i < MAXENTRIES; i++) {
+                    //   printf("%d ", buffer_store[queue_loc][i].entryNum);
+                    // }
+                    // printf("\n");
 
                 }
               }else{printf("MISSING VALUE!\n");}
@@ -556,8 +573,28 @@ int main(int argc, char const *argv[]) {
           if (strcmp(args[1], "publisher")==0){
             if (args[2] != NULL){
 
+
+
               //TODO!!!!!!!!!!!!!!!!!!!!!!!
               printf("***\tADD PUB %s\n", args[2]);
+
+              int check_avail = 0;
+              for (size_t i = 0; i < NUMPROXIES; i++) {
+                if(sub_avail[i] == 0){
+                  printf("Found available publisher thread\n");
+                }
+                else{
+                  check_avail++;
+                }
+              }
+              if(check_avail==NUMPROXIES){
+                printf("No more available publisher threads\n");
+              }
+
+
+
+
+
 
             }
             else {printf("MISSING VALUE!\n");}
@@ -583,6 +620,7 @@ int main(int argc, char const *argv[]) {
 
             //TODO!!!!!!!!!!!!!!!!!!!!!!!
             printf("***\tQUERY TOPICS\n");
+
 
           }
           else if (strcmp(args[1], "publishers")==0){
