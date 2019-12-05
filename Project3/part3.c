@@ -709,7 +709,7 @@ int main(int argc, char const *argv[]) {
 
   }//end of while()
 
-  sleep(20);
+  //sleep(20);
 
   //pthread_cancel(cleanup_thread);
 
