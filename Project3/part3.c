@@ -626,10 +626,15 @@ int main(int argc, char const *argv[]) {
           if (strcmp(args[1], "topics")==0){
 
             //========================================
+            int checkT = 0;
             for (size_t i = 0; i < MAXTOPICS; i++) {
               if(registry[i] != NULL){
                 printf("Topic[%d]: ID:%d Name:%s Length:%d\n", i, registry[i]->topicID, *registry[i]->name, registry[i]->length);
               }
+              else{checkT ++;}
+            }
+            if(checkT == MAXTOPICS){
+              printf("There are no topics you fool!\n");
             }
             //========================================
 
@@ -638,12 +643,15 @@ int main(int argc, char const *argv[]) {
 
 
             //========================================
+            int checkP = 0;
             for (size_t i = 0; i < NUMPROXIES; i++) {
               if(pub_avail[i] == 1){
-
                 printf("Publisher[%d]: File:%s\n", i, pub_file_names[i]);
-
               }
+              else{checkP++;}
+            }
+            if(checkP == NUMPROXIES){
+              printf("There are no publishers you fool!\n");
             }
             //========================================
 
@@ -651,12 +659,15 @@ int main(int argc, char const *argv[]) {
           else if (strcmp(args[1], "subscribers")==0){
 
             //========================================
+            int checkS = 0;
             for (size_t i = 0; i < NUMPROXIES; i++) {
               if(sub_avail[i] == 1){
-
                 printf("Subscriber[%d]: File:%s\n", i, sub_file_names[i]);
-
               }
+              else{checkS++;}
+            }
+            if(checkS == NUMPROXIES){
+              printf("There are no subscribers you fool!\n");
             }
             //========================================
 
