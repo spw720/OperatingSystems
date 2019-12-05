@@ -332,7 +332,7 @@ void *subscriber(void *inp){ //getEntry()
       if (strcmp(args[0], "get")==0){
         if (args[1] != NULL){
 
-          printf("GET %d\n", ataoi(args[1]));
+          printf("GET %d\n", atoi(args[1]));
 
         }
       }
@@ -341,7 +341,7 @@ void *subscriber(void *inp){ //getEntry()
       else if (strcmp(args[0], "sleep")==0){
         if (args[1] != NULL){
 
-          printf("SLEEP %d\n", ataoi(args[1]));
+          printf("SLEEP %d\n", atoi(args[1]));
 
         }
       }
