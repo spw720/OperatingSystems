@@ -40,11 +40,8 @@ typedef struct topicEntry topicEntry;
 //------------------------------------------------------------------------------
 
 struct topicQ {
-
   int topicID;
-
   char *name[MAXNAME];
-
 
   //topicEntry *const buffer;
   topicEntry * buffer;
@@ -57,20 +54,12 @@ typedef struct topicQ topicQ;
 
 //------------------------------------------------------------------------------
 
-//struct to be sent to publisher threads
-struct pub_args {
-    char *queue_name;
-    topicEntry *tobe_pub[MAXENTRIES];
+//struct to be sent to pub/sub threads
+struct thread_args {
+    char *file_name;
+    int thread_ID;
 };
-typedef struct pub_args pub_args;
-
-//------------------------------------------------------------------------------
-
-//struct to be sent to subscriber threads
-struct sub_args {
-    topicQ *tobe_sub[MAXTOPICS];
-};
-typedef struct sub_args sub_args;
+typedef struct thread_args thread_args;
 
 //------------------------------------------------------------------------------
 
@@ -254,28 +243,18 @@ void *cleanup(void *arg){
     //for topic in topicQ
     for (size_t i = 0; i < MAXTOPICS; i++) {
       if(registry[i] != NULL){
-
         //lock it down with this topics lock
-
         printf("*\tcleanup(): Locking up queue[%s]\n", *registry[i]->name);
-
         pthread_mutex_lock(&lock[i]);
-
         //While dequeue keeps finding entries past DELTA to dequeue, keep going!
         while(dequeue(*registry[i]->name)){}
-
         //unlock it with this topics respective lock
-
         printf("*\tcleanup(): Unlocking queue[%s]\n", *registry[i]->name);
-
         pthread_mutex_unlock(&lock[i]);
-
       }//end of if registry==NULL
     }//end of for(topics)
-
     //sleep as to make print statements more readable
     sleep(1);
-
   }//end of main infinite loop
   return NULL;
 }//end of cleanup()
@@ -284,56 +263,25 @@ void *cleanup(void *arg){
 
 void *publisher(void *input){ //enqueue()
 
-  // pub_args *inp = input;
-  //
-  // for (size_t i = 0; i < MAXTOPICS; i++) {
-  //   if(registry[i] != NULL){
-  //     if (strcmp(*registry[i]->name, inp->queue_name) == 0){
-  //       //USED IN WHILE LOOP TO REFERENCE ARGUMENT IN PASSED_IN ARRAY
-  //       int z = 0;
-  //       while( inp->tobe_pub[z] != NULL ){
-  //         //lock it down with this topics lock
-  //         printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
-  //         pthread_mutex_lock(&lock[i]);
-  //         int result = enqueue(*registry[i]->name, inp->tobe_pub[z]);
-  //         printQ(*registry[i]->name);
-  //         //unlock it with this topics lock
-  //         printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
-  //         pthread_mutex_unlock(&lock[i]);
-  //         //While enqueue returns 0 (either from full queue or wrong Q name)
-  //         while(result == 0){
-  //           printf("*\tpublisher(): enqueue on [%s] failed, trying again after yield. Full buffer?\n", *registry[i]->name);
-  //           //lock it down with this topics lock
-  //           printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
-  //           pthread_mutex_lock(&lock[i]);
-  //           //try to enqueue again
-  //           result = enqueue(*registry[i]->name, inp->tobe_pub[z]);
-  //           printQ(*registry[i]->name);
-  //           //unlock it with this topics lock
-  //           printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
-  //           pthread_mutex_unlock(&lock[i]);
-  //           //Sleep to help make print statements print before thread yields
-  //           sleep(1);
-  //           //Yield CPU and put thread into ready queue
-  //           sched_yield();
-  //         }//end of while enqueue() returns 0
-  //
-  //         printf("*\tpublisher(): enqueue on [%s] succeeded\n", *registry[i]->name);
-  //         //sleep as to make print statements more readable
-  //         sleep(1);
-  //         //DONT FORGET ABOUT ME!
-  //         z++;
-  //         //DONT FORGET ABOUT ME!
-  //       }//end of while()
-  //     }//end of if()
-  //   }//end of if()
-  // }//end of for()
+  thread_args *args = input;
 
-  int thread_id = 0;
-  printf("Proxy thread <%d> - type: <Publisher>​\n", thread_id);
+  FILE *input = NULL;
+  char *buffy = NULL;
+  size_t bufferSize = 2048;
+	size_t file_size;
+  char *token;
+
+	//input = fopen(argv[1], "r");
+  printf("ID: %d\n", args->thread_ID);
+  printf("FILE: %s\n", *args->file_name);
+
+  buffy = (char *)malloc(bufferSize * sizeof(char));
+  if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
+
+
+
 
   return NULL;
-
 
 }//end of publisher()
 
@@ -341,65 +289,75 @@ void *publisher(void *input){ //enqueue()
 
 void *subscriber(void *input){ //getEntry()
 
-  // sub_args *inp = input;
-  //
-  // //empty struct to-be filled by getEntry()
-  // topicEntry place_hold;
-  // place_hold.entryNum = -999;
-  //
-  // //last entry initially set to 1
-  // int last_entry = 1;
-  //
-  // //for topic in registry
-  // for (size_t i = 0; i < MAXTOPICS; i++) {
-  //   if(registry[i] != NULL){
-  //     //for topic in passed in struct
-  //     for (size_t j = 0; j < MAXTOPICS; j++) {
-  //       if(inp->tobe_sub[j] != NULL && *registry[i]->name != NULL){
-  //         if (strcmp(*registry[i]->name, *inp->tobe_sub[j]->name) == 0){
-  //           printf("*\tsubscriber(): HIT[%s]\n", *inp->tobe_sub[j]->name);
-  //           //try to getEntry
-  //           //lock it down with this topics lock
-  //           printf("*\tsubscriber(): Locking up queue[%s]\n", *registry[i]->name);
-  //           pthread_mutex_lock(&lock[i]);
-  //           int result = getEntry(*registry[i]->name, last_entry, &place_hold);
-  //           //unlock it with this topics lock
-  //           printf("*\tsubscriber(): Unlocking queue[%s]\n", *registry[i]->name);
-  //           pthread_mutex_unlock(&lock[i]);
-  //           //if getEntry() returns 0 (all entries < lastEntry+1 <or> Q is empty)
-  //           if(result == 0){
-  //             printf("*\tsubscriber(): getEntry on [%s] failed\n", *registry[i]->name);
-  //             //sleep so print shows up
-  //             sleep(1);
-  //             //yield CPU and put back on ready Q
-  //             sched_yield();
-  //           }
-  //           //if getEntry() returns 1 (found lastEntry+1)
-  //           else if(result == 1){
-  //             printf("*\tsubscriber(): getEntry on [%s] found entry:[%d]\n", *registry[i]->name, place_hold.entryNum);
-  //             last_entry++;
-  //           }
-  //           else{
-  //             printf("*\tsubscriber(): getEntry on [%s] found entry:[%d]", *registry[i]->name, place_hold.entryNum);
-  //             printf(" ... lastEntry is now:[%d]\n", result);
-  //             last_entry = result;
-  //           }
-  //           sleep(1);
-  //
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
+  thread_args *args = input;
 
-  int thread_id = 0;
-  printf("Proxy thread <%d> - type: <Subscriber>​\n", thread_id);
+  FILE *input = NULL;
+  char *buffy = NULL;
+  size_t bufferSize = 2048;
+	size_t file_size;
+  char *token;
+
+  printf("ID: %d\n", args->thread_ID);
+  printf("FILE: %s\n", *args->file_name);
+	//input = fopen(argv[1], "r");
+
+
+  buffy = (char *)malloc(bufferSize * sizeof(char));
+  if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
+
+  while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
+    int spaces = 0;
+    int tokens = 0;
+    int arguments = 0;
+    for (int i = 0; i < file_size; i++) {if (buffy[i] == ' '){spaces += 1;}}
+    tokens = spaces + 1;
+    arguments = tokens - 1;
+    char *args[tokens+1];
+    args[tokens] = NULL;
+    int index = 0;
+    token = strtok(buffy, " ");
+    while(token != NULL) {
+      int length = strlen(token);
+      if (length > 0 && token[length - 1] == '\n'){ token[length-1] = '\0';}
+      args[index] = token;
+      index += 1;
+      token = strtok(NULL, " ");
+    }//end of while()
+
+    //if there are arguments to be parsed
+    if(args[0] != NULL){}
+
+  }//end of main while()
+
+
+
 
   return NULL;
 
 }//end of subscriber()
 
 //------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 int main(int argc, char const *argv[]) {
 
@@ -422,6 +380,245 @@ int main(int argc, char const *argv[]) {
 	}
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
+
+  while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
+    int spaces = 0;
+    int tokens = 0;
+    int arguments = 0;
+    for (int i = 0; i < file_size; i++) {if (buffy[i] == ' '){spaces += 1;}}
+    tokens = spaces + 1;
+    arguments = tokens - 1;
+    char *args[tokens+1];
+    args[tokens] = NULL;
+    int index = 0;
+    int exit = 0;
+    token = strtok(buffy, " ");
+    while(token != NULL) {
+      int length = strlen(token);
+      if (length > 0 && token[length - 1] == '\n'){ token[length-1] = '\0';}
+      args[index] = token;
+      if (strcmp(token, "exit")==0){exit = 1;}
+      index += 1;
+      token = strtok(NULL, " ");
+    }//end of while()
+
+    if(exit == 1){
+      break;
+    }
+
+    //if there are arguments to be parsed
+    if(args[0] != NULL){
+
+      if (strcmp(args[0], "create")==0){
+        if (args[1] != NULL){
+          if (args[2] != NULL){
+            if (args[3] != NULL){
+              if (args[4] != NULL){
+
+                //========================================
+                if(queue_loc >= MAXTOPICS){
+                  printf("MAX NUMBER OF QUEUES REACHED\n");
+                }
+                else{
+
+                  //place initilaized topicQ into registry
+                  registry[queue_loc] = &queues[queue_loc];
+
+                  //set ID
+                  registry[queue_loc]->topicID = atoi(args[2]);
+
+                  //set name
+                  strcpy(topic_names[queue_loc], args[3]);
+                  *registry[queue_loc]->name = topic_names[queue_loc];
+
+                  //set length
+                  int len = MAXENTRIES;
+                  if (atoi(args[4]) > len){
+                    registry[queue_loc]->length = len;
+                  }
+                  else{
+                    registry[queue_loc]->length = atoi(args[4]);
+                  }
+
+                  //set last entry of topicQ buffer to NULL
+                  buffer_store[queue_loc][registry[queue_loc]->length] = null;
+
+                  //set buffer of regustry to repective initialized buffer from buffer store
+                  registry[queue_loc]->buffer = buffer_store[queue_loc];
+
+                  printf("\tSuccesfully created topic[%s]\n", args[3]);
+
+                  //increment topic locater
+                  queue_loc++;
+
+                }
+                //========================================
+
+              }else{printf("MISSING VALUE!\n");}
+            }else{printf("MISSING VALUE!\n");}
+          }else{printf("MISSING VALUE!\n");}
+        }else{printf("MISSING VALUE!\n");}
+      }
+      //-----------------------------------
+      else if (strcmp(args[0], "delta")==0){
+        if (args[1] != NULL){
+
+          //========================================
+          double val = atof(args[1]);
+          DELTA = val;
+          printf("\tDELTA is now %f\n", DELTA);
+          //========================================
+
+        }
+        else{printf("MISSING VALUE!\n");}
+      }
+      //-----------------------------------
+      else if (strcmp(args[0], "add")==0){
+        if (args[1] != NULL){
+          if (strcmp(args[1], "publisher")==0){
+            if (args[2] != NULL){
+
+              //========================================
+              int check_availp = 0;
+              for (size_t i = 0; i < NUMPROXIES; i++) {
+                if(pub_avail[i] == 0){
+                  printf("\tFound available publisher thread[%d]\n", i);
+                  pub_avail[i] = 1;
+                  strcpy(pub_file_names[i], args[2]);
+                  break;
+                }
+                else{
+                  check_availp++;
+                }
+              }
+              if(check_availp==NUMPROXIES){
+                printf("\tNo more available publisher threads\n");
+              }
+              //========================================
+
+            }
+            else {printf("MISSING VALUE!\n");}
+          }
+          else if (strcmp(args[1], "subscriber")==0){
+            if (args[2] != NULL){
+
+              //========================================
+              int check_avails = 0;
+              for (size_t i = 0; i < NUMPROXIES; i++) {
+                if(sub_avail[i] == 0){
+                  printf("\tFound available subsriber thread[%d]\n", i);
+                  sub_avail[i] = 1;
+                  strcpy(sub_file_names[i], args[2]);
+                  break;
+                }
+                else{
+                  check_avails++;
+                }
+              }
+              if(check_avails==NUMPROXIES){
+                printf("\tNo more available subscriber threads\n");
+              }
+              //========================================
+
+            }
+            else {printf("MISSING VALUE!\n");}
+          }
+          else{printf("UNKNOWN VALUE AFTER <add>\n");}
+        }
+        else{printf("MISSING VALUE!\n");}
+      }
+      //-----------------------------------
+      else if (strcmp(args[0], "query")==0){
+
+        if(args[1] != NULL){
+          if (strcmp(args[1], "topics")==0){
+
+            //========================================
+            int checkT = 0;
+            for (size_t i = 0; i < MAXTOPICS; i++) {
+              if(registry[i] != NULL){
+                printf("'\tTopic[%d]: ID:%d Name:%s Length:%d\n", i, registry[i]->topicID, *registry[i]->name, registry[i]->length);
+              }
+              else{checkT ++;}
+            }
+            if(checkT == MAXTOPICS){
+              printf("\tThere are no topics you fool!\n");
+            }
+            //========================================
+
+          }
+          else if (strcmp(args[1], "publishers")==0){
+
+
+            //========================================
+            int checkP = 0;
+            for (size_t i = 0; i < NUMPROXIES; i++) {
+              if(pub_avail[i] == 1){
+                printf("\tPublisher[%d]: File:%s\n", i, pub_file_names[i]);
+              }
+              else{checkP++;}
+            }
+            if(checkP == NUMPROXIES){
+              printf("\tThere are no publishers you fool!\n");
+            }
+            //========================================
+
+          }
+          else if (strcmp(args[1], "subscribers")==0){
+
+            //========================================
+            int checkS = 0;
+            for (size_t i = 0; i < NUMPROXIES; i++) {
+              if(sub_avail[i] == 1){
+                printf("\tSubscriber[%d]: File:%s\n", i, sub_file_names[i]);
+              }
+              else{checkS++;}
+            }
+            if(checkS == NUMPROXIES){
+              printf("\tThere are no subscribers you fool!\n");
+            }
+            //========================================
+
+          }
+          else{printf("UNKNOWN VALUE AFTER <query>\n");}
+        }
+        else{printf("MISSING VALUE!\n");}
+      }
+      //-----------------------------------
+      else if (strcmp(args[0], "start")==0){
+
+        //========================================
+        for (size_t i = 0; i < NUMPROXIES; i++) {
+
+          if(sub_avail[i] == 1){
+            printf("\tStarting subscriber[%d]\n", i);
+            pthread_create(&sub_pool[i], NULL, subscriber, NULL);
+          }
+
+          if(pub_avail[i] == 1){
+            printf("\tStarting publisher[%d]\n", i);
+            pthread_create(&pub_pool[i], NULL, publisher, NULL);
+          }
+
+        }
+
+        pthread_t cleanup_thread;
+        pthread_create(&cleanup_thread, NULL, cleanup, NULL);
+
+        //========================================
+
+      }
+      //-----------------------------------
+      else{printf("UNKNOWN COMMAND!\n");}
+
+    }
+    else{printf("MISSING VALUE!\n");}
+
+    if (input == stdin){
+      printf(">>> ");
+    }
+
+  }//end of while()
 
 
   //========================================
@@ -463,6 +660,10 @@ int main(int argc, char const *argv[]) {
   //arrays to-be used to decide if thread is taken
   int sub_avail[NUMPROXIES] = {};
   int pub_avail[NUMPROXIES] = {};
+
+  //structs of arguments to-be sent to pthread_create
+  thread_args sub_thread_args[NUMPROXIES] = {};
+  thread_args pub_thread_args[NUMPROXIES] = {};
 
   //set all entries to 0 to indicate threads are all free
   for (size_t i = 0; i < NUMPROXIES; i++) {
@@ -684,12 +885,29 @@ int main(int argc, char const *argv[]) {
 
           if(sub_avail[i] == 1){
             printf("\tStarting subscriber[%d]\n", i);
-            pthread_create(&sub_pool[i], NULL, subscriber, NULL);
+
+            char f_name1[] = sub_file_names[i];
+            sub_thread_args[i].file_name = f_name1;
+
+            sub_thread_args[i].thread_ID = i;
+
+            pthread_create(&sub_pool[i], NULL, subscriber, (void *)&sub_thread_args[i]);
+
+
           }
 
           if(pub_avail[i] == 1){
             printf("\tStarting publisher[%d]\n", i);
-            pthread_create(&pub_pool[i], NULL, publisher, NULL);
+
+            char f_name2[] = pub_file_names[i];
+
+            pub_thread_args[i].file_name = f_name2;
+
+            pub_thread_args[i].thread_ID = i;
+
+            pthread_create(&pub_pool[i], NULL, publisher, (void *)&pub_thread_args[i]);
+
+
           }
 
         }
