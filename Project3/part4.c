@@ -307,7 +307,7 @@ void *publisher(void *inp){ //enqueue()
           if (args[2] != NULL){
             if (args[3] != NULL){
 
-              printf("\n\nPUT %s %s %s\n\n", args[1], args[2], args[3]);
+              printf("PUT %s %s %s\n", args[1], args[2], args[3]);
 
             }
           }
@@ -318,7 +318,7 @@ void *publisher(void *inp){ //enqueue()
       else if (strcmp(args[0], "sleep")==0){
         if (args[1] != NULL){
 
-          printf("\n\nSLEEP %d\n\n", atoi(args[1]));
+          printf("SLEEP %d\n", atoi(args[1]));
 
         }
       }
@@ -326,11 +326,11 @@ void *publisher(void *inp){ //enqueue()
       //stop
       else if (strcmp(args[0], "stop")==0){
 
-        printf("\n\nSTOP\n\n");
+        printf("STOP\n");
 
       }
 
-      else{printf("\n\nInvalid Command\n\n");}
+      else{printf("Invalid Command\n");}
 
     }
 
@@ -388,7 +388,7 @@ void *subscriber(void *inp){ //getEntry()
       if (strcmp(args[0], "get")==0){
         if (args[1] != NULL){
 
-          printf("\n\nGET %d\n\n", atoi(args[1]));
+          printf("GET %d\n", atoi(args[1]));
 
         }
       }
@@ -397,7 +397,7 @@ void *subscriber(void *inp){ //getEntry()
       else if (strcmp(args[0], "sleep")==0){
         if (args[1] != NULL){
 
-          printf("\n\nSLEEP %d\n\n", atoi(args[1]));
+          printf("SLEEP %d\n", atoi(args[1]));
 
         }
       }
@@ -405,11 +405,11 @@ void *subscriber(void *inp){ //getEntry()
       //stop
       else if (strcmp(args[0], "stop")==0){
 
-        printf("\n\nSTOP\n\n");
+        printf("STOP\n");
 
       }
 
-      else{printf("\n\nInvalid Command\n\n");}
+      else{printf("Invalid Command\n");}
 
     }
 
