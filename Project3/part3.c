@@ -538,7 +538,7 @@ int main(int argc, char const *argv[]) {
                   //set buffer of regustry to repective initialized buffer from buffer store
                   registry[queue_loc]->buffer = buffer_store[queue_loc];
 
-                  printf("Succesfully created topic[%s]\n", args[3]);
+                  printf("\tSuccesfully created topic[%s]\n", args[3]);
 
                   //increment topic locater
                   queue_loc++;
@@ -558,7 +558,7 @@ int main(int argc, char const *argv[]) {
           //========================================
           double val = atof(args[1]);
           DELTA = val;
-          printf("DELTA is now %f\n", DELTA);
+          printf("\tDELTA is now %f\n", DELTA);
           //========================================
 
         }
@@ -574,7 +574,7 @@ int main(int argc, char const *argv[]) {
               int check_availp = 0;
               for (size_t i = 0; i < NUMPROXIES; i++) {
                 if(pub_avail[i] == 0){
-                  printf("Found available publisher thread[%d]\n", i);
+                  printf("\tFound available publisher thread[%d]\n", i);
                   pub_avail[i] = 1;
                   strcpy(pub_file_names[i], args[2]);
                   break;
@@ -584,7 +584,7 @@ int main(int argc, char const *argv[]) {
                 }
               }
               if(check_availp==NUMPROXIES){
-                printf("No more available publisher threads\n");
+                printf("\tNo more available publisher threads\n");
               }
               //========================================
 
@@ -598,7 +598,7 @@ int main(int argc, char const *argv[]) {
               int check_avails = 0;
               for (size_t i = 0; i < NUMPROXIES; i++) {
                 if(sub_avail[i] == 0){
-                  printf("Found available subsriber thread[%d]\n", i);
+                  printf("\tFound available subsriber thread[%d]\n", i);
                   sub_avail[i] = 1;
                   strcpy(sub_file_names[i], args[2]);
                   break;
@@ -608,7 +608,7 @@ int main(int argc, char const *argv[]) {
                 }
               }
               if(check_avails==NUMPROXIES){
-                printf("No more available subscriber threads\n");
+                printf("\tNo more available subscriber threads\n");
               }
               //========================================
 
@@ -629,13 +629,12 @@ int main(int argc, char const *argv[]) {
             int checkT = 0;
             for (size_t i = 0; i < MAXTOPICS; i++) {
               if(registry[i] != NULL){
-                printf("Topic[%d]: ID:%d Name:%s Length:%d\n", i, registry[i]->topicID, *registry[i]->name, registry[i]->length);
+                printf("'\tTopic[%d]: ID:%d Name:%s Length:%d\n", i, registry[i]->topicID, *registry[i]->name, registry[i]->length);
               }
               else{checkT ++;}
             }
-            printf("CHECKT:%d\n", checkT);
             if(checkT == MAXTOPICS){
-              printf("There are no topics you fool!\n");
+              printf("\tThere are no topics you fool!\n");
             }
             //========================================
 
@@ -647,12 +646,12 @@ int main(int argc, char const *argv[]) {
             int checkP = 0;
             for (size_t i = 0; i < NUMPROXIES; i++) {
               if(pub_avail[i] == 1){
-                printf("Publisher[%d]: File:%s\n", i, pub_file_names[i]);
+                printf("\tPublisher[%d]: File:%s\n", i, pub_file_names[i]);
               }
               else{checkP++;}
             }
             if(checkP == NUMPROXIES){
-              printf("There are no publishers you fool!\n");
+              printf("\tThere are no publishers you fool!\n");
             }
             //========================================
 
@@ -663,12 +662,12 @@ int main(int argc, char const *argv[]) {
             int checkS = 0;
             for (size_t i = 0; i < NUMPROXIES; i++) {
               if(sub_avail[i] == 1){
-                printf("Subscriber[%d]: File:%s\n", i, sub_file_names[i]);
+                printf("\tSubscriber[%d]: File:%s\n", i, sub_file_names[i]);
               }
               else{checkS++;}
             }
             if(checkS == NUMPROXIES){
-              printf("There are no subscribers you fool!\n");
+              printf("\tThere are no subscribers you fool!\n");
             }
             //========================================
 
@@ -681,8 +680,19 @@ int main(int argc, char const *argv[]) {
       else if (strcmp(args[0], "start")==0){
 
         //========================================
-        //TODO!!!!!!!!!!!!!!!!!!!!!!!
-        printf("***\tSTART\n");
+        for (size_t i = 0; i < NUMPROXIES; i++) {
+
+          if(sub_avail[i] == 1){
+            printf("\tStarting subscriber[%d]\n", i);
+            pthread_create(&sub_pool[i], NULL, subscriber, NULL);
+          }
+
+          if(pub_avail[i] == 1){
+            printf("\tStarting publisher[%d]\n", i);
+            pthread_create(&pub_pool[i], NULL, publisher, NULL);
+          }
+
+        }
         //========================================
 
       }
@@ -697,6 +707,23 @@ int main(int argc, char const *argv[]) {
     }
 
   }//end of while()
+
+  //cancel all active threads
+  for (size_t i = 0; i < NUMPROXIES; i++) {
+    if(pub_avail[i] == 1){
+      pthread_join(pub_pool[i], NULL);
+      //set thread to available
+      pub_avail[i] = 0;
+    }
+  }
+
+  for (size_t i = 0; i < NUMPROXIES; i++) {
+    if(sub_avail[i] == 1){
+      pthread_join(sub_pool[i], NULL);
+      //set thread to available
+      sub_avail[i] = 0;
+    }
+  }
 
   // Close the file
   free(buffy);
