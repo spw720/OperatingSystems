@@ -634,7 +634,7 @@ int main(int argc, char const *argv[]) {
               else{checkT ++;}
             }
             printf("CHECKT:%d\n", checkT);
-            if(checkT == MAXTOPICS-1){
+            if(checkT == MAXTOPICS){
               printf("There are no topics you fool!\n");
             }
             //========================================
