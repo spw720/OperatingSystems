@@ -580,8 +580,9 @@ int main(int argc, char const *argv[]) {
 
               int check_avail = 0;
               for (size_t i = 0; i < NUMPROXIES; i++) {
-                if(sub_avail[i] == 0){
-                  printf("Found available publisher thread\n");
+                if(pub_avail[i] == 0){
+                  printf("Found available publisher thread[%d]\n", i);
+                  pub_avail[i] = 1;
                 }
                 else{
                   check_avail++;
