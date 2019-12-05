@@ -575,9 +575,6 @@ int main(int argc, char const *argv[]) {
 
 
 
-              //TODO!!!!!!!!!!!!!!!!!!!!!!!
-              printf("***\tADD PUB %s\n", args[2]);
-
               int check_avail = 0;
               for (size_t i = 0; i < NUMPROXIES; i++) {
                 if(pub_avail[i] == 0){
@@ -604,8 +601,23 @@ int main(int argc, char const *argv[]) {
           else if (strcmp(args[1], "subscriber")==0){
             if (args[2] != NULL){
 
-              //TODO!!!!!!!!!!!!!!!!!!!!!!!
-              printf("***\tADD SUB %s\n", args[2]);
+
+              int check_avail = 0;
+              for (size_t i = 0; i < NUMPROXIES; i++) {
+                if(sub_avail[i] == 0){
+                  printf("Found available subsriber thread[%d]\n", i);
+                  sub_avail[i] = 1;
+                  break;
+                }
+                else{
+                  check_avail++;
+                }
+              }
+              if(check_avail==NUMPROXIES){
+                printf("No more available subscriber threads\n");
+              }
+
+
 
             }
             else {printf("MISSING VALUE!\n");}
