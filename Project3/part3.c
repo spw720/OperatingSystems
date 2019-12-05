@@ -586,8 +586,7 @@ int main(int argc, char const *argv[]) {
                   pub_avail[i] = 1;
 
                   pub_file_names[i] = args[2];
-
-
+                  strcpy(pub_file_names[i], args[2]);
 
                   break;
                 }
@@ -617,7 +616,7 @@ int main(int argc, char const *argv[]) {
                   printf("Found available subsriber thread[%d]\n", i);
                   sub_avail[i] = 1;
 
-                  sub_file_names[i] = args[2];
+                  strcpy(sub_file_names[i], args[2]);
 
 
 
