@@ -663,7 +663,8 @@ int main(int argc, char const *argv[]) {
 
             sub_thread_args[i].thread_ID = i;
 
-            pthread_create(&sub_pool[i], NULL, subscriber, (void *)&sub_thread_args[i]);
+            //pthread_create(&sub_pool[i], NULL, subscriber, (void *)&sub_thread_args[i]);
+            pthread_create(&sub_pool[i], NULL, subscriber, NULL);
           }
 
           if(pub_avail[i] == 1){
@@ -675,7 +676,8 @@ int main(int argc, char const *argv[]) {
 
             pub_thread_args[i].thread_ID = i;
 
-            pthread_create(&pub_pool[i], NULL, publisher, (void *)&pub_thread_args[i]);
+            //pthread_create(&pub_pool[i], NULL, publisher, (void *)&pub_thread_args[i]);
+            pthread_create(&pub_pool[i], NULL, publisher, NULL);
           }
 
           //start up the cleanup thread
@@ -698,7 +700,7 @@ int main(int argc, char const *argv[]) {
 
   }//end of while()
 
-  sleep(20);
+  //sleep(20);
 
   //pthread_cancel(cleanup_thread);
 
