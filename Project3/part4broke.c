@@ -1,6 +1,6 @@
 #define _GNU_SOURCE
 //
-//Project 3 (part4) - Sean Wilson - CIS415 @ UofO F'19
+//Project 3 (part3) - Sean Wilson - CIS415 @ UofO F'19
 //
 
 //------------------------------------------------------------------------------
@@ -278,16 +278,16 @@ void *publisher(void *inp){ //enqueue()
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
 
+
+
+
   return NULL;
-
-
-
 
 }//end of publisher()
 
 //------------------------------------------------------------------------------
 
-void *subscriber(void *input){ //getEntry()
+void *subscriber(void *inp){ //getEntry()
 
   thread_args *args = inp;
 
@@ -331,11 +331,33 @@ void *subscriber(void *input){ //getEntry()
 
 
 
+
   return NULL;
 
 }//end of subscriber()
 
 //------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 int main(int argc, char const *argv[]) {
 
@@ -358,6 +380,245 @@ int main(int argc, char const *argv[]) {
 	}
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
+
+  while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
+    int spaces = 0;
+    int tokens = 0;
+    int arguments = 0;
+    for (int i = 0; i < file_size; i++) {if (buffy[i] == ' '){spaces += 1;}}
+    tokens = spaces + 1;
+    arguments = tokens - 1;
+    char *args[tokens+1];
+    args[tokens] = NULL;
+    int index = 0;
+    int exit = 0;
+    token = strtok(buffy, " ");
+    while(token != NULL) {
+      int length = strlen(token);
+      if (length > 0 && token[length - 1] == '\n'){ token[length-1] = '\0';}
+      args[index] = token;
+      if (strcmp(token, "exit")==0){exit = 1;}
+      index += 1;
+      token = strtok(NULL, " ");
+    }//end of while()
+
+    if(exit == 1){
+      break;
+    }
+
+    //if there are arguments to be parsed
+    if(args[0] != NULL){
+
+      if (strcmp(args[0], "create")==0){
+        if (args[1] != NULL){
+          if (args[2] != NULL){
+            if (args[3] != NULL){
+              if (args[4] != NULL){
+
+                //========================================
+                if(queue_loc >= MAXTOPICS){
+                  printf("MAX NUMBER OF QUEUES REACHED\n");
+                }
+                else{
+
+                  //place initilaized topicQ into registry
+                  registry[queue_loc] = &queues[queue_loc];
+
+                  //set ID
+                  registry[queue_loc]->topicID = atoi(args[2]);
+
+                  //set name
+                  strcpy(topic_names[queue_loc], args[3]);
+                  *registry[queue_loc]->name = topic_names[queue_loc];
+
+                  //set length
+                  int len = MAXENTRIES;
+                  if (atoi(args[4]) > len){
+                    registry[queue_loc]->length = len;
+                  }
+                  else{
+                    registry[queue_loc]->length = atoi(args[4]);
+                  }
+
+                  //set last entry of topicQ buffer to NULL
+                  buffer_store[queue_loc][registry[queue_loc]->length] = null;
+
+                  //set buffer of regustry to repective initialized buffer from buffer store
+                  registry[queue_loc]->buffer = buffer_store[queue_loc];
+
+                  printf("\tSuccesfully created topic[%s]\n", args[3]);
+
+                  //increment topic locater
+                  queue_loc++;
+
+                }
+                //========================================
+
+              }else{printf("MISSING VALUE!\n");}
+            }else{printf("MISSING VALUE!\n");}
+          }else{printf("MISSING VALUE!\n");}
+        }else{printf("MISSING VALUE!\n");}
+      }
+      //-----------------------------------
+      else if (strcmp(args[0], "delta")==0){
+        if (args[1] != NULL){
+
+          //========================================
+          double val = atof(args[1]);
+          DELTA = val;
+          printf("\tDELTA is now %f\n", DELTA);
+          //========================================
+
+        }
+        else{printf("MISSING VALUE!\n");}
+      }
+      //-----------------------------------
+      else if (strcmp(args[0], "add")==0){
+        if (args[1] != NULL){
+          if (strcmp(args[1], "publisher")==0){
+            if (args[2] != NULL){
+
+              //========================================
+              int check_availp = 0;
+              for (size_t i = 0; i < NUMPROXIES; i++) {
+                if(pub_avail[i] == 0){
+                  printf("\tFound available publisher thread[%d]\n", i);
+                  pub_avail[i] = 1;
+                  strcpy(pub_file_names[i], args[2]);
+                  break;
+                }
+                else{
+                  check_availp++;
+                }
+              }
+              if(check_availp==NUMPROXIES){
+                printf("\tNo more available publisher threads\n");
+              }
+              //========================================
+
+            }
+            else {printf("MISSING VALUE!\n");}
+          }
+          else if (strcmp(args[1], "subscriber")==0){
+            if (args[2] != NULL){
+
+              //========================================
+              int check_avails = 0;
+              for (size_t i = 0; i < NUMPROXIES; i++) {
+                if(sub_avail[i] == 0){
+                  printf("\tFound available subsriber thread[%d]\n", i);
+                  sub_avail[i] = 1;
+                  strcpy(sub_file_names[i], args[2]);
+                  break;
+                }
+                else{
+                  check_avails++;
+                }
+              }
+              if(check_avails==NUMPROXIES){
+                printf("\tNo more available subscriber threads\n");
+              }
+              //========================================
+
+            }
+            else {printf("MISSING VALUE!\n");}
+          }
+          else{printf("UNKNOWN VALUE AFTER <add>\n");}
+        }
+        else{printf("MISSING VALUE!\n");}
+      }
+      //-----------------------------------
+      else if (strcmp(args[0], "query")==0){
+
+        if(args[1] != NULL){
+          if (strcmp(args[1], "topics")==0){
+
+            //========================================
+            int checkT = 0;
+            for (size_t i = 0; i < MAXTOPICS; i++) {
+              if(registry[i] != NULL){
+                printf("'\tTopic[%d]: ID:%d Name:%s Length:%d\n", i, registry[i]->topicID, *registry[i]->name, registry[i]->length);
+              }
+              else{checkT ++;}
+            }
+            if(checkT == MAXTOPICS){
+              printf("\tThere are no topics you fool!\n");
+            }
+            //========================================
+
+          }
+          else if (strcmp(args[1], "publishers")==0){
+
+
+            //========================================
+            int checkP = 0;
+            for (size_t i = 0; i < NUMPROXIES; i++) {
+              if(pub_avail[i] == 1){
+                printf("\tPublisher[%d]: File:%s\n", i, pub_file_names[i]);
+              }
+              else{checkP++;}
+            }
+            if(checkP == NUMPROXIES){
+              printf("\tThere are no publishers you fool!\n");
+            }
+            //========================================
+
+          }
+          else if (strcmp(args[1], "subscribers")==0){
+
+            //========================================
+            int checkS = 0;
+            for (size_t i = 0; i < NUMPROXIES; i++) {
+              if(sub_avail[i] == 1){
+                printf("\tSubscriber[%d]: File:%s\n", i, sub_file_names[i]);
+              }
+              else{checkS++;}
+            }
+            if(checkS == NUMPROXIES){
+              printf("\tThere are no subscribers you fool!\n");
+            }
+            //========================================
+
+          }
+          else{printf("UNKNOWN VALUE AFTER <query>\n");}
+        }
+        else{printf("MISSING VALUE!\n");}
+      }
+      //-----------------------------------
+      else if (strcmp(args[0], "start")==0){
+
+        //========================================
+        for (size_t i = 0; i < NUMPROXIES; i++) {
+
+          if(sub_avail[i] == 1){
+            printf("\tStarting subscriber[%d]\n", i);
+            pthread_create(&sub_pool[i], NULL, subscriber, NULL);
+          }
+
+          if(pub_avail[i] == 1){
+            printf("\tStarting publisher[%d]\n", i);
+            pthread_create(&pub_pool[i], NULL, publisher, NULL);
+          }
+
+        }
+
+        pthread_t cleanup_thread;
+        pthread_create(&cleanup_thread, NULL, cleanup, NULL);
+
+        //========================================
+
+      }
+      //-----------------------------------
+      else{printf("UNKNOWN COMMAND!\n");}
+
+    }
+    else{printf("MISSING VALUE!\n");}
+
+    if (input == stdin){
+      printf(">>> ");
+    }
+
+  }//end of while()
 
 
   //========================================
@@ -633,6 +894,8 @@ int main(int argc, char const *argv[]) {
             sub_thread_args[i].thread_ID = i;
 
             pthread_create(&sub_pool[i], NULL, subscriber, (void *)&sub_thread_args[i]);
+
+
           }
 
           if(pub_avail[i] == 1){
@@ -645,12 +908,14 @@ int main(int argc, char const *argv[]) {
             pub_thread_args[i].thread_ID = i;
 
             pthread_create(&pub_pool[i], NULL, publisher, (void *)&pub_thread_args[i]);
+
+
           }
 
-          //start up the cleanup thread
-          pthread_create(&cleanup_thread, NULL, cleanup, NULL);
-
         }
+
+        //start up the cleanup thread
+        pthread_create(&cleanup_thread, NULL, cleanup, NULL);
 
         //========================================
 
@@ -667,7 +932,7 @@ int main(int argc, char const *argv[]) {
 
   }//end of while()
 
-  //sleep(20);
+  sleep(20);
 
   pthread_cancel(cleanup_thread);
 
