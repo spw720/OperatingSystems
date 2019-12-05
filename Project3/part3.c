@@ -456,6 +456,10 @@ int main(int argc, char const *argv[]) {
   pthread_t sub_pool[NUMPROXIES] = {};
   pthread_t pub_pool[NUMPROXIES] = {};
 
+  //array of filenames
+  char sub_file_names[NUMPROXIES][MAXNAME];
+  char pub_file_names[NUMPROXIES][MAXNAME];
+
   //arrays to-be used to decide if thread is taken
   int sub_avail[NUMPROXIES] = {};
   int pub_avail[NUMPROXIES] = {};
@@ -580,6 +584,11 @@ int main(int argc, char const *argv[]) {
                 if(pub_avail[i] == 0){
                   printf("Found available publisher thread[%d]\n", i);
                   pub_avail[i] = 1;
+
+                  pub_file_names[i] = args[2];
+
+
+
                   break;
                 }
                 else{
@@ -601,12 +610,17 @@ int main(int argc, char const *argv[]) {
           else if (strcmp(args[1], "subscriber")==0){
             if (args[2] != NULL){
 
-
               int check_avails = 0;
               for (size_t i = 0; i < NUMPROXIES; i++) {
                 if(sub_avail[i] == 0){
+
                   printf("Found available subsriber thread[%d]\n", i);
                   sub_avail[i] = 1;
+
+                  sub_file_names[i] = args[2];
+
+
+
                   break;
                 }
                 else{
@@ -616,8 +630,6 @@ int main(int argc, char const *argv[]) {
               if(check_avails==NUMPROXIES){
                 printf("No more available subscriber threads\n");
               }
-
-
 
             }
             else {printf("MISSING VALUE!\n");}
@@ -632,8 +644,11 @@ int main(int argc, char const *argv[]) {
         if(args[1] != NULL){
           if (strcmp(args[1], "topics")==0){
 
-            //TODO!!!!!!!!!!!!!!!!!!!!!!!
-            printf("***\tQUERY TOPICS\n");
+            for (size_t i = 0; i < MAXTOPICS; i++) {
+              if(registry[i] != NULL){
+                printf("Topic[%d]: ID:%d Name:%s Length:%d\n", i, registry[i]->topicID, *registry[i]->name, registry[i]->length);
+              }
+            }printf("\n");
 
 
           }
