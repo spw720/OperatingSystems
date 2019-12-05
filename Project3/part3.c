@@ -506,6 +506,8 @@ int main(int argc, char const *argv[]) {
           if (args[2] != NULL){
             if (args[3] != NULL){
               if (args[4] != NULL){
+
+                //========================================
                 if(queue_loc >= MAXTOPICS){
                   printf("MAX NUMBER OF QUEUES REACHED\n");
                 }
@@ -536,25 +538,14 @@ int main(int argc, char const *argv[]) {
                   //set buffer of regustry to repective initialized buffer from buffer store
                   registry[queue_loc]->buffer = buffer_store[queue_loc];
 
+                  printf("Succesfully created topic[%s]\n", args[3]);
+
                   //increment topic locater
                   queue_loc++;
 
-
-                  //Print statements to be used for testing
-
-                    // for (size_t i = 0; i < MAXTOPICS; i++) {
-                    //   if(registry[i] != NULL){
-                    //     printf("REGISTRY[%d] [%d] [%s] [%d]\n", i, registry[i]->topicID, *registry[i]->name, registry[i]->length);
-                    //     printf("REGISTRY[%d] Buffer[0]:%d Buffer[-1]:%d BUFFER[len]:%d\n", i, registry[i]->buffer[0].entryNum, registry[i]->buffer[MAXENTRIES].entryNum, registry[i]->buffer[registry[queue_loc]->length].entryNum);
-                    //   }else{printf("REGISTRY[%d] NULL\n", i);}
-                    // }printf("\n");
-
-                    // for (size_t i = 0; i < MAXENTRIES; i++) {
-                    //   printf("%d ", buffer_store[queue_loc][i].entryNum);
-                    // }
-                    // printf("\n");
-
                 }
+                //========================================
+
               }else{printf("MISSING VALUE!\n");}
             }else{printf("MISSING VALUE!\n");}
           }else{printf("MISSING VALUE!\n");}
@@ -564,9 +555,11 @@ int main(int argc, char const *argv[]) {
       else if (strcmp(args[0], "delta")==0){
         if (args[1] != NULL){
 
+          //========================================
           double val = atof(args[1]);
           DELTA = val;
-          printf("***\tDELTA = %f\n", DELTA);
+          printf("DELTA is now %f\n", DELTA);
+          //========================================
 
         }
         else{printf("MISSING VALUE!\n");}
@@ -577,16 +570,13 @@ int main(int argc, char const *argv[]) {
           if (strcmp(args[1], "publisher")==0){
             if (args[2] != NULL){
 
-
-
+              //========================================
               int check_availp = 0;
               for (size_t i = 0; i < NUMPROXIES; i++) {
                 if(pub_avail[i] == 0){
                   printf("Found available publisher thread[%d]\n", i);
                   pub_avail[i] = 1;
-
                   strcpy(pub_file_names[i], args[2]);
-
                   break;
                 }
                 else{
@@ -596,11 +586,7 @@ int main(int argc, char const *argv[]) {
               if(check_availp==NUMPROXIES){
                 printf("No more available publisher threads\n");
               }
-
-
-
-
-
+              //========================================
 
             }
             else {printf("MISSING VALUE!\n");}
@@ -608,17 +594,13 @@ int main(int argc, char const *argv[]) {
           else if (strcmp(args[1], "subscriber")==0){
             if (args[2] != NULL){
 
+              //========================================
               int check_avails = 0;
               for (size_t i = 0; i < NUMPROXIES; i++) {
                 if(sub_avail[i] == 0){
-
                   printf("Found available subsriber thread[%d]\n", i);
                   sub_avail[i] = 1;
-
                   strcpy(sub_file_names[i], args[2]);
-
-
-
                   break;
                 }
                 else{
@@ -628,6 +610,7 @@ int main(int argc, char const *argv[]) {
               if(check_avails==NUMPROXIES){
                 printf("No more available subscriber threads\n");
               }
+              //========================================
 
             }
             else {printf("MISSING VALUE!\n");}
@@ -642,24 +625,40 @@ int main(int argc, char const *argv[]) {
         if(args[1] != NULL){
           if (strcmp(args[1], "topics")==0){
 
+            //========================================
             for (size_t i = 0; i < MAXTOPICS; i++) {
               if(registry[i] != NULL){
                 printf("Topic[%d]: ID:%d Name:%s Length:%d\n", i, registry[i]->topicID, *registry[i]->name, registry[i]->length);
               }
-            }printf("\n");
-
+            }
+            //========================================
 
           }
           else if (strcmp(args[1], "publishers")==0){
 
-            //TODO!!!!!!!!!!!!!!!!!!!!!!!
-            printf("***\tQUERY PUB\n");
+
+            //========================================
+            for (size_t i = 0; i < NUMPROXIES; i++) {
+              if(pub_avail[i] == 1){
+
+                printf("Publisher[%d]: File:%s\n", i, pub_file_names[i]);
+
+              }
+            }
+            //========================================
 
           }
           else if (strcmp(args[1], "subscribers")==0){
 
-            //TODO!!!!!!!!!!!!!!!!!!!!!!!
-            printf("***\tQUERY SUB\n");
+            //========================================
+            for (size_t i = 0; i < NUMPROXIES; i++) {
+              if(sub_avail[i] == 1){
+
+                printf("Subscriber[%d]: File:%s\n", i, sub_file_names[i]);
+
+              }
+            }
+            //========================================
 
           }
           else{printf("UNKNOWN VALUE AFTER <query>\n");}
@@ -669,8 +668,10 @@ int main(int argc, char const *argv[]) {
       //-----------------------------------
       else if (strcmp(args[0], "start")==0){
 
+        //========================================
         //TODO!!!!!!!!!!!!!!!!!!!!!!!
         printf("***\tSTART\n");
+        //========================================
 
       }
       //-----------------------------------
