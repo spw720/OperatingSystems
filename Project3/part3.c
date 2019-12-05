@@ -575,7 +575,7 @@ int main(int argc, char const *argv[]) {
 
 
 
-              int check_avail = 0;
+              int check_availp = 0;
               for (size_t i = 0; i < NUMPROXIES; i++) {
                 if(pub_avail[i] == 0){
                   printf("Found available publisher thread[%d]\n", i);
@@ -583,10 +583,10 @@ int main(int argc, char const *argv[]) {
                   break;
                 }
                 else{
-                  check_avail++;
+                  check_availp++;
                 }
               }
-              if(check_avail==NUMPROXIES){
+              if(check_availp==NUMPROXIES){
                 printf("No more available publisher threads\n");
               }
 
@@ -602,7 +602,7 @@ int main(int argc, char const *argv[]) {
             if (args[2] != NULL){
 
 
-              int check_avail = 0;
+              int check_avails = 0;
               for (size_t i = 0; i < NUMPROXIES; i++) {
                 if(sub_avail[i] == 0){
                   printf("Found available subsriber thread[%d]\n", i);
@@ -610,10 +610,10 @@ int main(int argc, char const *argv[]) {
                   break;
                 }
                 else{
-                  check_avail++;
+                  check_avails++;
                 }
               }
-              if(check_avail==NUMPROXIES){
+              if(check_avails==NUMPROXIES){
                 printf("No more available subscriber threads\n");
               }
 
