@@ -651,7 +651,7 @@ int main(int argc, char const *argv[]) {
               }
               else{checkP++;}
             }
-            if(checkP == NUMPROXIES-1){
+            if(checkP == NUMPROXIES){
               printf("There are no publishers you fool!\n");
             }
             //========================================
@@ -667,7 +667,7 @@ int main(int argc, char const *argv[]) {
               }
               else{checkS++;}
             }
-            if(checkS == NUMPROXIES-1){
+            if(checkS == NUMPROXIES){
               printf("There are no subscribers you fool!\n");
             }
             //========================================
