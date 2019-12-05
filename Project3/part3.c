@@ -515,6 +515,7 @@ int main(int argc, char const *argv[]) {
                   for (size_t i = 0; i < MAXENTRIES; i++) {
                     printf("%d ", buffer_store[queue_loc][i].entryNum);
                   }
+                  printf("\n");
 
                   registry[queue_loc]->buffer = buffer_store[queue_loc];
 
