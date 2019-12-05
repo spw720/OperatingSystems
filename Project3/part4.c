@@ -719,7 +719,7 @@ int main(int argc, char const *argv[]) {
     }
   }
 
-  pthread_join(cleanup_thread, NULL);
+  //pthread_join(cleanup_thread, NULL);
 
   // Close the file
   free(buffy);
