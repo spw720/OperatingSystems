@@ -583,6 +583,7 @@ int main(int argc, char const *argv[]) {
                 if(pub_avail[i] == 0){
                   printf("Found available publisher thread[%d]\n", i);
                   pub_avail[i] = 1;
+                  break;
                 }
                 else{
                   check_avail++;
