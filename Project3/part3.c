@@ -694,9 +694,6 @@ int main(int argc, char const *argv[]) {
 
         }
 
-        pthread_t cleanup_thread;
-        pthread_create(&cleanup_thread, NULL, cleanup, NULL);
-
         //========================================
 
       }
