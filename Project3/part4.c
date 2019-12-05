@@ -273,7 +273,7 @@ void *publisher(void *inp){ //enqueue()
 
 	//input = fopen(argv[1], "r");
   printf("ID: %d\n", args->thread_ID);
-  printf("FILE: %s\n", *args->file_name);
+  //printf("FILE: %s\n", *args->file_name);
 
   // buffy = (char *)malloc(bufferSize * sizeof(char));
   // if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
@@ -298,7 +298,7 @@ void *subscriber(void *inp){ //getEntry()
   char *token;
 
   printf("ID: %d\n", args->thread_ID);
-  printf("FILE: %s\n", *args->file_name);
+  //printf("FILE: %s\n", *args->file_name);
 	//input = fopen(argv[1], "r");
 
 
