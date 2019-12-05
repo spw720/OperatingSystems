@@ -261,9 +261,9 @@ void *cleanup(void *arg){
 
 //------------------------------------------------------------------------------
 
-void *publisher(void *input){ //enqueue()
+void *publisher(void *inp){ //enqueue()
 
-  thread_args *args = input;
+  thread_args *args = inp;
 
   FILE *input = NULL;
   char *buffy = NULL;
@@ -287,9 +287,9 @@ void *publisher(void *input){ //enqueue()
 
 //------------------------------------------------------------------------------
 
-void *subscriber(void *input){ //getEntry()
+void *subscriber(void *inp){ //getEntry()
 
-  thread_args *args = input;
+  thread_args *args = inp;
 
   FILE *input = NULL;
   char *buffy = NULL;
