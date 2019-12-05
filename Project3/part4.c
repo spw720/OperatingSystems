@@ -287,7 +287,7 @@ void *publisher(void *inp){ //enqueue()
 
 //------------------------------------------------------------------------------
 
-void *subscriber(void *input){ //getEntry()
+void *subscriber(void *inp){ //getEntry()
 
   thread_args *args = inp;
 
@@ -627,8 +627,9 @@ int main(int argc, char const *argv[]) {
           if(sub_avail[i] == 1){
             printf("\tStarting subscriber[%d]\n", i);
 
-            char f_name1[] = sub_file_names[i];
-            sub_thread_args[i].file_name = f_name1;
+            // char f_name1[] = sub_file_names[i];
+            // sub_thread_args[i].file_name = f_name1;
+            sub_thread_args[i].file_name = sub_file_names[i];
 
             sub_thread_args[i].thread_ID = i;
 
@@ -638,9 +639,9 @@ int main(int argc, char const *argv[]) {
           if(pub_avail[i] == 1){
             printf("\tStarting publisher[%d]\n", i);
 
-            char f_name2[] = pub_file_names[i];
-
-            pub_thread_args[i].file_name = f_name2;
+            // char f_name2[] = pub_file_names[i];
+            // pub_thread_args[i].file_name = f_name2;
+            pub_thread_args[i].file_name = pub_file_names[i];
 
             pub_thread_args[i].thread_ID = i;
 
