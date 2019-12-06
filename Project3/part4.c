@@ -446,10 +446,10 @@ void *publisher(void *inp){ //enqueue()
         printf("Proxy thread <%d> - type: <Publisher> - Executed command: <Stop>\n", thread_args->thread_ID);
         break;
 
-        //free(buffy);
-        //fclose(input);
+        free(buffy);
+        fclose(input);
 
-        //return NULL;
+        return NULL;
 
         //----------------------------------
 
@@ -457,6 +457,8 @@ void *publisher(void *inp){ //enqueue()
       else{printf("[pub] Invalid Command <%s>\n", args[0]);}
     }//end of if(args[0] != Null)
   }//end of main while()
+
+  printf("PUB ERREO?\n");
 
   free(buffy);
   fclose(input);
@@ -605,11 +607,9 @@ void *subscriber(void *inp){ //getEntry()
         printf("Proxy thread <%d> - type: <Subscriber> - Executed command: <Stop>\n", thread_args->thread_ID);
 
 
-        // free(buffy);
-        // fclose(input);
-        // return NULL;
-
-        break;
+        free(buffy);
+        fclose(input);
+        return NULL;
 
         //----------------------------------
 
@@ -619,6 +619,8 @@ void *subscriber(void *inp){ //getEntry()
     }//end of if args[0]!=NULL
 
   }//end of main while()
+
+  printf("SUB ERREO?\n");
 
   free(buffy);
   fclose(input);
