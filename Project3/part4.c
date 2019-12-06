@@ -309,8 +309,8 @@ void *publisher(void *inp){ //enqueue()
   FILE *input = NULL;
   char *buffy = NULL;
   size_t bufferSize = 2048;
-	size_t file_size;
-  char *token;
+	size_t file_size = 0;
+  char *token = NULL;
 
   // printf("ID: %d\n", args->thread_ID);
   // printf("FILE: %s\n", args->file_name);
@@ -473,8 +473,8 @@ void *subscriber(void *inp){ //getEntry()
   FILE *input = NULL;
   char *buffy = NULL;
   size_t bufferSize = 2048;
-	size_t file_size;
-  char *token;
+	size_t file_size = 0;
+  char *token = NULL;
 
   // printf("ID: %d\n", args->thread_ID);
   // printf("FILE: %s\n", args->file_name);
