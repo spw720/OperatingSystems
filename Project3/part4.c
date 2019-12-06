@@ -376,7 +376,7 @@ void *publisher(void *inp){ //enqueue()
                     printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
                     pthread_mutex_lock(&lock[i]);
 
-                    int result = enqueue(*registry[i]->name, to_be_enq);
+                    int result = enqueue(*registry[i]->name, &to_be_enq);
                     printQ(*registry[i]->name);
 
                     //unlock it with this topics lock
@@ -393,7 +393,7 @@ void *publisher(void *inp){ //enqueue()
                       pthread_mutex_lock(&lock[i]);
 
                       //try to enqueue again
-                      result = enqueue(*registry[i]->name, to_be_enq);
+                      result = enqueue(*registry[i]->name, &to_be_enq);
                       printQ(*registry[i]->name);
 
                       //unlock it with this topics lock
