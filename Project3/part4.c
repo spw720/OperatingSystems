@@ -370,13 +370,12 @@ void *publisher(void *inp){ //enqueue()
 
               strcpy(to_be_enq.photoURL, args[2]);
 
-              char maxurl[URLSIZE] = args[3];
-              printf("******%s\n", maxurl);
+              printf("******%s\n", args[3]);
 
               int tempy = 4;
               while (args[tempy] != NULL]){
-                maxurl += args[tempy];
-                printf("******%s\n", maxurl);
+                args[3] += args[tempy];
+                printf("******%s\n", args[3]);
                 tempy++;
               }
 
