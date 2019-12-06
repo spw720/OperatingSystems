@@ -387,27 +387,14 @@ void *publisher(void *inp){ //enqueue()
                     pthread_mutex_unlock(&lock[i]);
 
                     //While enqueue returns 0 (either from full queue or wrong Q name)
-                    while(result == 0){
+                    if(result == 0){
 
-                      printf("*\tpublisher(): enqueue on [%s] failed, trying again after yield. Full buffer?\n", *registry[i]->name);
-
-                      //lock it down with this topics lock
-                      printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
-                      pthread_mutex_lock(&lock[i]);
-
-                      //try to enqueue again
-                      result = enqueue(*registry[i]->name, &to_be_enq);
-                      printQ(*registry[i]->name);
-
-                      //unlock it with this topics lock
-                      printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
-                      pthread_mutex_unlock(&lock[i]);
+                      printf("*\tpublisher(): enqueue on [%s] failed. Full buffer?\n", *registry[i]->name);
 
                       //Yield CPU and put thread into ready queue
                       sched_yield();
                     }//end of while enqueue() returns 0
-
-                    printf("*\tpublisher(): enqueue on [%s] succeeded\n", *registry[i]->name);
+                    else{printf("*\tpublisher(): enqueue on [%s] succeeded\n", *registry[i]->name);}
 
                   }//if()
                 }//if()
