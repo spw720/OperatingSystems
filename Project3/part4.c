@@ -457,7 +457,7 @@ void *publisher(void *inp){ //enqueue()
   }//end of main while()
 
   printf("SOURCE OF ERROR?\n");
-  sleep(1);
+  //sleep(1);
 
   free(buffy);
   fclose(input);
@@ -620,7 +620,7 @@ void *subscriber(void *inp){ //getEntry()
   }//end of main while()
 
   printf("SOURCE OF ERROR?\n");
-  sleep(1);
+  //sleep(1);
 
   free(buffy);
   fclose(input);
