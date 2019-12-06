@@ -438,15 +438,11 @@ void *publisher(void *inp){ //enqueue()
         //----------------------------------
         printf("Proxy thread <%d> - type: <Publisher> - Executed command: <Stop>\n", thread_args->thread_ID);
 
-        for (size_t i = 0; i < MAXTOPICS; i++) {
-          if(registry[i] != NULL){
-            if(registry[i]->topicID == atoi(args[1])){
-              free(buffy);
-              fclose(input);
-              return NULL;
-            }
-          }
-        }
+
+        free(buffy);
+        fclose(input);
+        return NULL;
+
         //----------------------------------
 
       }
@@ -580,15 +576,11 @@ void *subscriber(void *inp){ //getEntry()
 
         //----------------------------------
         printf("Proxy thread <%d> - type: <Subscriber> - Executed command: <Stop>\n", thread_args->thread_ID);
-        for (size_t i = 0; i < MAXTOPICS; i++) {
-          if(registry[i] != NULL){
-            if(registry[i]->topicID == atoi(args[1])){
-              free(buffy);
-              fclose(input);
-              return NULL;
-            }
-          }
-        }
+
+        free(buffy);
+        fclose(input);
+        return NULL;
+
         //----------------------------------
 
       }
