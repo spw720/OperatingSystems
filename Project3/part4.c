@@ -444,10 +444,12 @@ void *publisher(void *inp){ //enqueue()
 
         //----------------------------------
         printf("Proxy thread <%d> - type: <Publisher> - Executed command: <Stop>\n", thread_args->thread_ID);
+        break;
 
-        free(buffy);
-        fclose(input);
-        return NULL;
+        //free(buffy);
+        //fclose(input);
+
+        //return NULL;
 
         //----------------------------------
 
@@ -456,11 +458,8 @@ void *publisher(void *inp){ //enqueue()
     }//end of if(args[0] != Null)
   }//end of main while()
 
-  // printf("SOURCE OF ERROR?\n");
-  // sleep(1);
-  //
-  // free(buffy);
-  // fclose(input);
+  free(buffy);
+  fclose(input);
   return NULL;
 
 }//end of publisher()
@@ -606,9 +605,11 @@ void *subscriber(void *inp){ //getEntry()
         printf("Proxy thread <%d> - type: <Subscriber> - Executed command: <Stop>\n", thread_args->thread_ID);
 
 
-        free(buffy);
-        fclose(input);
-        return NULL;
+        // free(buffy);
+        // fclose(input);
+        // return NULL;
+
+        break;
 
         //----------------------------------
 
@@ -619,11 +620,8 @@ void *subscriber(void *inp){ //getEntry()
 
   }//end of main while()
 
-  // printf("SOURCE OF ERROR?\n");
-  // sleep(1);
-  //
-  // free(buffy);
-  // fclose(input);
+  free(buffy);
+  fclose(input);
   return NULL;
 
 }//end of subscriber()
