@@ -721,17 +721,13 @@ int main(int argc, char const *argv[]) {
                   printf("MAX NUMBER OF QUEUES REACHED\n");
                 }
                 else{
-
                   //place initilaized topicQ into registry
                   registry[queue_loc] = &queues[queue_loc];
-
                   //set ID
                   registry[queue_loc]->topicID = atoi(args[2]);
-
                   //set name
                   strcpy(topic_names[queue_loc], args[3]);
                   *registry[queue_loc]->name = topic_names[queue_loc];
-
                   //set length
                   int len = MAXENTRIES;
                   if (atoi(args[4]) > len){
@@ -740,10 +736,8 @@ int main(int argc, char const *argv[]) {
                   else{
                     registry[queue_loc]->length = atoi(args[4]);
                   }
-
                   //set last entry of topicQ buffer to NULL
                   buffer_store[queue_loc][registry[queue_loc]->length] = null;
-
                   //set buffer of regustry to repective initialized buffer from buffer store
                   registry[queue_loc]->buffer = buffer_store[queue_loc];
 
@@ -910,7 +904,7 @@ int main(int argc, char const *argv[]) {
           }
 
           //start up the cleanup thread
-          pthread_create(&cleanup_thread, NULL, cleanup, NULL);
+          //pthread_create(&cleanup_thread, NULL, cleanup, NULL);
 
         }
         //========================================
@@ -929,7 +923,7 @@ int main(int argc, char const *argv[]) {
 
   sleep(10);
 
-  pthread_cancel(cleanup_thread);
+  //pthread_cancel(cleanup_thread);
 
   //cancel all active threads
   for (size_t i = 0; i < NUMPROXIES; i++) {
@@ -948,7 +942,7 @@ int main(int argc, char const *argv[]) {
     }
   }
 
-  pthread_join(cleanup_thread, NULL);
+  //pthread_join(cleanup_thread, NULL);
 
   // Close the file
   free(buffy);
