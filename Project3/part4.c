@@ -317,7 +317,7 @@ void *publisher(void *inp){ //enqueue()
 
   int i, len = strlen(thread_args->file_name);
 	for(i=1; i<len-1; i++){
-    if(thread_args->file_name[i-1] == '\"'){
+    if(thread_args->file_name[i] == '\"'){
 		    thread_args->file_name[i-1] = thread_args->file_name[i];
     }
 	}
@@ -507,7 +507,7 @@ void *subscriber(void *inp){ //getEntry()
 	int i, len = strlen(thread_args->file_name);
 
 	for(i = 1; i<len-1; i++){
-    if(thread_args->file_name[i-1] == '\"'){
+    if(thread_args->file_name[i] == '\"'){
 		    thread_args->file_name[i-1] = thread_args->file_name[i];
     }
 	}
