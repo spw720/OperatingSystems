@@ -306,27 +306,26 @@ void *publisher(void *inp){ //enqueue()
 
   thread_args *thread_args = inp;
 
-  printf("*******PUB1**********\n");
-
-
   //FILE *input = NULL;
   char *buffy = NULL;
   size_t bufferSize = 2048;
 	size_t file_size = 0;
   char *token = NULL;
 
-  printf("*******PUB2**********\n");
-
   // printf("ID: %d\n", args->thread_ID);
   printf("FILE: %s\n", thread_args->file_name);
 
   //input = fopen(thread_args->file_name, "r");
-  FILE *input = fopen(thread_args->file_name, "r");;
+  FILE *input = fopen(thread_args->file_name, "r");
+
+  if (input == NULL){
+    printf("PUB-FILE NOT OPENED!\n");
+    free(buffer);
+    return NULL;
+  }
 
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
-
-  printf("*******PUB3**********\n");
 
   char* rest = buffy;
 
@@ -497,6 +496,12 @@ void *subscriber(void *inp){ //getEntry()
 
 	FILE *input = fopen(thread_args->file_name, "r");
 
+  if (input == NULL){
+    printf("SUB-FILE NOT OPENED!\n");
+    free(buffer);
+    return NULL;
+  }
+
 
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
@@ -630,7 +635,7 @@ void *subscriber(void *inp){ //getEntry()
         printf("Proxy thread <%d> - type: <Subscriber> - Executed command: <Stop>\n", thread_args->thread_ID);
 
 
-        //free(buffy);
+        free(buffy);
         fclose(input);
         return NULL;
 
@@ -645,7 +650,7 @@ void *subscriber(void *inp){ //getEntry()
 
   printf("SUB ERREO?\n");
 
-  //free(buffy);
+  free(buffy);
   fclose(input);
   return NULL;
 
@@ -968,7 +973,7 @@ int main(int argc, char const *argv[]) {
   pthread_join(cleanup_thread, NULL);
 
   // Close the file
-  //free(buffy);
+  free(buffy);
   fclose(input);
 
   return 0;
