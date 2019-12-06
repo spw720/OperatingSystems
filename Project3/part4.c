@@ -380,7 +380,7 @@ void *publisher(void *inp){ //enqueue()
 
               while (args[tempy] != NULL){
 
-                strcat(str, args[tempy];
+                strcat(str, args[tempy]);
 
                 printf("******%s\n", str);
                 tempy++;
