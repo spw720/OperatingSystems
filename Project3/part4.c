@@ -488,6 +488,10 @@ void *subscriber(void *inp){ //getEntry()
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
 
+
+  char* rest = buffy;
+
+
   while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
     int spaces = 0;
     int tokens = 0;
@@ -502,11 +506,12 @@ void *subscriber(void *inp){ //getEntry()
     //**************************************************
 
     //Testing strtok_r
-    char* rest = buffy;
-    token = strtok_r(rest, " ", &rest);
+    //char* rest = buffy;
+    token = strtok_r(buffy, " ", &rest);
+    //token = strtok(buffy, " ");
+
     printf("SUB TOKEN: [%s]\n", token);
 
-    //token = strtok(buffy, " ");
     //Testing strtok_r
 
     while(token != NULL) {
@@ -519,11 +524,12 @@ void *subscriber(void *inp){ //getEntry()
       //TODO make caption able to take caption with spaces
       //**************************************************
       //Testing strtok_r
-      char* rest2 = NULL;
-      token = strtok_r(rest2, " ", &rest2);
+      token = strtok_r(NULL, " ", &rest);
+      //token = strtok(NULL, " ");
+
       printf("SUB TOKEN: [%s]\n", token);
 
-      //token = strtok(NULL, " ");
+
       //Testing strtok_r
 
     }//end of while()
