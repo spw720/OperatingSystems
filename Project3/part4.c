@@ -491,7 +491,13 @@ void *subscriber(void *inp){ //getEntry()
     //**************************************************
     //TODO make caption able to take caption with spaces
     //**************************************************
-    token = strtok(buffy, " ");
+
+    //Testing strtok_r
+    char* rest = buffy;
+    token = strtok_r(rest, " ", &rest);
+
+    //token = strtok(buffy, " ");
+    //Testing strtok_r
 
     while(token != NULL) {
       int length = strlen(token);
@@ -502,7 +508,12 @@ void *subscriber(void *inp){ //getEntry()
       //**************************************************
       //TODO make caption able to take caption with spaces
       //**************************************************
-      token = strtok(NULL, " ");
+      //Testing strtok_r
+      char* rest2 = NULL;
+      token = strtok_r(rest2, " ", &rest2);
+
+      //token = strtok(NULL, " ");
+      //Testing strtok_r
 
     }//end of while()
 
