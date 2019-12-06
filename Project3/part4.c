@@ -333,7 +333,7 @@ void *publisher(void *inp){ //enqueue()
 
     //Testing strtok_r
     char* rest = buffy;
-    token = strtok_r(rest, " ", &rest)))
+    token = strtok_r(rest, " ", &rest);
 
     //token = strtok(buffy, " ");
     //Testing strtok_r
@@ -351,7 +351,7 @@ void *publisher(void *inp){ //enqueue()
 
       //Testing strtok_r
       char* rest2 = NULL;
-      token = strtok_r(rest2, " ", &rest2)))
+      token = strtok_r(rest2, " ", &rest2);
 
       //token = strtok(NULL, " ");
       //Testing strtok_r
