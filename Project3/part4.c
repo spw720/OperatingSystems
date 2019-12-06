@@ -302,6 +302,8 @@ void *cleanup(void *arg){
 
 void *publisher(void *inp){ //enqueue()
 
+  printf("*******PUBLISHER**********\n");
+
   thread_args *thread_args = inp;
 
   FILE *input = NULL;
@@ -463,6 +465,8 @@ void *publisher(void *inp){ //enqueue()
 //------------------------------------------------------------------------------
 
 void *subscriber(void *inp){ //getEntry()
+
+  printf("*******SUBSCRIBER**********\n");
 
   thread_args *thread_args = inp;
 
