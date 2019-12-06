@@ -871,7 +871,7 @@ int main(int argc, char const *argv[]) {
           }
 
           //start up the cleanup thread
-          //pthread_create(&cleanup_thread, NULL, cleanup, NULL);
+          pthread_create(&cleanup_thread, NULL, cleanup, NULL);
 
         }
         //========================================
@@ -890,7 +890,7 @@ int main(int argc, char const *argv[]) {
 
   sleep(10);
 
-  //pthread_cancel(cleanup_thread);
+  pthread_cancel(cleanup_thread);
 
   //cancel all active threads
   for (size_t i = 0; i < NUMPROXIES; i++) {
@@ -909,7 +909,7 @@ int main(int argc, char const *argv[]) {
     }
   }
 
-  //pthread_join(cleanup_thread, NULL);
+  pthread_join(cleanup_thread, NULL);
 
   // Close the file
   free(buffy);
