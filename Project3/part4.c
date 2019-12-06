@@ -442,7 +442,7 @@ void *publisher(void *inp){ //enqueue()
         //----------------------------------
 
       }
-      else{printf("Invalid Command\n");}
+      else{printf("[pub] Invalid Command <%s>\n", args[0]);}
     }//end of if(args[0] != Null)
   }//end of main while()
 
@@ -584,7 +584,7 @@ void *subscriber(void *inp){ //getEntry()
         //----------------------------------
 
       }
-      else{printf("Invalid Command\n");}
+      else{printf("[sub] Invalid Command <%s>\n", args[0]);}
 
     }//end of if args[0]!=NULL
 
@@ -646,41 +646,8 @@ int main(int argc, char const *argv[]) {
     }
   }
 
+  //queue locater
   int queue_loc = 0;
-
-
-  //**************************************************
-  //TODO - MOVED ALL THESE OUTSIDE MAIN TO MAKE GLOBAL
-  //**************************************************
-
-  // //========================================
-  //
-  // //initialize thread pools
-  // pthread_t sub_pool[NUMPROXIES] = {};
-  // pthread_t pub_pool[NUMPROXIES] = {};
-  //
-  // pthread_t cleanup_thread;
-  //
-  // //array of filenames
-  // char sub_file_names[NUMPROXIES][MAXNAME];
-  // char pub_file_names[NUMPROXIES][MAXNAME];
-  //
-  // //arrays to-be used to decide if thread is taken
-  // int sub_avail[NUMPROXIES] = {};
-  // int pub_avail[NUMPROXIES] = {};
-  //
-  // //structs of arguments to-be sent to pthread_create
-  // thread_args sub_thread_args[NUMPROXIES] = {};
-  // thread_args pub_thread_args[NUMPROXIES] = {};
-  //
-  // //set all entries to 0 to indicate threads are all free
-  // for (size_t i = 0; i < NUMPROXIES; i++) {
-  //   sub_avail[i] = 0;
-  //   pub_avail[i] = 0;
-  // }
-  //
-  // //========================================
-
 
   while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
     int spaces = 0;
@@ -910,7 +877,7 @@ int main(int argc, char const *argv[]) {
         //========================================
 
       }
-      else{printf("UNKNOWN COMMAND!\n");}
+      else{printf("[main] UNKNOWN COMMAND! <%s>\n", args[0]);}
 
     }
     else{printf("MISSING VALUE!\n");}
