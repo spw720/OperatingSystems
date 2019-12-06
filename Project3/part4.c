@@ -306,7 +306,7 @@ void *publisher(void *inp){ //enqueue()
 
   thread_args *thread_args = inp;
 
-  FILE *input = NULL;
+  //FILE *input = NULL;
   char *buffy = NULL;
   size_t bufferSize = 2048;
 	size_t file_size = 0;
@@ -315,7 +315,8 @@ void *publisher(void *inp){ //enqueue()
   // printf("ID: %d\n", args->thread_ID);
   // printf("FILE: %s\n", args->file_name);
 
-  input = fopen(thread_args->file_name, "r");
+  //input = fopen(thread_args->file_name, "r");
+  FILE *input = fopen(thread_args->file_name, "r");;
 
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
@@ -470,7 +471,7 @@ void *subscriber(void *inp){ //getEntry()
 
   thread_args *thread_args = inp;
 
-  FILE *input = NULL;
+  //FILE *input = NULL;
   char *buffy = NULL;
   size_t bufferSize = 2048;
 	size_t file_size = 0;
@@ -479,7 +480,7 @@ void *subscriber(void *inp){ //getEntry()
   // printf("ID: %d\n", args->thread_ID);
   // printf("FILE: %s\n", args->file_name);
 
-	input = fopen(thread_args->file_name, "r");
+	FILE *input = input = fopen(thread_args->file_name, "r");
 
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
