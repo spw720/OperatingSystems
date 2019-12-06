@@ -825,8 +825,6 @@ int main(int argc, char const *argv[]) {
               for (size_t i = 0; i < NUMPROXIES; i++) {
                 if(pub_avail[i] == 0){
 
-                  input = args[2]
-
                   printf("\tFound available publisher thread[%d]\n", i);
                   pub_avail[i] = 1;
                   strcpy(pub_file_names[i], args[2]);
