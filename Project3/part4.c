@@ -111,7 +111,7 @@ void printQ(char *QID){
     if(registry[i] != NULL){
       if (strcmp(*registry[i]->name, QID) == 0){
         printf("\n---Entries of Q[%s]---\n[", *registry[i]->name);
-        for (size_t j = 0; j <= MAXENTRIES; j++) {
+        for (size_t j = 0; j <= registry[i]->length; j++) {
           printf("%d, ", registry[i]->buffer[j].entryNum);
         }
         printf("]\n\n");
@@ -143,7 +143,7 @@ int enqueue(char *QID, topicEntry *TE){
           gettimeofday(&time, NULL);
           registry[i]->buffer[registry[i]->tail].timeStamp = time;
           //increment tail
-          int new_tail = (registry[i]->tail + 1) % (MAXENTRIES+1);
+          int new_tail = (registry[i]->tail + 1) % (registry[i]->length+1);
           registry[i]->tail = new_tail;
           return 1;
         }
@@ -171,7 +171,7 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
           return 0;
         }
         //Case2: lastEntry+1 is in Queue: copy lastEntry+1 data to TE, return 1)
-        for (size_t j = 0; j < MAXENTRIES+1; j++) {
+        for (size_t j = 0; j < registry[i]->length+1; j++) {
           if (registry[i]->buffer[j].entryNum == lastEntry+1){
             //copy data over
             *TE = registry[i]->buffer[j];
@@ -180,7 +180,7 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
           }
         }
         //Case3: Topic queue is NOT empty & lastEntry+1 is NOT in queues
-        for (size_t j = 0; j < MAXENTRIES+1; j++) {
+        for (size_t j = 0; j < registry[i]->length+1; j++) {
           //ii: if there exists entry.entryNum > lastEntry+1:
           if (registry[i]->buffer[j].entryNum > lastEntry+1){
             //copy entry data to TE, return entry.entryNum
@@ -229,23 +229,31 @@ int dequeue(char *QID){
           if (registry[i]->buffer[registry[i]->tail].entryNum == -1){
             //set head entryNum to -1 (null)
             registry[i]->buffer[registry[i]->head].entryNum = -1;
-            int head_minus1 = (registry[i]->head - 1) % (MAXENTRIES+1);
-            if (head_minus1 == -1) { head_minus1 = MAXENTRIES; }
+
+            int head_minus1 = (registry[i]->head - 1) % (registry[i]->length+1);
+
+            if (head_minus1 == -1) { head_minus1 = registry[i]->length; }
             //set head-1 entryNum to 0 (empty)
             registry[i]->buffer[head_minus1].entryNum = 0;
             //Increment head
-            int new_head = (registry[i]->head + 1) % (MAXENTRIES+1);
+
+            int new_head = (registry[i]->head + 1) % (registry[i]->length+1);
+
             registry[i]->head = new_head;
           }
           else {
-            int head_minus2 = (registry[i]->head - 1) % (MAXENTRIES+1);
-            if (head_minus2 == -1) { head_minus2 = MAXENTRIES; }
+
+            int head_minus2 = (registry[i]->head - 1) % (registry[i]->length+1);
+
+            if (head_minus2 == -1) { head_minus2 = registry[i]->length; }
+
             //set head-1 entryNum to 0 (empty)
             registry[i]->buffer[head_minus2].entryNum = 0;
             //set head entryNum to -1 (null)
             registry[i]->buffer[registry[i]->head].entryNum = -1;
             //increment head
-            int new_head = (registry[i]->head + 1) % (MAXENTRIES+1);
+            int new_head = (registry[i]->head + 1) % (registry[i]->length+1);
+
             registry[i]->head = new_head;
           }
           return 1;
