@@ -334,7 +334,7 @@ void *publisher(void *inp){ //enqueue()
     //Testing strtok_r
     char* rest = buffy;
     token = strtok_r(rest, " ", &rest);
-
+    printf("PUB TOKEN: [%s]\n", token);
     //token = strtok(buffy, " ");
     //Testing strtok_r
 
@@ -352,6 +352,7 @@ void *publisher(void *inp){ //enqueue()
       //Testing strtok_r
       char* rest2 = NULL;
       token = strtok_r(rest2, " ", &rest2);
+      printf("PUB TOKEN: [%s]\n", token);
 
       //token = strtok(NULL, " ");
       //Testing strtok_r
@@ -495,6 +496,7 @@ void *subscriber(void *inp){ //getEntry()
     //Testing strtok_r
     char* rest = buffy;
     token = strtok_r(rest, " ", &rest);
+    printf("SUB TOKEN: [%s]\n", token);
 
     //token = strtok(buffy, " ");
     //Testing strtok_r
@@ -511,6 +513,7 @@ void *subscriber(void *inp){ //getEntry()
       //Testing strtok_r
       char* rest2 = NULL;
       token = strtok_r(rest2, " ", &rest2);
+      printf("SUB TOKEN: [%s]\n", token);
 
       //token = strtok(NULL, " ");
       //Testing strtok_r
