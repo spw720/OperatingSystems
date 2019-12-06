@@ -870,10 +870,11 @@ int main(int argc, char const *argv[]) {
             pthread_create(&pub_pool[i], NULL, publisher, (void *)&pub_thread_args[i]);
           }
 
-          //start up the cleanup thread
-          pthread_create(&cleanup_thread, NULL, cleanup, NULL);
-
         }
+
+        //start up the cleanup thread
+        pthread_create(&cleanup_thread, NULL, cleanup, NULL);
+
         //========================================
 
       }
