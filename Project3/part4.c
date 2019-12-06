@@ -336,10 +336,11 @@ void *publisher(void *inp){ //enqueue()
     //TODO use strtok_r
     //**************************************************
 
+    printf("BEFORE PUB TOKEN: [%s]\n", token);
     //Testing strtok_r
     // char* rest = buffy;
     token = strtok_r(buffy, " ", &rest);
-    printf("PUB TOKEN: [%s]\n", token);
+    printf("AFTER PUB TOKEN: [%s]\n", token);
     //token = strtok(buffy, " ");
     //Testing strtok_r
 
@@ -507,12 +508,13 @@ void *subscriber(void *inp){ //getEntry()
     //TODO make caption able to take caption with spaces
     //**************************************************
 
+    printf("BEFORE SUB TOKEN: [%s]\n", token);
     //Testing strtok_r
     //char* rest = buffy;
     token = strtok_r(buffy, " ", &rest);
     //token = strtok(buffy, " ");
 
-    printf("SUB TOKEN: [%s]\n", token);
+    printf("AFTER SUB TOKEN: [%s]\n", token);
 
     //Testing strtok_r
 
