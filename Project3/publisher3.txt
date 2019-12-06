@@ -1,7 +1,7 @@
-put 3 "https://ichef.bmages-486869012.jpg" "A_goat"
+put 3 "https://ichef.bmages-486869012.jpg" "A goat"
 sleep 1000
-put 3 "https://dbukjjton2014_EE.JPG" "Mariota,_goat"
+put 3 "https://dbukjjton2014_EE.JPG" "Mariota, goat"
 sleep 2000
-put 3 "https://ichef.bbca3-923b-ff26a4d2d103.jpg" "Some_goats"
+put 3 "https://ichef.bbca3-923b-ff26a4d2d103.jpg" "Some goats"
 sleep 20000
 stop
