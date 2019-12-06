@@ -306,11 +306,16 @@ void *publisher(void *inp){ //enqueue()
 
   thread_args *thread_args = inp;
 
+  printf("*******PUB1**********\n");
+
+
   //FILE *input = NULL;
   char *buffy = NULL;
   size_t bufferSize = 2048;
 	size_t file_size = 0;
   char *token = NULL;
+
+  printf("*******PUB2**********\n");
 
   // printf("ID: %d\n", args->thread_ID);
   printf("FILE: %s\n", thread_args->file_name);
@@ -321,7 +326,11 @@ void *publisher(void *inp){ //enqueue()
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
 
+  printf("*******PUB3**********\n");
+
   char* rest = buffy;
+
+  printf("*******PUB4**********\n");
 
   while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
     int spaces = 0;
@@ -477,23 +486,40 @@ void *subscriber(void *inp){ //getEntry()
 
   thread_args *thread_args = inp;
 
+  printf("*******SUB1**********\n");
+
   //FILE *input = NULL;
   char *buffy = NULL;
+
+  printf("*******SUB2**********\n");
+
   size_t bufferSize = 2048;
+
+  printf("*******SUB3**********\n");
+
 	size_t file_size = 0;
+
+  printf("*******SUB4**********\n");
+
   char *token = NULL;
+
+  printf("*******SUB5**********\n");
 
   // printf("ID: %d\n", args->thread_ID);
   printf("FILE: %s\n", thread_args->file_name);
 
 	FILE *input = fopen(thread_args->file_name, "r");
 
+  printf("*******SUB6**********\n");
+
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
 
+  printf("*******SUB7**********\n");
 
   char* rest = buffy;
 
+  printf("*******SUB8**********\n");
 
   while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
     int spaces = 0;
