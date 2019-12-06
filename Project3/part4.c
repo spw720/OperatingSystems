@@ -495,7 +495,7 @@ void *subscriber(void *inp){ //getEntry()
   // printf("ID: %d\n", args->thread_ID);
   printf("FILE: %s\n", thread_args->file_name);
 
-	FILE *input = fopen(thread_args->file_name, "r");]
+	FILE *input = fopen(thread_args->file_name, "r");
 
 
   buffy = (char *)malloc(bufferSize * sizeof(char));
