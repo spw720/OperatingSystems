@@ -445,7 +445,6 @@ void *publisher(void *inp){ //enqueue()
         //----------------------------------
         printf("Proxy thread <%d> - type: <Publisher> - Executed command: <Stop>\n", thread_args->thread_ID);
 
-
         free(buffy);
         fclose(input);
         return NULL;
@@ -456,6 +455,9 @@ void *publisher(void *inp){ //enqueue()
       else{printf("[pub] Invalid Command <%s>\n", args[0]);}
     }//end of if(args[0] != Null)
   }//end of main while()
+
+  printf("SOURCE OF ERROR?\n");
+  sleep(1);
 
   free(buffy);
   fclose(input);
@@ -480,7 +482,7 @@ void *subscriber(void *inp){ //getEntry()
   // printf("ID: %d\n", args->thread_ID);
   printf("FILE: %s\n", thread_args->file_name);
 
-	FILE *input = input = fopen(thread_args->file_name, "r");
+	FILE *input = fopen(thread_args->file_name, "r");
 
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
@@ -603,6 +605,7 @@ void *subscriber(void *inp){ //getEntry()
         //----------------------------------
         printf("Proxy thread <%d> - type: <Subscriber> - Executed command: <Stop>\n", thread_args->thread_ID);
 
+
         free(buffy);
         fclose(input);
         return NULL;
@@ -615,6 +618,9 @@ void *subscriber(void *inp){ //getEntry()
     }//end of if args[0]!=NULL
 
   }//end of main while()
+
+  printf("SOURCE OF ERROR?\n");
+  sleep(1);
 
   free(buffy);
   fclose(input);
