@@ -444,8 +444,9 @@ void *publisher(void *inp){ //enqueue()
           if(registry[i] != NULL){
             if(registry[i]->topicID == atoi(args[1])){
 
-              pthread_join(pub_pool[i], NULL);
-              pub_avail[i] = 0;
+              free(buffy);
+              fclose(input);
+              return NULL;
 
             }
           }
@@ -457,6 +458,8 @@ void *publisher(void *inp){ //enqueue()
     }//end of if(args[0] != Null)
   }//end of main while()
 
+  free(buffy);
+  fclose(input);
   return NULL;
 
 }//end of publisher()
@@ -597,8 +600,9 @@ void *subscriber(void *inp){ //getEntry()
           if(registry[i] != NULL){
             if(registry[i]->topicID == atoi(args[1])){
 
-              pthread_join(sub_pool[i], NULL);
-              sub_avail[i] = 0;
+              free(buffy);
+              fclose(input);
+              return NULL;
 
             }
           }
@@ -612,6 +616,8 @@ void *subscriber(void *inp){ //getEntry()
 
   }//end of main while()
 
+  free(buffy);
+  fclose(input);
   return NULL;
 
 }//end of subscriber()
