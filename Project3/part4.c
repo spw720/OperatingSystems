@@ -321,6 +321,8 @@ void *publisher(void *inp){ //enqueue()
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
 
+  char* rest = buffy;
+
   while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
     int spaces = 0;
     int tokens = 0;
@@ -335,8 +337,8 @@ void *publisher(void *inp){ //enqueue()
     //**************************************************
 
     //Testing strtok_r
-    char* rest = buffy;
-    token = strtok_r(rest, " ", &rest);
+    // char* rest = buffy;
+    token = strtok_r(buffy, " ", &rest);
     printf("PUB TOKEN: [%s]\n", token);
     //token = strtok(buffy, " ");
     //Testing strtok_r
@@ -353,8 +355,8 @@ void *publisher(void *inp){ //enqueue()
       //**************************************************
 
       //Testing strtok_r
-      char* rest2 = NULL;
-      token = strtok_r(rest2, " ", &rest2);
+      //char* rest2 = NULL;
+      token = strtok_r(NULL, " ", &rest);
       printf("PUB TOKEN: [%s]\n", token);
 
       //token = strtok(NULL, " ");
