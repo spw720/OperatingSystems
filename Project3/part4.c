@@ -12,6 +12,7 @@
 #include <pthread.h>
 #include <sched.h>
 #include <sys/time.h>
+#include <time.h>
 
 //------------------------------------------------------------------------------
 
@@ -329,7 +330,14 @@ void *publisher(void *inp){ //enqueue()
     //**************************************************
     //TODO use strtok_r
     //**************************************************
-    token = strtok(buffy, " ");
+
+    //Testing strtok_r
+    char* rest = buffy;
+    token = strtok_r(rest, " ", &rest)))
+
+    //token = strtok(buffy, " ");
+    //Testing strtok_r
+
 
     while(token != NULL) {
       int length = strlen(token);
@@ -340,7 +348,13 @@ void *publisher(void *inp){ //enqueue()
       //**************************************************
       //TODO use strtok_r
       //**************************************************
-      token = strtok(NULL, " ");
+
+      //Testing strtok_r
+      char* rest2 = NULL;
+      token = strtok_r(rest2, " ", &rest2)))
+
+      //token = strtok(NULL, " ");
+      //Testing strtok_r
 
     }//end of while()
 
@@ -410,11 +424,13 @@ void *publisher(void *inp){ //enqueue()
         if (args[1] != NULL){
 
           //----------------------------------
+          int milli = atoi(args[1]); // length of time to sleep, in miliseconds
+          struct timespec tim = {0};
+          tim.tv_sec = 0;
+          tim.tv_nsec = milli * 1000000L;
+          nanosleep(&tim, (struct timespec *)NULL);
+
           printf("Proxy thread <%d> - type: <Publisher> - Executed command: <Sleep>\n", thread_args->thread_ID);
-
-          int milli = (atoi(args[1])*1000);//Sleep 1000 micro seconds = 1 ms, etc.
-
-          usleep(milli); //Sleep milli micro seconds
           //----------------------------------
 
         }
@@ -551,9 +567,13 @@ void *subscriber(void *inp){ //getEntry()
         if (args[1] != NULL){
 
           //----------------------------------
+          int milli = atoi(args[1]); // length of time to sleep, in miliseconds
+          struct timespec tim = {0};
+          tim.tv_sec = 0;
+          tim.tv_nsec = milli * 1000000L;
+          nanosleep(&tim, (struct timespec *)NULL);
+
           printf("Proxy thread <%d> - type: <Subscriber> - Executed command: <Sleep>\n", thread_args->thread_ID);
-          int milli = (atoi(args[1])*1000);//Sleep 1000 micro seconds = 1 ms, etc.
-          usleep(milli); //Sleep milli micro seconds
           //----------------------------------
 
         }
