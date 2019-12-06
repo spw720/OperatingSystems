@@ -271,8 +271,8 @@ void *publisher(void *inp){ //enqueue()
 	size_t file_size;
   char *token;
 
-  printf("ID: %d\n", args->thread_ID);
-  printf("FILE: %s\n", args->file_name);
+  // printf("ID: %d\n", args->thread_ID);
+  // printf("FILE: %s\n", args->file_name);
 
   input = fopen(args->file_name, "r");
 
@@ -289,13 +289,23 @@ void *publisher(void *inp){ //enqueue()
     char *args[tokens+1];
     args[tokens] = NULL;
     int index = 0;
+
+    //**************************************************
+    //TODO use strtok_r
+    //**************************************************
     token = strtok(buffy, " ");
+
     while(token != NULL) {
       int length = strlen(token);
       if (length > 0 && token[length - 1] == '\n'){ token[length-1] = '\0';}
       args[index] = token;
       index += 1;
+
+      //**************************************************
+      //TODO use strtok_r
+      //**************************************************
       token = strtok(NULL, " ");
+
     }//end of while()
 
     //if there are arguments to be parsed
@@ -306,37 +316,112 @@ void *publisher(void *inp){ //enqueue()
         if (args[1] != NULL){
           if (args[2] != NULL){
             if (args[3] != NULL){
+              //----------------------------------
 
               printf("PUT %s %s %s\n", args[1], args[2], args[3]);
 
+              topicEntry to_be_enq;
+
+              to_be_enq.pubID = args->thread_ID;
+
+              strcpy(to_be_enq.photoURL, args[2]);
+              //to_be_enq.photoURL = args[2];
+
+              //**************************************************
+              //TODO make caption able to take caption with spaces
+              //**************************************************
+              strcpy(to_be_enq.photoCaption, args[3]);
+              //to_be_enq.photoCaption = args[3];
+
+
+              for (size_t i = 0; i < MAXTOPICS; i++) {
+                if(registry[i] != NULL){
+                  if(registry[i].topicID == atoi(args[1])){
+
+                    //lock it down with this topics lock
+                    printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
+                    pthread_mutex_lock(&lock[i]);
+
+                    int result = enqueue(*registry[i]->name, to_be_enq);
+                    printQ(*registry[i]->name);
+
+                    //unlock it with this topics lock
+                    printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
+                    pthread_mutex_unlock(&lock[i]);
+
+                    //While enqueue returns 0 (either from full queue or wrong Q name)
+                    while(result == 0){
+
+                      printf("*\tpublisher(): enqueue on [%s] failed, trying again after yield. Full buffer?\n", *registry[i]->name);
+
+                      //lock it down with this topics lock
+                      printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
+                      pthread_mutex_lock(&lock[i]);
+
+                      //try to enqueue again
+                      result = enqueue(*registry[i]->name, to_be_enq);
+                      printQ(*registry[i]->name);
+
+                      //unlock it with this topics lock
+                      printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
+                      pthread_mutex_unlock(&lock[i]);
+
+                      //Sleep to help make print statements print before thread yields
+                      sleep(1);
+                      //Yield CPU and put thread into ready queue
+                      sched_yield();
+                    }//end of while enqueue() returns 0
+
+                    printf("*\tpublisher(): enqueue on [%s] succeeded\n", *registry[i]->name);
+
+                    //sleep as to make print statements more readable
+                    sleep(1);
+
+                  }//if()
+                }//if()
+              }//end of for()
+
+              //----------------------------------
             }
           }
         }
       }
-
       //sleep milli
       else if (strcmp(args[0], "sleep")==0){
         if (args[1] != NULL){
+          //----------------------------------
 
           printf("SLEEP %d\n", atoi(args[1]));
 
+          int milli = (atoi(args[1])*1000);//Sleep 1000 micro seconds = 1 ms, etc.
+
+          usleep(milli); //Sleep milli micro seconds
+
+          //----------------------------------
         }
       }
-
       //stop
       else if (strcmp(args[0], "stop")==0){
+        //----------------------------------
 
         printf("STOP\n");
 
+        for (size_t i = 0; i < MAXTOPICS; i++) {
+          if(registry[i] != NULL){
+            if(registry[i].topicID == atoi(args[1])){
+
+              pthread_join(pub_pool[i], NULL);
+              pub_avail[i] = 0;
+
+            }
+          }
+        }
+
+        //----------------------------------
       }
-
       else{printf("Invalid Command\n");}
-
-    }
-
+    }//end of if(args[0] != Null)
   }//end of main while()
-
-
 
   return NULL;
 
@@ -354,8 +439,8 @@ void *subscriber(void *inp){ //getEntry()
 	size_t file_size;
   char *token;
 
-  printf("ID: %d\n", args->thread_ID);
-  printf("FILE: %s\n", args->file_name);
+  // printf("ID: %d\n", args->thread_ID);
+  // printf("FILE: %s\n", args->file_name);
 
 	input = fopen(args->file_name, "r");
 
@@ -372,13 +457,23 @@ void *subscriber(void *inp){ //getEntry()
     char *args[tokens+1];
     args[tokens] = NULL;
     int index = 0;
+
+    //**************************************************
+    //TODO make caption able to take caption with spaces
+    //**************************************************
     token = strtok(buffy, " ");
+
     while(token != NULL) {
       int length = strlen(token);
       if (length > 0 && token[length - 1] == '\n'){ token[length-1] = '\0';}
       args[index] = token;
       index += 1;
+
+      //**************************************************
+      //TODO make caption able to take caption with spaces
+      //**************************************************
       token = strtok(NULL, " ");
+
     }//end of while()
 
     //if there are arguments to be parsed
@@ -387,41 +482,139 @@ void *subscriber(void *inp){ //getEntry()
       //get id
       if (strcmp(args[0], "get")==0){
         if (args[1] != NULL){
+          //----------------------------------
 
           printf("GET %d\n", atoi(args[1]));
 
+          //empty struct to-be filled by getEntry()
+          topicEntry place_hold;
+          place_hold.entryNum = -999;
+
+          //last entry initially set to 1
+          int last_entry = 1;
+
+          for (size_t i = 0; i < MAXTOPICS; i++) {
+            if(registry[i] != NULL){
+              if(registry[i].topicID == atoi(args[1])){
+
+                //try to getEntry
+
+                //lock it down with this topics lock
+                printf("*\tsubscriber(): Locking up queue[%s]\n", *registry[i]->name);
+                pthread_mutex_lock(&lock[i]);
+
+                int result = getEntry(*registry[i]->name, last_entry, &place_hold);
+
+                //unlock it with this topics lock
+                printf("*\tsubscriber(): Unlocking queue[%s]\n", *registry[i]->name);
+                pthread_mutex_unlock(&lock[i]);
+
+                //if getEntry() returns 0 (all entries < lastEntry+1 <or> Q is empty)
+                if(result == 0){
+                  printf("*\tsubscriber(): getEntry on [%s] failed\n", *registry[i]->name);
+
+                  //sleep so print shows up
+                  sleep(1);
+
+                  //yield CPU and put back on ready Q
+                  sched_yield();
+                }
+                //if getEntry() returns 1 (found lastEntry+1)
+                else if(result == 1){
+                  printf("*\tsubscriber(): getEntry on [%s] found entry:[%d]\n", *registry[i]->name, place_hold.entryNum);
+                  last_entry++;
+                }
+                else{
+                  printf("*\tsubscriber(): getEntry on [%s] found entry:[%d]", *registry[i]->name, place_hold.entryNum);
+                  printf(" ... lastEntry is now:[%d]\n", result);
+                  last_entry = result;
+                }
+
+                sleep(1);
+
+              }
+            }
+          }
+
+          //----------------------------------
         }
       }
-
       //sleep milli
       else if (strcmp(args[0], "sleep")==0){
         if (args[1] != NULL){
+          //----------------------------------
 
           printf("SLEEP %d\n", atoi(args[1]));
 
+          int milli = (atoi(args[1])*1000);//Sleep 1000 micro seconds = 1 ms, etc.
+
+          usleep(milli); //Sleep milli micro seconds
+
+          //----------------------------------
         }
       }
-
       //stop
       else if (strcmp(args[0], "stop")==0){
+        //----------------------------------
 
         printf("STOP\n");
 
-      }
+        for (size_t i = 0; i < MAXTOPICS; i++) {
+          if(registry[i] != NULL){
+            if(registry[i].topicID == atoi(args[1])){
 
+              pthread_join(sub_pool[i], NULL);
+              sub_avail[i] = 0;
+
+            }
+          }
+        }
+
+        //----------------------------------
+      }
       else{printf("Invalid Command\n");}
 
-    }
+    }//end of if args[0]!=NULL
 
   }//end of main while()
-
-
 
   return NULL;
 
 }//end of subscriber()
 
 //------------------------------------------------------------------------------
+
+//========================================
+
+//**************************************************
+//TODO - MOVED ALL THESE OUTSIDE MAIN TO MAKE GLOBAL
+//**************************************************
+
+//initialize thread pools
+pthread_t sub_pool[NUMPROXIES] = {};
+pthread_t pub_pool[NUMPROXIES] = {};
+
+pthread_t cleanup_thread;
+
+//array of filenames
+char sub_file_names[NUMPROXIES][MAXNAME];
+char pub_file_names[NUMPROXIES][MAXNAME];
+
+//arrays to-be used to decide if thread is taken
+int sub_avail[NUMPROXIES] = {};
+int pub_avail[NUMPROXIES] = {};
+
+//structs of arguments to-be sent to pthread_create
+thread_args sub_thread_args[NUMPROXIES] = {};
+thread_args pub_thread_args[NUMPROXIES] = {};
+
+//set all entries to 0 to indicate threads are all free
+for (size_t i = 0; i < NUMPROXIES; i++) {
+  sub_avail[i] = 0;
+  pub_avail[i] = 0;
+}
+
+//========================================
 
 int main(int argc, char const *argv[]) {
 
@@ -439,8 +632,8 @@ int main(int argc, char const *argv[]) {
   }
   //check for file mode
   if (argc == 2){
-		input = fopen(argv[1], "r");
     printf("File Mode\n");
+		input = fopen(argv[1], "r");
 	}
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
@@ -472,33 +665,38 @@ int main(int argc, char const *argv[]) {
 
   int queue_loc = 0;
 
-  //========================================
 
-  //initialize thread pools
-  pthread_t sub_pool[NUMPROXIES] = {};
-  pthread_t pub_pool[NUMPROXIES] = {};
+  //**************************************************
+  //TODO - MOVED ALL THESE OUTSIDE MAIN TO MAKE GLOBAL
+  //**************************************************
 
-  pthread_t cleanup_thread;
-
-  //array of filenames
-  char sub_file_names[NUMPROXIES][MAXNAME];
-  char pub_file_names[NUMPROXIES][MAXNAME];
-
-  //arrays to-be used to decide if thread is taken
-  int sub_avail[NUMPROXIES] = {};
-  int pub_avail[NUMPROXIES] = {};
-
-  //structs of arguments to-be sent to pthread_create
-  thread_args sub_thread_args[NUMPROXIES] = {};
-  thread_args pub_thread_args[NUMPROXIES] = {};
-
-  //set all entries to 0 to indicate threads are all free
-  for (size_t i = 0; i < NUMPROXIES; i++) {
-    sub_avail[i] = 0;
-    pub_avail[i] = 0;
-  }
-
-  //========================================
+  // //========================================
+  //
+  // //initialize thread pools
+  // pthread_t sub_pool[NUMPROXIES] = {};
+  // pthread_t pub_pool[NUMPROXIES] = {};
+  //
+  // pthread_t cleanup_thread;
+  //
+  // //array of filenames
+  // char sub_file_names[NUMPROXIES][MAXNAME];
+  // char pub_file_names[NUMPROXIES][MAXNAME];
+  //
+  // //arrays to-be used to decide if thread is taken
+  // int sub_avail[NUMPROXIES] = {};
+  // int pub_avail[NUMPROXIES] = {};
+  //
+  // //structs of arguments to-be sent to pthread_create
+  // thread_args sub_thread_args[NUMPROXIES] = {};
+  // thread_args pub_thread_args[NUMPROXIES] = {};
+  //
+  // //set all entries to 0 to indicate threads are all free
+  // for (size_t i = 0; i < NUMPROXIES; i++) {
+  //   sub_avail[i] = 0;
+  //   pub_avail[i] = 0;
+  // }
+  //
+  // //========================================
 
 
   while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
@@ -729,7 +927,7 @@ int main(int argc, char const *argv[]) {
           }
 
           //start up the cleanup thread
-          //pthread_create(&cleanup_thread, NULL, cleanup, NULL);
+          pthread_create(&cleanup_thread, NULL, cleanup, NULL);
 
         }
         //========================================
@@ -748,7 +946,7 @@ int main(int argc, char const *argv[]) {
 
   //sleep(20);
 
-  //pthread_cancel(cleanup_thread);
+  pthread_cancel(cleanup_thread);
 
   //cancel all active threads
   for (size_t i = 0; i < NUMPROXIES; i++) {
@@ -767,7 +965,7 @@ int main(int argc, char const *argv[]) {
     }
   }
 
-  //pthread_join(cleanup_thread, NULL);
+  pthread_join(cleanup_thread, NULL);
 
   // Close the file
   free(buffy);
