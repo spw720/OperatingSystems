@@ -370,12 +370,19 @@ void *publisher(void *inp){ //enqueue()
 
               strcpy(to_be_enq.photoURL, args[2]);
 
-              printf("******%s\n", args[3]);
 
+              printf("BEFORE ******%s\n", args[3]);
+
+              char str[URLSIZE];
               int tempy = 4;
-              while (args[tempy] != NULL]){
-                args[3] += args[tempy];
-                printf("******%s\n", args[3]);
+
+              strcpy(str, args[3]);
+
+              while (args[tempy] != NULL){
+
+                strcat(str, args[tempy];
+
+                printf("******%s\n", str);
                 tempy++;
               }
 
