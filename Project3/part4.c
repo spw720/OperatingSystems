@@ -522,6 +522,9 @@ void *subscriber(void *inp){ //getEntry()
   printf("*******SUB8**********\n");
 
   while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
+
+    printf("*******SUB9**********\n");
+
     int spaces = 0;
     int tokens = 0;
     for (int i = 0; i < file_size; i++) {if (buffy[i] == ' '){spaces += 1;}}
