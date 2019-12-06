@@ -315,6 +315,14 @@ void *publisher(void *inp){ //enqueue()
   // printf("ID: %d\n", args->thread_ID);
   printf("FILE: %s\n", thread_args->file_name);
 
+  int i, len = strlen(thread_args->file_name);
+	for(i=1; i<len-1; i++){
+		thread_args->file_name;[i-1]=thread_args->file_name;[i];
+	}
+	thread_args->file_name;[i-1]='\0';
+
+	printf("NEW FILE: %s\n", thread_args->file_name);
+
   //input = fopen(thread_args->file_name, "r");
   FILE *input = fopen(thread_args->file_name, "r");
 
@@ -494,6 +502,22 @@ void *subscriber(void *inp){ //getEntry()
   // printf("ID: %d\n", args->thread_ID);
   printf("FILE: %s\n", thread_args->file_name);
 
+  // int dex = 0;
+  // for (size_t i = 0; i < strlen(thread_args->file_name); i++) {
+  //   if(thread_args->file_name[i] != '\"'){
+  //
+  //   }
+  // }
+  // thread_args->file_name[dex] = '\0';
+
+	int i, len = strlen(thread_args->file_name);
+	for(i=1; i<len-1; i++){
+		thread_args->file_name;[i-1]=thread_args->file_name;[i];
+	}
+	thread_args->file_name;[i-1]='\0';
+
+	printf("NEW FILE: %s\n", thread_args->file_name);
+
 	FILE *input = fopen(thread_args->file_name, "r");
 
   if (input == NULL){
@@ -508,11 +532,7 @@ void *subscriber(void *inp){ //getEntry()
 
   char* rest = buffy;
 
-  printf("*******SUB8**********\n");
-
   while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
-
-    printf("*******SUB9**********\n");
 
     int spaces = 0;
     int tokens = 0;
@@ -804,10 +824,14 @@ int main(int argc, char const *argv[]) {
               int check_availp = 0;
               for (size_t i = 0; i < NUMPROXIES; i++) {
                 if(pub_avail[i] == 0){
+
+                  input = args[2]
+
                   printf("\tFound available publisher thread[%d]\n", i);
                   pub_avail[i] = 1;
                   strcpy(pub_file_names[i], args[2]);
                   break;
+
                 }
                 else{
                   check_availp++;
@@ -828,10 +852,12 @@ int main(int argc, char const *argv[]) {
               int check_avails = 0;
               for (size_t i = 0; i < NUMPROXIES; i++) {
                 if(sub_avail[i] == 0){
+
                   printf("\tFound available subsriber thread[%d]\n", i);
                   sub_avail[i] = 1;
                   strcpy(sub_file_names[i], args[2]);
                   break;
+
                 }
                 else{
                   check_avails++;
