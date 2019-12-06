@@ -76,6 +76,40 @@ pthread_mutex_t lock[MAXTOPICS] = {};
 //global variable for entry number (to-be incremented on each enqueue() op)
 int entry_number = 1;
 
+//========================================
+
+//**************************************************
+//TODO - MOVED ALL THESE OUTSIDE MAIN TO MAKE GLOBAL
+//**************************************************
+
+//initialize thread pools
+pthread_t sub_pool[NUMPROXIES] = {};
+pthread_t pub_pool[NUMPROXIES] = {};
+
+pthread_t cleanup_thread;
+
+//array of filenames
+char sub_file_names[NUMPROXIES][MAXNAME];
+char pub_file_names[NUMPROXIES][MAXNAME];
+
+//arrays to-be used to decide if thread is taken
+int sub_avail[NUMPROXIES] = {0};
+int pub_avail[NUMPROXIES] = {0};
+
+printf("!!!!!!%d %d\n", sub_avail[0], sub_avail[NUMPROXIES]);
+
+//structs of arguments to-be sent to pthread_create
+thread_args sub_thread_args[NUMPROXIES] = {};
+thread_args pub_thread_args[NUMPROXIES] = {};
+
+//set all entries to 0 to indicate threads are all free
+for (size_t i = 0; i < NUMPROXIES; i++) {
+  sub_avail[i] = 0;
+  pub_avail[i] = 0;
+}
+
+//========================================
+
 //------------------------------------------------------------------------------
 
 //Print contents of a queue given name
@@ -584,37 +618,6 @@ void *subscriber(void *inp){ //getEntry()
 
 //------------------------------------------------------------------------------
 
-//========================================
-
-//**************************************************
-//TODO - MOVED ALL THESE OUTSIDE MAIN TO MAKE GLOBAL
-//**************************************************
-
-//initialize thread pools
-pthread_t sub_pool[NUMPROXIES] = {};
-pthread_t pub_pool[NUMPROXIES] = {};
-
-pthread_t cleanup_thread;
-
-//array of filenames
-char sub_file_names[NUMPROXIES][MAXNAME];
-char pub_file_names[NUMPROXIES][MAXNAME];
-
-//arrays to-be used to decide if thread is taken
-int sub_avail[NUMPROXIES] = {};
-int pub_avail[NUMPROXIES] = {};
-
-//structs of arguments to-be sent to pthread_create
-thread_args sub_thread_args[NUMPROXIES] = {};
-thread_args pub_thread_args[NUMPROXIES] = {};
-
-//set all entries to 0 to indicate threads are all free
-for (size_t i = 0; i < NUMPROXIES; i++) {
-  sub_avail[i] = 0;
-  pub_avail[i] = 0;
-}
-
-//========================================
 
 int main(int argc, char const *argv[]) {
 
