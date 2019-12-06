@@ -42,10 +42,7 @@ typedef struct topicEntry topicEntry;
 struct topicQ {
   int topicID;
   char *name[MAXNAME];
-
-  //topicEntry *const buffer;
   topicEntry * buffer;
-
   int head;
   int tail;
   int length;
@@ -96,21 +93,17 @@ char pub_file_names[NUMPROXIES][MAXNAME];
 int sub_avail[NUMPROXIES] = {0};
 int pub_avail[NUMPROXIES] = {0};
 
-//printf("!!!!!!%d %d\n", sub_avail[0], sub_avail[NUMPROXIES]);
-
 //structs of arguments to-be sent to pthread_create
 thread_args sub_thread_args[NUMPROXIES] = {};
 thread_args pub_thread_args[NUMPROXIES] = {};
 
-//set all entries to 0 to indicate threads are all free
-// for (size_t i = 0; i < NUMPROXIES; i++) {
-//   sub_avail[i] = 0;
-//   pub_avail[i] = 0;
-// }
-
 //========================================
 
+
 //------------------------------------------------------------------------------
+//Functions
+//------------------------------------------------------------------------------
+
 
 //Print contents of a queue given name
 void printQ(char *QID){
@@ -232,7 +225,6 @@ int dequeue(char *QID){
             printf(">\t\tdequeue(): Operation rejected due to DELTA\n");
             return 0;
           }
-
           //if tail null:
           if (registry[i]->buffer[registry[i]->tail].entryNum == -1){
             //set head entryNum to -1 (null)
@@ -269,7 +261,11 @@ int dequeue(char *QID){
   return 0;
 }//end of dequeue()
 
+
 //------------------------------------------------------------------------------
+//Thread functions
+//------------------------------------------------------------------------------
+
 
 void *cleanup(void *arg){
   //Spin forever! (until thread is cancelled elsewhere)
@@ -316,10 +312,8 @@ void *publisher(void *inp){ //enqueue()
   while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
     int spaces = 0;
     int tokens = 0;
-    int arguments = 0;
     for (int i = 0; i < file_size; i++) {if (buffy[i] == ' '){spaces += 1;}}
     tokens = spaces + 1;
-    arguments = tokens - 1;
     char *args[tokens+1];
     args[tokens] = NULL;
     int index = 0;
@@ -350,9 +344,10 @@ void *publisher(void *inp){ //enqueue()
         if (args[1] != NULL){
           if (args[2] != NULL){
             if (args[3] != NULL){
+
               //----------------------------------
 
-              printf("PUT %s %s %s\n", args[1], args[2], args[3]);
+              printf("Proxy thread <%d> - type: <Publisher> - Executed command: <Put>\n", thread_args->thread_ID);
 
               topicEntry to_be_enq;
 
@@ -400,22 +395,17 @@ void *publisher(void *inp){ //enqueue()
                       printf("*\tpublisher(): Unlocking queue[%s]\n", *registry[i]->name);
                       pthread_mutex_unlock(&lock[i]);
 
-                      //Sleep to help make print statements print before thread yields
-                      sleep(1);
                       //Yield CPU and put thread into ready queue
                       sched_yield();
                     }//end of while enqueue() returns 0
 
                     printf("*\tpublisher(): enqueue on [%s] succeeded\n", *registry[i]->name);
 
-                    //sleep as to make print statements more readable
-                    sleep(1);
-
                   }//if()
                 }//if()
               }//end of for()
-
               //----------------------------------
+
             }
           }
         }
@@ -423,36 +413,34 @@ void *publisher(void *inp){ //enqueue()
       //sleep milli
       else if (strcmp(args[0], "sleep")==0){
         if (args[1] != NULL){
-          //----------------------------------
 
-          printf("SLEEP %d\n", atoi(args[1]));
+          //----------------------------------
+          printf("Proxy thread <%d> - type: <Publisher> - Executed command: <Sleep>\n", thread_args->thread_ID);
 
           int milli = (atoi(args[1])*1000);//Sleep 1000 micro seconds = 1 ms, etc.
 
           usleep(milli); //Sleep milli micro seconds
-
           //----------------------------------
+
         }
       }
       //stop
       else if (strcmp(args[0], "stop")==0){
-        //----------------------------------
 
-        printf("STOP\n");
+        //----------------------------------
+        printf("Proxy thread <%d> - type: <Publisher> - Executed command: <Stop>\n", thread_args->thread_ID);
 
         for (size_t i = 0; i < MAXTOPICS; i++) {
           if(registry[i] != NULL){
             if(registry[i]->topicID == atoi(args[1])){
-
               free(buffy);
               fclose(input);
               return NULL;
-
             }
           }
         }
-
         //----------------------------------
+
       }
       else{printf("Invalid Command\n");}
     }//end of if(args[0] != Null)
@@ -487,10 +475,8 @@ void *subscriber(void *inp){ //getEntry()
   while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
     int spaces = 0;
     int tokens = 0;
-    int arguments = 0;
     for (int i = 0; i < file_size; i++) {if (buffy[i] == ' '){spaces += 1;}}
     tokens = spaces + 1;
-    arguments = tokens - 1;
     char *args[tokens+1];
     args[tokens] = NULL;
     int index = 0;
@@ -521,7 +507,7 @@ void *subscriber(void *inp){ //getEntry()
         if (args[1] != NULL){
           //----------------------------------
 
-          printf("GET %d\n", atoi(args[1]));
+          printf("Proxy thread <%d> - type: <Subscriber> - Executed command: <Get>\n", thread_args->thread_ID);
 
           //empty struct to-be filled by getEntry()
           topicEntry place_hold;
@@ -549,10 +535,6 @@ void *subscriber(void *inp){ //getEntry()
                 //if getEntry() returns 0 (all entries < lastEntry+1 <or> Q is empty)
                 if(result == 0){
                   printf("*\tsubscriber(): getEntry on [%s] failed\n", *registry[i]->name);
-
-                  //sleep so print shows up
-                  sleep(1);
-
                   //yield CPU and put back on ready Q
                   sched_yield();
                 }
@@ -566,49 +548,41 @@ void *subscriber(void *inp){ //getEntry()
                   printf(" ... lastEntry is now:[%d]\n", result);
                   last_entry = result;
                 }
-
-                sleep(1);
-
               }
             }
           }
-
           //----------------------------------
+
         }
       }
       //sleep milli
       else if (strcmp(args[0], "sleep")==0){
         if (args[1] != NULL){
+
           //----------------------------------
-
-          printf("SLEEP %d\n", atoi(args[1]));
-
+          printf("Proxy thread <%d> - type: <Subscriber> - Executed command: <Sleep>\n", thread_args->thread_ID);
           int milli = (atoi(args[1])*1000);//Sleep 1000 micro seconds = 1 ms, etc.
-
           usleep(milli); //Sleep milli micro seconds
-
           //----------------------------------
+
         }
       }
       //stop
       else if (strcmp(args[0], "stop")==0){
+
         //----------------------------------
-
-        printf("STOP\n");
-
+        printf("Proxy thread <%d> - type: <Subscriber> - Executed command: <Stop>\n", thread_args->thread_ID);
         for (size_t i = 0; i < MAXTOPICS; i++) {
           if(registry[i] != NULL){
             if(registry[i]->topicID == atoi(args[1])){
-
               free(buffy);
               fclose(input);
               return NULL;
-
             }
           }
         }
-
         //----------------------------------
+
       }
       else{printf("Invalid Command\n");}
 
@@ -626,14 +600,6 @@ void *subscriber(void *inp){ //getEntry()
 
 
 int main(int argc, char const *argv[]) {
-
-  //set all entries to 0 to indicate threads are all free
-  // for (size_t i = 0; i < NUMPROXIES; i++) {
-  //   sub_avail[i] = 0;
-  //   pub_avail[i] = 0;
-  // }
-
-  printf("!!!!!!%d %d\n", sub_avail[0], sub_avail[NUMPROXIES]);
 
   FILE *input = NULL;
   char *buffy = NULL;
@@ -961,7 +927,7 @@ int main(int argc, char const *argv[]) {
 
   }//end of while()
 
-  //sleep(20);
+  sleep(10);
 
   pthread_cancel(cleanup_thread);
 
