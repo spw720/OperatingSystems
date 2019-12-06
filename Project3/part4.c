@@ -313,7 +313,7 @@ void *publisher(void *inp){ //enqueue()
   char *token = NULL;
 
   // printf("ID: %d\n", args->thread_ID);
-  // printf("FILE: %s\n", args->file_name);
+  printf("FILE: %s\n", args->file_name);
 
   //input = fopen(thread_args->file_name, "r");
   FILE *input = fopen(thread_args->file_name, "r");;
@@ -478,7 +478,7 @@ void *subscriber(void *inp){ //getEntry()
   char *token = NULL;
 
   // printf("ID: %d\n", args->thread_ID);
-  // printf("FILE: %s\n", args->file_name);
+  printf("FILE: %s\n", args->file_name);
 
 	FILE *input = input = fopen(thread_args->file_name, "r");
 
