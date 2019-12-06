@@ -320,7 +320,7 @@ void *publisher(void *inp){ //enqueue()
 
   if (input == NULL){
     printf("PUB-FILE NOT OPENED!\n");
-    free(buffer);
+    free(buffy);
     return NULL;
   }
 
@@ -498,7 +498,7 @@ void *subscriber(void *inp){ //getEntry()
 
   if (input == NULL){
     printf("SUB-FILE NOT OPENED!\n");
-    free(buffer);
+    free(buffy);
     return NULL;
   }
 
