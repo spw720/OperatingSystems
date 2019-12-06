@@ -370,7 +370,7 @@ void *publisher(void *inp){ //enqueue()
 
               for (size_t i = 0; i < MAXTOPICS; i++) {
                 if(registry[i] != NULL){
-                  if(registry[i].topicID == atoi(args[1])){
+                  if(registry[i]->topicID == atoi(args[1])){
 
                     //lock it down with this topics lock
                     printf("*\tpublisher(): Locking up queue[%s]\n", *registry[i]->name);
@@ -442,7 +442,7 @@ void *publisher(void *inp){ //enqueue()
 
         for (size_t i = 0; i < MAXTOPICS; i++) {
           if(registry[i] != NULL){
-            if(registry[i].topicID == atoi(args[1])){
+            if(registry[i]->topicID == atoi(args[1])){
 
               pthread_join(pub_pool[i], NULL);
               pub_avail[i] = 0;
@@ -529,7 +529,7 @@ void *subscriber(void *inp){ //getEntry()
 
           for (size_t i = 0; i < MAXTOPICS; i++) {
             if(registry[i] != NULL){
-              if(registry[i].topicID == atoi(args[1])){
+              if(registry[i]->topicID == atoi(args[1])){
 
                 //try to getEntry
 
@@ -595,7 +595,7 @@ void *subscriber(void *inp){ //getEntry()
 
         for (size_t i = 0; i < MAXTOPICS; i++) {
           if(registry[i] != NULL){
-            if(registry[i].topicID == atoi(args[1])){
+            if(registry[i]->topicID == atoi(args[1])){
 
               pthread_join(sub_pool[i], NULL);
               sub_avail[i] = 0;
