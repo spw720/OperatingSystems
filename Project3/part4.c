@@ -486,36 +486,20 @@ void *subscriber(void *inp){ //getEntry()
 
   thread_args *thread_args = inp;
 
-  printf("*******SUB1**********\n");
-
   //FILE *input = NULL;
   char *buffy = NULL;
-
-  printf("*******SUB2**********\n");
-
   size_t bufferSize = 2048;
-
-  printf("*******SUB3**********\n");
-
 	size_t file_size = 0;
-
-  printf("*******SUB4**********\n");
-
   char *token = NULL;
-
-  printf("*******SUB5**********\n");
 
   // printf("ID: %d\n", args->thread_ID);
   printf("FILE: %s\n", thread_args->file_name);
 
-	FILE *input = fopen(thread_args->file_name, "r");
+	FILE *input = fopen(thread_args->file_name, "r");]
 
-  printf("*******SUB6**********\n");
 
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
-
-  printf("*******SUB7**********\n");
 
   char* rest = buffy;
 
@@ -646,7 +630,7 @@ void *subscriber(void *inp){ //getEntry()
         printf("Proxy thread <%d> - type: <Subscriber> - Executed command: <Stop>\n", thread_args->thread_ID);
 
 
-        free(buffy);
+        //free(buffy);
         fclose(input);
         return NULL;
 
@@ -661,7 +645,7 @@ void *subscriber(void *inp){ //getEntry()
 
   printf("SUB ERREO?\n");
 
-  free(buffy);
+  //free(buffy);
   fclose(input);
   return NULL;
 
