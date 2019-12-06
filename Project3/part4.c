@@ -506,13 +506,12 @@ void *subscriber(void *inp){ //getEntry()
 
 	int i, len = strlen(thread_args->file_name);
 
-	for(i = 1; i<len-1; i++){
-    if(thread_args->file_name[i-1] != '\"'){
-		    thread_args->file_name[i-1] = thread_args->file_name[i];
-    }
-	}
-
-	thread_args->file_name[i-1]='\0';
+  if(thread_args->file_name[0] == '\"'){
+  	for(i = 1; i<len-1; i++){
+  	   thread_args->file_name[i-1] = thread_args->file_name[i];
+  	}
+  	thread_args->file_name[i-1]='\0';
+  }
 
 	printf("NEW FILE: %s\n", thread_args->file_name);
 
