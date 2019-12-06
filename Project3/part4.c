@@ -377,10 +377,12 @@ void *publisher(void *inp){ //enqueue()
               int tempy = 4;
 
               strcpy(str, args[3]);
+              strcat(str, " ");
 
               while (args[tempy] != NULL){
 
                 strcat(str, args[tempy]);
+                strcat(str, " ");
 
                 printf("******%s\n", str);
                 tempy++;
