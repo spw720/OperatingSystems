@@ -96,17 +96,17 @@ char pub_file_names[NUMPROXIES][MAXNAME];
 int sub_avail[NUMPROXIES] = {0};
 int pub_avail[NUMPROXIES] = {0};
 
-printf("!!!!!!%d %d\n", sub_avail[0], sub_avail[NUMPROXIES]);
+//printf("!!!!!!%d %d\n", sub_avail[0], sub_avail[NUMPROXIES]);
 
 //structs of arguments to-be sent to pthread_create
 thread_args sub_thread_args[NUMPROXIES] = {};
 thread_args pub_thread_args[NUMPROXIES] = {};
 
 //set all entries to 0 to indicate threads are all free
-for (size_t i = 0; i < NUMPROXIES; i++) {
-  sub_avail[i] = 0;
-  pub_avail[i] = 0;
-}
+// for (size_t i = 0; i < NUMPROXIES; i++) {
+//   sub_avail[i] = 0;
+//   pub_avail[i] = 0;
+// }
 
 //========================================
 
@@ -620,6 +620,14 @@ void *subscriber(void *inp){ //getEntry()
 
 
 int main(int argc, char const *argv[]) {
+
+  //set all entries to 0 to indicate threads are all free
+  // for (size_t i = 0; i < NUMPROXIES; i++) {
+  //   sub_avail[i] = 0;
+  //   pub_avail[i] = 0;
+  // }
+
+  printf("!!!!!!%d %d\n", sub_avail[0], sub_avail[NUMPROXIES]);
 
   FILE *input = NULL;
   char *buffy = NULL;
