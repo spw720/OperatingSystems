@@ -302,8 +302,6 @@ void *cleanup(void *arg){
 
 void *publisher(void *inp){ //enqueue()
 
-  printf("*******PUBLISHER**********\n");
-
   thread_args *thread_args = inp;
 
   //FILE *input = NULL;
@@ -311,9 +309,6 @@ void *publisher(void *inp){ //enqueue()
   size_t bufferSize = 2048;
 	size_t file_size = 0;
   char *token = NULL;
-
-  // printf("ID: %d\n", args->thread_ID);
-  printf("FILE: %s\n", thread_args->file_name);
 
   int i, len = strlen(thread_args->file_name);
   if(thread_args->file_name[0] == '\"'){
@@ -323,9 +318,6 @@ void *publisher(void *inp){ //enqueue()
   	thread_args->file_name[i-1] = '\0';
   }
 
-	printf("NEW FILE: %s\n", thread_args->file_name);
-
-  //input = fopen(thread_args->file_name, "r");
   FILE *input = fopen(thread_args->file_name, "r");
 
   if (input == NULL){
@@ -339,8 +331,6 @@ void *publisher(void *inp){ //enqueue()
 
   char* rest = buffy;
 
-  printf("*******PUB4**********\n");
-
   while((file_size = getline(&buffy, &bufferSize, input) ) != -1){
     int spaces = 0;
     int tokens = 0;
@@ -350,18 +340,7 @@ void *publisher(void *inp){ //enqueue()
     args[tokens] = NULL;
     int index = 0;
 
-    //**************************************************
-    //TODO use strtok_r
-    //**************************************************
-
-    printf("BEFORE PUB TOKEN: [%s]\n", token);
-    //Testing strtok_r
-    // char* rest = buffy;
     token = strtok_r(buffy, " ", &rest);
-    printf("AFTER PUB TOKEN: [%s]\n", token);
-    //token = strtok(buffy, " ");
-    //Testing strtok_r
-
 
     while(token != NULL) {
       int length = strlen(token);
@@ -369,17 +348,7 @@ void *publisher(void *inp){ //enqueue()
       args[index] = token;
       index += 1;
 
-      //**************************************************
-      //TODO use strtok_r
-      //**************************************************
-
-      //Testing strtok_r
-      //char* rest2 = NULL;
       token = strtok_r(NULL, " ", &rest);
-      printf("PUB TOKEN: [%s]\n", token);
-
-      //token = strtok(NULL, " ");
-      //Testing strtok_r
 
     }//end of while()
 
@@ -391,7 +360,6 @@ void *publisher(void *inp){ //enqueue()
         if (args[1] != NULL){
           if (args[2] != NULL){
             if (args[3] != NULL){
-
               //----------------------------------
 
               printf("Proxy thread <%d> - type: <Publisher> - Executed command: <Put>\n", thread_args->thread_ID);
@@ -401,13 +369,26 @@ void *publisher(void *inp){ //enqueue()
               to_be_enq.pubID = thread_args->thread_ID;
 
               strcpy(to_be_enq.photoURL, args[2]);
-              //to_be_enq.photoURL = args[2];
+
+              char maxurl[URLSIZE] = args[3];
+              printf("******%s\n", maxurl);
+
+              int tempy = 4;
+              while (args[tempy] != NULL]){
+                maxurl += args[tempy];
+                printf("******%s\n", maxurl);
+                tempy++;
+              }
 
               //**************************************************
               //TODO make caption able to take caption with spaces
               //**************************************************
               strcpy(to_be_enq.photoCaption, args[3]);
               //to_be_enq.photoCaption = args[3];
+
+
+
+
 
 
               for (size_t i = 0; i < MAXTOPICS; i++) {
@@ -439,7 +420,6 @@ void *publisher(void *inp){ //enqueue()
                 }//if()
               }//end of for()
               //----------------------------------
-
             }
           }
         }
@@ -462,10 +442,8 @@ void *publisher(void *inp){ //enqueue()
       }
       //stop
       else if (strcmp(args[0], "stop")==0){
-
         //----------------------------------
         printf("Proxy thread <%d> - type: <Publisher> - Executed command: <Stop>\n", thread_args->thread_ID);
-        break;
 
         free(buffy);
         fclose(input);
@@ -473,13 +451,10 @@ void *publisher(void *inp){ //enqueue()
         return NULL;
 
         //----------------------------------
-
       }
       else{printf("[pub] Invalid Command <%s>\n", args[0]);}
     }//end of if(args[0] != Null)
   }//end of main while()
-
-  printf("PUB ERREO?\n");
 
   free(buffy);
   fclose(input);
@@ -491,18 +466,12 @@ void *publisher(void *inp){ //enqueue()
 
 void *subscriber(void *inp){ //getEntry()
 
-  printf("*******SUBSCRIBER**********\n");
-
   thread_args *thread_args = inp;
 
-  //FILE *input = NULL;
   char *buffy = NULL;
   size_t bufferSize = 2048;
 	size_t file_size = 0;
   char *token = NULL;
-
-  // printf("ID: %d\n", args->thread_ID);
-  printf("FILE: %s\n", thread_args->file_name);
 
 	int i, len = strlen(thread_args->file_name);
 
@@ -513,8 +482,6 @@ void *subscriber(void *inp){ //getEntry()
   	thread_args->file_name[i-1]='\0';
   }
 
-	printf("NEW FILE: %s\n", thread_args->file_name);
-
 	FILE *input = fopen(thread_args->file_name, "r");
 
   if (input == NULL){
@@ -522,7 +489,6 @@ void *subscriber(void *inp){ //getEntry()
     free(buffy);
     return NULL;
   }
-
 
   buffy = (char *)malloc(bufferSize * sizeof(char));
   if(buffy == NULL){printf("Error! Unable to allocate input buffer. \n");exit(1);}
@@ -539,19 +505,7 @@ void *subscriber(void *inp){ //getEntry()
     args[tokens] = NULL;
     int index = 0;
 
-    //**************************************************
-    //TODO make caption able to take caption with spaces
-    //**************************************************
-
-    printf("BEFORE SUB TOKEN: [%s]\n", token);
-    //Testing strtok_r
-    //char* rest = buffy;
     token = strtok_r(buffy, " ", &rest);
-    //token = strtok(buffy, " ");
-
-    printf("AFTER SUB TOKEN: [%s]\n", token);
-
-    //Testing strtok_r
 
     while(token != NULL) {
       int length = strlen(token);
@@ -559,17 +513,7 @@ void *subscriber(void *inp){ //getEntry()
       args[index] = token;
       index += 1;
 
-      //**************************************************
-      //TODO make caption able to take caption with spaces
-      //**************************************************
-      //Testing strtok_r
       token = strtok_r(NULL, " ", &rest);
-      //token = strtok(NULL, " ");
-
-      printf("SUB TOKEN: [%s]\n", token);
-
-
-      //Testing strtok_r
 
     }//end of while()
 
@@ -580,7 +524,6 @@ void *subscriber(void *inp){ //getEntry()
       if (strcmp(args[0], "get")==0){
         if (args[1] != NULL){
           //----------------------------------
-
           printf("Proxy thread <%d> - type: <Subscriber> - Executed command: <Get>\n", thread_args->thread_ID);
 
           //empty struct to-be filled by getEntry()
@@ -593,9 +536,7 @@ void *subscriber(void *inp){ //getEntry()
           for (size_t i = 0; i < MAXTOPICS; i++) {
             if(registry[i] != NULL){
               if(registry[i]->topicID == atoi(args[1])){
-
                 //try to getEntry
-
                 //lock it down with this topics lock
                 printf("*\tsubscriber(): Locking up queue[%s]\n", *registry[i]->name);
                 pthread_mutex_lock(&lock[i]);
@@ -626,13 +567,11 @@ void *subscriber(void *inp){ //getEntry()
             }
           }
           //----------------------------------
-
         }
       }
       //sleep milli
       else if (strcmp(args[0], "sleep")==0){
         if (args[1] != NULL){
-
           //----------------------------------
           int milli = atoi(args[1]); // length of time to sleep, in miliseconds
           struct timespec tim = {0};
@@ -642,30 +581,24 @@ void *subscriber(void *inp){ //getEntry()
 
           printf("Proxy thread <%d> - type: <Subscriber> - Executed command: <Sleep>\n", thread_args->thread_ID);
           //----------------------------------
-
         }
       }
       //stop
       else if (strcmp(args[0], "stop")==0){
-
         //----------------------------------
         printf("Proxy thread <%d> - type: <Subscriber> - Executed command: <Stop>\n", thread_args->thread_ID);
-
 
         free(buffy);
         fclose(input);
         return NULL;
 
         //----------------------------------
-
       }
       else{printf("[sub] Invalid Command <%s>\n", args[0]);}
 
     }//end of if args[0]!=NULL
 
   }//end of main while()
-
-  printf("SUB ERREO?\n");
 
   free(buffy);
   fclose(input);
