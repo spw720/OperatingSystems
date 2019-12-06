@@ -968,7 +968,7 @@ int main(int argc, char const *argv[]) {
   pthread_join(cleanup_thread, NULL);
 
   // Close the file
-  free(buffy);
+  //free(buffy);
   fclose(input);
 
   return 0;
