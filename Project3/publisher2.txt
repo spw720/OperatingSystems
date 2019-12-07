@@ -4,6 +4,11 @@ put 2 "https://images-na.ssl-imX342_.jpg" "Neat"
 sleep 1000
 put 2 "https://www.thesprucepets.cg-down-b00011bf29a.jpg" "Golden"
 sleep 1000
+put 2 "https://www.thesprucepets.cg-down-b00011bf29a.jpg" "Golden"
+put 2 "https://www.thesprucepets.cg-down-b00011bf29a.jpg" "Golden"
+put 2 "https://www.thesprucepets.cg-down-b00011bf29a.jpg" "Golden"
+put 2 "https://www.thesprucepets.cg-down-b00011bf29a.jpg" "Golden"
+put 2 "https://www.thesprucepets.cg-down-b00011bf29a.jpg" "Golden"
 put 2 "https://86cb8127dc14737f5057-7c067/350899/dog.jpg" "Good dog"
 sleep 5000
 stop

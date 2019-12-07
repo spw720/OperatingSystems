@@ -100,11 +100,9 @@ thread_args pub_thread_args[NUMPROXIES] = {};
 
 //========================================
 
-
 //------------------------------------------------------------------------------
 //Functions
 //------------------------------------------------------------------------------
-
 
 //Print contents of a queue given name
 void printQ(char *QID){
@@ -204,6 +202,8 @@ int getEntry(char *QID, int lastEntry, topicEntry *TE){
 
 int dequeue(char *QID){
 
+  struct timeval blank;
+
   struct timeval new;
   struct timeval old;
   double diff;
@@ -230,16 +230,21 @@ int dequeue(char *QID){
           if (registry[i]->buffer[registry[i]->tail].entryNum == -1){
             //set head entryNum to -1 (null)
             registry[i]->buffer[registry[i]->head].entryNum = -1;
+            registry[i]->buffer[registry[i]->head].timeStamp = blank;
+            registry[i]->buffer[registry[i]->head].photoURL = "";
+            registry[i]->buffer[registry[i]->head].photoCaption = "";
 
             int head_minus1 = (registry[i]->head - 1) % (registry[i]->length+1);
 
             if (head_minus1 == -1) { head_minus1 = registry[i]->length; }
             //set head-1 entryNum to 0 (empty)
             registry[i]->buffer[head_minus1].entryNum = 0;
+            registry[i]->buffer[head_minus1].timeStamp = blank;
+            registry[i]->buffer[head_minus1].photoURL = "";
+            registry[i]->buffer[head_minus1].photoCaption = "";
+
             //Increment head
-
             int new_head = (registry[i]->head + 1) % (registry[i]->length+1);
-
             registry[i]->head = new_head;
           }
           else {
@@ -250,8 +255,16 @@ int dequeue(char *QID){
 
             //set head-1 entryNum to 0 (empty)
             registry[i]->buffer[head_minus2].entryNum = 0;
+            registry[i]->buffer[head_minus2].timeStamp = blank;
+            registry[i]->buffer[head_minus2].photoURL = "";
+            registry[i]->buffer[head_minus2].photoCaption = "";
+
             //set head entryNum to -1 (null)
             registry[i]->buffer[registry[i]->head].entryNum = -1;
+            registry[i]->buffer[registry[i]->head].timeStamp = blank;
+            registry[i]->buffer[registry[i]->head].photoURL = "";
+            registry[i]->buffer[registry[i]->head].photoCaption = "";
+
             //increment head
             int new_head = (registry[i]->head + 1) % (registry[i]->length+1);
 
@@ -364,40 +377,23 @@ void *publisher(void *inp){ //enqueue()
 
               printf("Proxy thread <%d> - type: <Publisher> - Executed command: <Put>\n", thread_args->thread_ID);
 
+              //entry to-be enqueued
               topicEntry to_be_enq;
-
+              //set PubID to ThreadID
               to_be_enq.pubID = thread_args->thread_ID;
-
+              //set URL
               strcpy(to_be_enq.photoURL, args[2]);
-
-
-              printf("BEFORE ******%s\n", args[3]);
-
+              //Check if caption is multiple words, then set
               char str[URLSIZE];
               int tempy = 4;
-
               strcpy(str, args[3]);
               strcat(str, " ");
-
               while (args[tempy] != NULL){
-
                 strcat(str, args[tempy]);
                 strcat(str, " ");
-
-                printf("******%s\n", str);
                 tempy++;
               }
-
-              //**************************************************
-              //TODO make caption able to take caption with spaces
-              //**************************************************
-              strcpy(to_be_enq.photoCaption, args[3]);
-              //to_be_enq.photoCaption = args[3];
-
-
-
-
-
+              strcpy(to_be_enq.photoCaption, str);
 
               for (size_t i = 0; i < MAXTOPICS; i++) {
                 if(registry[i] != NULL){
@@ -416,9 +412,7 @@ void *publisher(void *inp){ //enqueue()
 
                     //While enqueue returns 0 (either from full queue or wrong Q name)
                     if(result == 0){
-
                       printf("*\tpublisher(): enqueue on [%s] failed. Full buffer?\n", *registry[i]->name);
-
                       //Yield CPU and put thread into ready queue
                       sched_yield();
                     }//end of while enqueue() returns 0
@@ -703,7 +697,7 @@ int main(int argc, char const *argv[]) {
 
                 //========================================
                 if(queue_loc >= MAXTOPICS){
-                  printf("MAX NUMBER OF QUEUES REACHED\n");
+                  printf("CANNOT CREATE TOPIC: <max number of queues reached>\n");
                 }
                 else{
                   //place initilaized topicQ into registry
@@ -915,7 +909,7 @@ int main(int argc, char const *argv[]) {
 
   pthread_cancel(cleanup_thread);
 
-  //cancel all active threads
+  //join all active threads
   for (size_t i = 0; i < NUMPROXIES; i++) {
     if(pub_avail[i] == 1){
       pthread_join(pub_pool[i], NULL);

@@ -1,4 +1,10 @@
 put 1 "https://cdn.s-Turkey.jpg" "Taurus Mountains"
+put 1 "https://cdn.s-Turkey.jpg" "Taurus Mountains"
+put 1 "https://cdn.s-Turkey.jpg" "Taurus Mountains"
+put 1 "https://cdn.s-Turkey.jpg" "Taurus Mountains"
+put 1 "https://cdn.s-Turkey.jpg" "Taurus Mountains"
+put 1 "https://cdn.s-Turkey.jpg" "Taurus Mountains"
+put 1 "https://cdn.s-Turkey.jpg" "Taurus Mountains"
 sleep 1500
 put 1 "https://www.rld-820x312.jpg" "Pointy Mountain"
 sleep 1500
