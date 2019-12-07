@@ -340,11 +340,12 @@ void *publisher(void *inp){ //enqueue()
 
   char html_name[50] = "publisher";
   char result[50];
-  sprintf(thread_args->thread_ID, "%d", num);
+  sprintf(thread_args->thread_ID, "%d", result);
 
   strcat(html_name, result);
 
-  printf("%s\n", html_name);
+  printf("***%s\n", html_name);
+  sleep(1);
 
   //html_file = fopen("data/file1.txt", "w");
 
