@@ -342,7 +342,7 @@ void *publisher(void *inp){ //enqueue()
 
   char html_name[50] = "publisher";
   char result[50];
-  sprintf(thread_args->thread_ID, "%d", result);
+  sprintf(result, "%d", thread_args->thread_ID);
 
   strcat(html_name, result);
 
