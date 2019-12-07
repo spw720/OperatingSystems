@@ -338,32 +338,6 @@ void *publisher(void *inp){ //enqueue()
 
   thread_args *thread_args = inp;
 
-  FILE * html_file;
-
-  char html_name[50] = "publisher";
-  char result[50];
-  sprintf(result, "%d", thread_args->thread_ID);
-  strcat(html_name, result);
-  strcat(html_name, ".html");
-
-  //printf("!!!{%s}!!!\n", html_name);
-
-  html_file = fopen(html_name, "w+");
-  fprintf(html_file, "%s", "<!DOCTYPE html>\n");
-  fprintf(html_file, "%s", "<html>\n");
-
-  fprintf(html_file, "%s", "<head>\n");
-
-  fprintf(html_file, "%s%s%s", "<title>", html_name, "</title>\n");
-
-  fprintf(html_file, "%s", "</head>\n");
-
-  fprintf(html_file, "%s", "<body>\n");
-
-  fprintf(html_file, "%s", "</body>\n");
-
-  fprintf(html_file, "%s", "</html>\n");
-
   printf("Proxy thread <%d> - type: <Publisher>​\n", thread_args->thread_ID);
 
   pthread_mutex_lock(&locker);
@@ -522,6 +496,33 @@ void *publisher(void *inp){ //enqueue()
 void *subscriber(void *inp){ //getEntry()
 
   thread_args *thread_args = inp;
+
+  FILE * html_file;
+
+  char html_name[50] = "subscriber";
+  char result[50];
+  sprintf(result, "%d", thread_args->thread_ID);
+  strcat(html_name, result);
+  strcat(html_name, ".html");
+
+  //printf("!!!{%s}!!!\n", html_name);
+
+  html_file = fopen(html_name, "w+");
+
+  fprintf(html_file, "%s", "<!DOCTYPE html>\n");
+  fprintf(html_file, "%s", "<html>\n");
+
+  fprintf(html_file, "%s", "<head>\n");
+
+  fprintf(html_file, "%s%d%s", "<title>Subscriber ", thread_args->thread_ID, "</title>\n");
+
+  fprintf(html_file, "%s", "</head>\n");
+
+  fprintf(html_file, "%s", "<body>\n");
+
+  fprintf(html_file, "%s", "</body>\n");
+
+  fprintf(html_file, "%s", "</html>\n");
 
   printf("Proxy thread <%d> - type: <Subscriber>​\n", thread_args->thread_ID);
 
