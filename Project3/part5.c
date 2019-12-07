@@ -343,11 +343,10 @@ void *publisher(void *inp){ //enqueue()
   char html_name[50] = "publisher";
   char result[50];
   sprintf(result, "%d", thread_args->thread_ID);
-
   strcat(html_name, result);
+  strcat(html_name, ".html");
 
-  printf("***%s\n", html_name);
-  sleep(1);
+  printf("!!!{%s}!!!\n", html_name);
 
   //html_file = fopen("data/file1.txt", "w");
 
