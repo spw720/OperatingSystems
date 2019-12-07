@@ -522,10 +522,6 @@ void *subscriber(void *inp){ //getEntry()
 
   fprintf(html_file, "%s%d%s", "<h1>Subscriber ", thread_args->thread_ID, "</h1>\n");
 
-  fprintf(html_file, "%s", "</body>\n");
-
-  fprintf(html_file, "%s", "</html>\n");
-
   printf("Proxy thread <%d> - type: <Subscriber>​\n", thread_args->thread_ID);
 
   pthread_mutex_lock(&locker);
@@ -620,11 +616,19 @@ void *subscriber(void *inp){ //getEntry()
                 //if getEntry() returns 1 (found lastEntry+1)
                 else if(result == 1){
                   printf("*\tsubscriber(): getEntry on [%s] found entry:[%d]\n", *registry[i]->name, place_hold.entryNum);
+
+                  fprintf(html_file, "%s%s%s", "<img src=", place_hold.photoURL, ">\n");
+                  fprintf(html_file, "%s%s%s", "<p>", place_hold.photoCaption, "</p>\n");
+
                   last_entry++;
                 }
                 else{
                   printf("*\tsubscriber(): getEntry on [%s] found entry:[%d]", *registry[i]->name, place_hold.entryNum);
                   printf(" ... lastEntry is now:[%d]\n", result);
+
+                  fprintf(html_file, "%s%s%s", "<img src=", place_hold.photoURL, ">\n");
+                  fprintf(html_file, "%s%s%s", "<p>", place_hold.photoCaption, "</p>\n");
+
                   last_entry = result;
                 }
               }
@@ -651,6 +655,9 @@ void *subscriber(void *inp){ //getEntry()
       else if (strcmp(args[0], "stop")==0){
         //----------------------------------
         printf("Proxy thread <%d> - type: <Subscriber> - Executed command: <Stop>\n", thread_args->thread_ID);
+
+        fprintf(html_file, "%s", "</body>\n");
+        fprintf(html_file, "%s", "</html>\n");
 
         free(buffy);
         fclose(input);
