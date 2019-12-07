@@ -933,7 +933,7 @@ int main(int argc, char const *argv[]) {
 
         pthread_mutex_lock(&locker);
         pthread_cond_broadcast(&condition);
-        pthread_mutex_unlock(&lock);
+        pthread_mutex_unlock(&locker);
 
         //start up the cleanup thread
         pthread_create(&cleanup_thread, NULL, cleanup, NULL);
