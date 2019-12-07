@@ -336,6 +336,8 @@ void *cleanup(void *arg){
 
 void *publisher(void *inp){ //enqueue()
 
+  thread_args *thread_args = inp;
+
   FILE * html_file;
 
   char html_name[50] = "publisher";
@@ -348,8 +350,6 @@ void *publisher(void *inp){ //enqueue()
   sleep(1);
 
   //html_file = fopen("data/file1.txt", "w");
-
-  thread_args *thread_args = inp;
 
   printf("Proxy thread <%d> - type: <Publisher>​\n", thread_args->thread_ID);
 
