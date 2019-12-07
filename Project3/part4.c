@@ -71,6 +71,11 @@ pthread_mutex_t lock[MAXTOPICS] = {};
 
 //------------------------------------------------------------------------------
 
+pthread_cond_t condition = PTHREAD_COND_INITIALIZER;
+pthread_mutex_t locker = PTHREAD_MUTEX_INITIALIZER;
+
+//------------------------------------------------------------------------------
+
 //global variable for entry number (to-be incremented on each enqueue() op)
 int entry_number = 1;
 
@@ -333,6 +338,12 @@ void *publisher(void *inp){ //enqueue()
 
   thread_args *thread_args = inp;
 
+  printf("Proxy thread <%d> - type: <Publisher>​\n", thread_args->thread_ID);
+
+  pthread_mutex_lock(&locker);
+  pthread_cond_wait(&condition, &locker);
+  pthread_mutex_unlock(&locker);
+
   //FILE *input = NULL;
   char *buffy = NULL;
   size_t bufferSize = 2048;
@@ -485,6 +496,12 @@ void *publisher(void *inp){ //enqueue()
 void *subscriber(void *inp){ //getEntry()
 
   thread_args *thread_args = inp;
+
+  printf("Proxy thread <%d> - type: <Subscriber>​\n", thread_args->thread_ID);
+
+  pthread_mutex_lock(&locker);
+  pthread_cond_wait(&condition, &locker);
+  pthread_mutex_unlock(&locker);
 
   char *buffy = NULL;
   size_t bufferSize = 2048;
@@ -776,6 +793,11 @@ int main(int argc, char const *argv[]) {
                   printf("\tFound available publisher thread[%d]\n", i);
                   pub_avail[i] = 1;
                   strcpy(pub_file_names[i], args[2]);
+
+                  pub_thread_args[i].file_name = pub_file_names[i];
+                  pub_thread_args[i].thread_ID = i;
+                  pthread_create(&pub_pool[i], NULL, publisher, (void *)&pub_thread_args[i]);
+
                   break;
 
                 }
@@ -802,6 +824,11 @@ int main(int argc, char const *argv[]) {
                   printf("\tFound available subsriber thread[%d]\n", i);
                   sub_avail[i] = 1;
                   strcpy(sub_file_names[i], args[2]);
+
+                  sub_thread_args[i].file_name = sub_file_names[i];
+                  sub_thread_args[i].thread_ID = i;
+                  pthread_create(&sub_pool[i], NULL, subscriber, (void *)&sub_thread_args[i]);
+
                   break;
 
                 }
@@ -882,27 +909,31 @@ int main(int argc, char const *argv[]) {
       else if (strcmp(args[0], "start")==0){
 
         //========================================
-        for (size_t i = 0; i < NUMPROXIES; i++) {
+        // for (size_t i = 0; i < NUMPROXIES; i++) {
+        //
+        //   if(sub_avail[i] == 1){
+        //     printf("\tStarting subscriber[%d]\n", i);
+        //
+        //     sub_thread_args[i].file_name = sub_file_names[i];
+        //     sub_thread_args[i].thread_ID = i;
+        //
+        //     pthread_create(&sub_pool[i], NULL, subscriber, (void *)&sub_thread_args[i]);
+        //   }
+        //
+        //   if(pub_avail[i] == 1){
+        //     printf("\tStarting publisher[%d]\n", i);
+        //
+        //     pub_thread_args[i].file_name = pub_file_names[i];
+        //     pub_thread_args[i].thread_ID = i;
+        //
+        //     pthread_create(&pub_pool[i], NULL, publisher, (void *)&pub_thread_args[i]);
+        //   }
+        //
+        // }
 
-          if(sub_avail[i] == 1){
-            printf("\tStarting subscriber[%d]\n", i);
-
-            sub_thread_args[i].file_name = sub_file_names[i];
-            sub_thread_args[i].thread_ID = i;
-
-            pthread_create(&sub_pool[i], NULL, subscriber, (void *)&sub_thread_args[i]);
-          }
-
-          if(pub_avail[i] == 1){
-            printf("\tStarting publisher[%d]\n", i);
-
-            pub_thread_args[i].file_name = pub_file_names[i];
-            pub_thread_args[i].thread_ID = i;
-
-            pthread_create(&pub_pool[i], NULL, publisher, (void *)&pub_thread_args[i]);
-          }
-
-        }
+        pthread_mutex_lock(&locker);
+        pthread_cond_broadcast(&condition);
+        pthread_mutex_unlock(&lock);
 
         //start up the cleanup thread
         pthread_create(&cleanup_thread, NULL, cleanup, NULL);
