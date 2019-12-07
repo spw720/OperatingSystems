@@ -349,7 +349,20 @@ void *publisher(void *inp){ //enqueue()
   //printf("!!!{%s}!!!\n", html_name);
 
   html_file = fopen(html_name, "w+");
-  fprintf(html_file, "%s %s %s %d", "We", "are", "in", 2012);
+  fprintf(html_file, "%s", "<!DOCTYPE html>\n");
+  fprintf(html_file, "%s", "<html>\n");
+
+  fprintf(html_file, "%s", "<head>\n");
+
+  fprintf(html_file, "%s%s%s", "<title>", html_name, "</title>\n");
+
+  fprintf(html_file, "%s", "</head>\n");
+
+  fprintf(html_file, "%s", "<body>\n");
+
+  fprintf(html_file, "%s", "</body>\n");
+
+  fprintf(html_file, "%s", "</html>\n");
 
   printf("Proxy thread <%d> - type: <Publisher>​\n", thread_args->thread_ID);
 
@@ -967,7 +980,7 @@ int main(int argc, char const *argv[]) {
 
   }//end of while()
 
-  sleep(10);
+  sleep(5);
 
   pthread_cancel(cleanup_thread);
 
