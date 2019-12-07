@@ -240,8 +240,12 @@ int dequeue(char *QID){
             //set head-1 entryNum to 0 (empty)
             registry[i]->buffer[head_minus1].entryNum = 0;
             registry[i]->buffer[head_minus1].timeStamp = blank;
-            registry[i]->buffer[head_minus1].photoURL = "";
-            registry[i]->buffer[head_minus1].photoCaption = "";
+
+            //registry[i]->buffer[head_minus1].photoURL = "";
+            strcpy(registry[i]->buffer[head_minus1].photoURL, "");
+
+            //registry[i]->buffer[head_minus1].photoCaption = "";
+            strcpy(registry[i]->buffer[head_minus1].photoCaption, "");
 
             //Increment head
             int new_head = (registry[i]->head + 1) % (registry[i]->length+1);
@@ -256,14 +260,22 @@ int dequeue(char *QID){
             //set head-1 entryNum to 0 (empty)
             registry[i]->buffer[head_minus2].entryNum = 0;
             registry[i]->buffer[head_minus2].timeStamp = blank;
-            registry[i]->buffer[head_minus2].photoURL = "";
-            registry[i]->buffer[head_minus2].photoCaption = "";
+
+            //registry[i]->buffer[head_minus2].photoURL = "";
+            strcpy(registry[i]->buffer[head_minus2].photoURL, "");
+
+            //registry[i]->buffer[head_minus2].photoCaption = "";
+            strcpy(registry[i]->buffer[head_minus2].photoCaption, "");
 
             //set head entryNum to -1 (null)
             registry[i]->buffer[registry[i]->head].entryNum = -1;
             registry[i]->buffer[registry[i]->head].timeStamp = blank;
-            registry[i]->buffer[registry[i]->head].photoURL = "";
-            registry[i]->buffer[registry[i]->head].photoCaption = "";
+
+            //registry[i]->buffer[registry[i]->head].photoURL = "";
+            strcpy(registry[i]->buffer[registry[i]->head].photoURL, "");
+
+            //registry[i]->buffer[registry[i]->head].photoCaption = "";
+            strcpy(registry[i]->buffer[registry[i]->head].photoCaption, "");
 
             //increment head
             int new_head = (registry[i]->head + 1) % (registry[i]->length+1);
