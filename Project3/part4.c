@@ -231,8 +231,12 @@ int dequeue(char *QID){
             //set head entryNum to -1 (null)
             registry[i]->buffer[registry[i]->head].entryNum = -1;
             registry[i]->buffer[registry[i]->head].timeStamp = blank;
-            registry[i]->buffer[registry[i]->head].photoURL = "";
-            registry[i]->buffer[registry[i]->head].photoCaption = "";
+
+            //registry[i]->buffer[registry[i]->head].photoURL = "";
+            strcpy(registry[i]->buffer[registry[i]->head].photoURL, "");
+
+            //registry[i]->buffer[registry[i]->head].photoCaption = "";
+            strcpy(registry[i]->buffer[registry[i]->head].photoCaption, "");
 
             int head_minus1 = (registry[i]->head - 1) % (registry[i]->length+1);
 
