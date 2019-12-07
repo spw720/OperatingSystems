@@ -661,6 +661,7 @@ void *subscriber(void *inp){ //getEntry()
 
         free(buffy);
         fclose(input);
+        fclose(html_file);
         return NULL;
 
         //----------------------------------
@@ -673,6 +674,7 @@ void *subscriber(void *inp){ //getEntry()
 
   free(buffy);
   fclose(input);
+  fclose(html_file);
   return NULL;
 
 }//end of subscriber()
