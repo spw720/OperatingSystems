@@ -346,9 +346,10 @@ void *publisher(void *inp){ //enqueue()
   strcat(html_name, result);
   strcat(html_name, ".html");
 
-  printf("!!!{%s}!!!\n", html_name);
+  //printf("!!!{%s}!!!\n", html_name);
 
-  //html_file = fopen("data/file1.txt", "w");
+  html_file = fopen(html_name, "w+");
+  fprintf(html_file, "%s %s %s %d", "We", "are", "in", 2012);
 
   printf("Proxy thread <%d> - type: <Publisher>​\n", thread_args->thread_ID);
 
