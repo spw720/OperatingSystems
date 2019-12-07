@@ -520,6 +520,8 @@ void *subscriber(void *inp){ //getEntry()
 
   fprintf(html_file, "%s", "<body>\n");
 
+  fprintf(html_file, "%s%d%s", "<h1>Subscriber ", thread_args->thread_ID, "</h1>\n");
+
   fprintf(html_file, "%s", "</body>\n");
 
   fprintf(html_file, "%s", "</html>\n");
