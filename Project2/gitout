@@ -1,5 +1,0 @@
-#!/bin/bash
-rm a.out
-git add *
-git commit -m "commit via shell script"
-git push

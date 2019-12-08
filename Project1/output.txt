@@ -1,0 +1,15 @@
+/Users/sean/Desktop/CIS415/415-Repo/CIS415/swilso17-CIS415F19-P1
+/Users/sean/Desktop/CIS415/415-Repo/CIS415/swilso17-CIS415F19-P1/test
+. .. input.txt 
+pwd ; mkdir test ; cd test
+cd .. ; cd test ; pwd
+cp ../input.txt . ; ls ; cat input.txt
+mv input.txt del.txt ; pwd ; ls
+rm del.txt ; ls
+cd .. ; pwd
+ls
+/Users/sean/Desktop/CIS415/415-Repo/CIS415/swilso17-CIS415F19-P1/test
+. .. del.txt 
+. .. 
+/Users/sean/Desktop/CIS415/415-Repo/CIS415/swilso17-CIS415F19-P1
+. .. test psuedo-shell makefile command.c proj1.c input.txt main.c proj1 command.h output.txt 

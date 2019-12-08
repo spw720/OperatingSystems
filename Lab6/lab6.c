@@ -31,6 +31,7 @@ int main(void)
   else if(pid == 0) {
     //This code runs in the child process only
     printf("Child process: %d - Starting...\n", getpid());
+
     //Add your while loop here
     int time = 1;
     while(time <= 10){
@@ -58,12 +59,6 @@ int main(void)
       sleep(1);
     }
 
-
-
-
-    //printf("Parent process: %d - Waiting for child to complete...\n", getpid());
-    //w = waitpid(pid, &wstatus, 0);
-    //printf("Parent process: %d - Finished\n", getpid());
   }
 
   //exit out of program

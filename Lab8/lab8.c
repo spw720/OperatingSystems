@@ -59,7 +59,6 @@ int enqueue(char *MTQ_ID, mealTicket *MT){
           registry[i]->tail);
 
         //increment tail
-        //registry[i]->tail += 1; //TODO make this wraparound
         //printf("TAIL BEFORE: [%d]\n", registry[i]->tail);
         int new_tail = (registry[i]->tail + 1) % (BUFFER_SIZE+1);
         registry[i]->tail = new_tail;
@@ -338,7 +337,6 @@ int main(){
     printf("%d, ", registry[3]->buffer[i].ticketNum);
   }
   printf("\n");
-
 
   return 0;
 
